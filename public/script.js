@@ -2,15 +2,20 @@
 
 const projectSections = [...document.querySelectorAll("[data-project-section]")];
 const projectLinks = [...document.querySelectorAll("[data-project-link]")];
-const themeSections = [...document.querySelectorAll("[data-theme-project]")];
 const themeColor = document.querySelector('meta[name="theme-color"]');
+
+let themeFrame = null;
 
 function setActiveProject(projectName) {
   const project = projectSections.find(
     (section) => section.dataset.projectSection === projectName,
   );
 
-  if (!project || document.body.dataset.project === projectName) {
+  if (!project) {
+    return;
+  }
+
+  if (document.body.dataset.project === projectName) {
     return;
   }
 
@@ -18,44 +23,54 @@ function setActiveProject(projectName) {
   themeColor?.setAttribute("content", project.dataset.themeColor);
 
   projectLinks.forEach((link) => {
-    const isActive = link.dataset.projectLink === projectName;
-
-    if (isActive) {
-      link.setAttribute("aria-current", "true");
+    if (link.dataset.projectLink === projectName) {
+      link.setAttribute("aria-current", "location");
     } else {
       link.removeAttribute("aria-current");
     }
   });
 }
 
-projectLinks.forEach((link) => {
-  link.addEventListener("click", () => {
-    setActiveProject(link.dataset.projectLink);
-  });
-});
+function getProjectAtViewportCenter() {
+  const viewportCenter = window.innerHeight * 0.5;
+  let nearestProject = projectSections[0];
+  let nearestDistance = Number.POSITIVE_INFINITY;
 
-const hashProject = window.location.hash.slice(1);
+  for (const project of projectSections) {
+    const bounds = project.getBoundingClientRect();
 
-if (projectSections.some((section) => section.id === hashProject)) {
-  setActiveProject(hashProject);
+    if (bounds.top <= viewportCenter && bounds.bottom > viewportCenter) {
+      return project.dataset.projectSection;
+    }
+
+    const distance = Math.min(
+      Math.abs(bounds.top - viewportCenter),
+      Math.abs(bounds.bottom - viewportCenter),
+    );
+
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestProject = project;
+    }
+  }
+
+  return nearestProject.dataset.projectSection;
 }
 
-if ("IntersectionObserver" in window) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const activeEntry = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-      if (activeEntry) {
-        setActiveProject(activeEntry.target.dataset.themeProject);
-      }
-    },
-    {
-      rootMargin: "-32% 0px -52% 0px",
-      threshold: [0, 0.01],
-    },
-  );
-
-  themeSections.forEach((section) => observer.observe(section));
+function updateThemeFromScroll() {
+  themeFrame = null;
+  setActiveProject(getProjectAtViewportCenter());
 }
+
+function scheduleThemeUpdate() {
+  if (themeFrame === null) {
+    themeFrame = window.requestAnimationFrame(updateThemeFromScroll);
+  }
+}
+
+window.addEventListener("scroll", scheduleThemeUpdate, { passive: true });
+window.addEventListener("resize", scheduleThemeUpdate);
+window.addEventListener("pageshow", scheduleThemeUpdate);
+window.addEventListener("hashchange", scheduleThemeUpdate);
+
+scheduleThemeUpdate();
