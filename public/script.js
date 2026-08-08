@@ -368,9 +368,11 @@ sectionPages.forEach((section) => {
 document.addEventListener("keydown", handleBoundaryKey);
 
 window.addEventListener("popstate", () => {
-  setSection(sectionIndexFromHash(), {
+  const historySection = sectionIndexFromHash();
+
+  setSection(historySection, {
     historyMode: "none",
-    focusHeading: true,
+    focusHeading: historySection !== currentSection,
     source: "history",
   });
 
@@ -378,16 +380,117 @@ window.addEventListener("popstate", () => {
 
   if (projectFromHistory) {
     setProject(projectFromHistory);
+    setProjectView(projectViewFromHash());
+  } else if (window.location.hash === "#projects") {
+    setProjectView("showcase");
   }
 });
 
 const projectTabs = [...document.querySelectorAll("[data-project-tab]")];
 const projectPanels = [...document.querySelectorAll("[data-project-panel]")];
-const projectBuildLink = document.querySelector("[data-project-build-link]");
+const projectBuildButton = document.querySelector("[data-project-build-link]");
 const projectBuildLinkLabel = document.querySelector("[data-build-link-label]");
+const projectBuildLinkKicker = document.querySelector("[data-build-link-kicker]");
+const projectBuildLinkIcon = document.querySelector("[data-build-link-icon]");
+const projectBuildLinkArrow = document.querySelector("[data-build-link-arrow]");
 
 function projectNameFromHash() {
   return window.location.hash.match(/^#(project-\d+)(?:$|-)/)?.[1] ?? null;
+}
+
+function projectViewFromHash() {
+  return /^#project-\d+-build$/.test(window.location.hash) ? "build" : "showcase";
+}
+
+function selectedProjectTab() {
+  return projectTabs.find((tab) => tab.dataset.projectTab === document.body.dataset.project);
+}
+
+function applyProjectViewState() {
+  const activeMode = document.body.dataset.projectView;
+  const activeProject = document.body.dataset.project;
+
+  projectPanels.forEach((panel) => {
+    const panelIsSelected = panel.dataset.projectPanel === activeProject;
+
+    panel.querySelectorAll("[data-project-view]").forEach((view) => {
+      const isCurrentView = panelIsSelected && view.dataset.projectView === activeMode;
+      view.setAttribute("aria-hidden", String(!isCurrentView));
+      view.inert = !isCurrentView;
+    });
+  });
+}
+
+function updateProjectViewButton() {
+  const selectedTab = selectedProjectTab();
+
+  if (!selectedTab || !projectBuildButton) {
+    return;
+  }
+
+  const isBuildView = document.body.dataset.projectView === "build";
+  const projectTitle = selectedTab.dataset.projectTitle;
+
+  projectBuildButton.setAttribute("aria-pressed", String(isBuildView));
+  projectBuildButton.setAttribute(
+    "aria-label",
+    isBuildView
+      ? `Return to the ${projectTitle} interactive picture`
+      : `Open the ${projectTitle} web build`,
+  );
+
+  if (projectBuildLinkKicker) {
+    projectBuildLinkKicker.textContent = isBuildView ? "Interactive picture" : "Web build";
+  }
+
+  if (projectBuildLinkLabel) {
+    projectBuildLinkLabel.textContent = isBuildView
+      ? `Back to ${projectTitle} picture`
+      : `Open ${projectTitle} build`;
+  }
+
+  if (projectBuildLinkIcon) {
+    projectBuildLinkIcon.textContent = isBuildView ? "←" : "▶";
+  }
+
+  if (projectBuildLinkArrow) {
+    projectBuildLinkArrow.textContent = isBuildView ? "↙" : "→";
+  }
+}
+
+function setProjectView(
+  mode,
+  { historyMode = "none", announce = false } = {},
+) {
+  if (mode !== "showcase" && mode !== "build") {
+    return;
+  }
+
+  document.body.dataset.projectView = mode;
+  applyProjectViewState();
+  updateProjectViewButton();
+
+  const selectedTab = selectedProjectTab();
+
+  if (selectedTab && historyMode !== "none") {
+    const target =
+      mode === "build"
+        ? selectedTab.dataset.buildTarget
+        : selectedTab.dataset.projectTab;
+    const state = {
+      section: "projects",
+      project: selectedTab.dataset.projectTab,
+      projectView: mode,
+    };
+
+    window.history[`${historyMode}State`](state, "", `#${target}`);
+  }
+
+  if (announce && sectionAnnouncer && selectedTab) {
+    sectionAnnouncer.textContent = `${selectedTab.dataset.projectTitle} ${
+      mode === "build" ? "web build" : "interactive picture"
+    } view`;
+  }
 }
 
 function setProject(projectName, focusTab = false) {
@@ -409,17 +512,8 @@ function setProject(projectName, focusTab = false) {
     panel.hidden = panel.dataset.projectPanel !== projectName;
   });
 
-  if (projectBuildLink) {
-    projectBuildLink.href = `#${selectedTab.dataset.buildTarget}`;
-    projectBuildLink.setAttribute(
-      "aria-label",
-      `Go to the ${selectedTab.dataset.projectTitle} web build`,
-    );
-  }
-
-  if (projectBuildLinkLabel) {
-    projectBuildLinkLabel.textContent = `Go to ${selectedTab.dataset.projectTitle} build`;
-  }
+  applyProjectViewState();
+  updateProjectViewButton();
 
   if (focusTab) {
     selectedTab.focus();
@@ -427,7 +521,10 @@ function setProject(projectName, focusTab = false) {
 }
 
 projectTabs.forEach((tab, index) => {
-  tab.addEventListener("click", () => setProject(tab.dataset.projectTab));
+  tab.addEventListener("click", () => {
+    setProject(tab.dataset.projectTab);
+    setProjectView("showcase", { historyMode: "push", announce: true });
+  });
   tab.addEventListener("keydown", (event) => {
     const supportedKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
 
@@ -449,53 +546,39 @@ projectTabs.forEach((tab, index) => {
     }
 
     setProject(projectTabs[nextIndex].dataset.projectTab, true);
+    setProjectView("showcase", { historyMode: "replace", announce: true });
   });
 });
 
-projectBuildLink?.addEventListener("click", (event) => {
-  const buildTarget = document.querySelector(projectBuildLink.hash);
-
-  if (!buildTarget) {
-    return;
-  }
-
-  event.preventDefault();
-  window.history.pushState(
-    { section: "projects", project: document.body.dataset.project },
-    "",
-    projectBuildLink.hash,
-  );
-  buildTarget.scrollIntoView({
-    behavior: reducedMotion.matches ? "auto" : "smooth",
-    block: "center",
-  });
-  buildTarget.focus({ preventScroll: true });
+projectBuildButton?.addEventListener("click", () => {
+  const nextMode = document.body.dataset.projectView === "build" ? "showcase" : "build";
+  setProjectView(nextMode, { historyMode: "push", announce: true });
 });
 
 const sceneHighlightDetails = {
   clouds: {
+    number: "01",
     kicker: "Visible area 01",
     title: "Clouds",
     copy: "The cloud group spanning the upper-right part of the frame.",
-    shape: "ellipse(27% 15% at 73% 17%)",
   },
   sky: {
+    number: "02",
     kicker: "Visible area 02",
     title: "Sky",
     copy: "The open blue area separating the clouds from the grass.",
-    shape: "ellipse(31% 23% at 43% 35%)",
   },
   grass: {
+    number: "03",
     kicker: "Visible area 03",
     title: "Grass",
     copy: "The sunlit field filling the lower-left foreground.",
-    shape: "ellipse(43% 27% at 27% 75%)",
   },
   ball: {
+    number: "04",
     kicker: "Visible area 04",
     title: "Ball",
     copy: "The white ball set against the darker grass near the right.",
-    shape: "circle(10% at 70% 68%)",
   },
 };
 
@@ -509,6 +592,9 @@ function initializeProjectGallery(gallery) {
   const scenes = slides
     .map((slide) => slide.querySelector("[data-interactive-scene]"))
     .filter(Boolean);
+  const inspector = gallery
+    .closest("[data-project-panel]")
+    ?.querySelector("[data-scene-inspector]");
   const sceneStates = new WeakMap();
   let activeSlideIndex = 0;
 
@@ -522,6 +608,20 @@ function initializeProjectGallery(gallery) {
     });
   }
 
+  function animateInspector(state) {
+    if (reducedMotion.matches) {
+      return;
+    }
+
+    window.clearTimeout(state.animationTimer);
+    state.inspector.classList.remove("is-updating");
+    void state.inspector.offsetWidth;
+    state.inspector.classList.add("is-updating");
+    state.animationTimer = window.setTimeout(() => {
+      state.inspector.classList.remove("is-updating");
+    }, 260);
+  }
+
   function showSceneOverview(scene) {
     const state = sceneStates.get(scene);
 
@@ -530,10 +630,13 @@ function initializeProjectGallery(gallery) {
     }
 
     scene.classList.remove("is-inspecting");
-    scene.style.removeProperty("--focus-shape");
-    state.kicker.textContent = "Picture overview";
-    state.title.textContent = "Choose an area";
-    state.copy.textContent = "Use a marker on the picture or one of the area buttons below.";
+    state.inspector.dataset.activeNumber = "00";
+    state.number.textContent = "00";
+    state.kicker.textContent = "Interactive picture";
+    state.title.textContent = "Choose a marker";
+    state.copy.textContent =
+      "Hover, focus, or click any marker to show its explanation here.";
+    animateInspector(state);
 
     controlsForScene(scene).forEach((control) => {
       control.classList.remove("is-active");
@@ -549,11 +652,13 @@ function initializeProjectGallery(gallery) {
       return;
     }
 
-    scene.style.setProperty("--focus-shape", detail.shape);
     scene.classList.add("is-inspecting");
+    state.inspector.dataset.activeNumber = detail.number;
+    state.number.textContent = detail.number;
     state.kicker.textContent = detail.kicker;
     state.title.textContent = detail.title;
     state.copy.textContent = detail.copy;
+    animateInspector(state);
 
     controlsForScene(scene).forEach((control) => {
       const matches = control.dataset.sceneHighlight === highlightName;
@@ -606,12 +711,15 @@ function initializeProjectGallery(gallery) {
   scenes.forEach((scene) => {
     const state = {
       pinnedHighlight: null,
-      kicker: scene.querySelector("[data-scene-kicker]"),
-      title: scene.querySelector("[data-scene-title]"),
-      copy: scene.querySelector("[data-scene-copy]"),
+      animationTimer: 0,
+      inspector,
+      kicker: inspector?.querySelector("[data-scene-kicker]"),
+      number: inspector?.querySelector("[data-scene-number]"),
+      title: inspector?.querySelector("[data-scene-title]"),
+      copy: inspector?.querySelector("[data-scene-copy]"),
     };
 
-    if (!state.kicker || !state.title || !state.copy) {
+    if (!state.inspector || !state.kicker || !state.number || !state.title || !state.copy) {
       return;
     }
 
@@ -692,6 +800,7 @@ function initializeProjectGallery(gallery) {
     totalLabel.textContent = String(slides.length).padStart(2, "0");
   }
 
+  gallery.classList.toggle("is-single", slides.length <= 1);
   setSlide(0);
 }
 
@@ -721,6 +830,7 @@ edgePrevious.hidden = false;
 edgeNext.hidden = false;
 updateEdgeControls();
 setProject(initialProject);
+setProjectView(projectViewFromHash());
 
 window.requestAnimationFrame(() => {
   window.requestAnimationFrame(() => document.documentElement.classList.add("is-ready"));
