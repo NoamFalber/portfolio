@@ -13,6 +13,7 @@ const edgePrevious = document.querySelector('[data-edge-switch="previous"]');
 const edgeNext = document.querySelector('[data-edge-switch="next"]');
 const skipLink = document.querySelector("[data-skip-link]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const mobileLayout = window.matchMedia("(max-width: 42rem)");
 const deferredProjectImages = [
   ...document.querySelectorAll("[data-deferred-src]"),
 ];
@@ -28,6 +29,7 @@ let edgeDirection = 0;
 let edgeReady = false;
 let edgeGestureTimer = 0;
 let touchStartY = null;
+let pendingTouchEdgeDirection = 0;
 
 function loadDeferredProjectImages() {
   deferredProjectImages.forEach((image) => {
@@ -186,6 +188,7 @@ function setSection(
   const destinationScroller = destination.querySelector("[data-section-scroller]");
   const boundarySources = new Set(["wheel", "touch", "keyboard", "edge"]);
 
+  pendingTouchEdgeDirection = 0;
   dismissEdge();
   isTransitioning = true;
   sectionDeck?.classList.add("is-section-transitioning");
@@ -334,6 +337,8 @@ function handleBoundaryKey(event) {
 }
 
 function handleTouchStart(event) {
+  pendingTouchEdgeDirection = 0;
+
   if (event.touches.length !== 1 || isTransitioning) {
     touchStartY = null;
     return;
@@ -362,7 +367,14 @@ function handleTouchEnd(event) {
   const direction = distance > 0 ? 1 : -1;
   const scroller = activeScroller();
 
-  if (!hasNeighbor(direction) || !isAtBoundary(scroller, direction)) {
+  if (!hasNeighbor(direction)) {
+    return;
+  }
+
+  if (!isAtBoundary(scroller, direction)) {
+    if (mobileLayout.matches) {
+      pendingTouchEdgeDirection = direction;
+    }
     return;
   }
 
@@ -407,6 +419,18 @@ sectionPages.forEach((section) => {
   scroller.addEventListener(
     "scroll",
     () => {
+      if (
+        mobileLayout.matches &&
+        pendingTouchEdgeDirection &&
+        section === sectionPages[currentSection] &&
+        isAtBoundary(scroller, pendingTouchEdgeDirection)
+      ) {
+        const direction = pendingTouchEdgeDirection;
+        pendingTouchEdgeDirection = 0;
+        revealEdge(direction, true);
+        return;
+      }
+
       if (edgeDirection && !isAtBoundary(scroller, edgeDirection)) {
         dismissEdge();
       }
@@ -588,7 +612,7 @@ function setProjectView(
   const selectedTab = selectedProjectTab();
   const hasBuild = selectedTab?.dataset.hasBuild === "true";
 
-  if (mode === "build" && !hasBuild) {
+  if (mode === "build" && (!hasBuild || mobileLayout.matches)) {
     mode = "showcase";
 
     if (/^#project-\d+-build$/.test(window.location.hash) && selectedTab) {
@@ -709,6 +733,12 @@ projectBuildReturnButton?.addEventListener("click", () => {
   });
 });
 
+mobileLayout.addEventListener("change", (event) => {
+  if (event.matches && document.body.dataset.projectView === "build") {
+    setProjectView("showcase", { historyMode: "replace" });
+  }
+});
+
 const sceneHighlightDetails = {
   clouds: {
     kicker: "Inspecting the scene",
@@ -731,6 +761,28 @@ const sceneHighlightDetails = {
     copy: "The white ball set against the darker grass near the right.",
   },
 };
+
+function revealMobileInspector(inspector) {
+  if (!mobileLayout.matches || !inspector) {
+    return;
+  }
+
+  const scroller = inspector.closest("[data-section-scroller]");
+
+  if (!scroller) {
+    return;
+  }
+
+  const scrollerBounds = scroller.getBoundingClientRect();
+  const inspectorBounds = inspector.getBoundingClientRect();
+  const targetTop =
+    scroller.scrollTop + inspectorBounds.top - scrollerBounds.top - 12;
+
+  scroller.scrollTo({
+    top: targetTop,
+    behavior: reducedMotion.matches ? "auto" : "smooth",
+  });
+}
 
 function initializeProjectGallery(gallery) {
   const slides = [...gallery.querySelectorAll("[data-gallery-slide]")];
@@ -962,6 +1014,12 @@ function initializeProjectGallery(gallery) {
           ? null
           : control.dataset.sceneHighlight;
       restoreScene(scene);
+
+      if (state.pinnedHighlight) {
+        window.requestAnimationFrame(() => {
+          revealMobileInspector(state.inspector);
+        });
+      }
     });
 
     control.addEventListener("keydown", (event) => {

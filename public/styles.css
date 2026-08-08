@@ -925,14 +925,14 @@ html:not(.js) .project-panel {
 .scene-hotspot {
   position: absolute;
   display: grid;
-  width: 4.25rem;
-  height: 4.25rem;
+  width: 3.5rem;
+  height: 3.5rem;
   place-items: center;
   padding: 0;
   transform: translate(-50%, -50%);
   border: 0;
   background: transparent;
-  color: var(--paper-light);
+  color: rgba(255, 253, 248, 0.74);
   cursor: pointer;
   pointer-events: auto;
   transition: color 170ms ease;
@@ -947,13 +947,13 @@ html:not(.js) .project-panel {
 }
 
 .scene-hotspot::before {
-  width: 2.55rem;
-  height: 2.55rem;
+  width: 1.95rem;
+  height: 1.95rem;
   border: 2px solid currentColor;
-  background: rgba(25, 49, 39, 0.2);
+  background: rgba(25, 49, 39, 0.1);
   box-shadow:
-    0 0 0 0.15rem rgba(25, 49, 39, 0.42),
-    0.16rem 0.16rem 0 rgba(25, 49, 39, 0.66);
+    0 0 0 0.12rem rgba(25, 49, 39, 0.28),
+    0.12rem 0.12rem 0 rgba(25, 49, 39, 0.42);
   transition:
     background-color 240ms ease,
     border-color 240ms ease,
@@ -962,10 +962,10 @@ html:not(.js) .project-panel {
 }
 
 .scene-hotspot::after {
-  width: 0.68rem;
-  height: 0.68rem;
+  width: 0.5rem;
+  height: 0.5rem;
   background: currentColor;
-  box-shadow: 0 0 0 0.16rem rgba(25, 49, 39, 0.42);
+  box-shadow: 0 0 0 0.12rem rgba(25, 49, 39, 0.3);
   transition:
     background-color 170ms ease,
     transform 170ms ease;
@@ -993,9 +993,9 @@ html:not(.js) .project-panel {
 
 .scene-hotspot > span {
   position: absolute;
-  width: 3.8rem;
-  height: 3.8rem;
-  border: 1.5px solid currentColor;
+  width: 2.9rem;
+  height: 2.9rem;
+  border: 1.25px solid currentColor;
   border-radius: 50%;
   animation: target-ripple 2.4s cubic-bezier(0.2, 0.65, 0.35, 1) infinite;
   backface-visibility: hidden;
@@ -1038,7 +1038,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 .scene-hotspot:hover,
 .scene-hotspot:focus-visible,
 .scene-hotspot.is-active {
-  color: var(--coral);
+  color: rgba(230, 107, 75, 0.96);
 }
 
 .scene-hotspot:hover::before,
@@ -1927,24 +1927,57 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     --rail-space: 0rem;
   }
 
+  html,
+  body {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  .section-deck,
+  .section-page,
+  .section-page__scroller,
+  .section-content {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .section-page,
+  .section-page__scroller {
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  .section-page__scroller {
+    overscroll-behavior: none;
+    touch-action: pan-y pinch-zoom;
+  }
+
   .section-content {
     padding-right: var(--gutter);
-    padding-bottom: 8rem;
+    padding-bottom: calc(9rem + env(safe-area-inset-bottom, 0px));
   }
 
   .section-rail {
     top: auto;
     right: 0.75rem;
-    bottom: 0.65rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
     left: 0.75rem;
     width: auto;
     padding: 0;
     transform: none;
-    box-shadow: 0.25rem 0.25rem 0 var(--shadow);
+    box-shadow: 0.22rem 0.22rem 0 var(--shadow);
   }
 
   .section-rail__label {
-    display: none;
+    display: flex;
+    min-height: 1.9rem;
+    padding: 0.3rem 0.55rem;
+    background: var(--mint-light);
+    font-size: 0.68rem;
   }
 
   .section-rail ol {
@@ -1961,9 +1994,9 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   .section-rail a,
   .section-rail a:hover {
     min-height: 3.8rem;
-    grid-template-columns: auto 1fr;
-    gap: 0.45rem;
-    justify-items: start;
+    grid-template-columns: 1fr;
+    gap: 0;
+    justify-items: center;
     padding: 0.45rem;
     border: 0;
     box-shadow: none;
@@ -1972,7 +2005,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
   .section-rail a[aria-current="page"] {
     background: var(--sun);
-    box-shadow: none;
+    box-shadow: inset 0 0.22rem 0 var(--coral-dark);
   }
 
   .section-rail a::after {
@@ -1980,9 +2013,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   }
 
   .section-rail__number {
-    width: 1.65rem;
-    height: 1.65rem;
-    font-size: 0.64rem;
+    display: none;
   }
 
   .section-rail__copy {
@@ -1996,6 +2027,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     opacity: 1;
     pointer-events: auto;
     transform: none;
+    text-align: center;
   }
 
   .section-rail__copy strong {
@@ -2009,7 +2041,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   .intro-layout {
     gap: 3rem;
     padding-top: 2.5rem;
-    padding-bottom: 9rem;
+    padding-bottom: calc(10rem + env(safe-area-inset-bottom, 0px));
   }
 
   .intro-copy h1 {
@@ -2021,6 +2053,15 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     min-height: min(125vw, 29rem);
   }
 
+  .portrait-card {
+    width: calc(100% - 0.5rem);
+    transform: none;
+  }
+
+  .portrait-card::before {
+    inset: 0.65rem -0.5rem -0.5rem 0.5rem;
+  }
+
   .portrait-card figcaption {
     align-items: flex-start;
     flex-direction: column;
@@ -2028,7 +2069,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   }
 
   .about-heading h2 {
-    font-size: clamp(3.8rem, 17vw, 6rem);
+    font-size: clamp(3rem, 17vw, 6rem);
   }
 
   .practice-note {
@@ -2043,6 +2084,83 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
   .projects-heading h2 {
     font-size: clamp(4rem, 19vw, 6rem);
+  }
+
+  .project-toolbar {
+    display: block;
+  }
+
+  .project-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: hidden;
+    scrollbar-width: none;
+  }
+
+  .project-tab {
+    min-width: 0;
+    min-height: 4.5rem;
+    grid-template-columns: 1fr;
+    gap: 0.12rem;
+    justify-items: center;
+    padding: 0.55rem 0.2rem;
+    text-align: center;
+  }
+
+  .project-tab > span:first-child {
+    font-size: 0.68rem;
+  }
+
+  .project-tab > span:nth-child(2) {
+    min-width: 0;
+  }
+
+  .project-tab strong {
+    font-size: clamp(0.7rem, 3.35vw, 0.86rem);
+    line-height: 1.05;
+  }
+
+  .project-tab small,
+  .project-tab > span:last-child,
+  .project-build-link,
+  .workspace-window--build {
+    display: none;
+  }
+
+  body[data-project-view="build"] .workspace-window--showcase {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .project-inspector__selection {
+    order: -1;
+    min-height: 10.5rem;
+  }
+
+  .project-inspector__project {
+    min-height: 14rem;
+  }
+
+  .scene-hotspot {
+    width: 2.75rem;
+    height: 2.75rem;
+    color: rgba(255, 253, 248, 0.66);
+  }
+
+  .scene-hotspot::before {
+    width: 1.55rem;
+    height: 1.55rem;
+    border-width: 1.5px;
+  }
+
+  .scene-hotspot::after {
+    width: 0.4rem;
+    height: 0.4rem;
+  }
+
+  .scene-hotspot > span {
+    width: 2.3rem;
+    height: 2.3rem;
+    border-width: 1px;
   }
 
   .project-workspace {
@@ -2077,7 +2195,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   }
 
   .edge-switch--next {
-    bottom: 5.6rem;
+    bottom: calc(8rem + env(safe-area-inset-bottom, 0px));
   }
 
   .edge-switch__hint {
