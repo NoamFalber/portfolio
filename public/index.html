@@ -1,293 +1,172 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="The game development and technical art portfolio of Noam Falber."
+      content="The development and technical art portfolio of Noam Falber."
     >
-    <meta name="theme-color" content="#071013">
+    <meta name="theme-color" content="#e9eadf">
     <title>Noam Falber — Developer &amp; Technical Artist</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
   </head>
-  <body data-project="project-one">
+  <body data-project="project-01">
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
-    <div class="ambient-background" aria-hidden="true">
-      <span class="ambient-background__glow ambient-background__glow--one"></span>
-      <span class="ambient-background__glow ambient-background__glow--two"></span>
-      <span class="ambient-background__grid"></span>
-    </div>
-
     <header class="site-header">
-      <a class="identity" href="#top" aria-label="Noam Falber, home">
-        <span class="identity__mark" aria-hidden="true">NF</span>
-        <span class="identity__copy">
-          <strong>Noam Falber</strong>
-          <span>Developer &amp; Technical Artist</span>
-        </span>
+      <a class="site-identity" href="#top" aria-label="Noam Falber, home">
+        <strong>Noam Falber</strong>
+        <span>Developer &amp; Technical Artist</span>
       </a>
 
       <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#projects">Projects</a>
-        <a href="#play-build">Play build</a>
+        <a href="#work">Selected work</a>
       </nav>
     </header>
 
     <main id="main-content">
-      <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="hero__status">
-          <span class="status-dot" aria-hidden="true"></span>
-          Interactive portfolio
+      <section
+        class="hero"
+        id="top"
+        data-theme-project="project-01"
+        aria-labelledby="hero-title"
+      >
+        <div class="hero__inner">
+          <p class="hero__role">Developer and Technical Artist</p>
+          <h1 id="hero-title">
+            <span>Noam</span>
+            <span>Falber</span>
+          </h1>
+
+          <div class="hero__footer">
+            <p>Portfolio</p>
+            <a class="action-link" href="#work">
+              View selected work
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
         </div>
-        <h1 id="hero-title">Building worlds you can see.<br>Engineering the systems behind them.</h1>
-        <p>
-          I’m Noam Falber, a developer and technical artist. Explore the work,
-          then inspect the ideas and technical decisions inside each scene.
-        </p>
-        <a class="text-link" href="#projects">
-          Explore selected work
-          <span aria-hidden="true">↘</span>
-        </a>
       </section>
 
-      <section class="projects" id="projects" aria-labelledby="projects-title">
-        <div class="section-heading">
+      <section class="work" id="work" aria-labelledby="work-title">
+        <header class="work__header page-shell">
           <div>
-            <p class="eyebrow">Selected work</p>
-            <h2 id="projects-title">Three projects. Three different systems.</h2>
+            <p class="section-label">Portfolio</p>
+            <h2 id="work-title">Selected work</h2>
           </div>
-          <p class="section-heading__note">Select a project to change the scene.</p>
-        </div>
+          <p class="work__instruction">
+            Choose a project or continue scrolling. The page palette follows
+            the active project.
+          </p>
+        </header>
 
-        <div class="project-tabs" role="tablist" aria-label="Portfolio projects">
-          <button
-            class="project-tab is-active"
-            id="project-one-tab"
-            type="button"
-            role="tab"
-            aria-selected="true"
-            aria-controls="project-panel"
-            data-project="project-one"
+        <nav class="project-index page-shell" aria-label="Selected projects">
+          <a href="#project-01" data-project-link="project-01" aria-current="true">
+            <span>01</span>
+            <span>Project 01</span>
+          </a>
+          <a href="#project-02" data-project-link="project-02">
+            <span>02</span>
+            <span>Project 02</span>
+          </a>
+          <a href="#project-03" data-project-link="project-03">
+            <span>03</span>
+            <span>Project 03</span>
+          </a>
+        </nav>
+
+        <div class="projects">
+          <article
+            class="project page-shell"
+            id="project-01"
+            data-project-section="project-01"
+            data-theme-project="project-01"
+            data-theme-color="#e9eadf"
+            aria-labelledby="project-01-title"
           >
-            <span class="project-tab__number">01</span>
-            <span class="project-tab__name">Project One</span>
-            <span class="project-tab__tag">Featured</span>
-          </button>
-          <button
-            class="project-tab"
-            id="project-two-tab"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="project-panel"
-            tabindex="-1"
-            data-project="project-two"
+            <header class="project__header">
+              <p class="project__count">01 <span>/ 03</span></p>
+              <div>
+                <p class="project__status">Selected project</p>
+                <h3 id="project-01-title">Project 01</h3>
+              </div>
+            </header>
+
+            <figure class="project-media">
+              <img
+                src="assets/images/project-one-hero.webp"
+                width="1456"
+                height="1080"
+                alt="A blue sky with clouds above a sunlit grass field and a white ball."
+                fetchpriority="high"
+              >
+              <figcaption>
+                <span>Reference visual</span>
+                <a href="#project-02">Next project <span aria-hidden="true">↓</span></a>
+              </figcaption>
+            </figure>
+          </article>
+
+          <article
+            class="project page-shell"
+            id="project-02"
+            data-project-section="project-02"
+            data-theme-project="project-02"
+            data-theme-color="#4e2633"
+            aria-labelledby="project-02-title"
           >
-            <span class="project-tab__number">02</span>
-            <span class="project-tab__name">Project Two</span>
-            <span class="project-tab__tag">Next</span>
-          </button>
-          <button
-            class="project-tab"
-            id="project-three-tab"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="project-panel"
-            tabindex="-1"
-            data-project="project-three"
+            <header class="project__header">
+              <p class="project__count">02 <span>/ 03</span></p>
+              <div>
+                <p class="project__status">Selected project</p>
+                <h3 id="project-02-title">Project 02</h3>
+              </div>
+            </header>
+
+            <div class="project-poster" aria-hidden="true">
+              <span class="project-poster__number">02</span>
+              <span class="project-poster__rule"></span>
+              <span class="project-poster__label">Project 02</span>
+            </div>
+
+            <div class="project__next">
+              <a href="#project-03">Next project <span aria-hidden="true">↓</span></a>
+            </div>
+          </article>
+
+          <article
+            class="project page-shell"
+            id="project-03"
+            data-project-section="project-03"
+            data-theme-project="project-03"
+            data-theme-color="#163c49"
+            aria-labelledby="project-03-title"
           >
-            <span class="project-tab__number">03</span>
-            <span class="project-tab__name">Project Three</span>
-            <span class="project-tab__tag">Next</span>
-          </button>
-        </div>
-
-        <article
-          class="project-panel"
-          id="project-panel"
-          role="tabpanel"
-          aria-labelledby="project-one-tab"
-          tabindex="0"
-        >
-          <header class="project-intro">
-            <div class="project-intro__index" aria-hidden="true">
-              <span data-project-index>01</span>
-              <span>/</span>
-              <span>03</span>
-            </div>
-            <div class="project-intro__title">
-              <p class="eyebrow" data-project-kicker>Featured project</p>
-              <h3 data-project-title>Project One</h3>
-            </div>
-            <div class="project-intro__summary">
-              <p data-project-summary>
-                A visual scene presented as an interactive breakdown. Explore
-                the image to reveal the technical topics behind each element.
-              </p>
-              <span class="discipline-label" data-project-discipline>
-                Technical art &amp; development
-              </span>
-            </div>
-          </header>
-
-          <div class="scene-layout">
-            <div class="scene-column">
-              <div class="scene-frame" data-scene-frame>
-                <img
-                  class="scene-image"
-                  data-scene-image
-                  src="assets/images/project-one-hero.webp"
-                  width="1456"
-                  height="1080"
-                  alt="A bright blue sky with soft clouds above a sunlit grass field and a white ball."
-                  fetchpriority="high"
-                >
-
-                <div class="scene-placeholder" data-scene-placeholder hidden>
-                  <div class="scene-placeholder__orb" aria-hidden="true"></div>
-                  <div class="scene-placeholder__lines" aria-hidden="true"></div>
-                  <div class="scene-placeholder__copy">
-                    <span data-placeholder-index>02</span>
-                    <p>Project visual pending</p>
-                    <strong data-placeholder-title>Project Two</strong>
-                  </div>
-                </div>
-
-                <div class="scene-shade" aria-hidden="true"></div>
-
-                <div class="hotspot-layer" data-hotspot-layer>
-                  <button
-                    class="hotspot hotspot--clouds"
-                    type="button"
-                    aria-label="Explore the clouds"
-                    aria-pressed="false"
-                    data-hotspot="clouds"
-                  >
-                    <span class="hotspot__pulse" aria-hidden="true"></span>
-                    <span class="hotspot__dot" aria-hidden="true"></span>
-                    <span class="hotspot__label">Clouds</span>
-                  </button>
-
-                  <button
-                    class="hotspot hotspot--sky"
-                    type="button"
-                    aria-label="Explore the sky"
-                    aria-pressed="false"
-                    data-hotspot="sky"
-                  >
-                    <span class="hotspot__pulse" aria-hidden="true"></span>
-                    <span class="hotspot__dot" aria-hidden="true"></span>
-                    <span class="hotspot__label">Sky</span>
-                  </button>
-
-                  <button
-                    class="hotspot hotspot--grass"
-                    type="button"
-                    aria-label="Explore the grass"
-                    aria-pressed="false"
-                    data-hotspot="grass"
-                  >
-                    <span class="hotspot__pulse" aria-hidden="true"></span>
-                    <span class="hotspot__dot" aria-hidden="true"></span>
-                    <span class="hotspot__label">Grass</span>
-                  </button>
-
-                  <button
-                    class="hotspot hotspot--ball"
-                    type="button"
-                    aria-label="Explore the ball"
-                    aria-pressed="false"
-                    data-hotspot="ball"
-                  >
-                    <span class="hotspot__pulse" aria-hidden="true"></span>
-                    <span class="hotspot__dot" aria-hidden="true"></span>
-                    <span class="hotspot__label">Ball</span>
-                  </button>
-                </div>
-
-                <div class="scene-frame__label" data-scene-label>
-                  <span class="status-dot" aria-hidden="true"></span>
-                  Interactive breakdown
-                </div>
+            <header class="project__header">
+              <p class="project__count">03 <span>/ 03</span></p>
+              <div>
+                <p class="project__status">Selected project</p>
+                <h3 id="project-03-title">Project 03</h3>
               </div>
+            </header>
 
-              <p class="scene-instruction" data-scene-instruction>
-                Hover, focus, or tap a marker to inspect the scene.
-              </p>
+            <div class="project-poster project-poster--final" aria-hidden="true">
+              <span class="project-poster__number">03</span>
+              <span class="project-poster__rule"></span>
+              <span class="project-poster__label">Project 03</span>
             </div>
 
-            <aside class="inspector" aria-label="Technical detail inspector">
-              <div class="inspector__topline">
-                <span>Scene inspector</span>
-                <span data-inspector-count>00 / 04</span>
-              </div>
-              <div class="inspector__content" aria-live="polite" aria-atomic="true">
-                <p class="eyebrow" data-inspector-eyebrow>Interactive scene</p>
-                <h4 data-inspector-title>Explore the scene</h4>
-                <p data-inspector-copy>
-                  Each marker opens a short technical note. Start with the sky,
-                  clouds, grass, or ball.
-                </p>
-              </div>
-              <div class="inspector__footer">
-                <span aria-hidden="true">+</span>
-                <span data-inspector-footer>Four areas to inspect</span>
-              </div>
-            </aside>
-          </div>
-        </article>
-      </section>
-
-      <section class="play-build" id="play-build" aria-labelledby="play-build-title">
-        <div class="section-heading section-heading--build">
-          <div>
-            <p class="eyebrow">Playable work</p>
-            <h2 id="play-build-title">Play it in the browser.</h2>
-          </div>
-          <p class="section-heading__note" data-build-project>Project One / Unity WebGL</p>
-        </div>
-
-        <div class="unity-shell" id="unity-player" data-build-state="empty">
-          <div class="unity-shell__bar">
-            <div class="unity-shell__controls" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
+            <div class="project__next">
+              <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
             </div>
-            <span data-build-title>Project One — WebGL build</span>
-            <span class="unity-shell__state">
-              <span class="status-dot" aria-hidden="true"></span>
-              Build not connected
-            </span>
-          </div>
-
-          <div class="unity-shell__viewport" role="status">
-            <div class="unity-mark" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <p class="eyebrow">Unity WebGL</p>
-            <h3>Player space reserved.</h3>
-            <p data-build-copy>
-              The playable build for Project One will load here when it is ready.
-            </p>
-            <span class="build-badge">Coming soon</span>
-          </div>
-
-          <div class="unity-shell__footer" aria-hidden="true">
-            <span>16:9 player area</span>
-            <span>Keyboard + mouse</span>
-          </div>
+          </article>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer page-shell">
       <p>Noam Falber</p>
       <p>Developer &amp; Technical Artist</p>
       <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
