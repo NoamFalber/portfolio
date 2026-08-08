@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -148,63 +148,84 @@
             </header>
 
             <div class="project-workspace">
-              <div
-                class="project-tabs"
-                role="tablist"
-                aria-label="Select a project"
-              >
-                <button
-                  class="project-tab"
-                  id="project-1-tab"
-                  type="button"
-                  role="tab"
-                  aria-selected="true"
-                  aria-controls="project-1"
-                  data-project-tab="project-1"
+              <div class="project-toolbar">
+                <div
+                  class="project-tabs"
+                  role="tablist"
+                  aria-label="Select a project"
                 >
-                  <span>01</span>
-                  <span>
-                    <strong>Project One</strong>
-                    <small>Featured selection</small>
-                  </span>
-                  <span aria-hidden="true">→</span>
-                </button>
+                  <button
+                    class="project-tab"
+                    id="project-1-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="project-1"
+                    data-project-tab="project-1"
+                    data-project-title="Project One"
+                    data-build-target="project-1-build"
+                  >
+                    <span>01</span>
+                    <span>
+                      <strong>Project One</strong>
+                      <small>Featured selection</small>
+                    </span>
+                    <span aria-hidden="true">→</span>
+                  </button>
 
-                <button
-                  class="project-tab"
-                  id="project-2-tab"
-                  type="button"
-                  role="tab"
-                  aria-selected="false"
-                  aria-controls="project-2"
-                  tabindex="-1"
-                  data-project-tab="project-2"
-                >
-                  <span>02</span>
-                  <span>
-                    <strong>Project Two</strong>
-                    <small>Details needed</small>
-                  </span>
-                  <span aria-hidden="true">→</span>
-                </button>
+                  <button
+                    class="project-tab"
+                    id="project-2-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="project-2"
+                    tabindex="-1"
+                    data-project-tab="project-2"
+                    data-project-title="Project Two"
+                    data-build-target="project-2-build"
+                  >
+                    <span>02</span>
+                    <span>
+                      <strong>Project Two</strong>
+                      <small>Details needed</small>
+                    </span>
+                    <span aria-hidden="true">→</span>
+                  </button>
 
-                <button
-                  class="project-tab"
-                  id="project-3-tab"
-                  type="button"
-                  role="tab"
-                  aria-selected="false"
-                  aria-controls="project-3"
-                  tabindex="-1"
-                  data-project-tab="project-3"
+                  <button
+                    class="project-tab"
+                    id="project-3-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="project-3"
+                    tabindex="-1"
+                    data-project-tab="project-3"
+                    data-project-title="Project Three"
+                    data-build-target="project-3-build"
+                  >
+                    <span>03</span>
+                    <span>
+                      <strong>Project Three</strong>
+                      <small>Details needed</small>
+                    </span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+
+                <a
+                  class="project-build-link"
+                  href="#project-1-build"
+                  data-project-build-link
                 >
-                  <span>03</span>
+                  <span class="project-build-link__icon" aria-hidden="true">▶</span>
                   <span>
-                    <strong>Project Three</strong>
-                    <small>Details needed</small>
+                    <small>Web build</small>
+                    <strong data-build-link-label>Go to Project One build</strong>
                   </span>
-                  <span aria-hidden="true">→</span>
-                </button>
+                  <span aria-hidden="true">↘</span>
+                </a>
               </div>
 
               <div class="project-stage">
@@ -215,39 +236,180 @@
                   aria-labelledby="project-1-tab"
                   data-project-panel="project-1"
                 >
-                  <figure class="project-visual">
-                    <img
-                      src="assets/images/project-one-hero.webp"
-                      width="1456"
-                      height="1080"
-                      alt="A bright blue sky above a sunlit grass field with a white ball."
-                      fetchpriority="high"
-                    >
-                    <figcaption>
-                      Provisional reference visual; not yet verified as project
-                      output.
-                    </figcaption>
-                  </figure>
-                  <div class="project-summary">
-                    <p class="project-summary__status">Featured selection</p>
-                    <h3>Project One</h3>
-                    <p>
-                      The strongest of the three selected project visuals. Its
-                      final title, Noam’s contribution, tools, and production
-                      details still need confirmation before this becomes a
-                      complete case study.
-                    </p>
-                    <dl class="project-facts">
-                      <div>
-                        <dt>Position</dt>
-                        <dd>01 of 03</dd>
+                  <div class="project-panel__body">
+                    <div class="project-gallery" data-project-gallery>
+                      <header class="gallery-heading">
+                        <div>
+                          <p>Interactive pictures</p>
+                          <strong>Inspect the scene</strong>
+                        </div>
+                        <p>Hover, focus, or tap a marked area to isolate it.</p>
+                        <div class="gallery-pager" role="group" aria-label="Picture navigation">
+                          <button type="button" data-gallery-previous aria-label="Previous picture">←</button>
+                          <span>
+                            <strong data-gallery-current>01</strong>
+                            <span aria-hidden="true">/</span>
+                            <span data-gallery-total>01</span>
+                          </span>
+                          <button type="button" data-gallery-next aria-label="Next picture">→</button>
+                        </div>
+                      </header>
+
+                      <div class="gallery-slides">
+                        <figure
+                          class="gallery-slide"
+                          id="project-1-picture-1"
+                          data-gallery-slide
+                          data-gallery-index="0"
+                        >
+                          <div class="interactive-scene" data-interactive-scene>
+                            <img
+                              class="interactive-scene__image"
+                              src="assets/images/project-one-hero.webp"
+                              width="1456"
+                              height="1080"
+                              alt="A bright blue sky above a sunlit grass field with a white ball."
+                              fetchpriority="high"
+                            >
+                            <span class="interactive-scene__dimmer" aria-hidden="true"></span>
+                            <img
+                              class="interactive-scene__focus"
+                              src="assets/images/project-one-hero.webp"
+                              width="1456"
+                              height="1080"
+                              alt=""
+                              aria-hidden="true"
+                            >
+
+                            <div class="scene-hotspots" role="group" aria-label="Areas in the picture">
+                              <button
+                                class="scene-hotspot scene-hotspot--clouds"
+                                type="button"
+                                aria-label="Inspect the clouds"
+                                aria-pressed="false"
+                                data-scene-highlight="clouds"
+                              >
+                                <span>01</span>
+                                <strong>Clouds</strong>
+                              </button>
+                              <button
+                                class="scene-hotspot scene-hotspot--sky"
+                                type="button"
+                                aria-label="Inspect the sky"
+                                aria-pressed="false"
+                                data-scene-highlight="sky"
+                              >
+                                <span>02</span>
+                                <strong>Sky</strong>
+                              </button>
+                              <button
+                                class="scene-hotspot scene-hotspot--grass"
+                                type="button"
+                                aria-label="Inspect the grass"
+                                aria-pressed="false"
+                                data-scene-highlight="grass"
+                              >
+                                <span>03</span>
+                                <strong>Grass</strong>
+                              </button>
+                              <button
+                                class="scene-hotspot scene-hotspot--ball"
+                                type="button"
+                                aria-label="Inspect the ball"
+                                aria-pressed="false"
+                                data-scene-highlight="ball"
+                              >
+                                <span>04</span>
+                                <strong>Ball</strong>
+                              </button>
+                            </div>
+
+                            <div class="scene-inspector" aria-live="polite" aria-atomic="true">
+                              <p data-scene-kicker>Picture overview</p>
+                              <h4 data-scene-title>Choose an area</h4>
+                              <p data-scene-copy>
+                                Use a marker on the picture or one of the area buttons below.
+                              </p>
+                            </div>
+                          </div>
+                          <figcaption>
+                            Provisional reference visual; not yet verified as
+                            project output.
+                          </figcaption>
+                        </figure>
                       </div>
-                      <div>
-                        <dt>Status</dt>
-                        <dd>Content gathering</dd>
-                      </div>
-                    </dl>
+
+                      <footer class="gallery-controls">
+                        <div class="gallery-thumbnails" role="group" aria-label="Choose a picture">
+                          <button
+                            type="button"
+                            aria-pressed="true"
+                            aria-controls="project-1-picture-1"
+                            data-gallery-thumbnail="0"
+                          >
+                            <img
+                              src="assets/images/project-one-hero.webp"
+                              width="96"
+                              height="72"
+                              alt=""
+                            >
+                            <span><small>Picture 01</small><strong>Scene overview</strong></span>
+                          </button>
+                        </div>
+
+                        <div class="scene-highlight-list" role="group" aria-label="Choose an area to inspect">
+                          <button type="button" aria-pressed="false" data-scene-highlight="clouds">
+                            <span>01</span>Clouds
+                          </button>
+                          <button type="button" aria-pressed="false" data-scene-highlight="sky">
+                            <span>02</span>Sky
+                          </button>
+                          <button type="button" aria-pressed="false" data-scene-highlight="grass">
+                            <span>03</span>Grass
+                          </button>
+                          <button type="button" aria-pressed="false" data-scene-highlight="ball">
+                            <span>04</span>Ball
+                          </button>
+                        </div>
+                      </footer>
+                    </div>
+
+                    <aside class="project-summary" aria-labelledby="project-1-summary-title">
+                      <p class="project-summary__status">Featured selection</p>
+                      <h3 id="project-1-summary-title">Project One</h3>
+                      <p>
+                        The strongest of the three selected project visuals. Its
+                        final title, Noam’s contribution, tools, and production
+                        details still need confirmation before this becomes a
+                        complete case study.
+                      </p>
+                      <dl class="project-facts">
+                        <div>
+                          <dt>Position</dt>
+                          <dd>01 of 03</dd>
+                        </div>
+                        <div>
+                          <dt>Pictures</dt>
+                          <dd>01 connected</dd>
+                        </div>
+                      </dl>
+                    </aside>
                   </div>
+
+                  <section
+                    class="project-build"
+                    id="project-1-build"
+                    tabindex="-1"
+                    aria-labelledby="project-1-build-title"
+                  >
+                    <span class="project-build__icon" aria-hidden="true">▶</span>
+                    <div>
+                      <p>Web build</p>
+                      <h4 id="project-1-build-title">Project One browser build</h4>
+                      <span>The build files have not been connected yet.</span>
+                    </div>
+                    <strong><span aria-hidden="true"></span>Connection pending</strong>
+                  </section>
                 </div>
 
                 <div
@@ -257,28 +419,38 @@
                   aria-labelledby="project-2-tab"
                   data-project-panel="project-2"
                 >
-                  <div class="empty-project-visual" aria-hidden="true">
-                    <span>02</span>
+                  <div class="project-panel__body">
+                    <div class="empty-project-visual" aria-hidden="true">
+                      <span>02</span>
+                    </div>
+                    <div class="project-summary">
+                      <p class="project-summary__status">Selected project</p>
+                      <h3>Project Two</h3>
+                      <p>
+                        This position is reserved for the second selected project.
+                        No project image, contribution, tools, or results have
+                        been supplied yet, so the portfolio does not invent them.
+                      </p>
+                      <dl class="project-facts">
+                        <div><dt>Position</dt><dd>02 of 03</dd></div>
+                        <div><dt>Status</dt><dd>Details needed</dd></div>
+                      </dl>
+                    </div>
                   </div>
-                  <div class="project-summary">
-                    <p class="project-summary__status">Selected project</p>
-                    <h3>Project Two</h3>
-                    <p>
-                      This position is reserved for the second selected project.
-                      No project image, contribution, tools, or results have
-                      been supplied yet, so the portfolio does not invent them.
-                    </p>
-                    <dl class="project-facts">
-                      <div>
-                        <dt>Position</dt>
-                        <dd>02 of 03</dd>
-                      </div>
-                      <div>
-                        <dt>Status</dt>
-                        <dd>Details needed</dd>
-                      </div>
-                    </dl>
-                  </div>
+                  <section
+                    class="project-build"
+                    id="project-2-build"
+                    tabindex="-1"
+                    aria-labelledby="project-2-build-title"
+                  >
+                    <span class="project-build__icon" aria-hidden="true">▶</span>
+                    <div>
+                      <p>Web build</p>
+                      <h4 id="project-2-build-title">Project Two browser build</h4>
+                      <span>The build files have not been connected yet.</span>
+                    </div>
+                    <strong><span aria-hidden="true"></span>Connection pending</strong>
+                  </section>
                 </div>
 
                 <div
@@ -288,28 +460,38 @@
                   aria-labelledby="project-3-tab"
                   data-project-panel="project-3"
                 >
-                  <div class="empty-project-visual empty-project-visual--three" aria-hidden="true">
-                    <span>03</span>
+                  <div class="project-panel__body">
+                    <div class="empty-project-visual empty-project-visual--three" aria-hidden="true">
+                      <span>03</span>
+                    </div>
+                    <div class="project-summary">
+                      <p class="project-summary__status">Selected project</p>
+                      <h3>Project Three</h3>
+                      <p>
+                        This position is reserved for the third selected project.
+                        It stays intentionally simple until real project evidence
+                        and Noam’s exact role are available.
+                      </p>
+                      <dl class="project-facts">
+                        <div><dt>Position</dt><dd>03 of 03</dd></div>
+                        <div><dt>Status</dt><dd>Details needed</dd></div>
+                      </dl>
+                    </div>
                   </div>
-                  <div class="project-summary">
-                    <p class="project-summary__status">Selected project</p>
-                    <h3>Project Three</h3>
-                    <p>
-                      This position is reserved for the third selected project.
-                      It stays intentionally simple until real project evidence
-                      and Noam’s exact role are available.
-                    </p>
-                    <dl class="project-facts">
-                      <div>
-                        <dt>Position</dt>
-                        <dd>03 of 03</dd>
-                      </div>
-                      <div>
-                        <dt>Status</dt>
-                        <dd>Details needed</dd>
-                      </div>
-                    </dl>
-                  </div>
+                  <section
+                    class="project-build"
+                    id="project-3-build"
+                    tabindex="-1"
+                    aria-labelledby="project-3-build-title"
+                  >
+                    <span class="project-build__icon" aria-hidden="true">▶</span>
+                    <div>
+                      <p>Web build</p>
+                      <h4 id="project-3-build-title">Project Three browser build</h4>
+                      <span>The build files have not been connected yet.</span>
+                    </div>
+                    <strong><span aria-hidden="true"></span>Connection pending</strong>
+                  </section>
                 </div>
               </div>
             </div>
@@ -319,6 +501,7 @@
     </main>
 
     <nav class="section-rail" aria-label="Portfolio sections">
+      <p class="section-rail__label"><span>Sections</span><span aria-hidden="true">↕</span></p>
       <ol>
         <li>
           <a

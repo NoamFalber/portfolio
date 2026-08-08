@@ -373,10 +373,22 @@ window.addEventListener("popstate", () => {
     focusHeading: true,
     source: "history",
   });
+
+  const projectFromHistory = projectNameFromHash();
+
+  if (projectFromHistory) {
+    setProject(projectFromHistory);
+  }
 });
 
 const projectTabs = [...document.querySelectorAll("[data-project-tab]")];
 const projectPanels = [...document.querySelectorAll("[data-project-panel]")];
+const projectBuildLink = document.querySelector("[data-project-build-link]");
+const projectBuildLinkLabel = document.querySelector("[data-build-link-label]");
+
+function projectNameFromHash() {
+  return window.location.hash.match(/^#(project-\d+)(?:$|-)/)?.[1] ?? null;
+}
 
 function setProject(projectName, focusTab = false) {
   const selectedTab = projectTabs.find((tab) => tab.dataset.projectTab === projectName);
@@ -396,6 +408,18 @@ function setProject(projectName, focusTab = false) {
   projectPanels.forEach((panel) => {
     panel.hidden = panel.dataset.projectPanel !== projectName;
   });
+
+  if (projectBuildLink) {
+    projectBuildLink.href = `#${selectedTab.dataset.buildTarget}`;
+    projectBuildLink.setAttribute(
+      "aria-label",
+      `Go to the ${selectedTab.dataset.projectTitle} web build`,
+    );
+  }
+
+  if (projectBuildLinkLabel) {
+    projectBuildLinkLabel.textContent = `Go to ${selectedTab.dataset.projectTitle} build`;
+  }
 
   if (focusTab) {
     selectedTab.focus();
@@ -428,10 +452,253 @@ projectTabs.forEach((tab, index) => {
   });
 });
 
+projectBuildLink?.addEventListener("click", (event) => {
+  const buildTarget = document.querySelector(projectBuildLink.hash);
+
+  if (!buildTarget) {
+    return;
+  }
+
+  event.preventDefault();
+  window.history.pushState(
+    { section: "projects", project: document.body.dataset.project },
+    "",
+    projectBuildLink.hash,
+  );
+  buildTarget.scrollIntoView({
+    behavior: reducedMotion.matches ? "auto" : "smooth",
+    block: "center",
+  });
+  buildTarget.focus({ preventScroll: true });
+});
+
+const sceneHighlightDetails = {
+  clouds: {
+    kicker: "Visible area 01",
+    title: "Clouds",
+    copy: "The cloud group spanning the upper-right part of the frame.",
+    shape: "ellipse(27% 15% at 73% 17%)",
+  },
+  sky: {
+    kicker: "Visible area 02",
+    title: "Sky",
+    copy: "The open blue area separating the clouds from the grass.",
+    shape: "ellipse(31% 23% at 43% 35%)",
+  },
+  grass: {
+    kicker: "Visible area 03",
+    title: "Grass",
+    copy: "The sunlit field filling the lower-left foreground.",
+    shape: "ellipse(43% 27% at 27% 75%)",
+  },
+  ball: {
+    kicker: "Visible area 04",
+    title: "Ball",
+    copy: "The white ball set against the darker grass near the right.",
+    shape: "circle(10% at 70% 68%)",
+  },
+};
+
+function initializeProjectGallery(gallery) {
+  const slides = [...gallery.querySelectorAll("[data-gallery-slide]")];
+  const thumbnails = [...gallery.querySelectorAll("[data-gallery-thumbnail]")];
+  const previous = gallery.querySelector("[data-gallery-previous]");
+  const next = gallery.querySelector("[data-gallery-next]");
+  const currentLabel = gallery.querySelector("[data-gallery-current]");
+  const totalLabel = gallery.querySelector("[data-gallery-total]");
+  const scenes = slides
+    .map((slide) => slide.querySelector("[data-interactive-scene]"))
+    .filter(Boolean);
+  const sceneStates = new WeakMap();
+  let activeSlideIndex = 0;
+
+  const formatIndex = (index) => String(index + 1).padStart(2, "0");
+  const activeScene = () => slides[activeSlideIndex]?.querySelector("[data-interactive-scene]");
+
+  function controlsForScene(scene) {
+    return [...gallery.querySelectorAll("[data-scene-highlight]")].filter((control) => {
+      const owningScene = control.closest("[data-interactive-scene]");
+      return owningScene ? owningScene === scene : activeScene() === scene;
+    });
+  }
+
+  function showSceneOverview(scene) {
+    const state = sceneStates.get(scene);
+
+    if (!state) {
+      return;
+    }
+
+    scene.classList.remove("is-inspecting");
+    scene.style.removeProperty("--focus-shape");
+    state.kicker.textContent = "Picture overview";
+    state.title.textContent = "Choose an area";
+    state.copy.textContent = "Use a marker on the picture or one of the area buttons below.";
+
+    controlsForScene(scene).forEach((control) => {
+      control.classList.remove("is-active");
+      control.setAttribute("aria-pressed", "false");
+    });
+  }
+
+  function showSceneHighlight(scene, highlightName, isPinned = false) {
+    const detail = sceneHighlightDetails[highlightName];
+    const state = sceneStates.get(scene);
+
+    if (!detail || !state) {
+      return;
+    }
+
+    scene.style.setProperty("--focus-shape", detail.shape);
+    scene.classList.add("is-inspecting");
+    state.kicker.textContent = detail.kicker;
+    state.title.textContent = detail.title;
+    state.copy.textContent = detail.copy;
+
+    controlsForScene(scene).forEach((control) => {
+      const matches = control.dataset.sceneHighlight === highlightName;
+      control.classList.toggle("is-active", matches);
+      control.setAttribute("aria-pressed", String(isPinned && matches));
+    });
+  }
+
+  function restoreScene(scene) {
+    const state = sceneStates.get(scene);
+
+    if (state?.pinnedHighlight) {
+      showSceneHighlight(scene, state.pinnedHighlight, true);
+    } else {
+      showSceneOverview(scene);
+    }
+  }
+
+  function setSlide(nextIndex) {
+    if (!slides.length) {
+      return;
+    }
+
+    activeSlideIndex = Math.min(Math.max(nextIndex, 0), slides.length - 1);
+
+    slides.forEach((slide, index) => {
+      slide.hidden = index !== activeSlideIndex;
+    });
+
+    thumbnails.forEach((thumbnail) => {
+      const isCurrent = Number(thumbnail.dataset.galleryThumbnail) === activeSlideIndex;
+      thumbnail.setAttribute("aria-pressed", String(isCurrent));
+    });
+
+    if (currentLabel) {
+      currentLabel.textContent = formatIndex(activeSlideIndex);
+    }
+
+    if (previous) {
+      previous.disabled = activeSlideIndex === 0;
+    }
+
+    if (next) {
+      next.disabled = activeSlideIndex === slides.length - 1;
+    }
+
+    scenes.forEach(restoreScene);
+  }
+
+  scenes.forEach((scene) => {
+    const state = {
+      pinnedHighlight: null,
+      kicker: scene.querySelector("[data-scene-kicker]"),
+      title: scene.querySelector("[data-scene-title]"),
+      copy: scene.querySelector("[data-scene-copy]"),
+    };
+
+    if (!state.kicker || !state.title || !state.copy) {
+      return;
+    }
+
+    sceneStates.set(scene, state);
+  });
+
+  [...gallery.querySelectorAll("[data-scene-highlight]")].forEach((control) => {
+    const controlledScene = () => control.closest("[data-interactive-scene]") || activeScene();
+
+    control.addEventListener("pointerenter", () => {
+      const scene = controlledScene();
+      if (scene) {
+        showSceneHighlight(scene, control.dataset.sceneHighlight);
+      }
+    });
+
+    control.addEventListener("pointerleave", () => {
+      const scene = controlledScene();
+      if (scene && document.activeElement !== control) {
+        restoreScene(scene);
+      }
+    });
+
+    control.addEventListener("focus", () => {
+      const scene = controlledScene();
+      if (scene) {
+        showSceneHighlight(scene, control.dataset.sceneHighlight);
+      }
+    });
+
+    control.addEventListener("blur", () => {
+      const scene = controlledScene();
+      if (scene) {
+        restoreScene(scene);
+      }
+    });
+
+    control.addEventListener("click", () => {
+      const scene = controlledScene();
+      const state = scene ? sceneStates.get(scene) : null;
+
+      if (!scene || !state) {
+        return;
+      }
+
+      state.pinnedHighlight =
+        state.pinnedHighlight === control.dataset.sceneHighlight
+          ? null
+          : control.dataset.sceneHighlight;
+      restoreScene(scene);
+    });
+
+    control.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      const scene = controlledScene();
+      const state = scene ? sceneStates.get(scene) : null;
+
+      if (scene && state) {
+        state.pinnedHighlight = null;
+        showSceneOverview(scene);
+      }
+    });
+  });
+
+  thumbnails.forEach((thumbnail) => {
+    thumbnail.addEventListener("click", () => {
+      setSlide(Number(thumbnail.dataset.galleryThumbnail));
+    });
+  });
+
+  previous?.addEventListener("click", () => setSlide(activeSlideIndex - 1));
+  next?.addEventListener("click", () => setSlide(activeSlideIndex + 1));
+
+  if (totalLabel) {
+    totalLabel.textContent = String(slides.length).padStart(2, "0");
+  }
+
+  setSlide(0);
+}
+
+document.querySelectorAll("[data-project-gallery]").forEach(initializeProjectGallery);
+
 const initialSection = sectionIndexFromHash();
-const initialProject = window.location.hash.startsWith("#project-")
-  ? window.location.hash.slice(1)
-  : "project-1";
+const initialProject = projectNameFromHash() ?? "project-1";
 
 currentSection = initialSection;
 sectionPages.forEach((section, index) => {
