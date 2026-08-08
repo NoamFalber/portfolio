@@ -176,6 +176,7 @@ img {
 .js:not(.is-ready) .section-rail__copy,
 .js:not(.is-ready) .workspace-window {
   transition: none;
+  animation: none !important;
 }
 
 .js .section-page[data-position="before"] {
@@ -525,7 +526,6 @@ img {
 .workspace-window {
   min-width: 0;
   min-height: 0;
-  transition: transform 680ms var(--ease-page);
   will-change: transform;
 }
 
@@ -557,6 +557,20 @@ body[data-project-view="build"] .workspace-window--showcase {
 body[data-project-view="build"] .workspace-window--build {
   transform: translateX(0);
   pointer-events: auto;
+}
+
+.project-workspace.is-project-transitioning .workspace-window {
+  pointer-events: none !important;
+}
+
+.project-workspace.is-transitioning-to-build .workspace-window--showcase,
+.project-workspace.is-transitioning-to-showcase .workspace-window--build {
+  animation: workspace-slide-out-right 680ms var(--ease-page) both;
+}
+
+.project-workspace.is-transitioning-to-build .workspace-window--build,
+.project-workspace.is-transitioning-to-showcase .workspace-window--showcase {
+  animation: workspace-slide-in-right 680ms var(--ease-page) both;
 }
 
 .project-toolbar {
@@ -907,8 +921,8 @@ html:not(.js) .project-panel {
 .scene-hotspot {
   position: absolute;
   display: grid;
-  width: 4rem;
-  height: 4rem;
+  width: 4.25rem;
+  height: 4.25rem;
   place-items: center;
   padding: 0;
   transform: translate(-50%, -50%);
@@ -923,31 +937,35 @@ html:not(.js) .project-panel {
 .scene-hotspot::before,
 .scene-hotspot::after {
   position: absolute;
+  border-radius: 50%;
   content: "";
   pointer-events: none;
 }
 
 .scene-hotspot::before {
-  width: 2.1rem;
-  height: 2.1rem;
-  transform: rotate(45deg);
+  width: 2.55rem;
+  height: 2.55rem;
   border: 2px solid currentColor;
-  background: rgba(25, 49, 39, 0.12);
-  box-shadow: 0.18rem 0.18rem 0 rgba(25, 49, 39, 0.62);
-  animation: target-invite 1.8s ease-in-out infinite;
+  background: rgba(25, 49, 39, 0.2);
+  box-shadow:
+    0 0 0 0.15rem rgba(25, 49, 39, 0.42),
+    0.16rem 0.16rem 0 rgba(25, 49, 39, 0.66);
+  animation: target-prompt 1.65s ease-in-out infinite;
   transition:
     background-color 170ms ease,
     border-color 170ms ease,
-    box-shadow 170ms ease;
+    box-shadow 170ms ease,
+    transform 170ms ease;
 }
 
 .scene-hotspot::after {
-  width: 0.52rem;
-  height: 0.52rem;
-  transform: rotate(45deg);
+  width: 0.68rem;
+  height: 0.68rem;
   background: currentColor;
   box-shadow: 0 0 0 0.16rem rgba(25, 49, 39, 0.42);
-  transition: background-color 170ms ease;
+  transition:
+    background-color 170ms ease,
+    transform 170ms ease;
 }
 
 .scene-hotspot--clouds {
@@ -972,23 +990,11 @@ html:not(.js) .project-panel {
 
 .scene-hotspot > span {
   position: absolute;
-  width: 3.3rem;
-  height: 2px;
-  background: currentColor;
-  opacity: 0.76;
-  animation: target-scan 1.8s ease-in-out infinite;
-  transition: background-color 170ms ease;
-}
-
-.scene-hotspot > span::before {
-  position: absolute;
-  top: -1.6rem;
-  left: 50%;
-  width: 2px;
-  height: 3.3rem;
-  transform: translateX(-50%);
-  background: currentColor;
-  content: "";
+  width: 3.8rem;
+  height: 3.8rem;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  animation: target-ripple 1.65s ease-out infinite;
 }
 
 .scene-hotspot:hover,
@@ -1007,7 +1013,14 @@ html:not(.js) .project-panel {
 }
 
 .scene-hotspot.is-active::before {
-  animation: target-selected 0.8s ease-in-out infinite alternate;
+  background: rgba(230, 107, 75, 0.4);
+  animation: target-selected 0.75s ease-in-out infinite alternate;
+}
+
+.scene-hotspot:hover::after,
+.scene-hotspot:focus-visible::after,
+.scene-hotspot.is-active::after {
+  transform: scale(1.28);
 }
 
 .gallery-slide figcaption {
@@ -1128,6 +1141,34 @@ html:not(.js) .project-panel {
   background: var(--mint-light);
 }
 
+.project-inspector__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: clamp(7.5rem, 16vh, 10rem);
+  align-content: center;
+  padding-left: clamp(0.85rem, 1.4vw, 1.15rem);
+  border-left: 0.24rem solid var(--line);
+  transition:
+    border-color 180ms ease,
+    opacity 100ms ease,
+    transform 100ms ease;
+}
+
+.project-inspector__selection[data-inspector-state="detail"]
+  .project-inspector__content {
+  border-left-color: var(--coral);
+}
+
+.project-inspector__content.is-exiting {
+  transform: translateX(0.45rem);
+  opacity: 0;
+}
+
+.project-inspector__content.is-entering {
+  animation: inspector-content-in 280ms var(--ease-page) both;
+}
+
 .project-inspector__selection-head {
   position: relative;
   z-index: 1;
@@ -1143,7 +1184,7 @@ html:not(.js) .project-panel {
   font-weight: 700;
 }
 
-.project-inspector__selection h4 {
+.project-inspector__content h4 {
   position: relative;
   z-index: 1;
   margin-top: 0.7rem;
@@ -1152,7 +1193,7 @@ html:not(.js) .project-panel {
   line-height: 0.95;
 }
 
-.project-inspector__selection > p {
+.project-inspector__content > p {
   position: relative;
   z-index: 1;
   margin-top: 0.65rem;
@@ -1164,14 +1205,23 @@ html:not(.js) .project-panel {
 .project-inspector__selection > span {
   position: relative;
   z-index: 1;
+  display: inline-flex;
   margin-top: 0.85rem;
+  align-items: center;
+  gap: 0.45rem;
   color: var(--green-dark);
   font-size: 0.7rem;
   font-weight: 700;
 }
 
-.project-inspector__selection.is-updating > * {
-  animation: inspector-shift 230ms ease both;
+.project-inspector__selection > span::before {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: var(--sun);
+  content: "";
 }
 
 .project-summary {
@@ -1643,50 +1693,68 @@ html:not(.js) .project-panel {
   }
 }
 
-@keyframes target-invite {
-  0%,
-  100% {
-    transform: rotate(45deg) scale(0.82);
-    opacity: 0.72;
+@keyframes workspace-slide-out-right {
+  from {
+    transform: translateX(0);
   }
 
-  50% {
-    transform: rotate(45deg) scale(1.06);
-    opacity: 1;
+  to {
+    transform: translateX(103%);
   }
 }
 
-@keyframes target-scan {
+@keyframes workspace-slide-in-right {
+  from {
+    transform: translateX(-103%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes target-prompt {
   0%,
   100% {
-    transform: scaleX(0.48);
-    opacity: 0.48;
+    transform: scale(1);
   }
 
   50% {
-    transform: scaleX(1);
-    opacity: 0.9;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes target-ripple {
+  0% {
+    transform: scale(0.62);
+    opacity: 0.95;
+  }
+
+  80%,
+  100% {
+    transform: scale(1.12);
+    opacity: 0;
   }
 }
 
 @keyframes target-selected {
   from {
-    transform: rotate(45deg) scale(0.94);
+    transform: scale(0.92);
   }
 
   to {
-    transform: rotate(45deg) scale(1.08);
+    transform: scale(1.04);
   }
 }
 
-@keyframes inspector-shift {
+@keyframes inspector-content-in {
   from {
-    transform: translateY(0.55rem);
-    opacity: 0.3;
+    transform: translateX(-0.55rem);
+    opacity: 0;
   }
 
   to {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }

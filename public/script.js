@@ -393,6 +393,7 @@ const projectBuildLinkLabel = document.querySelector("[data-build-link-label]");
 const projectBuildLinkKicker = document.querySelector("[data-build-link-kicker]");
 const projectBuildLinkIcon = document.querySelector("[data-build-link-icon]");
 const projectBuildLinkArrow = document.querySelector("[data-build-link-arrow]");
+const projectWorkspace = document.querySelector(".project-workspace");
 const workspaceWindows = [
   ...document.querySelectorAll("[data-workspace-window]"),
 ];
@@ -404,6 +405,7 @@ const projectBuildReturnButton = document.querySelector(
 );
 const projectBuildReturnLabel = document.querySelector("[data-build-return-label]");
 const projectBuildWindowTitle = document.querySelector("[data-build-window-title]");
+let projectWindowTransitionTimer = 0;
 
 function projectNameFromHash() {
   return window.location.hash.match(/^#(project-\d+)(?:$|-)/)?.[1] ?? null;
@@ -415,6 +417,37 @@ function projectViewFromHash() {
 
 function selectedProjectTab() {
   return projectTabs.find((tab) => tab.dataset.projectTab === document.body.dataset.project);
+}
+
+function animateProjectViewChange(mode, previousMode) {
+  if (
+    !projectWorkspace ||
+    mode === previousMode ||
+    reducedMotion.matches ||
+    !document.documentElement.classList.contains("is-ready")
+  ) {
+    return;
+  }
+
+  window.clearTimeout(projectWindowTransitionTimer);
+  projectWorkspace.classList.remove(
+    "is-project-transitioning",
+    "is-transitioning-to-build",
+    "is-transitioning-to-showcase",
+  );
+  void projectWorkspace.offsetWidth;
+  projectWorkspace.classList.add(
+    "is-project-transitioning",
+    `is-transitioning-to-${mode}`,
+  );
+
+  projectWindowTransitionTimer = window.setTimeout(() => {
+    projectWorkspace.classList.remove(
+      "is-project-transitioning",
+      "is-transitioning-to-build",
+      "is-transitioning-to-showcase",
+    );
+  }, 720);
 }
 
 function applyProjectViewState() {
@@ -495,6 +528,7 @@ function setProjectView(
     return;
   }
 
+  const previousMode = document.body.dataset.projectView;
   const selectedTab = selectedProjectTab();
   const hasBuild = selectedTab?.dataset.hasBuild === "true";
 
@@ -515,6 +549,7 @@ function setProjectView(
   }
 
   document.body.dataset.projectView = mode;
+  animateProjectViewChange(mode, previousMode);
   applyProjectViewState();
   updateProjectViewButton();
 
@@ -656,18 +691,49 @@ function initializeProjectGallery(gallery) {
     });
   }
 
-  function animateInspector(state) {
-    if (reducedMotion.matches) {
+  function updateInspectorContent(state, contentKey, content) {
+    if (state.pendingContent === contentKey) {
       return;
     }
 
+    window.clearTimeout(state.updateTimer);
     window.clearTimeout(state.animationTimer);
-    state.inspector.classList.remove("is-updating");
-    void state.inspector.offsetWidth;
-    state.inspector.classList.add("is-updating");
-    state.animationTimer = window.setTimeout(() => {
-      state.inspector.classList.remove("is-updating");
-    }, 260);
+
+    if (state.currentContent === contentKey) {
+      state.pendingContent = null;
+      state.content.classList.remove("is-exiting", "is-entering");
+      return;
+    }
+
+    state.pendingContent = contentKey;
+
+    const commitContent = () => {
+      state.kicker.textContent = content.kicker;
+      state.title.textContent = content.title;
+      state.copy.textContent = content.copy;
+      state.inspector.dataset.inspectorState = content.state;
+      state.currentContent = contentKey;
+      state.pendingContent = null;
+    };
+
+    state.content.classList.remove("is-entering");
+
+    if (reducedMotion.matches || state.currentContent === null) {
+      state.content.classList.remove("is-exiting");
+      commitContent();
+      return;
+    }
+
+    state.content.classList.add("is-exiting");
+    state.updateTimer = window.setTimeout(() => {
+      commitContent();
+      state.content.classList.remove("is-exiting");
+      void state.content.offsetWidth;
+      state.content.classList.add("is-entering");
+      state.animationTimer = window.setTimeout(() => {
+        state.content.classList.remove("is-entering");
+      }, 300);
+    }, 90);
   }
 
   function showSceneOverview(scene) {
@@ -677,11 +743,12 @@ function initializeProjectGallery(gallery) {
       return;
     }
 
-    state.kicker.textContent = "Interactive picture";
-    state.title.textContent = "Choose a target";
-    state.copy.textContent =
-      "Hover, focus, or click any target to show its explanation here.";
-    animateInspector(state);
+    updateInspectorContent(state, "overview", {
+      state: "overview",
+      kicker: "Interactive picture",
+      title: "Choose a target",
+      copy: "Hover, focus, or click any target to show its explanation here.",
+    });
 
     controlsForScene(scene).forEach((control) => {
       control.classList.remove("is-active");
@@ -697,10 +764,12 @@ function initializeProjectGallery(gallery) {
       return;
     }
 
-    state.kicker.textContent = detail.kicker;
-    state.title.textContent = detail.title;
-    state.copy.textContent = detail.copy;
-    animateInspector(state);
+    updateInspectorContent(state, `detail-${highlightName}`, {
+      state: "detail",
+      kicker: detail.kicker,
+      title: detail.title,
+      copy: detail.copy,
+    });
 
     controlsForScene(scene).forEach((control) => {
       const matches = control.dataset.sceneHighlight === highlightName;
@@ -753,14 +822,24 @@ function initializeProjectGallery(gallery) {
   scenes.forEach((scene) => {
     const state = {
       pinnedHighlight: null,
+      currentContent: null,
+      pendingContent: null,
+      updateTimer: 0,
       animationTimer: 0,
       inspector,
+      content: inspector?.querySelector("[data-scene-content]"),
       kicker: inspector?.querySelector("[data-scene-kicker]"),
       title: inspector?.querySelector("[data-scene-title]"),
       copy: inspector?.querySelector("[data-scene-copy]"),
     };
 
-    if (!state.inspector || !state.kicker || !state.title || !state.copy) {
+    if (
+      !state.inspector ||
+      !state.content ||
+      !state.kicker ||
+      !state.title ||
+      !state.copy
+    ) {
       return;
     }
 

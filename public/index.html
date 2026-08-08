@@ -373,17 +373,23 @@
                           <div
                             class="project-inspector__selection"
                             data-scene-inspector
+                            data-inspector-state="overview"
                             aria-live="polite"
                             aria-atomic="true"
                           >
-                            <div class="project-inspector__selection-head">
-                              <p data-scene-kicker>Interactive picture</p>
+                            <div
+                              class="project-inspector__content"
+                              data-scene-content
+                            >
+                              <div class="project-inspector__selection-head">
+                                <p data-scene-kicker>Interactive picture</p>
+                              </div>
+                              <h4 data-scene-title>Choose a target</h4>
+                              <p data-scene-copy>
+                                Hover, focus, or click any target to show its
+                                explanation here.
+                              </p>
                             </div>
-                            <h4 data-scene-title>Choose a target</h4>
-                            <p data-scene-copy>
-                              Hover, focus, or click any target to show its
-                              explanation here.
-                            </p>
                             <span>Click pins a note. Escape clears it.</span>
                           </div>
                         </aside>
