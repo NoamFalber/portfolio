@@ -4,12 +4,18 @@ document.documentElement.classList.add("js");
 
 const sectionPages = [...document.querySelectorAll("[data-section-page]")];
 const sectionLinks = [...document.querySelectorAll("[data-section-link]")];
-const sectionRailLinks = [...document.querySelectorAll(".section-rail [data-section-link]")];
+const sectionRailLinks = [
+  ...document.querySelectorAll(".section-rail [data-section-link]"),
+];
+const sectionDeck = document.querySelector(".section-deck");
 const sectionAnnouncer = document.querySelector("[data-section-announcer]");
 const edgePrevious = document.querySelector('[data-edge-switch="previous"]');
 const edgeNext = document.querySelector('[data-edge-switch="next"]');
 const skipLink = document.querySelector("[data-skip-link]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const deferredProjectImages = [
+  ...document.querySelectorAll("[data-deferred-src]"),
+];
 
 const sectionNames = sectionPages.map(
   (section) => section.id.charAt(0).toUpperCase() + section.id.slice(1),
@@ -22,6 +28,29 @@ let edgeDirection = 0;
 let edgeReady = false;
 let edgeGestureTimer = 0;
 let touchStartY = null;
+
+function loadDeferredProjectImages() {
+  deferredProjectImages.forEach((image) => {
+    const source = image.dataset.deferredSrc;
+
+    if (!source) {
+      return;
+    }
+
+    if (image.dataset.deferredAlt) {
+      image.alt = image.dataset.deferredAlt;
+      image.removeAttribute("data-deferred-alt");
+    }
+
+    if (image.dataset.deferredPriority) {
+      image.fetchPriority = image.dataset.deferredPriority;
+      image.removeAttribute("data-deferred-priority");
+    }
+
+    image.src = source;
+    image.removeAttribute("data-deferred-src");
+  });
+}
 
 function sectionIndexFromTarget(target) {
   return sectionPages.findIndex((section) => section.id === target);
@@ -62,7 +91,10 @@ function isAtBoundary(scroller, direction) {
     return scroller.scrollTop <= epsilon;
   }
 
-  return scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - epsilon;
+  return (
+    scroller.scrollTop + scroller.clientHeight >=
+    scroller.scrollHeight - epsilon
+  );
 }
 
 function edgeControlForDirection(direction) {
@@ -136,6 +168,10 @@ function setSection(
     return;
   }
 
+  if (sectionPages[nextIndex]?.id === "projects") {
+    loadDeferredProjectImages();
+  }
+
   if (nextIndex === currentSection) {
     dismissEdge();
     if (focusHeading) {
@@ -152,6 +188,7 @@ function setSection(
 
   dismissEdge();
   isTransitioning = true;
+  sectionDeck?.classList.add("is-section-transitioning");
   window.clearTimeout(transitionTimer);
 
   if (boundarySources.has(source)) {
@@ -200,6 +237,7 @@ function setSection(
   const transitionDuration = reducedMotion.matches ? 0 : 700;
   transitionTimer = window.setTimeout(() => {
     isTransitioning = false;
+    sectionDeck?.classList.remove("is-section-transitioning");
   }, transitionDuration);
 }
 
@@ -216,7 +254,11 @@ function navigateFromEdge(direction, source) {
 }
 
 function handleWheel(event) {
-  if (isTransitioning || event.ctrlKey || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
+  if (
+    isTransitioning ||
+    event.ctrlKey ||
+    Math.abs(event.deltaY) <= Math.abs(event.deltaX)
+  ) {
     return;
   }
 
@@ -301,7 +343,11 @@ function handleTouchStart(event) {
 }
 
 function handleTouchEnd(event) {
-  if (touchStartY === null || event.changedTouches.length !== 1 || isTransitioning) {
+  if (
+    touchStartY === null ||
+    event.changedTouches.length !== 1 ||
+    isTransitioning
+  ) {
     touchStartY = null;
     return;
   }
@@ -358,11 +404,15 @@ sectionPages.forEach((section) => {
   scroller.addEventListener("wheel", handleWheel, { passive: false });
   scroller.addEventListener("touchstart", handleTouchStart, { passive: true });
   scroller.addEventListener("touchend", handleTouchEnd, { passive: true });
-  scroller.addEventListener("scroll", () => {
-    if (edgeDirection && !isAtBoundary(scroller, edgeDirection)) {
-      dismissEdge();
-    }
-  }, { passive: true });
+  scroller.addEventListener(
+    "scroll",
+    () => {
+      if (edgeDirection && !isAtBoundary(scroller, edgeDirection)) {
+        dismissEdge();
+      }
+    },
+    { passive: true },
+  );
 });
 
 document.addEventListener("keydown", handleBoundaryKey);
@@ -403,8 +453,12 @@ const projectBuildPanels = [
 const projectBuildReturnButton = document.querySelector(
   "[data-project-build-return]",
 );
-const projectBuildReturnLabel = document.querySelector("[data-build-return-label]");
-const projectBuildWindowTitle = document.querySelector("[data-build-window-title]");
+const projectBuildReturnLabel = document.querySelector(
+  "[data-build-return-label]",
+);
+const projectBuildWindowTitle = document.querySelector(
+  "[data-build-window-title]",
+);
 let projectWindowTransitionTimer = 0;
 
 function projectNameFromHash() {
@@ -416,7 +470,9 @@ function projectViewFromHash() {
 }
 
 function selectedProjectTab() {
-  return projectTabs.find((tab) => tab.dataset.projectTab === document.body.dataset.project);
+  return projectTabs.find(
+    (tab) => tab.dataset.projectTab === document.body.dataset.project,
+  );
 }
 
 function animateProjectViewChange(mode, previousMode) {
@@ -575,7 +631,9 @@ function setProjectView(
 }
 
 function setProject(projectName, focusTab = false) {
-  const selectedTab = projectTabs.find((tab) => tab.dataset.projectTab === projectName);
+  const selectedTab = projectTabs.find(
+    (tab) => tab.dataset.projectTab === projectName,
+  );
 
   if (!selectedTab) {
     return;
@@ -607,7 +665,14 @@ projectTabs.forEach((tab, index) => {
     setProjectView("showcase", { historyMode: "push", announce: true });
   });
   tab.addEventListener("keydown", (event) => {
-    const supportedKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+    const supportedKeys = [
+      "ArrowLeft",
+      "ArrowRight",
+      "ArrowUp",
+      "ArrowDown",
+      "Home",
+      "End",
+    ];
 
     if (!supportedKeys.includes(event.key)) {
       return;
@@ -639,7 +704,9 @@ projectBuildButton?.addEventListener("click", () => {
 
 projectBuildReturnButton?.addEventListener("click", () => {
   setProjectView("showcase", { historyMode: "push", announce: true });
-  window.requestAnimationFrame(() => projectBuildButton?.focus({ preventScroll: true }));
+  window.requestAnimationFrame(() => {
+    projectBuildButton?.focus({ preventScroll: true });
+  });
 });
 
 const sceneHighlightDetails = {
@@ -672,6 +739,9 @@ function initializeProjectGallery(gallery) {
   const next = gallery.querySelector("[data-gallery-next]");
   const currentLabel = gallery.querySelector("[data-gallery-current]");
   const totalLabel = gallery.querySelector("[data-gallery-total]");
+  const highlightControls = [
+    ...gallery.querySelectorAll("[data-scene-highlight]"),
+  ];
   const scenes = slides
     .map((slide) => slide.querySelector("[data-interactive-scene]"))
     .filter(Boolean);
@@ -682,10 +752,11 @@ function initializeProjectGallery(gallery) {
   let activeSlideIndex = 0;
 
   const formatIndex = (index) => String(index + 1).padStart(2, "0");
-  const activeScene = () => slides[activeSlideIndex]?.querySelector("[data-interactive-scene]");
+  const activeScene = () =>
+    slides[activeSlideIndex]?.querySelector("[data-interactive-scene]");
 
   function controlsForScene(scene) {
-    return [...gallery.querySelectorAll("[data-scene-highlight]")].filter((control) => {
+    return highlightControls.filter((control) => {
       const owningScene = control.closest("[data-interactive-scene]");
       return owningScene ? owningScene === scene : activeScene() === scene;
     });
@@ -846,8 +917,9 @@ function initializeProjectGallery(gallery) {
     sceneStates.set(scene, state);
   });
 
-  [...gallery.querySelectorAll("[data-scene-highlight]")].forEach((control) => {
-    const controlledScene = () => control.closest("[data-interactive-scene]") || activeScene();
+  highlightControls.forEach((control) => {
+    const controlledScene = () =>
+      control.closest("[data-interactive-scene]") || activeScene();
 
     control.addEventListener("pointerenter", () => {
       const scene = controlledScene();
@@ -930,9 +1002,18 @@ const initialSection = sectionIndexFromHash();
 const initialProject = projectNameFromHash() ?? "project-1";
 
 currentSection = initialSection;
+if (sectionPages[initialSection]?.id === "projects") {
+  loadDeferredProjectImages();
+}
+
 sectionPages.forEach((section, index) => {
   const isCurrent = index === initialSection;
-  section.dataset.position = index < initialSection ? "before" : index > initialSection ? "after" : "current";
+  section.dataset.position =
+    index < initialSection
+      ? "before"
+      : index > initialSection
+        ? "after"
+        : "current";
   section.setAttribute("aria-hidden", String(!isCurrent));
   section.inert = !isCurrent;
 });
