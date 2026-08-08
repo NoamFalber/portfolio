@@ -393,6 +393,17 @@ const projectBuildLinkLabel = document.querySelector("[data-build-link-label]");
 const projectBuildLinkKicker = document.querySelector("[data-build-link-kicker]");
 const projectBuildLinkIcon = document.querySelector("[data-build-link-icon]");
 const projectBuildLinkArrow = document.querySelector("[data-build-link-arrow]");
+const workspaceWindows = [
+  ...document.querySelectorAll("[data-workspace-window]"),
+];
+const projectBuildPanels = [
+  ...document.querySelectorAll("[data-project-build-panel]"),
+];
+const projectBuildReturnButton = document.querySelector(
+  "[data-project-build-return]",
+);
+const projectBuildReturnLabel = document.querySelector("[data-build-return-label]");
+const projectBuildWindowTitle = document.querySelector("[data-build-window-title]");
 
 function projectNameFromHash() {
   return window.location.hash.match(/^#(project-\d+)(?:$|-)/)?.[1] ?? null;
@@ -410,14 +421,14 @@ function applyProjectViewState() {
   const activeMode = document.body.dataset.projectView;
   const activeProject = document.body.dataset.project;
 
-  projectPanels.forEach((panel) => {
-    const panelIsSelected = panel.dataset.projectPanel === activeProject;
+  workspaceWindows.forEach((windowElement) => {
+    const isCurrentWindow = windowElement.dataset.workspaceWindow === activeMode;
+    windowElement.setAttribute("aria-hidden", String(!isCurrentWindow));
+    windowElement.inert = !isCurrentWindow;
+  });
 
-    panel.querySelectorAll("[data-project-view]").forEach((view) => {
-      const isCurrentView = panelIsSelected && view.dataset.projectView === activeMode;
-      view.setAttribute("aria-hidden", String(!isCurrentView));
-      view.inert = !isCurrentView;
-    });
+  projectBuildPanels.forEach((panel) => {
+    panel.hidden = panel.dataset.projectBuildPanel !== activeProject;
   });
 }
 
@@ -428,33 +439,51 @@ function updateProjectViewButton() {
     return;
   }
 
-  const isBuildView = document.body.dataset.projectView === "build";
   const projectTitle = selectedTab.dataset.projectTitle;
+  const hasBuild = selectedTab.dataset.hasBuild === "true";
 
-  projectBuildButton.setAttribute("aria-pressed", String(isBuildView));
+  projectBuildButton.disabled = !hasBuild;
+  projectBuildButton.setAttribute("aria-disabled", String(!hasBuild));
   projectBuildButton.setAttribute(
     "aria-label",
-    isBuildView
-      ? `Return to the ${projectTitle} interactive picture`
-      : `Open the ${projectTitle} web build`,
+    hasBuild
+      ? `Open the ${projectTitle} web build`
+      : `${projectTitle} does not have a web build`,
   );
 
   if (projectBuildLinkKicker) {
-    projectBuildLinkKicker.textContent = isBuildView ? "Interactive picture" : "Web build";
+    projectBuildLinkKicker.textContent = hasBuild
+      ? "Web build"
+      : "Web build unavailable";
   }
 
   if (projectBuildLinkLabel) {
-    projectBuildLinkLabel.textContent = isBuildView
-      ? `Back to ${projectTitle} picture`
-      : `Open ${projectTitle} build`;
+    projectBuildLinkLabel.textContent = hasBuild
+      ? `Open ${projectTitle} build`
+      : `No build for ${projectTitle}`;
   }
 
   if (projectBuildLinkIcon) {
-    projectBuildLinkIcon.textContent = isBuildView ? "←" : "▶";
+    projectBuildLinkIcon.textContent = hasBuild ? "▶" : "—";
   }
 
   if (projectBuildLinkArrow) {
-    projectBuildLinkArrow.textContent = isBuildView ? "↙" : "→";
+    projectBuildLinkArrow.textContent = hasBuild ? "→" : "—";
+  }
+
+  if (projectBuildReturnLabel) {
+    projectBuildReturnLabel.textContent = `Return to ${projectTitle}`;
+  }
+
+  if (projectBuildWindowTitle) {
+    projectBuildWindowTitle.textContent = projectTitle;
+  }
+
+  if (projectBuildReturnButton) {
+    projectBuildReturnButton.setAttribute(
+      "aria-label",
+      `Return to the ${projectTitle} interactive picture`,
+    );
   }
 }
 
@@ -466,11 +495,28 @@ function setProjectView(
     return;
   }
 
+  const selectedTab = selectedProjectTab();
+  const hasBuild = selectedTab?.dataset.hasBuild === "true";
+
+  if (mode === "build" && !hasBuild) {
+    mode = "showcase";
+
+    if (/^#project-\d+-build$/.test(window.location.hash) && selectedTab) {
+      window.history.replaceState(
+        {
+          section: "projects",
+          project: selectedTab.dataset.projectTab,
+          projectView: mode,
+        },
+        "",
+        `#${selectedTab.dataset.projectTab}`,
+      );
+    }
+  }
+
   document.body.dataset.projectView = mode;
   applyProjectViewState();
   updateProjectViewButton();
-
-  const selectedTab = selectedProjectTab();
 
   if (selectedTab && historyMode !== "none") {
     const target =
@@ -551,32 +597,34 @@ projectTabs.forEach((tab, index) => {
 });
 
 projectBuildButton?.addEventListener("click", () => {
-  const nextMode = document.body.dataset.projectView === "build" ? "showcase" : "build";
-  setProjectView(nextMode, { historyMode: "push", announce: true });
+  if (!projectBuildButton.disabled) {
+    setProjectView("build", { historyMode: "push", announce: true });
+  }
+});
+
+projectBuildReturnButton?.addEventListener("click", () => {
+  setProjectView("showcase", { historyMode: "push", announce: true });
+  window.requestAnimationFrame(() => projectBuildButton?.focus({ preventScroll: true }));
 });
 
 const sceneHighlightDetails = {
   clouds: {
-    number: "01",
-    kicker: "Visible area 01",
+    kicker: "Inspecting the scene",
     title: "Clouds",
     copy: "The cloud group spanning the upper-right part of the frame.",
   },
   sky: {
-    number: "02",
-    kicker: "Visible area 02",
+    kicker: "Inspecting the scene",
     title: "Sky",
     copy: "The open blue area separating the clouds from the grass.",
   },
   grass: {
-    number: "03",
-    kicker: "Visible area 03",
+    kicker: "Inspecting the scene",
     title: "Grass",
     copy: "The sunlit field filling the lower-left foreground.",
   },
   ball: {
-    number: "04",
-    kicker: "Visible area 04",
+    kicker: "Inspecting the scene",
     title: "Ball",
     copy: "The white ball set against the darker grass near the right.",
   },
@@ -629,13 +677,10 @@ function initializeProjectGallery(gallery) {
       return;
     }
 
-    scene.classList.remove("is-inspecting");
-    state.inspector.dataset.activeNumber = "00";
-    state.number.textContent = "00";
     state.kicker.textContent = "Interactive picture";
-    state.title.textContent = "Choose a marker";
+    state.title.textContent = "Choose a target";
     state.copy.textContent =
-      "Hover, focus, or click any marker to show its explanation here.";
+      "Hover, focus, or click any target to show its explanation here.";
     animateInspector(state);
 
     controlsForScene(scene).forEach((control) => {
@@ -652,9 +697,6 @@ function initializeProjectGallery(gallery) {
       return;
     }
 
-    scene.classList.add("is-inspecting");
-    state.inspector.dataset.activeNumber = detail.number;
-    state.number.textContent = detail.number;
     state.kicker.textContent = detail.kicker;
     state.title.textContent = detail.title;
     state.copy.textContent = detail.copy;
@@ -714,12 +756,11 @@ function initializeProjectGallery(gallery) {
       animationTimer: 0,
       inspector,
       kicker: inspector?.querySelector("[data-scene-kicker]"),
-      number: inspector?.querySelector("[data-scene-number]"),
       title: inspector?.querySelector("[data-scene-title]"),
       copy: inspector?.querySelector("[data-scene-copy]"),
     };
 
-    if (!state.inspector || !state.kicker || !state.number || !state.title || !state.copy) {
+    if (!state.inspector || !state.kicker || !state.title || !state.copy) {
       return;
     }
 

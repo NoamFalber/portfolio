@@ -149,7 +149,11 @@
             </header>
 
             <div class="project-workspace">
-              <div class="project-toolbar">
+              <div
+                class="workspace-window workspace-window--showcase"
+                data-workspace-window="showcase"
+              >
+                <div class="project-toolbar">
                 <div
                   class="project-tabs"
                   role="tablist"
@@ -165,6 +169,7 @@
                     data-project-tab="project-1"
                     data-project-title="Project One"
                     data-build-target="project-1-build"
+                    data-has-build="true"
                   >
                     <span>01</span>
                     <span>
@@ -185,6 +190,7 @@
                     data-project-tab="project-2"
                     data-project-title="Project Two"
                     data-build-target="project-2-build"
+                    data-has-build="true"
                   >
                     <span>02</span>
                     <span>
@@ -204,7 +210,7 @@
                     tabindex="-1"
                     data-project-tab="project-3"
                     data-project-title="Project Three"
-                    data-build-target="project-3-build"
+                    data-has-build="false"
                   >
                     <span>03</span>
                     <span>
@@ -231,9 +237,9 @@
                   </span>
                   <span aria-hidden="true" data-build-link-arrow>→</span>
                 </button>
-              </div>
+                </div>
 
-              <div class="project-stage">
+                <div class="project-stage">
                 <div
                   class="project-panel project-panel--featured"
                   id="project-1"
@@ -241,12 +247,10 @@
                   aria-labelledby="project-1-tab"
                   data-project-panel="project-1"
                 >
-                  <div class="project-view-stack">
-                    <section
-                      class="project-view project-view--showcase"
-                      data-project-view="showcase"
-                      aria-label="Project One interactive pictures"
-                    >
+                  <section
+                    class="project-showcase"
+                    aria-label="Project One interactive pictures"
+                  >
                       <div class="project-panel__body">
                         <div class="project-gallery" data-project-gallery>
                           <header class="gallery-heading">
@@ -254,7 +258,7 @@
                               <p>Interactive picture</p>
                               <strong>Inspect the scene</strong>
                             </div>
-                            <p>Hover, focus, or click a marker. Click keeps its note open.</p>
+                            <p>Hover, focus, or click a target. Click keeps its note open.</p>
                             <div class="gallery-pager" role="group" aria-label="Picture navigation">
                               <button type="button" data-gallery-previous aria-label="Previous picture">←</button>
                               <span>
@@ -291,8 +295,7 @@
                                     aria-pressed="false"
                                     data-scene-highlight="clouds"
                                   >
-                                    <span>01</span>
-                                    <strong>Clouds</strong>
+                                    <span aria-hidden="true"></span>
                                   </button>
                                   <button
                                     class="scene-hotspot scene-hotspot--sky"
@@ -301,8 +304,7 @@
                                     aria-pressed="false"
                                     data-scene-highlight="sky"
                                   >
-                                    <span>02</span>
-                                    <strong>Sky</strong>
+                                    <span aria-hidden="true"></span>
                                   </button>
                                   <button
                                     class="scene-hotspot scene-hotspot--grass"
@@ -311,8 +313,7 @@
                                     aria-pressed="false"
                                     data-scene-highlight="grass"
                                   >
-                                    <span>03</span>
-                                    <strong>Grass</strong>
+                                    <span aria-hidden="true"></span>
                                   </button>
                                   <button
                                     class="scene-hotspot scene-hotspot--ball"
@@ -321,8 +322,7 @@
                                     aria-pressed="false"
                                     data-scene-highlight="ball"
                                   >
-                                    <span>04</span>
-                                    <strong>Ball</strong>
+                                    <span aria-hidden="true"></span>
                                   </button>
                                 </div>
                               </div>
@@ -373,54 +373,22 @@
                           <div
                             class="project-inspector__selection"
                             data-scene-inspector
-                            data-active-number="00"
                             aria-live="polite"
                             aria-atomic="true"
                           >
                             <div class="project-inspector__selection-head">
                               <p data-scene-kicker>Interactive picture</p>
-                              <strong data-scene-number>00</strong>
                             </div>
-                            <h4 data-scene-title>Choose a marker</h4>
+                            <h4 data-scene-title>Choose a target</h4>
                             <p data-scene-copy>
-                              Hover, focus, or click any marker to show its
+                              Hover, focus, or click any target to show its
                               explanation here.
                             </p>
                             <span>Click pins a note. Escape clears it.</span>
                           </div>
                         </aside>
                       </div>
-                    </section>
-
-                    <section
-                      class="project-view project-view--build"
-                      id="project-1-build"
-                      data-project-view="build"
-                      aria-labelledby="project-1-build-title"
-                      aria-hidden="true"
-                      inert
-                    >
-                      <div class="build-player">
-                        <header class="build-player__bar">
-                          <span>Project One / Web build</span>
-                          <strong><span aria-hidden="true"></span>Placeholder</strong>
-                        </header>
-                        <div class="build-player__viewport">
-                          <span class="build-player__play" aria-hidden="true">▶</span>
-                          <p>Web build</p>
-                          <h3 id="project-1-build-title">Project One playable space</h3>
-                          <p>
-                            The Project One build will load inside this frame
-                            when its files are connected.
-                          </p>
-                        </div>
-                        <footer class="build-player__footer">
-                          <span>Browser player placeholder</span>
-                          <span>No build connected</span>
-                        </footer>
-                      </div>
-                    </section>
-                  </div>
+                  </section>
                 </div>
 
                 <div
@@ -430,12 +398,10 @@
                   aria-labelledby="project-2-tab"
                   data-project-panel="project-2"
                 >
-                  <div class="project-view-stack">
-                    <section
-                      class="project-view project-view--showcase"
-                      data-project-view="showcase"
-                      aria-label="Project Two overview"
-                    >
+                  <section
+                    class="project-showcase"
+                    aria-label="Project Two overview"
+                  >
                       <div class="project-panel__body">
                         <div class="empty-project-visual" aria-hidden="true">
                           <span>02</span>
@@ -450,37 +416,7 @@
                           </p>
                         </div>
                       </div>
-                    </section>
-
-                    <section
-                      class="project-view project-view--build"
-                      id="project-2-build"
-                      data-project-view="build"
-                      aria-labelledby="project-2-build-title"
-                      aria-hidden="true"
-                      inert
-                    >
-                      <div class="build-player">
-                        <header class="build-player__bar">
-                          <span>Project Two / Web build</span>
-                          <strong><span aria-hidden="true"></span>Placeholder</strong>
-                        </header>
-                        <div class="build-player__viewport">
-                          <span class="build-player__play" aria-hidden="true">▶</span>
-                          <p>Web build</p>
-                          <h3 id="project-2-build-title">Project Two playable space</h3>
-                          <p>
-                            The Project Two build will load inside this frame
-                            when its files are connected.
-                          </p>
-                        </div>
-                        <footer class="build-player__footer">
-                          <span>Browser player placeholder</span>
-                          <span>No build connected</span>
-                        </footer>
-                      </div>
-                    </section>
-                  </div>
+                  </section>
                 </div>
 
                 <div
@@ -490,12 +426,10 @@
                   aria-labelledby="project-3-tab"
                   data-project-panel="project-3"
                 >
-                  <div class="project-view-stack">
-                    <section
-                      class="project-view project-view--showcase"
-                      data-project-view="showcase"
-                      aria-label="Project Three overview"
-                    >
+                  <section
+                    class="project-showcase"
+                    aria-label="Project Three overview"
+                  >
                       <div class="project-panel__body">
                         <div
                           class="empty-project-visual empty-project-visual--three"
@@ -513,42 +447,97 @@
                           </p>
                         </div>
                       </div>
-                    </section>
-
-                    <section
-                      class="project-view project-view--build"
-                      id="project-3-build"
-                      data-project-view="build"
-                      aria-labelledby="project-3-build-title"
-                      aria-hidden="true"
-                      inert
-                    >
-                      <div class="build-player">
-                        <header class="build-player__bar">
-                          <span>Project Three / Web build</span>
-                          <strong><span aria-hidden="true"></span>Placeholder</strong>
-                        </header>
-                        <div class="build-player__viewport">
-                          <span class="build-player__play" aria-hidden="true">▶</span>
-                          <p>Web build</p>
-                          <h3 id="project-3-build-title">Project Three playable space</h3>
-                          <p>
-                            The Project Three build will load inside this frame
-                            when its files are connected.
-                          </p>
-                        </div>
-                        <footer class="build-player__footer">
-                          <span>Browser player placeholder</span>
-                          <span>No build connected</span>
-                        </footer>
-                      </div>
-                    </section>
-                  </div>
+                  </section>
+                </div>
                 </div>
               </div>
+
+              <section
+                class="workspace-window workspace-window--build"
+                data-workspace-window="build"
+                aria-labelledby="build-window-title"
+                aria-hidden="true"
+                inert
+              >
+                <header class="build-window__toolbar">
+                  <div>
+                    <p>Web build</p>
+                    <h3 id="build-window-title" data-build-window-title>Project One</h3>
+                  </div>
+                  <button
+                    class="project-build-link project-build-return"
+                    type="button"
+                    data-project-build-return
+                  >
+                    <span class="project-build-link__icon" aria-hidden="true">↩</span>
+                    <span>
+                      <small>Interactive picture</small>
+                      <strong data-build-return-label>Return to Project One</strong>
+                    </span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </header>
+
+                <div class="build-window__stage">
+                  <section
+                    class="build-panel"
+                    id="project-1-build"
+                    data-project-build-panel="project-1"
+                    aria-labelledby="project-1-build-title"
+                  >
+                    <div class="build-player">
+                      <header class="build-player__bar">
+                        <span>Project One / Web build</span>
+                        <strong><span aria-hidden="true"></span>Placeholder</strong>
+                      </header>
+                      <div class="build-player__viewport">
+                        <span class="build-player__play" aria-hidden="true">▶</span>
+                        <p>Web build</p>
+                        <h3 id="project-1-build-title">Project One playable space</h3>
+                        <p>
+                          The Project One build will load inside this frame when
+                          its files are connected.
+                        </p>
+                      </div>
+                      <footer class="build-player__footer">
+                        <span>Browser player placeholder</span>
+                        <span>No build connected</span>
+                      </footer>
+                    </div>
+                  </section>
+
+                  <section
+                    class="build-panel"
+                    id="project-2-build"
+                    data-project-build-panel="project-2"
+                    aria-labelledby="project-2-build-title"
+                    hidden
+                  >
+                    <div class="build-player">
+                      <header class="build-player__bar">
+                        <span>Project Two / Web build</span>
+                        <strong><span aria-hidden="true"></span>Placeholder</strong>
+                      </header>
+                      <div class="build-player__viewport">
+                        <span class="build-player__play" aria-hidden="true">▶</span>
+                        <p>Web build</p>
+                        <h3 id="project-2-build-title">Project Two playable space</h3>
+                        <p>
+                          The Project Two build will load inside this frame when
+                          its files are connected.
+                        </p>
+                      </div>
+                      <footer class="build-player__footer">
+                        <span>Browser player placeholder</span>
+                        <span>No build connected</span>
+                      </footer>
+                    </div>
+                  </section>
+                </div>
+              </section>
+            </div>
             </div>
           </div>
-        </div>
       </section>
     </main>
 

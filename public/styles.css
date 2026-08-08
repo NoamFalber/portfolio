@@ -174,7 +174,7 @@ img {
 
 .js:not(.is-ready) .section-rail a,
 .js:not(.is-ready) .section-rail__copy,
-.js:not(.is-ready) .project-view {
+.js:not(.is-ready) .workspace-window {
   transition: none;
 }
 
@@ -514,12 +514,49 @@ img {
 }
 
 .project-workspace {
-  display: grid;
+  position: relative;
   min-height: 0;
-  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
   border: 2px solid var(--ink);
   box-shadow: 0.4rem 0.4rem 0 var(--shadow);
   background: var(--paper-light);
+}
+
+.workspace-window {
+  min-width: 0;
+  min-height: 0;
+  transition: transform 680ms var(--ease-page);
+  will-change: transform;
+}
+
+.workspace-window--showcase {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr);
+  transform: translateX(0);
+}
+
+.workspace-window--build {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  transform: translateX(-103%);
+  background: var(--paper-light);
+  pointer-events: none;
+}
+
+body[data-project-view="build"] .workspace-window--showcase {
+  transform: translateX(103%);
+  pointer-events: none;
+}
+
+body[data-project-view="build"] .workspace-window--build {
+  transform: translateX(0);
+  pointer-events: auto;
 }
 
 .project-toolbar {
@@ -613,7 +650,11 @@ img {
   font: inherit;
   text-align: left;
   text-decoration: none;
-  transition: background-color 150ms ease, padding 150ms ease, color 150ms ease;
+  transition:
+    background-color 260ms ease,
+    box-shadow 260ms ease,
+    color 260ms ease,
+    padding 150ms ease;
 }
 
 .project-build-link::before {
@@ -631,12 +672,41 @@ img {
   );
   content: "";
   pointer-events: none;
-  animation: build-button-shine 3.4s ease-in-out infinite;
+  animation: build-button-shine 2.45s ease-in-out infinite;
+}
+
+.project-build-link::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0.38rem;
+  border: 2px solid rgba(37, 17, 11, 0.5);
+  content: "";
+  pointer-events: none;
+  animation: build-button-pulse 1.65s ease-in-out infinite;
 }
 
 .project-build-link:hover {
   padding-right: 0.75rem;
   background: #ee7c5f;
+}
+
+.project-build-link:disabled {
+  padding-right: 1rem;
+  background: #d4d9d4;
+  box-shadow: none;
+  color: #4c5851;
+  cursor: not-allowed;
+}
+
+.project-build-link:disabled::before,
+.project-build-link:disabled::after,
+.project-build-link:disabled > span:last-child {
+  animation: none;
+}
+
+.project-build-link:disabled::before,
+.project-build-link:disabled::after {
+  display: none;
 }
 
 .project-build-link__icon {
@@ -672,6 +742,7 @@ img {
   z-index: 1;
   font-size: 1.2rem;
   font-weight: 700;
+  animation: build-arrow-nudge 1.35s ease-in-out infinite;
 }
 
 .project-stage {
@@ -689,7 +760,7 @@ html:not(.js) .project-stage {
   padding: 2rem;
 }
 
-html:not(.js) .project-view--build {
+html:not(.js) .workspace-window--build {
   display: none;
 }
 
@@ -703,49 +774,10 @@ html:not(.js) .project-panel {
   min-height: 0;
 }
 
-.project-view-stack {
-  position: relative;
+.project-showcase {
   height: 100%;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.project-view {
   min-width: 0;
   min-height: 0;
-  transition:
-    opacity 380ms ease,
-    transform 540ms var(--ease-page),
-    visibility 0s linear 540ms;
-}
-
-.project-view--showcase {
-  height: 100%;
-}
-
-.project-view--build {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  visibility: hidden;
-  transform: translateX(7%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-body[data-project-view="build"] .project-view--showcase {
-  visibility: hidden;
-  transform: translateX(-7%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-body[data-project-view="build"] .project-view--build {
-  visibility: visible;
-  transform: translateX(0);
-  opacity: 1;
-  pointer-events: auto;
-  transition-delay: 0s;
 }
 
 .project-panel__body {
@@ -875,37 +907,47 @@ body[data-project-view="build"] .project-view--build {
 .scene-hotspot {
   position: absolute;
   display: grid;
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 4rem;
+  height: 4rem;
   place-items: center;
   padding: 0;
   transform: translate(-50%, -50%);
   border: 0;
   background: transparent;
-  color: var(--ink);
+  color: var(--paper-light);
   cursor: pointer;
   pointer-events: auto;
+  transition: color 170ms ease;
 }
 
 .scene-hotspot::before,
 .scene-hotspot::after {
   position: absolute;
-  border-radius: 50%;
   content: "";
   pointer-events: none;
 }
 
 .scene-hotspot::before {
-  inset: 0;
-  border: 1px solid rgba(255, 253, 248, 0.9);
-  box-shadow: 0 0 0 0.18rem rgba(25, 49, 39, 0.35);
-  animation: marker-breathe 2.2s ease-in-out infinite;
+  width: 2.1rem;
+  height: 2.1rem;
+  transform: rotate(45deg);
+  border: 2px solid currentColor;
+  background: rgba(25, 49, 39, 0.12);
+  box-shadow: 0.18rem 0.18rem 0 rgba(25, 49, 39, 0.62);
+  animation: target-invite 1.8s ease-in-out infinite;
+  transition:
+    background-color 170ms ease,
+    border-color 170ms ease,
+    box-shadow 170ms ease;
 }
 
 .scene-hotspot::after {
-  inset: 0.34rem;
-  border: 1px dashed var(--paper-light);
-  animation: marker-orbit 5s linear infinite;
+  width: 0.52rem;
+  height: 0.52rem;
+  transform: rotate(45deg);
+  background: currentColor;
+  box-shadow: 0 0 0 0.16rem rgba(25, 49, 39, 0.42);
+  transition: background-color 170ms ease;
 }
 
 .scene-hotspot--clouds {
@@ -929,62 +971,43 @@ body[data-project-view="build"] .project-view--build {
 }
 
 .scene-hotspot > span {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  width: 1.95rem;
-  height: 1.95rem;
-  place-items: center;
-  border: 2px solid var(--paper-light);
-  border-radius: 50%;
-  background: var(--coral);
-  box-shadow: 0.18rem 0.18rem 0 rgba(25, 49, 39, 0.72);
-  color: #25110b;
-  font-size: 0.67rem;
-  font-weight: 700;
-  transition:
-    background-color 150ms ease,
-    box-shadow 150ms ease,
-    color 150ms ease,
-    transform 150ms ease;
-}
-
-.scene-hotspot > strong {
   position: absolute;
-  top: 50%;
-  left: calc(100% + 0.2rem);
-  padding: 0.32rem 0.48rem;
-  transform: translate(-0.45rem, -50%);
-  border: 2px solid var(--ink);
-  background: var(--paper-light);
-  box-shadow: 0.16rem 0.16rem 0 var(--shadow);
-  font-size: 0.7rem;
-  opacity: 0;
-  transition: opacity 150ms ease, transform 150ms ease;
-  white-space: nowrap;
+  width: 3.3rem;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.76;
+  animation: target-scan 1.8s ease-in-out infinite;
+  transition: background-color 170ms ease;
 }
 
-.scene-hotspot:hover > span,
-.scene-hotspot:focus-visible > span,
-.scene-hotspot.is-active > span {
-  transform: scale(1.14);
-  background: var(--sun);
-  box-shadow: 0.08rem 0.08rem 0 rgba(25, 49, 39, 0.72);
-  color: var(--ink);
+.scene-hotspot > span::before {
+  position: absolute;
+  top: -1.6rem;
+  left: 50%;
+  width: 2px;
+  height: 3.3rem;
+  transform: translateX(-50%);
+  background: currentColor;
+  content: "";
+}
+
+.scene-hotspot:hover,
+.scene-hotspot:focus-visible,
+.scene-hotspot.is-active {
+  color: var(--coral);
 }
 
 .scene-hotspot:hover::before,
 .scene-hotspot:focus-visible::before,
 .scene-hotspot.is-active::before {
-  border-width: 2px;
-  border-color: var(--sun);
+  background: rgba(230, 107, 75, 0.26);
+  box-shadow:
+    0.18rem 0.18rem 0 rgba(25, 49, 39, 0.62),
+    0 0 0 0.22rem rgba(230, 107, 75, 0.22);
 }
 
-.scene-hotspot:hover > strong,
-.scene-hotspot:focus-visible > strong,
-.scene-hotspot.is-active > strong {
-  transform: translate(0, -50%);
-  opacity: 1;
+.scene-hotspot.is-active::before {
+  animation: target-selected 0.8s ease-in-out infinite alternate;
 }
 
 .gallery-slide figcaption {
@@ -1105,19 +1128,6 @@ body[data-project-view="build"] .project-view--build {
   background: var(--mint-light);
 }
 
-.project-inspector__selection::after {
-  position: absolute;
-  right: -0.2rem;
-  bottom: -0.5rem;
-  color: rgba(53, 107, 82, 0.1);
-  font-size: clamp(7rem, 19vh, 12rem);
-  font-weight: 700;
-  letter-spacing: -0.08em;
-  line-height: 0.75;
-  content: attr(data-active-number);
-  pointer-events: none;
-}
-
 .project-inspector__selection-head {
   position: relative;
   z-index: 1;
@@ -1131,17 +1141,6 @@ body[data-project-view="build"] .project-view--build {
   color: var(--coral-dark);
   font-size: 0.76rem;
   font-weight: 700;
-}
-
-.project-inspector__selection-head strong {
-  display: grid;
-  width: 2.3rem;
-  height: 2.3rem;
-  place-items: center;
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-  background: var(--sun);
-  font-size: 0.72rem;
 }
 
 .project-inspector__selection h4 {
@@ -1201,6 +1200,49 @@ body[data-project-view="build"] .project-view--build {
   color: var(--ink-soft);
   font-size: 0.98rem;
   line-height: 1.55;
+}
+
+.build-window__toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  border-bottom: 2px solid var(--ink);
+  background: var(--mint-light);
+}
+
+.build-window__toolbar > div {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  gap: 0.12rem;
+  padding: 0.75rem 1rem;
+}
+
+.build-window__toolbar p,
+.build-window__toolbar h3 {
+  margin: 0;
+}
+
+.build-window__toolbar p {
+  color: var(--coral-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.build-window__toolbar h3 {
+  font-size: clamp(1.35rem, 2.4vh, 1.8rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.project-build-return {
+  border-left: 2px solid var(--ink);
+}
+
+.build-window__stage,
+.build-panel {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
 }
 
 .build-player {
@@ -1567,32 +1609,73 @@ body[data-project-view="build"] .project-view--build {
 
 @keyframes build-button-shine {
   0%,
-  56% {
+  42% {
     left: -45%;
   }
 
-  82%,
+  76%,
   100% {
     left: 135%;
   }
 }
 
-@keyframes marker-breathe {
+@keyframes build-button-pulse {
   0%,
   100% {
-    transform: scale(0.88);
-    opacity: 0.58;
+    transform: scale(1);
+    opacity: 0.42;
   }
 
   50% {
-    transform: scale(1.08);
+    transform: scale(0.975);
     opacity: 1;
   }
 }
 
-@keyframes marker-orbit {
+@keyframes build-arrow-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(0.32rem);
+  }
+}
+
+@keyframes target-invite {
+  0%,
+  100% {
+    transform: rotate(45deg) scale(0.82);
+    opacity: 0.72;
+  }
+
+  50% {
+    transform: rotate(45deg) scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes target-scan {
+  0%,
+  100% {
+    transform: scaleX(0.48);
+    opacity: 0.48;
+  }
+
+  50% {
+    transform: scaleX(1);
+    opacity: 0.9;
+  }
+}
+
+@keyframes target-selected {
+  from {
+    transform: rotate(45deg) scale(0.94);
+  }
+
   to {
-    transform: rotate(360deg);
+    transform: rotate(45deg) scale(1.08);
   }
 }
 
@@ -1687,8 +1770,9 @@ body[data-project-view="build"] .project-view--build {
     grid-template-columns: 1fr;
   }
 
-  .project-workspace {
-    display: block;
+  .workspace-window--showcase {
+    height: auto;
+    grid-template-rows: auto auto;
   }
 
   .project-tabs {
@@ -1716,8 +1800,7 @@ body[data-project-view="build"] .project-view--build {
   }
 
   .project-panel,
-  .project-view-stack,
-  .project-view--showcase {
+  .project-showcase {
     height: auto;
   }
 
@@ -1749,8 +1832,13 @@ body[data-project-view="build"] .project-view--build {
     min-height: 15rem;
   }
 
-  .project-view--build {
-    min-height: 100%;
+  .build-window__toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .project-build-return {
+    border-top: 2px solid var(--ink);
+    border-left: 0;
   }
 
   .gallery-heading {
@@ -1888,10 +1976,6 @@ body[data-project-view="build"] .project-view--build {
 
   .project-workspace {
     box-shadow: 0.25rem 0.25rem 0 var(--shadow);
-  }
-
-  .scene-hotspot > strong {
-    display: none;
   }
 
   .empty-project-visual {
