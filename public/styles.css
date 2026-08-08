@@ -565,12 +565,12 @@ body[data-project-view="build"] .workspace-window--build {
 
 .project-workspace.is-transitioning-to-build .workspace-window--showcase,
 .project-workspace.is-transitioning-to-showcase .workspace-window--build {
-  animation: workspace-slide-out-right 680ms var(--ease-page) both;
+  animation: workspace-slide-out-left 680ms var(--ease-page) both;
 }
 
 .project-workspace.is-transitioning-to-build .workspace-window--build,
 .project-workspace.is-transitioning-to-showcase .workspace-window--showcase {
-  animation: workspace-slide-in-right 680ms var(--ease-page) both;
+  animation: workspace-slide-in-left 680ms var(--ease-page) both;
 }
 
 .project-toolbar {
@@ -950,12 +950,11 @@ html:not(.js) .project-panel {
   box-shadow:
     0 0 0 0.15rem rgba(25, 49, 39, 0.42),
     0.16rem 0.16rem 0 rgba(25, 49, 39, 0.66);
-  animation: target-prompt 1.65s ease-in-out infinite;
   transition:
-    background-color 170ms ease,
-    border-color 170ms ease,
-    box-shadow 170ms ease,
-    transform 170ms ease;
+    background-color 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    transform 240ms cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
 .scene-hotspot::after {
@@ -994,7 +993,26 @@ html:not(.js) .project-panel {
   height: 3.8rem;
   border: 1.5px solid currentColor;
   border-radius: 50%;
-  animation: target-ripple 1.65s ease-out infinite;
+  animation: target-ripple 2.4s cubic-bezier(0.2, 0.65, 0.35, 1) infinite;
+  backface-visibility: hidden;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.scene-hotspot--clouds > span {
+  animation-delay: -0.3s;
+}
+
+.scene-hotspot--sky > span {
+  animation-delay: -0.9s;
+}
+
+.scene-hotspot--grass > span {
+  animation-delay: -1.5s;
+}
+
+.scene-hotspot--ball > span {
+  animation-delay: -2.1s;
 }
 
 .scene-hotspot:hover,
@@ -1014,7 +1032,12 @@ html:not(.js) .project-panel {
 
 .scene-hotspot.is-active::before {
   background: rgba(230, 107, 75, 0.4);
-  animation: target-selected 0.75s ease-in-out infinite alternate;
+}
+
+.scene-hotspot:hover::before,
+.scene-hotspot:focus-visible::before,
+.scene-hotspot.is-active::before {
+  transform: scale(0.94);
 }
 
 .scene-hotspot:hover::after,
@@ -1200,28 +1223,6 @@ html:not(.js) .project-panel {
   color: var(--ink-soft);
   font-size: clamp(0.78rem, 1.45vh, 0.92rem);
   line-height: 1.45;
-}
-
-.project-inspector__selection > span {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  margin-top: 0.85rem;
-  align-items: center;
-  gap: 0.45rem;
-  color: var(--green-dark);
-  font-size: 0.7rem;
-  font-weight: 700;
-}
-
-.project-inspector__selection > span::before {
-  width: 0.5rem;
-  height: 0.5rem;
-  flex: 0 0 auto;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  background: var(--sun);
-  content: "";
 }
 
 .project-summary {
@@ -1693,57 +1694,39 @@ html:not(.js) .project-panel {
   }
 }
 
-@keyframes workspace-slide-out-right {
+@keyframes workspace-slide-out-left {
   from {
     transform: translateX(0);
   }
 
   to {
-    transform: translateX(103%);
-  }
-}
-
-@keyframes workspace-slide-in-right {
-  from {
     transform: translateX(-103%);
   }
+}
+
+@keyframes workspace-slide-in-left {
+  from {
+    transform: translateX(103%);
+  }
 
   to {
     transform: translateX(0);
-  }
-}
-
-@keyframes target-prompt {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(0.9);
   }
 }
 
 @keyframes target-ripple {
   0% {
-    transform: scale(0.62);
-    opacity: 0.95;
+    transform: translateZ(0) scale(0.68);
+    opacity: 0.82;
   }
 
-  80%,
+  72% {
+    opacity: 0.12;
+  }
+
   100% {
-    transform: scale(1.12);
+    transform: translateZ(0) scale(1.16);
     opacity: 0;
-  }
-}
-
-@keyframes target-selected {
-  from {
-    transform: scale(0.92);
-  }
-
-  to {
-    transform: scale(1.04);
   }
 }
 

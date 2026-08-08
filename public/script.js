@@ -501,7 +501,7 @@ function updateProjectViewButton() {
   }
 
   if (projectBuildLinkArrow) {
-    projectBuildLinkArrow.textContent = hasBuild ? "→" : "—";
+    projectBuildLinkArrow.textContent = hasBuild ? "←" : "—";
   }
 
   if (projectBuildReturnLabel) {
