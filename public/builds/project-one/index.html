@@ -124,21 +124,13 @@
         unityShowBanner(message, "error");
       }
 
-      async function requireWebGpu() {
+      function requireWebGpuApi() {
         if (!window.isSecureContext) {
           throw new Error("This build requires WebGPU over a secure HTTPS connection.");
         }
 
         if (!navigator.gpu) {
           throw new Error("This build requires a browser and graphics driver with WebGPU enabled.");
-        }
-
-        const adapter = await navigator.gpu.requestAdapter();
-
-        if (!adapter) {
-          throw new Error(
-            "WebGPU could not access a graphics adapter. Update your browser and graphics driver, enable hardware acceleration, then reload."
-          );
         }
       }
 
@@ -159,7 +151,7 @@
         reportBuildState("loading");
 
         try {
-          await requireWebGpu();
+          requireWebGpuApi();
           await loadUnityLoader();
 
           const unityInstance = await createUnityInstance(canvas, config, (progress) => {
