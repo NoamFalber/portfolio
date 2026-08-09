@@ -142,10 +142,12 @@ img {
   overflow: hidden;
 }
 
-.section-page::before,
-.section-page::after {
+.section-page::before {
   position: absolute;
   z-index: 0;
+  inset: -2rem;
+  transform: rotate(-1.25deg) scale(1.04);
+  background-repeat: repeat;
   content: "";
   pointer-events: none;
 }
@@ -155,25 +157,10 @@ img {
 }
 
 .section-page--intro::before {
-  top: clamp(-11rem, -14vh, -7rem);
-  right: clamp(12rem, 25vw, 27rem);
-  width: clamp(18rem, 29vw, 30rem);
-  aspect-ratio: 1;
-  border: clamp(2.5rem, 4vw, 4.5rem) solid rgba(243, 201, 100, 0.24);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 2px rgba(32, 76, 58, 0.08),
-    inset 0 0 0 2px rgba(32, 76, 58, 0.06);
-}
-
-.section-page--intro::after {
-  top: clamp(4rem, 10vh, 8rem);
-  right: clamp(-10rem, -5vw, -4rem);
-  width: clamp(15rem, 23vw, 24rem);
-  height: clamp(9rem, 16vw, 16rem);
-  transform: rotate(-8deg);
-  border: 2px solid rgba(32, 76, 58, 0.09);
-  background: rgba(185, 220, 230, 0.2);
+  background-image: url("assets/patterns/intro-wallpaper.svg");
+  background-position: 2rem 1rem;
+  background-size: clamp(25rem, 32vw, 31rem);
+  opacity: 0.7;
 }
 
 .section-page--about {
@@ -181,25 +168,11 @@ img {
 }
 
 .section-page--about::before {
-  right: clamp(-8rem, 3vw, 3rem);
-  bottom: clamp(-15rem, -16vh, -9rem);
-  width: clamp(24rem, 38vw, 40rem);
-  aspect-ratio: 1;
-  border: clamp(3rem, 5vw, 5.5rem) solid rgba(185, 220, 230, 0.25);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 2px rgba(32, 76, 58, 0.08),
-    inset 0 0 0 2px rgba(32, 76, 58, 0.05);
-}
-
-.section-page--about::after {
-  bottom: clamp(-10rem, -11vh, -5rem);
-  left: clamp(-12rem, -8vw, -5rem);
-  width: clamp(22rem, 34vw, 36rem);
-  height: clamp(13rem, 21vw, 22rem);
-  transform: rotate(9deg);
-  border: 2px solid rgba(141, 48, 29, 0.07);
-  background: rgba(243, 201, 100, 0.16);
+  transform: rotate(1deg) scale(1.04);
+  background-image: url("assets/patterns/about-wallpaper.svg");
+  background-position: -1rem 3rem;
+  background-size: clamp(24rem, 30vw, 29rem);
+  opacity: 0.72;
 }
 
 .section-page--projects {
@@ -207,25 +180,10 @@ img {
 }
 
 .section-page--projects::before {
-  top: clamp(-12rem, -15vh, -7rem);
-  left: clamp(5rem, 17vw, 18rem);
-  width: clamp(20rem, 32vw, 34rem);
-  aspect-ratio: 1;
-  border: clamp(2.75rem, 4.5vw, 5rem) solid rgba(243, 201, 100, 0.22);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 2px rgba(32, 76, 58, 0.07),
-    inset 0 0 0 2px rgba(32, 76, 58, 0.05);
-}
-
-.section-page--projects::after {
-  right: clamp(-9rem, -4vw, -3rem);
-  bottom: clamp(-9rem, -10vh, -4rem);
-  width: clamp(20rem, 31vw, 33rem);
-  height: clamp(12rem, 19vw, 20rem);
-  transform: rotate(-7deg);
-  border: 2px solid rgba(141, 48, 29, 0.07);
-  background: rgba(230, 107, 75, 0.1);
+  background-image: url("assets/patterns/projects-wallpaper.svg");
+  background-position: 1rem -2rem;
+  background-size: clamp(22rem, 28vw, 27rem);
+  opacity: 0.74;
 }
 
 .js .section-deck {
@@ -2289,46 +2247,10 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     overflow-x: clip;
   }
 
-  .section-page--intro::before {
-    top: -7rem;
-    right: -4rem;
-    width: 17rem;
-    border-width: 2.5rem;
-  }
-
-  .section-page--intro::after {
-    top: 43%;
-    right: -9rem;
-    width: 16rem;
-    height: 10rem;
-  }
-
-  .section-page--about::before {
-    right: -9rem;
-    bottom: -8rem;
-    width: 22rem;
-    border-width: 3rem;
-  }
-
-  .section-page--about::after {
-    bottom: 9rem;
-    left: -11rem;
-    width: 20rem;
-    height: 12rem;
-  }
-
-  .section-page--projects::before {
-    top: -8rem;
-    left: -7rem;
-    width: 20rem;
-    border-width: 3rem;
-  }
-
-  .section-page--projects::after {
-    right: -10rem;
-    bottom: 7rem;
-    width: 20rem;
-    height: 12rem;
+  .section-page::before {
+    inset: -1rem;
+    transform: none;
+    background-size: 22rem;
   }
 
   .section-page__scroller {
@@ -2651,8 +2573,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     display: none;
   }
 
-  .section-page::before,
-  .section-page::after {
+  .section-page::before {
     display: none;
   }
 
@@ -2679,8 +2600,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
   .section-rail,
   .intro-reel,
-  .section-page::before,
-  .section-page::after {
+  .section-page::before {
     display: none !important;
   }
 
