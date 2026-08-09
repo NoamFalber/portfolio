@@ -9,11 +9,10 @@ const sectionRailLinks = [
 ];
 const sectionDeck = document.querySelector(".section-deck");
 const sectionAnnouncer = document.querySelector("[data-section-announcer]");
-const edgePrevious = document.querySelector('[data-edge-switch="previous"]');
-const edgeNext = document.querySelector('[data-edge-switch="next"]');
 const skipLink = document.querySelector("[data-skip-link]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const mobileLayout = window.matchMedia("(max-width: 42rem)");
+const singleViewportLayout = window.matchMedia("(min-width: 56.01rem)");
 const deferredProjectImages = [
   ...document.querySelectorAll("[data-deferred-src]"),
 ];
@@ -25,11 +24,7 @@ const sectionNames = sectionPages.map(
 let currentSection = 0;
 let isTransitioning = false;
 let transitionTimer = 0;
-let edgeDirection = 0;
-let edgeReady = false;
-let edgeGestureTimer = 0;
 let touchStartY = null;
-let pendingTouchEdgeDirection = 0;
 
 function loadDeferredProjectImages() {
   deferredProjectImages.forEach((image) => {
@@ -99,57 +94,6 @@ function isAtBoundary(scroller, direction) {
   );
 }
 
-function edgeControlForDirection(direction) {
-  return direction < 0 ? edgePrevious : edgeNext;
-}
-
-function updateEdgeControls() {
-  const previousIndex = currentSection - 1;
-  const nextIndex = currentSection + 1;
-
-  edgePrevious.hidden = previousIndex < 0;
-  edgeNext.hidden = nextIndex >= sectionPages.length;
-
-  if (previousIndex >= 0) {
-    edgePrevious.querySelector("[data-edge-title]").textContent = sectionNames[previousIndex];
-  }
-
-  if (nextIndex < sectionPages.length) {
-    edgeNext.querySelector("[data-edge-title]").textContent = sectionNames[nextIndex];
-  }
-}
-
-function dismissEdge() {
-  window.clearTimeout(edgeGestureTimer);
-  edgeGestureTimer = 0;
-  edgeDirection = 0;
-  edgeReady = false;
-  edgePrevious.classList.remove("is-visible");
-  edgeNext.classList.remove("is-visible");
-}
-
-function revealEdge(direction, readyAfterGesture = false) {
-  if (!hasNeighbor(direction)) {
-    dismissEdge();
-    return;
-  }
-
-  const control = edgeControlForDirection(direction);
-  const otherControl = edgeControlForDirection(-direction);
-
-  edgeDirection = direction;
-  edgeReady = readyAfterGesture;
-  control.classList.add("is-visible");
-  otherControl.classList.remove("is-visible");
-}
-
-function armEdgeAfterWheelGesture() {
-  window.clearTimeout(edgeGestureTimer);
-  edgeGestureTimer = window.setTimeout(() => {
-    edgeReady = true;
-  }, 180);
-}
-
 function focusSectionHeading(section) {
   const heading = section.querySelector("h1, h2");
 
@@ -175,7 +119,6 @@ function setSection(
   }
 
   if (nextIndex === currentSection) {
-    dismissEdge();
     if (focusHeading) {
       focusSectionHeading(sectionPages[nextIndex]);
     }
@@ -186,10 +129,8 @@ function setSection(
   const direction = nextIndex > previousIndex ? 1 : -1;
   const destination = sectionPages[nextIndex];
   const destinationScroller = destination.querySelector("[data-section-scroller]");
-  const boundarySources = new Set(["wheel", "touch", "keyboard", "edge"]);
+  const boundarySources = new Set(["wheel", "touch", "keyboard"]);
 
-  pendingTouchEdgeDirection = 0;
-  dismissEdge();
   isTransitioning = true;
   sectionDeck?.classList.add("is-section-transitioning");
   window.clearTimeout(transitionTimer);
@@ -220,8 +161,6 @@ function setSection(
     }
   });
 
-  updateEdgeControls();
-
   if (historyMode === "push") {
     window.history.pushState({ section: destination.id }, "", `#${destination.id}`);
   } else if (historyMode === "replace") {
@@ -244,14 +183,14 @@ function setSection(
   }, transitionDuration);
 }
 
-function navigateFromEdge(direction, source) {
+function navigateSection(direction, source) {
   if (!hasNeighbor(direction)) {
     return;
   }
 
   setSection(currentSection + direction, {
     historyMode: "push",
-    focusHeading: source === "edge" || source === "keyboard",
+    focusHeading: source === "keyboard",
     source,
   });
 }
@@ -272,25 +211,16 @@ function handleWheel(event) {
   const direction = event.deltaY > 0 ? 1 : -1;
   const scroller = activeScroller();
 
-  if (!hasNeighbor(direction) || !isAtBoundary(scroller, direction)) {
-    if (edgeDirection && !isAtBoundary(scroller, edgeDirection)) {
-      dismissEdge();
-    }
+  if (!hasNeighbor(direction)) {
+    return;
+  }
+
+  if (!singleViewportLayout.matches && !isAtBoundary(scroller, direction)) {
     return;
   }
 
   event.preventDefault();
-
-  if (edgeDirection === direction && edgeReady) {
-    navigateFromEdge(direction, "wheel");
-    return;
-  }
-
-  if (edgeDirection !== direction) {
-    revealEdge(direction);
-  }
-
-  armEdgeAfterWheelGesture();
+  navigateSection(direction, "wheel");
 }
 
 function handleBoundaryKey(event) {
@@ -315,30 +245,23 @@ function handleBoundaryKey(event) {
   const direction = keyDirections[event.key];
 
   if (!direction) {
-    if (event.key === "Escape") {
-      dismissEdge();
-    }
     return;
   }
 
   const scroller = activeScroller();
 
-  if (!hasNeighbor(direction) || !isAtBoundary(scroller, direction)) {
+  if (
+    !hasNeighbor(direction) ||
+    (!singleViewportLayout.matches && !isAtBoundary(scroller, direction))
+  ) {
     return;
   }
 
   event.preventDefault();
-
-  if (edgeDirection === direction && edgeReady) {
-    navigateFromEdge(direction, "keyboard");
-  } else {
-    revealEdge(direction, true);
-  }
+  navigateSection(direction, "keyboard");
 }
 
 function handleTouchStart(event) {
-  pendingTouchEdgeDirection = 0;
-
   if (event.touches.length !== 1 || isTransitioning) {
     touchStartY = null;
     return;
@@ -372,17 +295,10 @@ function handleTouchEnd(event) {
   }
 
   if (!isAtBoundary(scroller, direction)) {
-    if (mobileLayout.matches) {
-      pendingTouchEdgeDirection = direction;
-    }
     return;
   }
 
-  if (edgeDirection === direction && edgeReady) {
-    navigateFromEdge(direction, "touch");
-  } else {
-    revealEdge(direction, true);
-  }
+  navigateSection(direction, "touch");
 }
 
 sectionLinks.forEach((link) => {
@@ -407,36 +323,12 @@ skipLink.addEventListener("click", (event) => {
   focusSectionHeading(sectionPages[currentSection]);
 });
 
-edgePrevious.addEventListener("click", () => navigateFromEdge(-1, "edge"));
-edgeNext.addEventListener("click", () => navigateFromEdge(1, "edge"));
-
 sectionPages.forEach((section) => {
   const scroller = section.querySelector("[data-section-scroller]");
 
   scroller.addEventListener("wheel", handleWheel, { passive: false });
   scroller.addEventListener("touchstart", handleTouchStart, { passive: true });
   scroller.addEventListener("touchend", handleTouchEnd, { passive: true });
-  scroller.addEventListener(
-    "scroll",
-    () => {
-      if (
-        mobileLayout.matches &&
-        pendingTouchEdgeDirection &&
-        section === sectionPages[currentSection] &&
-        isAtBoundary(scroller, pendingTouchEdgeDirection)
-      ) {
-        const direction = pendingTouchEdgeDirection;
-        pendingTouchEdgeDirection = 0;
-        revealEdge(direction, true);
-        return;
-      }
-
-      if (edgeDirection && !isAtBoundary(scroller, edgeDirection)) {
-        dismissEdge();
-      }
-    },
-    { passive: true },
-  );
 });
 
 document.addEventListener("keydown", handleBoundaryKey);
@@ -1085,9 +977,6 @@ sectionRailLinks.forEach((link) => {
 });
 
 document.body.dataset.section = sectionPages[initialSection].id;
-edgePrevious.hidden = false;
-edgeNext.hidden = false;
-updateEdgeControls();
 setProject(initialProject);
 setProjectView(projectViewFromHash());
 
