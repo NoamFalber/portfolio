@@ -575,7 +575,7 @@ img {
 }
 
 .js.is-ready .intro-reel__track {
-  animation: intro-reel-conveyor 38s linear infinite;
+  animation: intro-reel-conveyor 76s linear infinite;
   will-change: transform;
 }
 
@@ -612,11 +612,11 @@ img {
 }
 
 .intro-reel__item--project {
-  width: clamp(30rem, 52vw, 52rem);
+  width: max(30rem, 52vw);
 }
 
 .intro-reel__item--profile {
-  width: clamp(20rem, 34vw, 34rem);
+  width: max(20rem, 34vw);
 }
 
 .intro-reel__item img {
