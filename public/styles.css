@@ -448,6 +448,119 @@ img {
   z-index: 1;
 }
 
+.intro-reel {
+  --reel-gap: 0rem;
+  --reel-overlap: clamp(3.5rem, 7vw, 7rem);
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: -6rem;
+  left: 0;
+  height: clamp(20rem, 48vh, 32rem);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.intro-reel::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--intro-paper) 0%,
+    transparent 10%,
+    transparent 90%,
+    var(--intro-paper) 100%
+  );
+  content: "";
+}
+
+.intro-reel__viewport {
+  height: 100%;
+  overflow: hidden;
+  opacity: 0.42;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 22%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 22%,
+    #000 100%
+  );
+}
+
+.intro-reel__track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  gap: var(--reel-gap);
+  filter: blur(3.2px) saturate(0.72) contrast(0.92);
+}
+
+.js.is-ready .intro-reel__track {
+  animation: intro-reel-conveyor 76s linear infinite;
+  will-change: transform;
+}
+
+.section-page[aria-hidden="true"] .intro-reel__track {
+  animation-play-state: paused;
+}
+
+.intro-reel__group {
+  display: flex;
+  flex: 0 0 auto;
+  height: 100%;
+  gap: var(--reel-gap);
+}
+
+.intro-reel__item {
+  flex: 0 0 auto;
+  height: 100%;
+  margin-right: calc(var(--reel-overlap) * -1);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 16%,
+    #000 84%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 16%,
+    #000 84%,
+    transparent 100%
+  );
+}
+
+.intro-reel__item--project {
+  width: max(30rem, 52vw);
+}
+
+.intro-reel__item--profile {
+  width: max(20rem, 34vw);
+}
+
+.intro-reel__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+}
+
+.intro-reel__item--project img {
+  object-position: 50% 53%;
+}
+
+.intro-reel__item--profile img {
+  object-position: center 43%;
+}
+
 .about-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(19rem, 0.85fr);
@@ -494,7 +607,7 @@ img {
 .about-facts {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1.35fr 1.55fr 1.1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
   border-block: 2px solid var(--ink);
 }
@@ -1800,6 +1913,12 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   }
 }
 
+@keyframes intro-reel-conveyor {
+  to {
+    transform: translateX(calc(-50% - (var(--reel-gap) / 2)));
+  }
+}
+
 @media (min-width: 56.01rem) {
   .js .section-page__scroller {
     overflow-y: hidden;
@@ -1977,12 +2096,6 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   .about-facts {
     grid-column: 1;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .about-facts > div:nth-child(3) {
-    grid-column: 1 / -1;
-    border-top: 1px solid var(--ink);
-    border-left: 0;
   }
 
   .project-toolbar {
@@ -2163,7 +2276,16 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   .intro-layout {
     gap: 3rem;
     padding-top: 2.5rem;
-    padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(10rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .intro-reel {
+    bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+    height: clamp(18rem, 50vh, 24rem);
+  }
+
+  .intro-reel__viewport {
+    opacity: 0.3;
   }
 
   .intro-copy h1 {
@@ -2191,10 +2313,6 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   .about-facts > div + div {
     border-top: 1px solid var(--ink);
     border-left: 0;
-  }
-
-  .about-facts > div:nth-child(3) {
-    grid-column: auto;
   }
 
   .projects-heading h2 {
@@ -2392,6 +2510,11 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     animation-iteration-count: 1 !important;
   }
 
+  .intro-reel__track {
+    transform: none !important;
+    animation: none !important;
+  }
+
 }
 
 @media (forced-colors: active) {
@@ -2403,6 +2526,10 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   .contact-link {
     border: 2px solid currentColor;
     box-shadow: none;
+  }
+
+  .intro-reel {
+    display: none;
   }
 
 }
@@ -2426,7 +2553,8 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     overflow: visible;
   }
 
-  .section-rail {
+  .section-rail,
+  .intro-reel {
     display: none !important;
   }
 
