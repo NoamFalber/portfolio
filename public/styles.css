@@ -541,8 +541,8 @@ img {
   background: linear-gradient(
     90deg,
     var(--intro-paper) 0%,
-    transparent 16%,
-    transparent 82%,
+    transparent 10%,
+    transparent 90%,
     var(--intro-paper) 100%
   );
   content: "";
@@ -551,17 +551,17 @@ img {
 .intro-reel__viewport {
   height: 100%;
   overflow: hidden;
-  opacity: 0.23;
+  opacity: 0.42;
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    #000 32%,
+    #000 22%,
     #000 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    #000 32%,
+    #000 22%,
     #000 100%
   );
 }
@@ -571,7 +571,7 @@ img {
   width: max-content;
   height: 100%;
   gap: var(--reel-gap);
-  filter: blur(6px) saturate(0.58) contrast(0.86);
+  filter: blur(3.2px) saturate(0.72) contrast(0.92);
 }
 
 .js.is-ready .intro-reel__track {
@@ -2412,7 +2412,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   }
 
   .intro-reel__viewport {
-    opacity: 0.17;
+    opacity: 0.3;
   }
 
   .intro-copy h1 {
