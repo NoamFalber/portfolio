@@ -192,18 +192,16 @@ function setSection(
   }
 
   if (focusHeading) {
-    const delay = reducedMotion.matches ? 0 : 360;
-    window.setTimeout(() => focusSectionHeading(destination), delay);
+    window.setTimeout(() => focusSectionHeading(destination), 360);
   }
 
-  const transitionDuration = reducedMotion.matches ? 0 : 700;
   transitionTimer = window.setTimeout(() => {
     isTransitioning = false;
     sectionDeck?.classList.remove("is-section-transitioning");
     sectionPages.forEach((section) => {
       section.classList.remove("is-section-bypassed");
     });
-  }, transitionDuration);
+  }, 700);
 }
 
 function navigateSection(direction, source) {

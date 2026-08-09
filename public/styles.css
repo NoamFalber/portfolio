@@ -2588,6 +2588,10 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     animation-iteration-count: 1 !important;
   }
 
+  .js.is-ready .section-page:not(.is-section-bypassed) {
+    transition-duration: 680ms !important;
+  }
+
   .intro-reel__track {
     transform: none !important;
     animation: none !important;
