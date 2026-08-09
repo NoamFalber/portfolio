@@ -1771,6 +1771,50 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 }
 
+@media (min-width: 56.01rem) and (max-height: 42rem) {
+  .about-layout {
+    grid-template-columns: minmax(0, 0.85fr) minmax(20rem, 1.15fr);
+    gap: 1.25rem 2rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .about-heading h2 {
+    font-size: clamp(2.8rem, 5vw, 4.1rem);
+    line-height: 0.9;
+  }
+
+  .about-copy p {
+    font-size: 0.9rem;
+    line-height: 1.42;
+  }
+
+  .about-copy .about-copy__lead {
+    margin-bottom: 0.75rem;
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  .about-copy .button {
+    min-height: 2.75rem;
+    margin-top: 0.9rem;
+  }
+
+  .about-facts > div {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .about-facts dt {
+    font-size: 0.7rem;
+  }
+
+  .about-facts dd {
+    margin-top: 0.3rem;
+    font-size: 0.82rem;
+    line-height: 1.2;
+  }
+}
+
 @media (max-width: 56rem) {
   .js .projects-layout {
     height: auto;
