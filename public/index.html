@@ -8,7 +8,7 @@
     >
     <meta
       name="description"
-      content="The development and technical art portfolio of Noam Falber."
+      content="Noam Falber is a Developer and Technical Artist building gameplay systems, custom tools, and real-time visuals with C# and Unity."
     >
     <meta name="theme-color" content="#f4efe4">
     <title>Noam Falber — Developer &amp; Technical Artist</title>
@@ -43,8 +43,8 @@
                 <span>Technical Artist</span>
               </p>
               <p class="intro-summary">
-                A focused portfolio of development and technical-art work for
-                games.
+                I build gameplay systems, custom tools, and real-time visuals,
+                mostly in C# and Unity.
               </p>
               <div class="intro-actions">
                 <a
@@ -53,7 +53,7 @@
                   data-section-link
                   data-section-target="projects"
                 >
-                  View selected projects
+                  View selected work
                   <span aria-hidden="true">↘</span>
                 </a>
                 <a
@@ -62,27 +62,29 @@
                   data-section-link
                   data-section-target="about"
                 >
-                  A little about me
+                  How I work
                   <span aria-hidden="true">↓</span>
                 </a>
               </div>
             </div>
 
-            <figure class="portrait-card">
-              <div
-                class="portrait-card__art"
-                role="img"
-                aria-label="Noam Falber monogram"
-              >
-                <span class="portrait-card__sun" aria-hidden="true"></span>
-                <span class="portrait-card__horizon" aria-hidden="true"></span>
-                <span class="portrait-card__monogram" aria-hidden="true">NF</span>
+            <aside class="engine-card" aria-labelledby="engine-card-title">
+              <div class="engine-card__art">
+                <p>Built with C# + MonoGame</p>
+                <h2 id="engine-card-title">A reusable<br>2D ECS engine</h2>
+                <p class="engine-card__systems-label">Including systems for</p>
+                <ul class="engine-card__systems">
+                  <li><span aria-hidden="true">01</span>UI</li>
+                  <li><span aria-hidden="true">02</span>Animation</li>
+                  <li><span aria-hidden="true">03</span>Rendering</li>
+                  <li><span aria-hidden="true">04</span>Scenes</li>
+                </ul>
               </div>
-              <figcaption>
-                <strong>Noam Falber</strong>
-                <span>Developer &amp; Technical Artist</span>
-              </figcaption>
-            </figure>
+              <p class="engine-card__caption">
+                <strong>One system I’ve built</strong>
+                <span>Engine development on top of a framework</span>
+              </p>
+            </aside>
           </div>
         </div>
       </section>
@@ -99,19 +101,24 @@
           <div class="about-layout section-content">
             <header class="about-heading">
               <p class="section-kicker">About</p>
-              <h2 id="about-title" tabindex="-1">Two disciplines,<br>one practice.</h2>
+              <h2 id="about-title" tabindex="-1">
+                I like building the parts other people build with.
+              </h2>
             </header>
 
             <div class="about-copy">
               <p class="about-copy__lead">
-                I’m a Developer and Technical Artist. My work sits between the
-                systems that make a game function and the visual decisions that
-                shape how it feels.
+                I’m most experienced with C# and Unity. I build gameplay
+                mechanics, but I also spend a lot of time on the custom tools
+                around them: interfaces that let designers and artists build
+                spells, lay out entire maps, and iterate inside the project.
               </p>
               <p>
-                This portfolio keeps those two sides together: the visible
-                result first, then the work and decisions behind it. The goal is
-                to make each project quick to understand and useful to inspect.
+                I’ve worked both solo and with dedicated teams, and I prefer the
+                back-and-forth of team development. The work I gravitate toward
+                sits where code, design, and art overlap: shaders,
+                post-processing, GPU-intensive effects, volumetric clouds, and
+                the systems that make them easier to build.
               </p>
               <a
                 class="button button--ink"
@@ -124,14 +131,27 @@
               </a>
             </div>
 
-            <aside class="practice-note" aria-label="Professional focus">
-              <p>Working between</p>
+            <dl class="about-facts" aria-label="Experience and education">
               <div>
-                <span>Development</span>
-                <span class="practice-note__join" aria-hidden="true">↔</span>
-                <span>Technical art</span>
+                <dt>Primary stack</dt>
+                <dd>C# + Unity</dd>
               </div>
-            </aside>
+              <div>
+                <dt>Engine work</dt>
+                <dd>MonoGame + 2D ECS</dd>
+              </div>
+              <div>
+                <dt>Also built with</dt>
+                <dd>
+                  C++ · C · Java · JavaScript<br>
+                  Godot · Unreal Engine 5 · raylib
+                </dd>
+              </div>
+              <div>
+                <dt>Education</dt>
+                <dd>Game development, Tiltan<br>Haifa · 2024–2026</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </section>
@@ -584,7 +604,7 @@
             <span class="section-rail__number">01</span>
             <span class="section-rail__copy">
               <strong>Intro</strong>
-              <small>Name, role &amp; portrait</small>
+              <small>Name, role &amp; proof</small>
             </span>
           </a>
         </li>
@@ -597,7 +617,7 @@
             <span class="section-rail__number">02</span>
             <span class="section-rail__copy">
               <strong>About</strong>
-              <small>Who I am</small>
+              <small>Experience &amp; tools</small>
             </span>
           </a>
         </li>
