@@ -1444,10 +1444,23 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   color: var(--sun);
 }
 
-.build-player__bar strong span {
+.build-player__status-dot {
+  flex: 0 0 auto;
   width: 0.55rem;
   height: 0.55rem;
   border-radius: 50%;
+  background: var(--coral);
+}
+
+[data-build-status="loading"] .build-player__status-dot {
+  animation: build-status-pulse 1.1s ease-in-out infinite;
+}
+
+[data-build-status="ready"] .build-player__status-dot {
+  background: #6ee7a0;
+}
+
+[data-build-status="error"] .build-player__status-dot {
   background: var(--coral);
 }
 
@@ -1461,6 +1474,65 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   padding: 2rem;
   background: var(--green-dark);
   text-align: center;
+}
+
+.build-player__viewport--embedded {
+  display: block;
+  padding: 0;
+  background: #231f20;
+  text-align: left;
+}
+
+.build-player__viewport--embedded::before,
+.build-player__viewport--embedded::after {
+  display: none;
+}
+
+.build-player__frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  background: #231f20;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.build-player__viewport--embedded.is-frame-loaded .build-player__frame {
+  opacity: 1;
+}
+
+.build-player__loading {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--green-dark);
+  color: var(--paper-light);
+  text-align: center;
+}
+
+.build-player__loading p {
+  margin: 0;
+  font-weight: 700;
+}
+
+.build-player__loader {
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 0.35rem solid rgba(255, 253, 248, 0.24);
+  border-top-color: var(--coral);
+  border-radius: 50%;
+  animation: build-loader-spin 850ms linear infinite;
+}
+
+.build-player__viewport--embedded.is-frame-loaded .build-player__loading {
+  display: none;
 }
 
 .build-player__viewport::before,
@@ -1529,6 +1601,16 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .build-player__footer {
   border-top: 1px solid #53685e;
+}
+
+.build-player__external {
+  color: var(--sun);
+  font-weight: 700;
+  text-underline-offset: 0.2rem;
+}
+
+.build-player__external:hover {
+  color: var(--paper-light);
 }
 
 .empty-project-visual {
@@ -1731,6 +1813,25 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
   50% {
     transform: translateX(0.32rem);
+  }
+}
+
+@keyframes build-loader-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes build-status-pulse {
+  0%,
+  100% {
+    transform: scale(0.75);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 

@@ -366,6 +366,7 @@ const workspaceWindows = [
 const projectBuildPanels = [
   ...document.querySelectorAll("[data-project-build-panel]"),
 ];
+const projectBuildFrames = [...document.querySelectorAll("[data-build-frame]")];
 const projectBuildReturnButton = document.querySelector(
   "[data-project-build-return]",
 );
@@ -376,6 +377,63 @@ const projectBuildWindowTitle = document.querySelector(
   "[data-build-window-title]",
 );
 let projectWindowTransitionTimer = 0;
+
+function setBuildStatus(frame, status) {
+  const panel = frame.closest("[data-project-build-panel]");
+  const statusLabel = panel?.querySelector("[data-build-status-label]");
+
+  if (!panel || !statusLabel) {
+    return;
+  }
+
+  const labels = {
+    loading: "Game files are loading…",
+    ready: "Build running",
+    error: "Build could not start",
+  };
+
+  panel.dataset.buildStatus = status;
+  statusLabel.textContent = labels[status] ?? "Ready to load";
+}
+
+function loadActiveProjectBuild() {
+  const activeProject = document.body.dataset.project;
+  const panel = projectBuildPanels.find(
+    (buildPanel) => buildPanel.dataset.projectBuildPanel === activeProject,
+  );
+  const frame = panel?.querySelector("[data-build-frame]");
+
+  if (!frame || frame.hasAttribute("src")) {
+    return;
+  }
+
+  setBuildStatus(frame, "loading");
+  frame.addEventListener(
+    "load",
+    () => {
+      frame.closest("[data-build-shell]")?.classList.add("is-frame-loaded");
+    },
+    { once: true },
+  );
+  frame.src = frame.dataset.buildSrc;
+}
+
+window.addEventListener("message", (event) => {
+  if (
+    event.origin !== window.location.origin ||
+    event.data?.type !== "portfolio-unity-build"
+  ) {
+    return;
+  }
+
+  const frame = projectBuildFrames.find(
+    (buildFrame) => buildFrame.contentWindow === event.source,
+  );
+
+  if (frame && ["loading", "ready", "error"].includes(event.data.state)) {
+    setBuildStatus(frame, event.data.state);
+  }
+});
 
 function projectNameFromHash() {
   return window.location.hash.match(/^#(project-\d+)(?:$|-)/)?.[1] ?? null;
@@ -524,6 +582,10 @@ function setProjectView(
   animateProjectViewChange(mode, previousMode);
   applyProjectViewState();
   updateProjectViewButton();
+
+  if (mode === "build") {
+    loadActiveProjectBuild();
+  }
 
   if (selectedTab && historyMode !== "none") {
     const target =

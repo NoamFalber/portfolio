@@ -1,3 +1,6 @@
 # Private local portfolio knowledge and Codex instructions
 /Docs/
 /AGENTS.md
+
+# Local drop folder for exported game builds; deployable copies live in public/.
+/GameWebBuilds/

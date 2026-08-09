@@ -300,7 +300,7 @@
                     data-project-tab="project-2"
                     data-project-title="Project Two"
                     data-build-target="project-2-build"
-                    data-has-build="true"
+                    data-has-build="false"
                   >
                     <span>02</span>
                     <span>
@@ -624,21 +624,35 @@
                   >
                     <div class="build-player">
                       <header class="build-player__bar">
-                        <span>Project One / Web build</span>
-                        <strong><span aria-hidden="true"></span>Placeholder</strong>
+                        <h3 class="sr-only" id="project-1-build-title">Project One playable web build</h3>
+                        <span>Project One / Unity WebGL</span>
+                        <strong aria-live="polite">
+                          <span class="build-player__status-dot" aria-hidden="true"></span>
+                          <span data-build-status-label>Ready to load</span>
+                        </strong>
                       </header>
-                      <div class="build-player__viewport">
-                        <span class="build-player__play" aria-hidden="true">▶</span>
-                        <p>Web build</p>
-                        <h3 id="project-1-build-title">Project One playable space</h3>
-                        <p>
-                          The Project One build will load inside this frame when
-                          its files are connected.
-                        </p>
+                      <div class="build-player__viewport build-player__viewport--embedded" data-build-shell>
+                        <div class="build-player__loading" data-build-loading>
+                          <span class="build-player__loader" aria-hidden="true"></span>
+                          <p>Opening the web build…</p>
+                        </div>
+                        <iframe
+                          class="build-player__frame"
+                          title="Project One playable web build"
+                          data-build-frame
+                          data-build-src="builds/project-one/"
+                          allow="autoplay; fullscreen; gamepad"
+                          allowfullscreen
+                        ></iframe>
                       </div>
                       <footer class="build-player__footer">
-                        <span>Browser player placeholder</span>
-                        <span>No build connected</span>
+                        <span>First launch may take a moment</span>
+                        <a
+                          class="build-player__external"
+                          href="builds/project-one/"
+                          target="_blank"
+                          rel="noopener"
+                        >Open in a full window <span aria-hidden="true">↗</span></a>
                       </footer>
                     </div>
                   </section>
