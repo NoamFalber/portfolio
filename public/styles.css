@@ -522,13 +522,14 @@ img {
 }
 
 .intro-reel {
-  --reel-gap: clamp(1rem, 2vw, 2rem);
+  --reel-gap: 0rem;
+  --reel-overlap: clamp(3.5rem, 7vw, 7rem);
   position: absolute;
   z-index: 0;
   right: 0;
-  bottom: 0;
+  bottom: -6rem;
   left: 0;
-  height: clamp(10rem, 23vh, 14rem);
+  height: clamp(20rem, 48vh, 32rem);
   overflow: hidden;
   pointer-events: none;
 }
@@ -540,8 +541,8 @@ img {
   background: linear-gradient(
     90deg,
     var(--intro-paper) 0%,
-    transparent 10%,
-    transparent 86%,
+    transparent 16%,
+    transparent 82%,
     var(--intro-paper) 100%
   );
   content: "";
@@ -550,17 +551,17 @@ img {
 .intro-reel__viewport {
   height: 100%;
   overflow: hidden;
-  opacity: 0.28;
+  opacity: 0.23;
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    #000 28%,
+    #000 32%,
     #000 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    #000 28%,
+    #000 32%,
     #000 100%
   );
 }
@@ -570,11 +571,11 @@ img {
   width: max-content;
   height: 100%;
   gap: var(--reel-gap);
-  filter: blur(1.6px) saturate(0.72) contrast(0.9);
+  filter: blur(6px) saturate(0.58) contrast(0.86);
 }
 
 .js.is-ready .intro-reel__track {
-  animation: intro-reel-conveyor 30s linear infinite;
+  animation: intro-reel-conveyor 38s linear infinite;
   will-change: transform;
 }
 
@@ -592,23 +593,37 @@ img {
 .intro-reel__item {
   flex: 0 0 auto;
   height: 100%;
+  margin-right: calc(var(--reel-overlap) * -1);
   overflow: hidden;
-  background: var(--green-dark);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 16%,
+    #000 84%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 16%,
+    #000 84%,
+    transparent 100%
+  );
 }
 
 .intro-reel__item--project {
-  width: clamp(28rem, 44vw, 46rem);
+  width: clamp(30rem, 52vw, 52rem);
 }
 
 .intro-reel__item--profile {
-  width: clamp(16rem, 26vw, 26rem);
+  width: clamp(20rem, 34vw, 34rem);
 }
 
 .intro-reel__item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.04);
+  transform: scale(1.1);
 }
 
 .intro-reel__item--project img {
@@ -2392,12 +2407,12 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   }
 
   .intro-reel {
-    bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
-    height: clamp(11rem, 28vh, 14rem);
+    bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+    height: clamp(18rem, 50vh, 24rem);
   }
 
   .intro-reel__viewport {
-    opacity: 0.22;
+    opacity: 0.17;
   }
 
   .intro-copy h1 {
