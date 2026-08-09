@@ -2,15 +2,15 @@
 
 const unityBrotliTypes = new Map([
   [
-    "/builds/project-one/Build/web-build.data.br",
+    "/builds/project-one/Build/web-build-v2.data.br",
     "application/octet-stream",
   ],
   [
-    "/builds/project-one/Build/web-build.framework.js.br",
+    "/builds/project-one/Build/web-build-v2.framework.js.br",
     "application/javascript",
   ],
   [
-    "/builds/project-one/Build/web-build.wasm.br",
+    "/builds/project-one/Build/web-build-v2.wasm.br",
     "application/wasm",
   ],
 ]);
