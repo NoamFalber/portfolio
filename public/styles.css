@@ -137,53 +137,20 @@ img {
 
 .section-page {
   position: relative;
-  isolation: isolate;
   min-height: 100svh;
   overflow: hidden;
-}
-
-.section-page::before {
-  position: absolute;
-  z-index: 0;
-  inset: -2rem;
-  transform: rotate(-1.25deg) scale(1.04);
-  background-repeat: repeat;
-  content: "";
-  pointer-events: none;
 }
 
 .section-page--intro {
   background: var(--intro-paper);
 }
 
-.section-page--intro::before {
-  background-image: url("assets/patterns/intro-wallpaper.svg");
-  background-position: 2rem 1rem;
-  background-size: clamp(25rem, 32vw, 31rem);
-  opacity: 0.7;
-}
-
 .section-page--about {
   background: var(--mint);
 }
 
-.section-page--about::before {
-  transform: rotate(1deg) scale(1.04);
-  background-image: url("assets/patterns/about-wallpaper.svg");
-  background-position: -1rem 3rem;
-  background-size: clamp(24rem, 30vw, 29rem);
-  opacity: 0.72;
-}
-
 .section-page--projects {
   background: var(--sky-light);
-}
-
-.section-page--projects::before {
-  background-image: url("assets/patterns/projects-wallpaper.svg");
-  background-position: 1rem -2rem;
-  background-size: clamp(22rem, 28vw, 27rem);
-  opacity: 0.74;
 }
 
 .js .section-deck {
@@ -234,8 +201,6 @@ img {
 }
 
 .section-page__scroller {
-  position: relative;
-  z-index: 1;
   min-height: 100svh;
 }
 
@@ -2247,12 +2212,6 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     overflow-x: clip;
   }
 
-  .section-page::before {
-    inset: -1rem;
-    transform: none;
-    background-size: 22rem;
-  }
-
   .section-page__scroller {
     overscroll-behavior: none;
     touch-action: pan-y pinch-zoom;
@@ -2573,10 +2532,6 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     display: none;
   }
 
-  .section-page::before {
-    display: none;
-  }
-
 }
 
 @media print {
@@ -2599,8 +2554,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   }
 
   .section-rail,
-  .intro-reel,
-  .section-page::before {
+  .intro-reel {
     display: none !important;
   }
 
