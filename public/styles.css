@@ -327,16 +327,25 @@ img {
   font-weight: 700;
 }
 
-.profile-link {
+.contact-links {
+  display: flex;
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.contact-link {
   display: inline-flex;
   min-height: 2.75rem;
-  gap: 0.55rem;
+  gap: 0.45rem;
   align-items: center;
-  padding: 0.45rem 0.65rem;
+  padding: 0.4rem 0.55rem;
   border: 1px solid var(--ink);
   background: var(--paper-light);
   box-shadow: 0.16rem 0.16rem 0 var(--shadow);
   color: var(--ink);
+  font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
   transition:
@@ -345,17 +354,19 @@ img {
     background-color 150ms ease;
 }
 
-.profile-link:hover {
+.contact-link:hover {
   background: var(--sun);
   box-shadow: 0.06rem 0.06rem 0 var(--shadow);
   transform: translate(0.1rem, 0.1rem);
 }
 
-.profile-link svg {
+.contact-link svg {
+  width: 1.25rem;
+  height: 1.25rem;
   flex: 0 0 auto;
 }
 
-.profile-link > span:last-child {
+.contact-link__arrow {
   color: var(--coral-dark);
 }
 
@@ -1872,6 +1883,18 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     min-height: 3rem;
   }
 
+  .contact-links {
+    gap: 0.45rem;
+  }
+
+  .contact-link {
+    padding-inline: 0.45rem;
+  }
+
+  .contact-link__arrow {
+    display: none;
+  }
+
   .about-layout {
     grid-template-columns: minmax(0, 0.85fr) minmax(20rem, 1.15fr);
     gap: 1.25rem 2rem;
@@ -2320,6 +2343,20 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     justify-content: space-between;
   }
 
+  .contact-links {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-link {
+    justify-content: center;
+  }
+
+  .contact-link:last-child {
+    grid-column: 1 / -1;
+  }
+
   .about-facts {
     grid-template-columns: 1fr;
   }
@@ -2360,7 +2397,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   .section-rail a[aria-current="page"],
   .section-rail ol,
   .portrait-card__media,
-  .profile-link {
+  .contact-link {
     border: 2px solid currentColor;
     box-shadow: none;
   }
