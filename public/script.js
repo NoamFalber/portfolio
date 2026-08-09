@@ -125,15 +125,35 @@ function setSection(
     return;
   }
 
+  if (
+    sectionPages[currentSection]?.id === "projects" &&
+    sectionPages[nextIndex]?.id !== "projects"
+  ) {
+    setProjectView("showcase");
+  }
+
   const previousIndex = currentSection;
   const direction = nextIndex > previousIndex ? 1 : -1;
   const destination = sectionPages[nextIndex];
   const destinationScroller = destination.querySelector("[data-section-scroller]");
   const boundarySources = new Set(["wheel", "touch", "keyboard"]);
+  const isSkippingSection = Math.abs(nextIndex - previousIndex) > 1;
 
   isTransitioning = true;
   sectionDeck?.classList.add("is-section-transitioning");
   window.clearTimeout(transitionTimer);
+
+  sectionPages.forEach((section) => {
+    section.classList.remove("is-section-bypassed");
+  });
+
+  if (isSkippingSection) {
+    sectionPages.forEach((section, index) => {
+      if (index !== previousIndex && index !== nextIndex) {
+        section.classList.add("is-section-bypassed");
+      }
+    });
+  }
 
   if (boundarySources.has(source)) {
     destinationScroller.scrollTop = direction > 0 ? 0 : destinationScroller.scrollHeight;
@@ -180,6 +200,9 @@ function setSection(
   transitionTimer = window.setTimeout(() => {
     isTransitioning = false;
     sectionDeck?.classList.remove("is-section-transitioning");
+    sectionPages.forEach((section) => {
+      section.classList.remove("is-section-bypassed");
+    });
   }, transitionDuration);
 }
 
@@ -387,6 +410,7 @@ function setBuildStatus(frame, status) {
   }
 
   const labels = {
+    idle: "Ready to load",
     loading: "Game files are loading…",
     ready: "Build running",
     error: "Build could not start",
@@ -394,6 +418,18 @@ function setBuildStatus(frame, status) {
 
   panel.dataset.buildStatus = status;
   statusLabel.textContent = labels[status] ?? "Ready to load";
+}
+
+function unloadProjectBuilds() {
+  projectBuildFrames.forEach((frame) => {
+    frame.closest("[data-build-shell]")?.classList.remove("is-frame-loaded");
+
+    if (frame.hasAttribute("src")) {
+      frame.removeAttribute("src");
+    }
+
+    setBuildStatus(frame, "idle");
+  });
 }
 
 function loadActiveProjectBuild() {
@@ -411,7 +447,9 @@ function loadActiveProjectBuild() {
   frame.addEventListener(
     "load",
     () => {
-      frame.closest("[data-build-shell]")?.classList.add("is-frame-loaded");
+      if (frame.hasAttribute("src")) {
+        frame.closest("[data-build-shell]")?.classList.add("is-frame-loaded");
+      }
     },
     { once: true },
   );
@@ -430,7 +468,10 @@ window.addEventListener("message", (event) => {
     (buildFrame) => buildFrame.contentWindow === event.source,
   );
 
-  if (frame && ["loading", "ready", "error"].includes(event.data.state)) {
+  if (
+    frame?.hasAttribute("src") &&
+    ["loading", "ready", "error"].includes(event.data.state)
+  ) {
     setBuildStatus(frame, event.data.state);
   }
 });
@@ -580,6 +621,11 @@ function setProjectView(
 
   document.body.dataset.projectView = mode;
   animateProjectViewChange(mode, previousMode);
+
+  if (mode === "showcase") {
+    unloadProjectBuilds();
+  }
+
   applyProjectViewState();
   updateProjectViewButton();
 
@@ -615,6 +661,10 @@ function setProject(projectName, focusTab = false) {
 
   if (!selectedTab) {
     return;
+  }
+
+  if (document.body.dataset.project !== projectName) {
+    unloadProjectBuilds();
   }
 
   document.body.dataset.project = projectName;

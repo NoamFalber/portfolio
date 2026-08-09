@@ -137,20 +137,44 @@ img {
 
 .section-page {
   position: relative;
+  isolation: isolate;
   min-height: 100svh;
   overflow: hidden;
+}
+
+.section-page::before {
+  position: absolute;
+  z-index: 0;
+  inset: -3%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+  pointer-events: none;
 }
 
 .section-page--intro {
   background: var(--intro-paper);
 }
 
+.section-page--intro::before {
+  background-image: url("assets/wallpapers/intro-flow.svg");
+}
+
 .section-page--about {
   background: var(--mint);
 }
 
+.section-page--about::before {
+  background-image: url("assets/wallpapers/about-flow.svg");
+}
+
 .section-page--projects {
   background: var(--sky-light);
+}
+
+.section-page--projects::before {
+  background-image: url("assets/wallpapers/projects-flow.svg");
 }
 
 .js .section-deck {
@@ -172,6 +196,11 @@ img {
   will-change: transform;
 }
 
+.js .section-page.is-section-bypassed {
+  visibility: hidden;
+  transition: none;
+}
+
 .js:not(.is-ready) .section-page {
   transition: none;
 }
@@ -185,7 +214,7 @@ img {
 
 .js .section-page[data-position="before"] {
   z-index: 1;
-  transform: translateY(-103%);
+  transform: translateY(-100%);
   pointer-events: none;
 }
 
@@ -196,11 +225,13 @@ img {
 
 .js .section-page[data-position="after"] {
   z-index: 1;
-  transform: translateY(103%);
+  transform: translateY(100%);
   pointer-events: none;
 }
 
 .section-page__scroller {
+  position: relative;
+  z-index: 1;
   min-height: 100svh;
 }
 
@@ -2226,6 +2257,11 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     touch-action: pan-y pinch-zoom;
   }
 
+  .section-page::before {
+    inset: -1.5rem;
+    background-position: 46% center;
+  }
+
   .section-content {
     padding-right: var(--gutter);
     padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
@@ -2546,6 +2582,10 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     display: none;
   }
 
+  .section-page::before {
+    display: none;
+  }
+
 }
 
 @media print {
@@ -2570,6 +2610,10 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   .section-rail,
   .intro-reel {
     display: none !important;
+  }
+
+  .section-page::before {
+    display: none;
   }
 
   .section-content {
