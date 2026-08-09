@@ -492,6 +492,24 @@ img {
   pointer-events: none;
 }
 
+.intro-reel::before {
+  position: absolute;
+  z-index: 2;
+  top: 18%;
+  right: 3%;
+  left: 3%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(82, 103, 93, 0.34) 14%,
+    rgba(82, 103, 93, 0.34) 86%,
+    transparent
+  );
+  box-shadow: 0 -0.75rem 1.5rem rgba(238, 228, 208, 0.52);
+  content: "";
+}
+
 .intro-reel::after {
   position: absolute;
   z-index: 1;
@@ -509,18 +527,13 @@ img {
 .intro-reel__viewport {
   height: 100%;
   overflow: hidden;
-  opacity: 0.42;
-  -webkit-mask-image: linear-gradient(
+  background: linear-gradient(
     to bottom,
     transparent 0%,
-    #000 22%,
-    #000 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    #000 22%,
-    #000 100%
+    transparent 8%,
+    rgba(238, 228, 208, 0.82) 15%,
+    var(--intro-paper) 18%,
+    var(--intro-paper) 100%
   );
 }
 
@@ -529,7 +542,22 @@ img {
   width: max-content;
   height: 100%;
   gap: var(--reel-gap);
+  opacity: 0.42;
   filter: blur(3.2px) saturate(0.72) contrast(0.92);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 18%,
+    #000 28%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 18%,
+    #000 28%,
+    #000 100%
+  );
 }
 
 .js.is-ready .intro-reel__track {
@@ -2329,7 +2357,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     height: clamp(18rem, 50vh, 24rem);
   }
 
-  .intro-reel__viewport {
+  .intro-reel__track {
     opacity: 0.3;
   }
 
