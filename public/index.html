@@ -382,14 +382,14 @@
                     aria-controls="project-2"
                     tabindex="-1"
                     data-project-tab="project-2"
-                    data-project-title="Project Two"
+                    data-project-title="Cave Map Workshop"
                     data-build-target="project-2-build"
-                    data-has-build="false"
+                    data-has-build="true"
                   >
                     <span>02</span>
                     <span>
-                      <strong>Project Two</strong>
-                      <small>Details needed</small>
+                      <strong>Cave Map Workshop</strong>
+                      <small>Runtime map toolkit</small>
                     </span>
                     <span aria-hidden="true">→</span>
                   </button>
@@ -452,7 +452,7 @@
                               <p>Interactive picture</p>
                               <strong>Inspect the scene</strong>
                             </div>
-                            <p>Hover over a target to inspect it. Keyboard users can focus a target.</p>
+                            <p>Hover on desktop or tap on a phone to inspect a target. Keyboard users can focus it.</p>
                             <div class="gallery-pager" role="group" aria-label="Picture navigation">
                               <button type="button" data-gallery-previous aria-label="Previous picture">←</button>
                               <span>
@@ -598,8 +598,8 @@
                               </div>
                               <h4 data-scene-title>Choose a target</h4>
                               <p data-scene-copy>
-                                Hover over any target to show its explanation
-                                here. Keyboard users can focus a target.
+                                Hover on desktop or tap on a phone to show a
+                                target’s explanation. Keyboard users can focus it.
                               </p>
                             </div>
                           </div>
@@ -609,7 +609,7 @@
                 </div>
 
                 <div
-                  class="project-panel project-panel--empty"
+                  class="project-panel project-panel--featured"
                   id="project-2"
                   role="tabpanel"
                   aria-labelledby="project-2-tab"
@@ -617,21 +617,229 @@
                 >
                   <section
                     class="project-showcase"
-                    aria-label="Project Two overview"
+                    aria-label="Cave Map Workshop interactive pictures"
                   >
                       <div class="project-panel__body">
-                        <div class="empty-project-visual" aria-hidden="true">
-                          <span>02</span>
+                        <div class="project-gallery" data-project-gallery>
+                          <header class="gallery-heading">
+                            <div>
+                              <p>Interactive picture</p>
+                              <strong>Inspect the workshop</strong>
+                            </div>
+                            <p>Hover on desktop or tap on a phone to keep a target selected. Keyboard users can focus it.</p>
+                            <div class="gallery-pager" role="group" aria-label="Picture navigation">
+                              <button type="button" data-gallery-previous aria-label="Previous picture">←</button>
+                              <span>
+                                <strong data-gallery-current>01</strong>
+                                <span aria-hidden="true">/</span>
+                                <span data-gallery-total>02</span>
+                              </span>
+                              <button type="button" data-gallery-next aria-label="Next picture">→</button>
+                            </div>
+                          </header>
+
+                          <div class="gallery-slides">
+                            <figure
+                              class="gallery-slide"
+                              id="project-2-picture-1"
+                              data-gallery-slide
+                              data-gallery-index="0"
+                            >
+                              <div
+                                class="interactive-scene interactive-scene--workshop"
+                                data-interactive-scene
+                                data-scene-overview-kicker="Interactive picture"
+                                data-scene-overview-title="Inspect the workshop"
+                                data-scene-overview-copy="Hover on desktop or tap on a phone to inspect how the authoring tool becomes a playable cave."
+                              >
+                                <img
+                                  class="interactive-scene__image"
+                                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                  data-deferred-src="assets/images/GameTwoHero.png"
+                                  data-deferred-alt="The Cave Map Workshop interface showing a layered cave map, tile palette, readiness checks, marker inspector, build controls, and live content statistics."
+                                  width="2558"
+                                  height="1329"
+                                  alt=""
+                                  decoding="async"
+                                >
+                                <noscript>
+                                  <img
+                                    class="interactive-scene__image"
+                                    src="assets/images/GameTwoHero.png"
+                                    width="2558"
+                                    height="1329"
+                                    alt="The Cave Map Workshop interface showing a layered cave map, tile palette, readiness checks, marker inspector, build controls, and live content statistics."
+                                  >
+                                </noscript>
+
+                                <div class="scene-hotspots" role="group" aria-label="Important systems in the Cave Map Workshop">
+                                  <button
+                                    class="scene-hotspot scene-hotspot--map-palette"
+                                    type="button"
+                                    aria-label="Inspect the layered authoring palette"
+                                    data-scene-highlight="map-palette"
+                                  ><span aria-hidden="true"></span></button>
+                                  <button
+                                    class="scene-hotspot scene-hotspot--map-canvas"
+                                    type="button"
+                                    aria-label="Inspect the batched map canvas"
+                                    data-scene-highlight="map-canvas"
+                                  ><span aria-hidden="true"></span></button>
+                                  <button
+                                    class="scene-hotspot scene-hotspot--map-readiness"
+                                    type="button"
+                                    aria-label="Inspect topology-aware validation"
+                                    data-scene-highlight="map-readiness"
+                                  ><span aria-hidden="true"></span></button>
+                                  <button
+                                    class="scene-hotspot scene-hotspot--marker-inspector"
+                                    type="button"
+                                    aria-label="Inspect the function-tile editor"
+                                    data-scene-highlight="marker-inspector"
+                                  ><span aria-hidden="true"></span></button>
+                                  <button
+                                    class="scene-hotspot scene-hotspot--build-play"
+                                    type="button"
+                                    aria-label="Inspect the Build and Play pipeline"
+                                    data-scene-highlight="build-play"
+                                  ><span aria-hidden="true"></span></button>
+                                  <button
+                                    class="scene-hotspot scene-hotspot--content-budget"
+                                    type="button"
+                                    aria-label="Inspect the live content budgets"
+                                    data-scene-highlight="content-budget"
+                                  ><span aria-hidden="true"></span></button>
+                                </div>
+                              </div>
+                              <figcaption>
+                                The runtime authoring workshop in a valid state with warnings: a layered 64 × 64 map is ready to generate and play.
+                              </figcaption>
+                            </figure>
+
+                            <figure
+                              class="gallery-slide"
+                              id="project-2-picture-2"
+                              data-gallery-slide
+                              data-gallery-index="1"
+                              hidden
+                            >
+                              <div
+                                class="interactive-scene interactive-scene--gameplay"
+                                data-interactive-scene
+                                data-scene-overview-kicker="Picture 02"
+                                data-scene-overview-title="Spell-combat gameplay"
+                                data-scene-overview-copy="This gameplay capture is included in the gallery without annotations for now."
+                              >
+                                <img
+                                  class="interactive-scene__image"
+                                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                  data-deferred-src="assets/images/GameTwoOther.png"
+                                  data-deferred-alt="First-person spell-combat gameplay inside a generated cave, with an open spell book showing Blood Orb and Fireball."
+                                  width="2003"
+                                  height="1041"
+                                  alt=""
+                                  decoding="async"
+                                >
+                                <noscript>
+                                  <img
+                                    class="interactive-scene__image"
+                                    src="assets/images/GameTwoOther.png"
+                                    width="2003"
+                                    height="1041"
+                                    alt="First-person spell-combat gameplay inside a generated cave, with an open spell book showing Blood Orb and Fireball."
+                                  >
+                                </noscript>
+                              </div>
+                              <figcaption>
+                                The generated level uses the project’s existing first-person movement, spells, enemies, pickups, death, finish, and reset systems.
+                              </figcaption>
+                            </figure>
+                          </div>
+
+                          <footer class="gallery-controls">
+                            <div class="gallery-thumbnails" role="group" aria-label="Choose a picture">
+                              <button
+                                type="button"
+                                aria-pressed="true"
+                                aria-controls="project-2-picture-1"
+                                data-gallery-thumbnail="0"
+                              >
+                                <img
+                                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                  data-deferred-src="assets/images/GameTwoHero.png"
+                                  width="96"
+                                  height="50"
+                                  alt=""
+                                  decoding="async"
+                                >
+                                <noscript><img src="assets/images/GameTwoHero.png" width="96" height="50" alt=""></noscript>
+                                <span>
+                                  <small>Picture 01</small>
+                                  <strong>Map workshop</strong>
+                                </span>
+                              </button>
+                              <button
+                                type="button"
+                                aria-pressed="false"
+                                aria-controls="project-2-picture-2"
+                                data-gallery-thumbnail="1"
+                              >
+                                <img
+                                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                  data-deferred-src="assets/images/GameTwoOther.png"
+                                  width="96"
+                                  height="50"
+                                  alt=""
+                                  decoding="async"
+                                >
+                                <noscript><img src="assets/images/GameTwoOther.png" width="96" height="50" alt=""></noscript>
+                                <span>
+                                  <small>Picture 02</small>
+                                  <strong>Generated gameplay</strong>
+                                </span>
+                              </button>
+                            </div>
+                          </footer>
                         </div>
-                        <div class="project-summary">
-                          <p class="project-summary__status">Selected project</p>
-                          <h3>Project Two</h3>
-                          <p>
-                            This position is reserved for the second selected
-                            project. No project image, contribution, tools, or
-                            results have been supplied yet.
-                          </p>
-                        </div>
+
+                        <aside
+                          class="project-inspector"
+                          aria-labelledby="project-2-summary-title"
+                        >
+                          <div class="project-inspector__project">
+                            <p>Runtime tools · procedural generation</p>
+                            <h3 id="project-2-summary-title">Cave Map Workshop</h3>
+                            <p>
+                              I turned a mature Unity cave editor into a desktop-and-web runtime tool: paint and validate layered 64 × 64 maps, then use the same C# pipeline to generate and play the full 3D cave in WebGPU.
+                            </p>
+                            <ul class="project-tags" aria-label="Project technologies">
+                              <li>Unity 6</li>
+                              <li>C#</li>
+                              <li>WebGPU</li>
+                            </ul>
+                          </div>
+
+                          <div
+                            class="project-inspector__selection"
+                            data-scene-inspector
+                            data-inspector-state="overview"
+                            aria-live="polite"
+                            aria-atomic="true"
+                          >
+                            <div
+                              class="project-inspector__content"
+                              data-scene-content
+                            >
+                              <div class="project-inspector__selection-head">
+                                <p data-scene-kicker>Interactive picture</p>
+                              </div>
+                              <h4 data-scene-title>Inspect the workshop</h4>
+                              <p data-scene-copy>
+                                Hover on desktop or tap on a phone to inspect how the authoring tool becomes a playable cave.
+                              </p>
+                            </div>
+                          </div>
+                        </aside>
                       </div>
                   </section>
                 </div>
@@ -744,23 +952,37 @@
                     aria-labelledby="project-2-build-title"
                     hidden
                   >
-                    <div class="build-player">
+                    <div class="build-player build-player--project-two">
                       <header class="build-player__bar">
-                        <span>Project Two / Web build</span>
-                        <strong><span aria-hidden="true"></span>Placeholder</strong>
+                        <h3 class="sr-only" id="project-2-build-title">Cave Map Workshop playable web build</h3>
+                        <span>Cave Map Workshop / Unity WebGPU</span>
+                        <strong aria-live="polite">
+                          <span class="build-player__status-dot" aria-hidden="true"></span>
+                          <span data-build-status-label>Ready to load</span>
+                        </strong>
                       </header>
-                      <div class="build-player__viewport">
-                        <span class="build-player__play" aria-hidden="true">▶</span>
-                        <p>Web build</p>
-                        <h3 id="project-2-build-title">Project Two playable space</h3>
-                        <p>
-                          The Project Two build will load inside this frame when
-                          its files are connected.
-                        </p>
+                      <div class="build-player__viewport build-player__viewport--embedded" data-build-shell>
+                        <div class="build-player__loading" data-build-loading>
+                          <span class="build-player__loader" aria-hidden="true"></span>
+                          <p>Opening the Cave Map Workshop…</p>
+                        </div>
+                        <iframe
+                          class="build-player__frame"
+                          title="Cave Map Workshop playable Unity WebGPU build"
+                          data-build-frame
+                          data-build-src="builds/project-two/"
+                          allow="autoplay; fullscreen; gamepad; webgpu"
+                          allowfullscreen
+                        ></iframe>
                       </div>
                       <footer class="build-player__footer">
-                        <span>Browser player placeholder</span>
-                        <span>No build connected</span>
+                        <span>Desktop browser · WebGPU required · first launch is about 57 MB compressed</span>
+                        <a
+                          class="build-player__external"
+                          href="builds/project-two/"
+                          target="_blank"
+                          rel="noopener"
+                        >Open in a full window <span aria-hidden="true">↗</span></a>
                       </footer>
                     </div>
                   </section>
@@ -769,6 +991,161 @@
             </div>
             </div>
           </div>
+      </section>
+
+      <section
+        class="section-page section-page--extra"
+        id="extra"
+        aria-labelledby="extra-title"
+        data-section-page
+        data-section-index="3"
+        data-position="after"
+      >
+        <div class="section-page__scroller" data-section-scroller>
+          <div class="extra-layout section-content">
+            <header class="extra-heading">
+              <p class="section-kicker">Extra</p>
+              <h2 id="extra-title" tabindex="-1">Project deep dives</h2>
+              <p>
+                The systems, constraints, and decisions behind the selected work.
+              </p>
+            </header>
+
+            <div class="extra-project-tabs" role="tablist" aria-label="Choose a project deep dive">
+              <button
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-disabled="true"
+                disabled
+              >
+                <span>01</span>
+                <span><strong>Project One</strong><small>No extra entry</small></span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="extra-project-2"
+              >
+                <span>02</span>
+                <span><strong>Cave Map Workshop</strong><small>Editor + runtime</small></span>
+              </button>
+            </div>
+
+            <article class="extra-case-study" id="extra-project-2" role="tabpanel">
+              <header class="extra-case-study__hero">
+                <div>
+                  <p class="extra-case-study__eyebrow">Unity runtime tool · procedural level generation</p>
+                  <h3>Cave Map Workshop</h3>
+                  <p class="extra-case-study__lead">
+                    I rebuilt an editor-only cave construction workflow as a product people can use at runtime. A designer can draw a layered 2D map, catch invalid topology before building, generate the complete 3D cave and navigation, and enter the existing spell-combat game without leaving the tool.
+                  </p>
+                  <div class="extra-case-study__actions">
+                    <a class="button button--primary" href="builds/project-two/" target="_blank" rel="noopener">
+                      <span>Open the WebGPU build</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                </div>
+                <dl class="extra-meta">
+                  <div><dt>Engine</dt><dd>Unity 6000.4.1f1 · URP 17.4</dd></div>
+                  <div><dt>Core</dt><dd>C# · runtime authoring · procedural generation</dd></div>
+                  <div><dt>Platforms</dt><dd>Desktop Unity · desktop web browsers</dd></div>
+                  <div><dt>Web renderer</dt><dd>WebGPU only · no WebGL fallback</dd></div>
+                </dl>
+              </header>
+
+              <section class="extra-story extra-story--problem" aria-labelledby="extra-problem-title">
+                <div class="extra-story__heading">
+                  <p>01 · The problem</p>
+                  <h4 id="extra-problem-title">Keep the mature map rules. Replace everything that could not ship.</h4>
+                </div>
+                <div class="extra-story__copy">
+                  <p>
+                    The original map painter was an approximately 5,000-line Unity <code>EditorWindow</code>. It depended on editor Undo, <code>AssetDatabase</code>, prefab and mesh saving, scene mutation, and arbitrary project references. Those systems were useful in development, but none could become a browser product.
+                  </p>
+                  <p>
+                    I separated the portable map data, editing transactions, validation, build coordination, persistence, UI, and generated-resource ownership into runtime-safe systems. The established tile rules and procedural <code>MapBuilder</code> stayed authoritative, so desktop and web use the same map logic instead of drifting into two implementations.
+                  </p>
+                </div>
+              </section>
+
+              <section class="extra-story" aria-labelledby="extra-authoring-title">
+                <div class="extra-story__heading">
+                  <p>02 · Editor and authoring</p>
+                  <h4 id="extra-authoring-title">A layered tool that protects intent while people draw.</h4>
+                </div>
+                <div class="extra-story__copy">
+                  <p>
+                    Each cell can hold a cave base, a gameplay marker, and a Guide Lamp overlay. Brush, Rectangle, Region Fill, erase, resize, and function-tile edits all pass through the same transaction service and topology rules. A drag is one undo step; fast strokes rasterize between pointer events; top-layer erase preserves the cave beneath it.
+                  </p>
+                  <ul>
+                    <li>One Player Start is normalized across the map.</li>
+                    <li>The Finish Zone remains one edge-connected region.</li>
+                    <li>Pit clusters stay attached to playable Floor.</li>
+                    <li>Enemy encounter settings survive cluster merges and splits.</li>
+                    <li>Structured validation reports errors, warnings, stable codes, and affected cells.</li>
+                  </ul>
+                  <p>
+                    The 64 × 64 canvas is rendered as one custom UI mesh rather than 4,096 GameObjects. It batches tiles, symbols, topology outlines, previews, hover state, and validation overlays, keeping the browser authoring view practical without giving up precise feedback.
+                  </p>
+                </div>
+              </section>
+
+              <section class="extra-story" aria-labelledby="extra-runtime-title">
+                <div class="extra-story__heading">
+                  <p>03 · Runtime generation</p>
+                  <h4 id="extra-runtime-title">The authored plan becomes the real playable level.</h4>
+                </div>
+                <div class="extra-story__copy">
+                  <ol class="runtime-pipeline" aria-label="Runtime cave generation pipeline">
+                    <li><strong>Snapshot</strong><span>Clone and revalidate the versioned map document.</span></li>
+                    <li><strong>Geometry</strong><span>Build floor chunks, curved boundary walls, roof, pits, backdrops, and seeded stalactites.</span></li>
+                    <li><strong>Gameplay</strong><span>Place spawn, encounter, finish, pool, wind, and lamp behavior from the authored layers.</span></li>
+                    <li><strong>Collision</strong><span>Separate detailed visual and spell surfaces from clean player-safe pit collision.</span></li>
+                    <li><strong>Navigation</strong><span>Bake ground and flying NavMesh data after the current geometry exists.</span></li>
+                    <li><strong>Play</strong><span>Bind gameplay references, reset into the generated map, and enter first-person combat.</span></li>
+                  </ol>
+                  <p>
+                    Generation yields during large scans and between expensive stages so the browser can keep presenting honest progress. Every generated mesh, material, NavMesh object, and hierarchy belongs to a <code>GeneratedMapLifetime</code>; leaving play mode disposes that lifetime before another build begins. Shared project assets are never destroyed.
+                  </p>
+                </div>
+              </section>
+
+              <section class="extra-story" aria-labelledby="extra-webgpu-title">
+                <div class="extra-story__heading">
+                  <p>04 · WebGPU delivery</p>
+                  <h4 id="extra-webgpu-title">The web build is a target, not an export checkbox.</h4>
+                </div>
+                <div class="extra-story__copy">
+                  <p>
+                    I built a dedicated Unity WebGPU renderer and quality path, then made the release validator reject any build that includes another graphics API. The browser page checks HTTPS, desktop input, <code>navigator.gpu</code>, and a high-performance adapter before downloading Unity. If WebGPU is unavailable, it stops with a useful compatibility message instead of silently switching renderers.
+                  </p>
+                  <p>
+                    The release uses Brotli-compressed, hashed Unity artifacts; a 256 MiB WebAssembly heap can grow geometrically to 2048 MiB, and device pixel ratio is capped at 1.5. The host serves the compressed JavaScript, data, and WebAssembly with their required encoding and MIME headers so streaming compilation can work correctly.
+                  </p>
+                </div>
+              </section>
+
+              <section class="extra-evidence" aria-labelledby="extra-evidence-title">
+                <header>
+                  <p>Verified engineering evidence</p>
+                  <h4 id="extra-evidence-title">Tested across the complete edit–build–play loop.</h4>
+                </header>
+                <dl>
+                  <div><dt>23 / 23</dt><dd>runtime-map EditMode tests passed</dd></div>
+                  <div><dt>20 cycles</dt><dd>deterministic Build → Play → Edit soak passed</dd></div>
+                  <div><dt>57,068,972 B</dt><dd>production Brotli WebGPU release</dd></div>
+                  <div><dt>244 / 0</dt><dd>WebGPU / WebGL target entries in the release log</dd></div>
+                </dl>
+                <p class="extra-evidence__note">
+                  The browser version targets desktop keyboard and mouse, requires a secure WebGPU-capable setup, and deliberately has no WebGL fallback. Runtime NavMesh baking remains a measured main-thread stage, so map dimensions, geometry, pits, objects, enemies, and estimated triangles are budgeted before generation begins.
+                </p>
+              </section>
+            </article>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -809,6 +1186,18 @@
             <span class="section-rail__number">03</span>
             <span class="section-rail__copy">
               <strong>Projects</strong>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#extra"
+            data-section-link
+            data-section-target="extra"
+          >
+            <span class="section-rail__number">04</span>
+            <span class="section-rail__copy">
+              <strong>Extra</strong>
             </span>
           </a>
         </li>

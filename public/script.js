@@ -12,7 +12,7 @@ const sectionAnnouncer = document.querySelector("[data-section-announcer]");
 const skipLink = document.querySelector("[data-skip-link]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const mobileLayout = window.matchMedia("(max-width: 42rem)");
-const singleViewportLayout = window.matchMedia("(min-width: 56.01rem)");
+const hoverPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const deferredProjectImages = [
   ...document.querySelectorAll("[data-deferred-src]"),
 ];
@@ -94,6 +94,19 @@ function isAtBoundary(scroller, direction) {
   );
 }
 
+function scrollerCanScroll(scroller) {
+  if (!scroller) {
+    return false;
+  }
+
+  const overflowY = window.getComputedStyle(scroller).overflowY;
+
+  return (
+    (overflowY === "auto" || overflowY === "scroll") &&
+    scroller.scrollHeight > scroller.clientHeight + 3
+  );
+}
+
 function focusSectionHeading(section) {
   const heading = section.querySelector("h1, h2");
 
@@ -163,6 +176,11 @@ function setSection(
 
   currentSection = nextIndex;
   document.body.dataset.section = destination.id;
+
+  if (sectionDeck) {
+    sectionDeck.scrollTop = 0;
+    sectionDeck.scrollLeft = 0;
+  }
 
   sectionPages.forEach((section, index) => {
     const isCurrent = index === nextIndex;
@@ -236,7 +254,7 @@ function handleWheel(event) {
     return;
   }
 
-  if (!singleViewportLayout.matches && !isAtBoundary(scroller, direction)) {
+  if (scrollerCanScroll(scroller) && !isAtBoundary(scroller, direction)) {
     return;
   }
 
@@ -273,7 +291,7 @@ function handleBoundaryKey(event) {
 
   if (
     !hasNeighbor(direction) ||
-    (!singleViewportLayout.matches && !isAtBoundary(scroller, direction))
+    (scrollerCanScroll(scroller) && !isAtBoundary(scroller, direction))
   ) {
     return;
   }
@@ -762,6 +780,36 @@ const sceneHighlightDetails = {
     title: "Ball",
     copy: "The white ball set against the darker grass near the right.",
   },
+  "map-palette": {
+    kicker: "Editor and authoring",
+    title: "Layered authoring palette",
+    copy: "Brush, Rectangle, and Region Fill edit separate cave, gameplay-marker, and Guide Lamp layers. A gesture is one undo transaction, and erase removes the highest layer first so the supporting cave remains intact.",
+  },
+  "map-canvas": {
+    kicker: "Editor and authoring",
+    title: "Batched 64 × 64 canvas",
+    copy: "The grid is one custom MaskableGraphic, not 4,096 UI GameObjects. It emits tiles, markers, topology edges, previews, validation cells, and pointer feedback into a single UI mesh for a practical browser workload.",
+  },
+  "map-readiness": {
+    kicker: "Validation",
+    title: "Topology-aware readiness",
+    copy: "The readiness view turns structured validation into clear build requirements. Errors block generation, warnings remain playable, and Build & Play always rechecks an immutable document snapshot so stale results cannot enter the generator.",
+  },
+  "marker-inspector": {
+    kicker: "Editor and authoring",
+    title: "Function-tile inspector",
+    copy: "Shift-click opens authored behavior for spawn facing, connected enemy encounters, or Guide Lamp wall sides. The inspector exposes only choices that are legal for the selected tile and the current cave topology.",
+  },
+  "build-play": {
+    kicker: "Runtime generation",
+    title: "Build & Play pipeline",
+    copy: "This validates the map, generates curved walls, roof, pits, collision, and gameplay objects in stages, bakes ground and flying NavMesh data, binds runtime references, resets the level, and enters the existing spell-combat loop.",
+  },
+  "content-budget": {
+    kicker: "Browser constraints",
+    title: "Live content budgets",
+    copy: "The footer reports map dimensions, cave cells, pits, markers, and a pre-build triangle estimate. Browser-focused limits stop oversized content before expensive geometry and NavMesh generation begin.",
+  },
 };
 
 function initializeProjectGallery(gallery) {
@@ -839,18 +887,24 @@ function initializeProjectGallery(gallery) {
     }, 90);
   }
 
-  function showSceneOverview(scene) {
+  function showSceneOverview(scene, { clearPinned = false } = {}) {
     const state = sceneStates.get(scene);
 
     if (!state) {
       return;
     }
 
+    if (clearPinned) {
+      state.pinnedControl = null;
+    }
+
     updateInspectorContent(state, "overview", {
       state: "overview",
-      kicker: "Interactive picture",
-      title: "Choose a target",
-      copy: "Hover over any target to show its explanation here. Keyboard users can focus a target.",
+      kicker: scene.dataset.sceneOverviewKicker || "Interactive picture",
+      title: scene.dataset.sceneOverviewTitle || "Choose a target",
+      copy:
+        scene.dataset.sceneOverviewCopy ||
+        "Hover on desktop or tap on a phone to show a target’s explanation. Keyboard users can focus it.",
     });
 
     controlsForScene(scene).forEach((control) => {
@@ -880,6 +934,16 @@ function initializeProjectGallery(gallery) {
   }
 
   function restoreScene(scene) {
+    const state = sceneStates.get(scene);
+
+    if (state?.pinnedControl) {
+      showSceneHighlight(
+        scene,
+        state.pinnedControl.dataset.sceneHighlight,
+      );
+      return;
+    }
+
     showSceneOverview(scene);
   }
 
@@ -911,7 +975,27 @@ function initializeProjectGallery(gallery) {
       next.disabled = activeSlideIndex === slides.length - 1;
     }
 
-    scenes.forEach(restoreScene);
+    scenes.forEach((scene) => {
+      const state = sceneStates.get(scene);
+
+      if (state) {
+        window.clearTimeout(state.updateTimer);
+        window.clearTimeout(state.animationTimer);
+        state.currentContent = null;
+        state.pendingContent = null;
+        state.pinnedControl = null;
+      }
+
+      controlsForScene(scene).forEach((control) => {
+        control.classList.remove("is-active");
+      });
+    });
+
+    const scene = activeScene();
+
+    if (scene) {
+      showSceneOverview(scene, { clearPinned: true });
+    }
   }
 
   scenes.forEach((scene) => {
@@ -920,6 +1004,7 @@ function initializeProjectGallery(gallery) {
       pendingContent: null,
       updateTimer: 0,
       animationTimer: 0,
+      pinnedControl: null,
       inspector,
       content: inspector?.querySelector("[data-scene-content]"),
       kicker: inspector?.querySelector("[data-scene-kicker]"),
@@ -943,8 +1028,13 @@ function initializeProjectGallery(gallery) {
   highlightControls.forEach((control) => {
     const controlledScene = () =>
       control.closest("[data-interactive-scene]") || activeScene();
+    let lastPointerType = "";
 
-    control.addEventListener("pointerenter", () => {
+    control.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "touch") {
+        return;
+      }
+
       const scene = controlledScene();
       if (scene) {
         showSceneHighlight(scene, control.dataset.sceneHighlight);
@@ -952,7 +1042,28 @@ function initializeProjectGallery(gallery) {
     });
 
     control.addEventListener("pointerdown", (event) => {
-      event.preventDefault();
+      lastPointerType = event.pointerType;
+
+      if (event.pointerType !== "touch") {
+        event.preventDefault();
+      }
+    });
+
+    control.addEventListener("click", (event) => {
+      const scene = controlledScene();
+      const state = sceneStates.get(scene);
+      const isTouchActivation =
+        lastPointerType === "touch" ||
+        (event.detail > 0 && !hoverPointer.matches);
+
+      lastPointerType = "";
+
+      if (!scene || !state || !isTouchActivation) {
+        return;
+      }
+
+      state.pinnedControl = control;
+      showSceneHighlight(scene, control.dataset.sceneHighlight);
     });
 
     control.addEventListener("pointerleave", () => {
@@ -1028,6 +1139,18 @@ document.body.dataset.section = sectionPages[initialSection].id;
 setProject(initialProject);
 setProjectView(projectViewFromHash());
 
+if (sectionDeck) {
+  sectionDeck.scrollTop = 0;
+  sectionDeck.scrollLeft = 0;
+}
+
 window.requestAnimationFrame(() => {
-  window.requestAnimationFrame(() => document.documentElement.classList.add("is-ready"));
+  window.requestAnimationFrame(() => {
+    if (sectionDeck) {
+      sectionDeck.scrollTop = 0;
+      sectionDeck.scrollLeft = 0;
+    }
+
+    document.documentElement.classList.add("is-ready");
+  });
 });

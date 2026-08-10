@@ -5,6 +5,9 @@
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "run_worker_first": ["/builds/project-one/Build/*"]
+    "run_worker_first": [
+      "/builds/project-one/Build/*",
+      "/builds/project-two/Build/*"
+    ]
   }
 }

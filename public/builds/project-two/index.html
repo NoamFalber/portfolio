@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#17120e">
+  <meta name="description" content="Design, validate, generate, and play a procedural Unity cave in the browser.">
+  <title>Cave Map Workshop | Unity WebGPU</title>
+  <link rel="stylesheet" href="TemplateData/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">UNITY WEBGPU PORTFOLIO</p>
+        <h1>Cave Map Workshop</h1>
+      </div>
+      <div class="actions">
+        <button id="help-button" type="button">Controls</button>
+        <button id="focus-button" type="button">Focus</button>
+        <button id="fullscreen-button" type="button">Fullscreen</button>
+      </div>
+    </header>
+
+    <section id="stage" class="stage" aria-label="Cave Map Workshop">
+      <canvas id="unity-canvas" width="960" height="600" tabindex="0"></canvas>
+      <div id="loading" class="overlay visible" role="status" aria-live="polite">
+        <div class="card">
+          <p class="eyebrow">PREPARING THE WORKSHOP</p>
+          <h2 id="loading-title">Checking WebGPU…</h2>
+          <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+          <p id="loading-detail">This build requires a current desktop browser with WebGPU.</p>
+        </div>
+      </div>
+      <div id="compatibility" class="overlay" role="alert">
+        <div class="card error-card">
+          <p class="eyebrow">BROWSER CHECK</p>
+          <h2 id="compatibility-title">WebGPU is unavailable</h2>
+          <p id="compatibility-detail"></p>
+          <div class="button-row">
+            <button id="retry-button" type="button">Retry</button>
+            <a href="https://developer.mozilla.org/docs/Web/API/WebGPU_API" target="_blank" rel="noopener">WebGPU help</a>
+          </div>
+        </div>
+      </div>
+      <div id="banner" aria-live="assertive"></div>
+    </section>
+
+    <footer>
+      <span>Author a map → validate it → generate the 3D cave → play it.</span>
+      <span id="build-label">0.1.0 · WebGPU only</span>
+    </footer>
+  </main>
+
+  <dialog id="help-dialog">
+    <form method="dialog">
+      <button class="close" type="submit" aria-label="Close">×</button>
+      <p class="eyebrow">CONTROLS</p>
+      <h2>Map workshop</h2>
+      <p>Left-drag paints, right-drag erases, middle-drag pans, and the wheel zooms. Use 1–5 for tools, Ctrl+Z/Y for history, and B to build and play.</p>
+      <h2>Play mode</h2>
+      <p>Click Focus to return keyboard input to Unity. Click the game before first-person mouse look. Press P to pause or unpause; Escape only releases browser pointer lock. Edit Map returns to authoring.</p>
+    </form>
+  </dialog>
+
+  <script>
+    const canvas = document.querySelector('#unity-canvas');
+    const loading = document.querySelector('#loading');
+    const loadingTitle = document.querySelector('#loading-title');
+    const loadingDetail = document.querySelector('#loading-detail');
+    const progressBar = document.querySelector('#progress-bar');
+    const compatibility = document.querySelector('#compatibility');
+    const compatibilityTitle = document.querySelector('#compatibility-title');
+    const compatibilityDetail = document.querySelector('#compatibility-detail');
+    const banner = document.querySelector('#banner');
+    let unityInstance = null;
+    let webGpuAdapterPromise = null;
+
+    function reportBuildState(state) {
+      if (window.parent !== window) {
+        window.parent.postMessage(
+          { type: 'portfolio-unity-build', state },
+          window.location.origin
+        );
+      }
+    }
+
+    function setOverlay(element, visible) {
+      element.classList.toggle('visible', visible);
+    }
+
+    function showCompatibility(title, detail) {
+      compatibilityTitle.textContent = title;
+      compatibilityDetail.textContent = detail;
+      setOverlay(loading, false);
+      setOverlay(compatibility, true);
+      reportBuildState('error');
+    }
+
+    function unityShowBanner(message, type) {
+      const item = document.createElement('div');
+      item.className = `banner-item ${type || 'info'}`;
+      item.textContent = message;
+      banner.appendChild(item);
+      if (type !== 'error') setTimeout(() => item.remove(), 6000);
+    }
+
+    async function requestWebGpuAdapter() {
+      if (!navigator.gpu) return null;
+
+      webGpuAdapterPromise ??= navigator.gpu.requestAdapter({
+        powerPreference: 'high-performance',
+        forceFallbackAdapter: false
+      }).catch(() => null);
+      return webGpuAdapterPromise;
+    }
+
+    async function browserSupportProblem() {
+      if (!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        return ['Secure connection required', 'WebGPU and persistent browser storage require HTTPS. Open this build from an HTTPS host.'];
+      }
+      if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        return ['Desktop browser required', 'This portfolio build targets keyboard-and-mouse desktop browsers. Open it in current Chrome, Edge, or another WebGPU-capable desktop browser.'];
+      }
+      if (!navigator.gpu) {
+        return ['WebGPU is unavailable', 'Update your browser and graphics drivers, then enable hardware acceleration. This build intentionally has no WebGL fallback.'];
+      }
+      const adapter = await requestWebGpuAdapter();
+      if (!adapter) {
+        return ['No WebGPU adapter is available', 'The browser exposes WebGPU, but could not access a hardware adapter. Update the graphics driver, enable browser hardware acceleration, and retry. This build intentionally has no WebGL fallback.'];
+      }
+      const isEmbedded = window.parent !== window;
+      const minimumWidth = isEmbedded ? 720 : 960;
+      const minimumHeight = isEmbedded ? 360 : 540;
+      if (window.innerWidth < minimumWidth || window.innerHeight < minimumHeight) {
+        return ['Window is too small', `Resize the browser to at least ${minimumWidth} × ${minimumHeight}, then retry.`];
+      }
+      return null;
+    }
+
+    async function boot() {
+      reportBuildState('loading');
+      loadingTitle.textContent = 'Checking WebGPU adapter…';
+      loadingDetail.textContent = 'Requesting the high-performance graphics adapter.';
+      const problem = await browserSupportProblem();
+      if (problem) {
+        showCompatibility(problem[0], problem[1]);
+        return;
+      }
+
+      setOverlay(compatibility, false);
+      setOverlay(loading, true);
+      loadingTitle.textContent = 'Loading cave workshop…';
+      loadingDetail.textContent = 'Downloading the Unity runtime and curated cave kit.';
+
+      const buildUrl = 'Build';
+      const loaderUrl = buildUrl + '/e1f7d6ae6433d55b8bd8916f0e162db5.loader.js';
+      const config = {
+        arguments: [],
+        dataUrl: buildUrl + '/35b4782e8b3134512369376ea3056728.data.br',
+        frameworkUrl: buildUrl + '/0819aaffc34ffef870244d502b9827e0.framework.js.br',
+        codeUrl: buildUrl + '/ae5343883c6e10953b2c9a124e38e37f.wasm.br',
+        streamingAssetsUrl: 'StreamingAssets',
+        companyName: "Noam Portfolio",
+        productName: "Cave Map Workshop",
+        productVersion: "0.1.0",
+        showBanner: unityShowBanner,
+        autoSyncPersistentDataPath: true,
+        devicePixelRatio: Math.min(Math.max(Number(window.devicePixelRatio || 1), 1), 1.5)
+      };
+
+      const script = document.createElement('script');
+      script.src = loaderUrl;
+      script.onerror = () => showCompatibility('Build files could not be loaded', 'Check the network connection and hosting MIME/compression headers, then retry.');
+      script.onload = () => {
+        createUnityInstance(canvas, config, progress => {
+          const percent = Math.round(progress * 100);
+          progressBar.style.width = `${percent}%`;
+          loadingDetail.textContent = `${percent}% · Keep this tab active during first load.`;
+        }).then(instance => {
+          unityInstance = instance;
+          setOverlay(loading, false);
+          canvas.focus();
+          unityInstance.SendMessage('Runtime Map Workshop', 'SetBrowserVisibility', document.hidden ? 'hidden' : 'visible');
+          reportBuildState('ready');
+        }).catch(error => {
+          showCompatibility('Unity could not start', String(error));
+        });
+      };
+      document.body.appendChild(script);
+    }
+
+    document.querySelector('#retry-button').addEventListener('click', () => location.reload());
+    document.querySelector('#fullscreen-button').addEventListener('click', () => {
+      if (unityInstance) unityInstance.SetFullscreen(1);
+      else document.querySelector('#stage').requestFullscreen?.();
+    });
+    document.querySelector('#focus-button').addEventListener('click', () => {
+      canvas.focus();
+      canvas.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    const helpDialog = document.querySelector('#help-dialog');
+    document.querySelector('#help-button').addEventListener('click', () => helpDialog.showModal());
+    canvas.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener('visibilitychange', () => {
+      if (unityInstance) {
+        unityInstance.SendMessage('Runtime Map Workshop', 'SetBrowserVisibility', document.hidden ? 'hidden' : 'visible');
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (!unityInstance && !compatibility.classList.contains('visible')) return;
+      const minimumWidth = window.parent !== window ? 720 : 960;
+      const minimumHeight = window.parent !== window ? 360 : 540;
+      if (window.innerWidth >= minimumWidth && window.innerHeight >= minimumHeight &&
+          compatibilityTitle.textContent === 'Window is too small') location.reload();
+    });
+    boot();
+  </script>
+</body>
+</html>
