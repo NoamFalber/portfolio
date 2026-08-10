@@ -673,19 +673,19 @@ function updateProjectViewButton() {
   projectBuildButton.setAttribute(
     "aria-label",
     hasBuild
-      ? `Open the ${projectTitle} web build`
+      ? `Play the ${projectTitle} WebGPU build`
       : `${projectTitle} does not have a web build`,
   );
 
   if (projectBuildLinkKicker) {
     projectBuildLinkKicker.textContent = hasBuild
-      ? "Web build"
+      ? "Playable WebGPU build"
       : "Web build unavailable";
   }
 
   if (projectBuildLinkLabel) {
     projectBuildLinkLabel.textContent = hasBuild
-      ? `Open ${projectTitle} build`
+      ? `Play ${projectTitle}`
       : `No build for ${projectTitle}`;
   }
 
@@ -708,7 +708,7 @@ function updateProjectViewButton() {
   if (projectBuildReturnButton) {
     projectBuildReturnButton.setAttribute(
       "aria-label",
-      `Return to the ${projectTitle} interactive picture`,
+      `Return to the ${projectTitle} project visual`,
     );
   }
 }
@@ -771,7 +771,7 @@ function setProjectView(
 
   if (announce && sectionAnnouncer && selectedTab) {
     sectionAnnouncer.textContent = `${selectedTab.dataset.projectTitle} ${
-      mode === "build" ? "web build" : "interactive picture"
+      mode === "build" ? "WebGPU build" : "project visual"
     } view`;
   }
 }
@@ -902,54 +902,54 @@ addMediaQueryChangeListener(buildAccessDisabled, (event) => {
 
 const sceneHighlightDetails = {
   clouds: {
-    kicker: "Volumetric clouds",
-    title: "One draw, up to 64 clouds",
-    copy: "These are 3D volumes rather than flat sky cards. One shader samples through up to 64 clouds in a single GPU draw, then a compute-generated field places their shadows across the terrain.",
+    kicker: "Volumetric sky",
+    title: "Clouds with depth, movement, and consequence",
+    copy: "I replaced flat camera-facing cards with bounded raymarched volumes. The full field uses one procedural draw, while a compute-generated shadow map connects the sky to the landscape below.",
   },
   sky: {
-    kicker: "Visual foundation",
-    title: "One sun connects the whole image",
-    copy: "A custom mathematical sky, the atmosphere, clouds, grass, terrain, and balls all use one directional light. That shared source keeps warm highlights and cool distance consistent as the camera moves.",
+    kicker: "Shared lighting",
+    title: "One sun explains the whole image",
+    copy: "The analytical sky, atmosphere, clouds, grass, terrain, and balls all derive from the same directional light. Warm highlights and cool distance therefore stay coherent as the camera moves.",
   },
   grass: {
-    kicker: "GPU grass",
-    title: "Dense grass in three GPU draw passes",
-    copy: "The GPU decides which blades are visible and how much detail each one needs, then prepares three indirect draw commands without waiting for the CPU. A matching terrain material continues the field after individual blades fade.",
+    kicker: "GPU-driven meadow",
+    title: "Dense nearby blades become one distant canopy",
+    copy: "Compute work selects visible grass and the useful level of detail before three indirect draws. A matching terrain material continues the same lighting, wind, and interaction after real geometry fades.",
   },
   ball: {
-    kicker: "Interaction",
-    title: "The ball makes the meadow respond",
-    copy: "The rolling ball is both the interaction and a systems test. Its physics bend nearby blades and leave trails that slowly recover while movement checks slopes, collision, speed, and camera feel.",
+    kicker: "World interaction",
+    title: "Movement leaves a trail the world remembers",
+    copy: "The rolling ball bends grass immediately, including between fast movement samples, then writes a sparse directional trail that recovers over time. Wandering balls share the same bounded system.",
   },
   "map-palette": {
-    kicker: "Editor and authoring",
-    title: "Draw the cave, then add gameplay",
-    copy: "Brush, Rectangle, and Fill shape the cave. Markers add the player start, encounters, hazards, healing, and the finish.",
+    kicker: "Layered authoring",
+    title: "Shape the cave, then give it gameplay meaning",
+    copy: "Brush, Rectangle, and Fill edit the cave footprint. Independent marker and function layers add the player start, encounters, hazards, healing, and the finish without losing the base geometry.",
   },
   "map-canvas": {
     kicker: "Editor and authoring",
-    title: "A responsive 64 × 64 canvas",
-    copy: "Instead of creating 4,096 separate UI objects, the 64 × 64 grid is batched into one mesh. It still shows layers, live previews, hover feedback, and warnings while keeping browser editing responsive.",
+    title: "One responsive canvas carries 4,096 cells",
+    copy: "The grid, symbols, topology outlines, previews, hover state, and validation feedback are batched into one UI mesh instead of thousands of interface objects.",
   },
   "map-readiness": {
     kicker: "Validation",
-    title: "Know when the map is playable",
-    copy: "Clear checks catch missing markers and broken routes before generation. Warnings stay visible without blocking a valid build.",
+    title: "The tool explains what blocks a playable map",
+    copy: "Structured checks catch missing markers, illegal layers, broken routes, and content-budget problems before generation. Warnings remain visible without blocking a valid build.",
   },
   "marker-inspector": {
     kicker: "Editor and authoring",
-    title: "Tune behavior where it belongs",
-    copy: "Select a marker to set spawn direction, enemy groups, or a lamp’s wall side without leaving the map.",
+    title: "Behavior stays attached to the authored marker",
+    copy: "A contextual inspector edits spawn direction, encounter composition, or a lamp’s valid wall side without sending the user away from the map.",
   },
   "build-play": {
     kicker: "Runtime generation",
-    title: "From sketch to playable cave",
-    copy: "Build & Play creates the cave geometry, player collision, and the navigation routes used by enemies. It then connects the existing combat systems and starts the level.",
+    title: "The 2D plan becomes the real combat level",
+    copy: "Build & Play validates a snapshot, generates the cave and player-safe collision, builds ground and flying navigation, connects the existing combat systems, and enters play.",
   },
   "content-budget": {
     kicker: "Browser constraints",
-    title: "See the cost before building",
-    copy: "Live counts show map size, pits, markers, and estimated triangles so oversized maps are caught early.",
+    title: "Cost is visible before generation begins",
+    copy: "Live counts expose cave size, pits, markers, enemies, and estimated geometry so a browser cannot be asked to build an unbounded document.",
   },
 };
 
@@ -1160,7 +1160,7 @@ function initializeProjectGallery(gallery) {
 
     updateInspectorContent(state, "overview", {
       state: "overview",
-      kicker: scene.dataset.sceneOverviewKicker || "Interactive picture",
+      kicker: scene.dataset.sceneOverviewKicker || "Project visual",
       title: scene.dataset.sceneOverviewTitle || "Choose a target",
       copy:
         scene.dataset.sceneOverviewCopy ||
