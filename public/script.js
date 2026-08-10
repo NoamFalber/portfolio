@@ -1364,6 +1364,11 @@ function initializeExtraCarousel(carousel) {
   const next = carousel.querySelector("[data-extra-next]");
   const currentLabel = carousel.querySelector("[data-extra-current]");
   const totalLabel = carousel.querySelector("[data-extra-total]");
+  const sectionPage = carousel.closest("[data-section-page]");
+  const sectionScroller = carousel.closest("[data-section-scroller]");
+  const compactBreakdown = window.matchMedia(
+    "(max-width: 42rem), (max-height: 42rem)",
+  );
   let activeIndex = 0;
   let requestedIndex = 0;
   let transitionTimer = 0;
@@ -1431,12 +1436,55 @@ function initializeExtraCarousel(carousel) {
     }, 130);
   }
 
+  function alignCarouselAfterControl() {
+    window.requestAnimationFrame(() => {
+      if (sectionDeck) {
+        sectionDeck.scrollLeft = 0;
+      }
+
+      if (sectionPage) {
+        sectionPage.scrollLeft = 0;
+        sectionPage.scrollTop = 0;
+      }
+
+      if (!sectionScroller) {
+        return;
+      }
+
+      sectionScroller.scrollLeft = 0;
+
+      if (!compactBreakdown.matches) {
+        return;
+      }
+
+      const scrollerBox = sectionScroller.getBoundingClientRect();
+      const carouselBox = carousel.getBoundingClientRect();
+      const carouselTop =
+        sectionScroller.scrollTop + carouselBox.top - scrollerBox.top;
+
+      sectionScroller.scrollTo({
+        top: Math.max(0, carouselTop),
+        left: 0,
+        behavior: "auto",
+      });
+    });
+  }
+
   tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => setExtraSlide(index));
+    tab.addEventListener("click", () => {
+      setExtraSlide(index);
+      alignCarouselAfterControl();
+    });
   });
 
-  previous?.addEventListener("click", () => setExtraSlide(requestedIndex - 1));
-  next?.addEventListener("click", () => setExtraSlide(requestedIndex + 1));
+  previous?.addEventListener("click", () => {
+    setExtraSlide(requestedIndex - 1);
+    alignCarouselAfterControl();
+  });
+  next?.addEventListener("click", () => {
+    setExtraSlide(requestedIndex + 1);
+    alignCarouselAfterControl();
+  });
   enableHorizontalSwipe(carousel.querySelector(".extra-stage"), (direction) => {
     setExtraSlide(requestedIndex + direction);
   });
@@ -1466,6 +1514,21 @@ document.querySelectorAll("[data-extra-project-select]").forEach((button) => {
     selectedPanel
       ?.querySelector(`[data-extra-project-select="${projectName}"]`)
       ?.focus({ preventScroll: true });
+
+    if (sectionDeck) {
+      sectionDeck.scrollLeft = 0;
+    }
+
+    const sectionPage = selectedPanel?.closest("[data-section-page]");
+    if (sectionPage) {
+      sectionPage.scrollLeft = 0;
+      sectionPage.scrollTop = 0;
+    }
+
+    const sectionScroller = selectedPanel?.closest("[data-section-scroller]");
+    if (sectionScroller) {
+      sectionScroller.scrollLeft = 0;
+    }
 
     if (sectionAnnouncer) {
       sectionAnnouncer.textContent =
