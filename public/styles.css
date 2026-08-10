@@ -38,6 +38,8 @@
   --coral-hover: #e87959;
   --button-shine: rgba(255, 255, 255, 0.68);
   --sun: #ebc75b;
+  --selection: #ebc75b;
+  --selection-edge: #1c4243;
   --line: #8ea29f;
   --shadow: #163238;
   --page-width: 94rem;
@@ -96,7 +98,7 @@ img {
 }
 
 ::selection {
-  background: var(--sun);
+  background: var(--selection);
   color: var(--ink);
 }
 
@@ -872,7 +874,7 @@ body[data-project-view="build"] .workspace-window--build {
 }
 
 .project-tab[aria-selected="true"] {
-  background: var(--sun);
+  background: var(--selection);
   color: var(--ink);
 }
 
@@ -1440,7 +1442,8 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .gallery-thumbnails button[aria-pressed="true"] {
-  box-shadow: 0.18rem 0.18rem 0 var(--shadow);
+  background: var(--selection);
+  box-shadow: inset 0 -0.25rem 0 var(--selection-edge);
 }
 
 .gallery-thumbnails img {
@@ -2021,7 +2024,8 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .extra-project-switcher > button[aria-pressed="true"],
 .extra-project-switcher > button[aria-pressed="true"]:hover {
-  background: var(--sun);
+  background: var(--selection);
+  box-shadow: inset 0 -0.32rem 0 var(--selection-edge);
 }
 
 .extra-project-switcher > button > span:first-child {
@@ -2456,8 +2460,8 @@ body:not([data-section="extra"]) .extra-build-jump::before {
 }
 
 .extra-step-tabs button[aria-selected="true"] {
-  background: var(--sun);
-  box-shadow: inset 0 0.24rem 0 var(--coral-dark);
+  background: var(--selection);
+  box-shadow: inset 0 0.24rem 0 var(--selection-edge);
 }
 
 .extra-step-tabs button:hover {
@@ -2465,7 +2469,7 @@ body:not([data-section="extra"]) .extra-build-jump::before {
 }
 
 .extra-step-tabs button[aria-selected="true"]:hover {
-  background: var(--sun);
+  background: var(--selection);
 }
 
 .extra-step-tabs span {
@@ -2575,8 +2579,8 @@ html:not(.js) .extra-step-tabs {
 }
 
 .section-rail a[aria-current="page"] {
-  border-left-color: var(--coral-dark);
-  background: var(--sun);
+  border-left-color: var(--selection-edge);
+  background: var(--selection);
   box-shadow: none;
   color: var(--ink);
 }
@@ -3181,8 +3185,8 @@ html:not(.js) .extra-step-tabs {
   }
 
   .section-rail a[aria-current="page"] {
-    background: var(--sun);
-    box-shadow: inset 0 0.22rem 0 var(--coral-dark);
+    background: var(--selection);
+    box-shadow: inset 0 0.22rem 0 var(--selection-edge);
   }
 
   .section-rail__number {
@@ -3754,7 +3758,7 @@ html:not(.js) .extra-step-tabs {
 
 .project-tab[aria-selected="true"],
 .project-tab[aria-selected="true"]:hover {
-  background: var(--sun);
+  background: var(--selection);
   color: var(--ink);
 }
 
@@ -3832,7 +3836,8 @@ html:not(.js) .extra-step-tabs {
 
 .extra-project-switcher > button[aria-pressed="true"],
 .extra-project-switcher > button[aria-pressed="true"]:hover {
-  background: var(--sun);
+  background: var(--selection);
+  box-shadow: inset 0 -0.32rem 0 var(--selection-edge);
   color: #173332;
 }
 
@@ -3895,7 +3900,8 @@ html:not(.js) .extra-step-tabs {
 
 .extra-step-tabs button[aria-selected="true"],
 .extra-step-tabs button[aria-selected="true"]:hover {
-  background: var(--sun);
+  background: var(--selection);
+  box-shadow: inset 0 0.24rem 0 var(--selection-edge);
   color: var(--ink);
 }
 
@@ -3908,7 +3914,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .section-rail a[aria-current="page"] {
-  background: var(--sun);
+  background: var(--selection);
 }
 
 .intro-layout {
@@ -4213,12 +4219,19 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-workspace {
+  --project-sidebar: clamp(18.5rem, 31%, 22rem);
   border-width: 1.5px;
   box-shadow: 0.42rem 0.42rem 0 var(--shadow);
 }
 
 .project-toolbar {
+  grid-template-columns: minmax(0, 1fr) var(--project-sidebar);
   border-bottom-width: 1.5px;
+}
+
+.project-panel__body,
+.build-window__toolbar {
+  grid-template-columns: minmax(0, 1fr) var(--project-sidebar);
 }
 
 .project-tabs {
@@ -4231,11 +4244,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-tab[aria-selected="true"] {
-  box-shadow: inset 0 -0.32rem 0 var(--green-dark);
-}
-
-.project-tab[data-project-tab="project-2"][aria-selected="true"] {
-  box-shadow: inset 0 -0.32rem 0 #9a5d36;
+  box-shadow: inset 0 -0.32rem 0 var(--selection-edge);
 }
 
 .project-build-link::after {
@@ -4248,6 +4257,8 @@ html:not(.js) .extra-step-tabs {
 }
 
 .gallery-heading {
+  position: relative;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-bottom-width: 1.5px;
   background: #1c4243;
   color: #fffaf0;
@@ -4261,7 +4272,15 @@ html:not(.js) .extra-step-tabs {
   color: var(--sun);
 }
 
+.gallery-heading > p {
+  padding-right: 7rem;
+}
+
 .gallery-pager {
+  position: absolute;
+  top: 50%;
+  right: 0.85rem;
+  transform: translateY(-50%);
   border-color: #fffaf0;
   background: #fffaf0;
   color: var(--ink);
@@ -4281,7 +4300,8 @@ html:not(.js) .extra-step-tabs {
 }
 
 .gallery-thumbnails button[aria-pressed="true"] {
-  box-shadow: inset 0 -0.25rem 0 var(--coral);
+  background: var(--selection);
+  box-shadow: inset 0 -0.25rem 0 var(--selection-edge);
 }
 
 .project-inspector {
@@ -4335,18 +4355,33 @@ html:not(.js) .extra-step-tabs {
 
 .extra-heading {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 1.25rem;
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.2rem;
+  align-items: start;
 }
 
 .extra-heading h2 {
-  text-align: right;
+  text-align: left;
 }
 
 .extra-workspace {
+  --extra-sidebar: clamp(17rem, 29%, 21rem);
   border-width: 1.5px;
   box-shadow: 0.42rem 0.42rem 0 var(--shadow);
+}
+
+.extra-workspace__toolbar,
+.extra-slide--hero {
+  grid-template-columns: minmax(0, 1fr) var(--extra-sidebar);
+}
+
+.extra-project-switcher {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.extra-hero-copy {
+  justify-content: flex-start;
+  padding-top: clamp(3.8rem, 8vh, 5.5rem);
 }
 
 .extra-workspace__toolbar,
@@ -4401,7 +4436,7 @@ html:not(.js) .extra-step-tabs {
 
 .section-rail a[aria-current="page"],
 .section-rail a[aria-current="page"]:hover {
-  background: var(--sun);
+  background: var(--selection);
   color: #173332;
 }
 
@@ -4448,6 +4483,25 @@ html:not(.js) .extra-step-tabs {
     border-right: 0;
   }
 
+  .build-window__toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-heading {
+    grid-template-columns: 1fr auto;
+  }
+
+  .gallery-heading > p {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    padding-right: 0;
+  }
+
+  .gallery-pager {
+    position: static;
+    transform: none;
+  }
+
   .project-panel__body {
     grid-template-columns: 1fr;
   }
@@ -4488,7 +4542,7 @@ html:not(.js) .extra-step-tabs {
   }
 
   .section-rail a[aria-current="page"] {
-    box-shadow: inset 0 0.25rem 0 var(--coral-dark);
+    box-shadow: inset 0 0.25rem 0 var(--selection-edge);
   }
 
   .section-rail__number {
@@ -4556,7 +4610,18 @@ html:not(.js) .extra-step-tabs {
     text-align: left;
   }
 
+  .extra-workspace__toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .extra-slide--hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
   .extra-hero-copy {
+    justify-content: center;
+    padding: clamp(0.75rem, 3vw, 1rem);
     background: rgba(255, 250, 240, 0.32);
   }
 }
