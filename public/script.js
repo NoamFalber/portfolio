@@ -840,6 +840,124 @@ const sceneHighlightDetails = {
   },
 };
 
+function resolveObjectPosition(value, freeSpace) {
+  const normalized = value?.trim().toLowerCase() || "50%";
+  const keywordPositions = {
+    left: 0,
+    top: 0,
+    center: 0.5,
+    right: 1,
+    bottom: 1,
+  };
+
+  if (normalized in keywordPositions) {
+    return freeSpace * keywordPositions[normalized];
+  }
+
+  if (normalized.endsWith("%")) {
+    return freeSpace * (Number.parseFloat(normalized) / 100);
+  }
+
+  if (normalized.endsWith("px")) {
+    return Number.parseFloat(normalized);
+  }
+
+  return freeSpace * 0.5;
+}
+
+function positionSceneHotspots(scene) {
+  const image = scene.querySelector(".interactive-scene__image");
+  const controls = [...scene.querySelectorAll("[data-hotspot-x][data-hotspot-y]")];
+  const sceneWidth = scene.clientWidth;
+  const sceneHeight = scene.clientHeight;
+  const sourceWidth = Number(image?.getAttribute("width")) || image?.naturalWidth;
+  const sourceHeight = Number(image?.getAttribute("height")) || image?.naturalHeight;
+
+  if (
+    !image ||
+    !controls.length ||
+    !sceneWidth ||
+    !sceneHeight ||
+    !sourceWidth ||
+    !sourceHeight
+  ) {
+    return;
+  }
+
+  const imageStyle = window.getComputedStyle(image);
+  const objectFit = imageStyle.objectFit;
+  let renderedWidth = sceneWidth;
+  let renderedHeight = sceneHeight;
+
+  if (objectFit === "contain" || objectFit === "cover" || objectFit === "scale-down") {
+    const containScale = Math.min(
+      sceneWidth / sourceWidth,
+      sceneHeight / sourceHeight,
+    );
+    const coverScale = Math.max(
+      sceneWidth / sourceWidth,
+      sceneHeight / sourceHeight,
+    );
+    const scale =
+      objectFit === "cover"
+        ? coverScale
+        : objectFit === "scale-down"
+          ? Math.min(1, containScale)
+          : containScale;
+
+    renderedWidth = sourceWidth * scale;
+    renderedHeight = sourceHeight * scale;
+  } else if (objectFit === "none") {
+    renderedWidth = sourceWidth;
+    renderedHeight = sourceHeight;
+  }
+
+  const [positionX = "50%", positionY = "50%"] =
+    imageStyle.objectPosition.split(/\s+/);
+  const offsetX = resolveObjectPosition(positionX, sceneWidth - renderedWidth);
+  const offsetY = resolveObjectPosition(positionY, sceneHeight - renderedHeight);
+
+  controls.forEach((control) => {
+    const imageX = Number(control.dataset.hotspotX);
+    const imageY = Number(control.dataset.hotspotY);
+
+    if (!Number.isFinite(imageX) || !Number.isFinite(imageY)) {
+      return;
+    }
+
+    control.style.setProperty(
+      "--scene-hotspot-x",
+      `${offsetX + renderedWidth * (imageX / 100)}px`,
+    );
+    control.style.setProperty(
+      "--scene-hotspot-y",
+      `${offsetY + renderedHeight * (imageY / 100)}px`,
+    );
+  });
+}
+
+const interactiveScenes = [
+  ...document.querySelectorAll("[data-interactive-scene]"),
+];
+
+if ("ResizeObserver" in window) {
+  const hotspotResizeObserver = new ResizeObserver((entries) => {
+    entries.forEach((entry) => positionSceneHotspots(entry.target));
+  });
+
+  interactiveScenes.forEach((scene) => hotspotResizeObserver.observe(scene));
+} else {
+  window.addEventListener("resize", () => {
+    interactiveScenes.forEach(positionSceneHotspots);
+  });
+}
+
+interactiveScenes.forEach((scene) => {
+  const image = scene.querySelector(".interactive-scene__image");
+  image?.addEventListener("load", () => positionSceneHotspots(scene));
+  window.requestAnimationFrame(() => positionSceneHotspots(scene));
+});
+
 function initializeProjectGallery(gallery) {
   const slides = [...gallery.querySelectorAll("[data-gallery-slide]")];
   const thumbnails = [...gallery.querySelectorAll("[data-gallery-thumbnail]")];
