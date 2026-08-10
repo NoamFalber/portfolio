@@ -764,28 +764,6 @@ const sceneHighlightDetails = {
   },
 };
 
-function revealMobileInspector(inspector) {
-  if (!mobileLayout.matches || !inspector) {
-    return;
-  }
-
-  const scroller = inspector.closest("[data-section-scroller]");
-
-  if (!scroller) {
-    return;
-  }
-
-  const scrollerBounds = scroller.getBoundingClientRect();
-  const inspectorBounds = inspector.getBoundingClientRect();
-  const targetTop =
-    scroller.scrollTop + inspectorBounds.top - scrollerBounds.top - 12;
-
-  scroller.scrollTo({
-    top: targetTop,
-    behavior: reducedMotion.matches ? "auto" : "smooth",
-  });
-}
-
 function initializeProjectGallery(gallery) {
   const slides = [...gallery.querySelectorAll("[data-gallery-slide]")];
   const thumbnails = [...gallery.querySelectorAll("[data-gallery-thumbnail]")];
@@ -872,16 +850,15 @@ function initializeProjectGallery(gallery) {
       state: "overview",
       kicker: "Interactive picture",
       title: "Choose a target",
-      copy: "Hover, focus, or click any target to show its explanation here.",
+      copy: "Hover over any target to show its explanation here. Keyboard users can focus a target.",
     });
 
     controlsForScene(scene).forEach((control) => {
       control.classList.remove("is-active");
-      control.setAttribute("aria-pressed", "false");
     });
   }
 
-  function showSceneHighlight(scene, highlightName, isPinned = false) {
+  function showSceneHighlight(scene, highlightName) {
     const detail = sceneHighlightDetails[highlightName];
     const state = sceneStates.get(scene);
 
@@ -899,18 +876,11 @@ function initializeProjectGallery(gallery) {
     controlsForScene(scene).forEach((control) => {
       const matches = control.dataset.sceneHighlight === highlightName;
       control.classList.toggle("is-active", matches);
-      control.setAttribute("aria-pressed", String(isPinned && matches));
     });
   }
 
   function restoreScene(scene) {
-    const state = sceneStates.get(scene);
-
-    if (state?.pinnedHighlight) {
-      showSceneHighlight(scene, state.pinnedHighlight, true);
-    } else {
-      showSceneOverview(scene);
-    }
+    showSceneOverview(scene);
   }
 
   function setSlide(nextIndex) {
@@ -946,7 +916,6 @@ function initializeProjectGallery(gallery) {
 
   scenes.forEach((scene) => {
     const state = {
-      pinnedHighlight: null,
       currentContent: null,
       pendingContent: null,
       updateTimer: 0,
@@ -982,6 +951,10 @@ function initializeProjectGallery(gallery) {
       }
     });
 
+    control.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+    });
+
     control.addEventListener("pointerleave", () => {
       const scene = controlledScene();
       if (scene && document.activeElement !== control) {
@@ -1000,41 +973,6 @@ function initializeProjectGallery(gallery) {
       const scene = controlledScene();
       if (scene) {
         restoreScene(scene);
-      }
-    });
-
-    control.addEventListener("click", () => {
-      const scene = controlledScene();
-      const state = scene ? sceneStates.get(scene) : null;
-
-      if (!scene || !state) {
-        return;
-      }
-
-      state.pinnedHighlight =
-        state.pinnedHighlight === control.dataset.sceneHighlight
-          ? null
-          : control.dataset.sceneHighlight;
-      restoreScene(scene);
-
-      if (state.pinnedHighlight) {
-        window.requestAnimationFrame(() => {
-          revealMobileInspector(state.inspector);
-        });
-      }
-    });
-
-    control.addEventListener("keydown", (event) => {
-      if (event.key !== "Escape") {
-        return;
-      }
-
-      const scene = controlledScene();
-      const state = scene ? sceneStates.get(scene) : null;
-
-      if (scene && state) {
-        state.pinnedHighlight = null;
-        showSceneOverview(scene);
       }
     });
   });

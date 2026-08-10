@@ -492,24 +492,6 @@ img {
   pointer-events: none;
 }
 
-.intro-reel::before {
-  position: absolute;
-  z-index: 2;
-  top: 18%;
-  right: 3%;
-  left: 3%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(82, 103, 93, 0.34) 14%,
-    rgba(82, 103, 93, 0.34) 86%,
-    transparent
-  );
-  box-shadow: 0 -0.75rem 1.5rem rgba(238, 228, 208, 0.52);
-  content: "";
-}
-
 .intro-reel::after {
   position: absolute;
   z-index: 1;
@@ -1134,7 +1116,7 @@ html:not(.js) .project-panel {
   border: 0;
   background: transparent;
   color: rgba(255, 253, 248, 0.74);
-  cursor: pointer;
+  cursor: default;
   pointer-events: auto;
   transition: color 170ms ease;
 }
@@ -2592,9 +2574,9 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     transition-duration: 680ms !important;
   }
 
-  .intro-reel__track {
-    transform: none !important;
-    animation: none !important;
+  .js.is-ready .intro-reel__track {
+    animation-duration: 76s !important;
+    animation-iteration-count: infinite !important;
   }
 
 }
