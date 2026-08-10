@@ -789,24 +789,24 @@ mobileLayout.addEventListener("change", (event) => {
 
 const sceneHighlightDetails = {
   clouds: {
-    kicker: "Volumetric rendering",
+    kicker: "Volumetric clouds",
     title: "One draw, up to 64 clouds",
-    copy: "Compact instance data drives raymarched volumes and a compute shadow field, giving the clouds stable shape and terrain shade without per-cloud Renderers.",
+    copy: "These are 3D volumes rather than flat sky cards. One shader samples through up to 64 clouds in a single GPU draw, then a compute-generated field places their shadows across the terrain.",
   },
   sky: {
     kicker: "Visual foundation",
     title: "One sun connects the whole image",
-    copy: "The analytical sky, atmosphere, clouds, grass, terrain, and balls share one directional light, keeping warm highlights and cool distance coherent.",
+    copy: "A custom mathematical sky, the atmosphere, clouds, grass, terrain, and balls all use one directional light. That shared source keeps warm highlights and cool distance consistent as the camera moves.",
   },
   grass: {
     kicker: "GPU grass",
-    title: "Dense grass in three indirect draws",
-    copy: "Compute culling sorts deterministic blades into near, middle, and far LOD buffers. The terrain continues the same canopy after real blades fade.",
+    title: "Dense grass in three GPU draw passes",
+    copy: "The GPU decides which blades are visible and how much detail each one needs, then prepares three indirect draw commands without waiting for the CPU. A matching terrain material continues the field after individual blades fade.",
   },
   ball: {
     kicker: "Interaction",
     title: "The ball makes the meadow respond",
-    copy: "Physics-driven movement creates immediate blade contact and persistent recovering trails while testing speed, slopes, collision, and camera feel.",
+    copy: "The rolling ball is both the interaction and a systems test. Its physics bend nearby blades and leave trails that slowly recover while movement checks slopes, collision, speed, and camera feel.",
   },
   "map-palette": {
     kicker: "Editor and authoring",
@@ -816,7 +816,7 @@ const sceneHighlightDetails = {
   "map-canvas": {
     kicker: "Editor and authoring",
     title: "A responsive 64 × 64 canvas",
-    copy: "The full grid renders as one UI mesh, keeping browser editing responsive while still showing layers, previews, and warnings.",
+    copy: "Instead of creating 4,096 separate UI objects, the 64 × 64 grid is batched into one mesh. It still shows layers, live previews, hover feedback, and warnings while keeping browser editing responsive.",
   },
   "map-readiness": {
     kicker: "Validation",
@@ -831,7 +831,7 @@ const sceneHighlightDetails = {
   "build-play": {
     kicker: "Runtime generation",
     title: "From sketch to playable cave",
-    copy: "Build & Play generates geometry, collision, and NavMesh data, connects the gameplay systems, and drops you into the level.",
+    copy: "Build & Play creates the cave geometry, player collision, and the navigation routes used by enemies. It then connects the existing combat systems and starts the level.",
   },
   "content-budget": {
     kicker: "Browser constraints",

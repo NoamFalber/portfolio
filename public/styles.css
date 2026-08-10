@@ -36,6 +36,7 @@
   --coral-dark: #8d301d;
   --button-ink: #25110b;
   --coral-hover: #ee7c5f;
+  --button-shine: rgba(255, 255, 255, 0.68);
   --sun: #f3c964;
   --line: #a9b8ad;
   --shadow: #193127;
@@ -236,7 +237,7 @@ img {
   --sun: #f3c964;
   --line: #a9b8ad;
   --shadow: #193127;
-  --wallpaper-wash: rgba(237, 244, 233, 0.3);
+  --wallpaper-wash: rgba(237, 244, 233, 0.58);
   --proof-line: #789084;
   --proof-copy: #d5e5da;
   --proof-copy-strong: #eef6f0;
@@ -939,7 +940,7 @@ body[data-project-view="build"] .workspace-window--build {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(var(--project-light-rgb), 0.72),
+    var(--button-shine),
     transparent
   );
   content: "";
@@ -2138,14 +2139,43 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 .extra-slide__lead {
   max-width: 51rem;
   margin-top: clamp(0.7rem, 1.8vh, 1.2rem);
-  color: var(--ink-soft);
+  color: var(--ink);
   font-size: clamp(0.92rem, min(1.3vw, 2.1vh), 1.12rem);
   line-height: 1.46;
 }
 
 .extra-build-jump {
+  position: relative;
   min-height: 3.15rem;
   margin-top: clamp(0.8rem, 2vh, 1.25rem);
+  overflow: hidden;
+}
+
+.extra-build-jump::before {
+  position: absolute;
+  top: -120%;
+  bottom: -120%;
+  left: -45%;
+  width: 28%;
+  transform: rotate(18deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--button-shine),
+    transparent
+  );
+  content: "";
+  pointer-events: none;
+  animation: build-button-shine 2.45s ease-in-out infinite;
+}
+
+.extra-build-jump > span {
+  position: relative;
+  z-index: 1;
+}
+
+body:not([data-section="extra"]) .extra-build-jump::before {
+  animation-play-state: paused;
 }
 
 .extra-meta {
@@ -2195,7 +2225,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .extra-slide--problem .extra-slide__heading {
-  background: var(--sun);
+  background: var(--sky-light);
 }
 
 .extra-slide__heading h3 {

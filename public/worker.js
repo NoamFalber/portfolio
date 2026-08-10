@@ -2,34 +2,34 @@
 
 const unityBrotliTypes = new Map([
   [
-    "/builds/project-one/Build/game-one-webgpu-20260809.data.br",
+    "/builds/project-one/Build/game-one-webgpu-20260810-r2.data.br",
     "application/octet-stream",
   ],
   [
-    "/builds/project-one/Build/game-one-webgpu-20260809.framework.js.br",
+    "/builds/project-one/Build/game-one-webgpu-20260810-r2.framework.js.br",
     "application/javascript",
   ],
   [
-    "/builds/project-one/Build/game-one-webgpu-20260809.wasm.br",
+    "/builds/project-one/Build/game-one-webgpu-20260810-r2.wasm.br",
     "application/wasm",
   ],
   [
-    "/builds/project-two/Build/0819aaffc34ffef870244d502b9827e0.framework.js.br",
+    "/builds/project-two/Build/70778cd10bfff059ad7f73d3e414d077.framework.js.br",
     "application/javascript",
   ],
   [
-    "/builds/project-two/Build/ae5343883c6e10953b2c9a124e38e37f.wasm.br",
+    "/builds/project-two/Build/d9959914722f8fe13c94204e95a15e5b.wasm.br",
     "application/wasm",
   ],
 ]);
 
 const projectTwoDataPath =
-  "/builds/project-two/Build/35b4782e8b3134512369376ea3056728.data.br";
+  "/builds/project-two/Build/954cd8d0e5bf0a0fe62a3c706f875469.data.br";
 const projectTwoDataParts = [
   `${projectTwoDataPath}.part-00`,
   `${projectTwoDataPath}.part-01`,
 ];
-const projectTwoDataLength = 47798498;
+const projectTwoDataLength = 47796561;
 
 function brotliHeaders(contentType, contentLength) {
   const headers = new Headers({
