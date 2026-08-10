@@ -14,7 +14,6 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const buildAccessDisabled = window.matchMedia(
   "(max-width: 42rem), (hover: none) and (pointer: coarse)",
 );
-const hoverPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const deferredProjectImages = [
   ...document.querySelectorAll("[data-deferred-src]"),
 ];
@@ -28,7 +27,7 @@ let isTransitioning = false;
 let transitionTimer = 0;
 let transitionFocusTarget = null;
 let pendingSectionRequest = null;
-let touchStartY = null;
+let touchGesture = null;
 
 function addMediaQueryChangeListener(query, listener) {
   if (typeof query.addEventListener === "function") {
@@ -193,7 +192,7 @@ function setSection(
   const direction = nextIndex > previousIndex ? 1 : -1;
   const destination = sectionPages[nextIndex];
   const destinationScroller = destination.querySelector("[data-section-scroller]");
-  const boundarySources = new Set(["wheel", "touch", "keyboard"]);
+  const boundarySources = new Set(["wheel", "touch"]);
   const isSkippingSection = Math.abs(nextIndex - previousIndex) > 1;
 
   isTransitioning = true;
@@ -279,7 +278,6 @@ function navigateSection(direction, source) {
 
   setSection(currentSection + direction, {
     historyMode: "push",
-    focusHeading: source === "keyboard",
     source,
   });
 }
@@ -312,74 +310,40 @@ function handleWheel(event) {
   navigateSection(direction, "wheel");
 }
 
-function handleBoundaryKey(event) {
-  if (event.defaultPrevented || event.repeat || isTransitioning) {
-    return;
-  }
-
-  const interactiveTarget =
-    event.target instanceof Element
-      ? event.target.closest(
-          "button, a, input, textarea, select, [contenteditable='true']",
-        )
-      : null;
-
-  if (interactiveTarget) {
-    return;
-  }
-
-  const keyDirections = {
-    ArrowUp: -1,
-    ArrowDown: 1,
-    PageUp: -1,
-    PageDown: 1,
-  };
-  const direction = keyDirections[event.key];
-
-  if (!direction) {
-    return;
-  }
-
-  const scroller = activeScroller();
-
-  if (
-    !hasNeighbor(direction) ||
-    (scrollerCanScroll(scroller) && !isAtBoundary(scroller, direction))
-  ) {
-    return;
-  }
-
-  event.preventDefault();
-  navigateSection(direction, "keyboard");
-}
-
 function handleTouchStart(event) {
   if (event.touches.length !== 1 || isTransitioning) {
-    touchStartY = null;
+    touchGesture = null;
     return;
   }
 
-  touchStartY = event.touches[0].clientY;
+  touchGesture = {
+    x: event.touches[0].clientX,
+    y: event.touches[0].clientY,
+  };
 }
 
 function handleTouchEnd(event) {
   if (
-    touchStartY === null ||
+    touchGesture === null ||
     event.changedTouches.length !== 1 ||
     isTransitioning
   ) {
-    touchStartY = null;
+    touchGesture = null;
     return;
   }
 
-  const distance = touchStartY - event.changedTouches[0].clientY;
-  touchStartY = null;
+  const distanceX = touchGesture.x - event.changedTouches[0].clientX;
+  const distanceY = touchGesture.y - event.changedTouches[0].clientY;
+  touchGesture = null;
 
-  if (Math.abs(distance) < 44) {
+  if (
+    Math.abs(distanceY) < 44 ||
+    Math.abs(distanceY) <= Math.abs(distanceX) * 1.15
+  ) {
     return;
   }
 
-  const direction = distance > 0 ? 1 : -1;
+  const direction = distanceY > 0 ? 1 : -1;
   const scroller = activeScroller();
 
   if (!hasNeighbor(direction)) {
@@ -394,7 +358,58 @@ function handleTouchEnd(event) {
 }
 
 function handleTouchCancel() {
-  touchStartY = null;
+  touchGesture = null;
+}
+
+function enableHorizontalSwipe(surface, onSwipe) {
+  if (!surface) {
+    return;
+  }
+
+  let gesture = null;
+
+  surface.addEventListener("pointerdown", (event) => {
+    if (
+      event.pointerType !== "touch" ||
+      !event.isPrimary ||
+      (event.target instanceof Element &&
+        event.target.closest(
+          "button, a, input, textarea, select, [contenteditable='true']",
+        ))
+    ) {
+      gesture = null;
+      return;
+    }
+
+    gesture = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    };
+  });
+
+  surface.addEventListener("pointerup", (event) => {
+    if (!gesture || event.pointerId !== gesture.pointerId) {
+      return;
+    }
+
+    const distanceX = event.clientX - gesture.x;
+    const distanceY = event.clientY - gesture.y;
+    gesture = null;
+
+    if (
+      Math.abs(distanceX) < 52 ||
+      Math.abs(distanceX) <= Math.abs(distanceY) * 1.25
+    ) {
+      return;
+    }
+
+    onSwipe(distanceX < 0 ? 1 : -1);
+  });
+
+  surface.addEventListener("pointercancel", () => {
+    gesture = null;
+  });
 }
 
 sectionLinks.forEach((link) => {
@@ -427,8 +442,6 @@ sectionPages.forEach((section) => {
   scroller.addEventListener("touchend", handleTouchEnd, { passive: true });
   scroller.addEventListener("touchcancel", handleTouchCancel, { passive: true });
 });
-
-document.addEventListener("keydown", handleBoundaryKey);
 
 function syncNavigationFromLocation() {
   const historySection = sectionIndexFromHash();
@@ -763,7 +776,7 @@ function setProjectView(
   }
 }
 
-function setProject(projectName, focusTab = false) {
+function setProject(projectName) {
   const selectedTab = projectTabs.find(
     (tab) => tab.dataset.projectTab === projectName,
   );
@@ -790,7 +803,6 @@ function setProject(projectName, focusTab = false) {
   projectTabs.forEach((tab) => {
     const isSelected = tab === selectedTab;
     tab.setAttribute("aria-selected", String(isSelected));
-    tab.tabIndex = isSelected ? 0 : -1;
   });
 
   projectPanels.forEach((panel) => {
@@ -816,10 +828,6 @@ function setProject(projectName, focusTab = false) {
 
   applyProjectViewState();
   updateProjectViewButton();
-
-  if (focusTab) {
-    selectedTab.focus();
-  }
 }
 
 function setExtraProject(projectName, previousProjectName = null) {
@@ -866,40 +874,10 @@ function setExtraProject(projectName, previousProjectName = null) {
   }
 }
 
-projectTabs.forEach((tab, index) => {
+projectTabs.forEach((tab) => {
   tab.addEventListener("click", () => {
     setProject(tab.dataset.projectTab);
     setProjectView("showcase", { historyMode: "push", announce: true });
-  });
-  tab.addEventListener("keydown", (event) => {
-    const supportedKeys = [
-      "ArrowLeft",
-      "ArrowRight",
-      "ArrowUp",
-      "ArrowDown",
-      "Home",
-      "End",
-    ];
-
-    if (!supportedKeys.includes(event.key)) {
-      return;
-    }
-
-    event.preventDefault();
-    let nextIndex = index;
-
-    if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      nextIndex = (index - 1 + projectTabs.length) % projectTabs.length;
-    } else if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      nextIndex = (index + 1) % projectTabs.length;
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = projectTabs.length - 1;
-    }
-
-    setProject(projectTabs[nextIndex].dataset.projectTab, true);
-    setProjectView("showcase", { historyMode: "replace", announce: true });
   });
 });
 
@@ -1186,7 +1164,7 @@ function initializeProjectGallery(gallery) {
       title: scene.dataset.sceneOverviewTitle || "Choose a target",
       copy:
         scene.dataset.sceneOverviewCopy ||
-        "Hover on desktop or tap on a phone to show a target’s explanation. Keyboard users can focus it.",
+        "Hover with a mouse or tap a marker to show its explanation.",
     });
 
     controlsForScene(scene).forEach((control) => {
@@ -1321,7 +1299,6 @@ function initializeProjectGallery(gallery) {
   highlightControls.forEach((control) => {
     const controlledScene = () =>
       control.closest("[data-interactive-scene]") || activeScene();
-    let lastPointerType = "";
 
     control.addEventListener("pointerenter", (event) => {
       if (event.pointerType === "touch") {
@@ -1334,48 +1311,25 @@ function initializeProjectGallery(gallery) {
       }
     });
 
-    control.addEventListener("pointerdown", (event) => {
-      lastPointerType = event.pointerType;
-
-      if (event.pointerType !== "touch") {
-        event.preventDefault();
-      }
-    });
-
-    control.addEventListener("click", (event) => {
+    control.addEventListener("click", () => {
       const scene = controlledScene();
       const state = sceneStates.get(scene);
-      const isTouchActivation =
-        lastPointerType === "touch" ||
-        (event.detail > 0 && !hoverPointer.matches);
 
-      lastPointerType = "";
-
-      if (!scene || !state || !isTouchActivation) {
+      if (!scene || !state) {
         return;
       }
 
-      state.pinnedControl = control;
-      showSceneHighlight(scene, control.dataset.sceneHighlight);
+      if (state.pinnedControl === control) {
+        showSceneOverview(scene, { clearPinned: true });
+      } else {
+        state.pinnedControl = control;
+        showSceneHighlight(scene, control.dataset.sceneHighlight);
+      }
     });
 
     control.addEventListener("pointerleave", () => {
       const scene = controlledScene();
       if (scene && document.activeElement !== control) {
-        restoreScene(scene);
-      }
-    });
-
-    control.addEventListener("focus", () => {
-      const scene = controlledScene();
-      if (scene) {
-        showSceneHighlight(scene, control.dataset.sceneHighlight);
-      }
-    });
-
-    control.addEventListener("blur", () => {
-      const scene = controlledScene();
-      if (scene) {
         restoreScene(scene);
       }
     });
@@ -1389,6 +1343,9 @@ function initializeProjectGallery(gallery) {
 
   previous?.addEventListener("click", () => setSlide(activeSlideIndex - 1));
   next?.addEventListener("click", () => setSlide(activeSlideIndex + 1));
+  enableHorizontalSwipe(gallery.querySelector(".gallery-slides"), (direction) => {
+    setSlide(activeSlideIndex + direction);
+  });
 
   if (totalLabel) {
     totalLabel.textContent = String(slides.length).padStart(2, "0");
@@ -1415,7 +1372,7 @@ function initializeExtraCarousel(carousel) {
   const formatIndex = (index) => String(index + 1).padStart(2, "0");
   const wrapIndex = (index) => (index + slides.length) % slides.length;
 
-  function applySlide(nextIndex, focusTab) {
+  function applySlide(nextIndex) {
     activeIndex = wrapIndex(nextIndex);
     requestedIndex = activeIndex;
 
@@ -1429,7 +1386,6 @@ function initializeExtraCarousel(carousel) {
     tabs.forEach((tab, index) => {
       const isCurrent = index === activeIndex;
       tab.setAttribute("aria-selected", String(isCurrent));
-      tab.tabIndex = isCurrent ? 0 : -1;
     });
 
     if (currentLabel) {
@@ -1444,13 +1400,9 @@ function initializeExtraCarousel(carousel) {
         activeSlide.classList.remove("is-entering");
       }, 280);
     }
-
-    if (focusTab) {
-      tabs[activeIndex]?.focus();
-    }
   }
 
-  function setExtraSlide(nextIndex, { focusTab = false } = {}) {
+  function setExtraSlide(nextIndex) {
     if (!slides.length) {
       return;
     }
@@ -1463,54 +1415,37 @@ function initializeExtraCarousel(carousel) {
     slides.forEach((slide) => slide.classList.remove("is-leaving", "is-entering"));
 
     if (normalizedIndex === activeIndex) {
-      if (focusTab) {
-        tabs[activeIndex]?.focus();
-      }
       return;
     }
 
     const activeSlide = slides[activeIndex];
 
     if (reducedMotion.matches || !document.documentElement.classList.contains("is-ready")) {
-      applySlide(normalizedIndex, focusTab);
+      applySlide(normalizedIndex);
       return;
     }
 
     activeSlide.classList.add("is-leaving");
     transitionTimer = window.setTimeout(() => {
-      applySlide(normalizedIndex, focusTab);
+      applySlide(normalizedIndex);
     }, 130);
   }
 
   tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => setExtraSlide(index));
-    tab.addEventListener("keydown", (event) => {
-      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
-        return;
-      }
-
-      event.preventDefault();
-
-      if (event.key === "Home") {
-        setExtraSlide(0, { focusTab: true });
-      } else if (event.key === "End") {
-        setExtraSlide(slides.length - 1, { focusTab: true });
-      } else {
-        setExtraSlide(index + (event.key === "ArrowRight" ? 1 : -1), {
-          focusTab: true,
-        });
-      }
-    });
   });
 
   previous?.addEventListener("click", () => setExtraSlide(requestedIndex - 1));
   next?.addEventListener("click", () => setExtraSlide(requestedIndex + 1));
+  enableHorizontalSwipe(carousel.querySelector(".extra-stage"), (direction) => {
+    setExtraSlide(requestedIndex + direction);
+  });
 
   if (totalLabel) {
     totalLabel.textContent = String(slides.length).padStart(2, "0");
   }
 
-  applySlide(0, false);
+  applySlide(0);
 }
 
 document.querySelectorAll("[data-extra-carousel]").forEach(initializeExtraCarousel);

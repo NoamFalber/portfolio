@@ -1174,6 +1174,7 @@ html:not(.js) .project-panel {
 
 .gallery-slides {
   min-height: 0;
+  touch-action: pan-y pinch-zoom;
 }
 
 .interactive-scene {
@@ -2094,6 +2095,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  touch-action: pan-y pinch-zoom;
 }
 
 [data-extra-project-panel="project-1"] .extra-stage {
@@ -2244,11 +2246,11 @@ body:not([data-section="extra"]) .extra-build-jump::before {
   flex-direction: column;
   justify-content: center;
   padding: clamp(1.1rem, 3vw, 2.5rem);
-  background: var(--sky-light);
+  background: var(--mint-light);
 }
 
 .extra-slide--problem .extra-slide__heading {
-  background: var(--sky-light);
+  background: var(--mint-light);
 }
 
 .extra-slide__heading h3 {
