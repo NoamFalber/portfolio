@@ -782,33 +782,33 @@ const sceneHighlightDetails = {
   },
   "map-palette": {
     kicker: "Editor and authoring",
-    title: "Layered authoring palette",
-    copy: "Brush, Rectangle, and Region Fill edit separate cave, gameplay-marker, and Guide Lamp layers. A gesture is one undo transaction, and erase removes the highest layer first so the supporting cave remains intact.",
+    title: "Draw the cave, then add gameplay",
+    copy: "Brush, Rectangle, and Fill shape the cave. Markers add the player start, encounters, hazards, healing, and the finish.",
   },
   "map-canvas": {
     kicker: "Editor and authoring",
-    title: "Batched 64 × 64 canvas",
-    copy: "The grid is one custom MaskableGraphic, not 4,096 UI GameObjects. It emits tiles, markers, topology edges, previews, validation cells, and pointer feedback into a single UI mesh for a practical browser workload.",
+    title: "A responsive 64 × 64 canvas",
+    copy: "The full grid renders as one UI mesh, keeping browser editing responsive while still showing layers, previews, and warnings.",
   },
   "map-readiness": {
     kicker: "Validation",
-    title: "Topology-aware readiness",
-    copy: "The readiness view turns structured validation into clear build requirements. Errors block generation, warnings remain playable, and Build & Play always rechecks an immutable document snapshot so stale results cannot enter the generator.",
+    title: "Know when the map is playable",
+    copy: "Clear checks catch missing markers and broken routes before generation. Warnings stay visible without blocking a valid build.",
   },
   "marker-inspector": {
     kicker: "Editor and authoring",
-    title: "Function-tile inspector",
-    copy: "Shift-click opens authored behavior for spawn facing, connected enemy encounters, or Guide Lamp wall sides. The inspector exposes only choices that are legal for the selected tile and the current cave topology.",
+    title: "Tune behavior where it belongs",
+    copy: "Select a marker to set spawn direction, enemy groups, or a lamp’s wall side without leaving the map.",
   },
   "build-play": {
     kicker: "Runtime generation",
-    title: "Build & Play pipeline",
-    copy: "This validates the map, generates curved walls, roof, pits, collision, and gameplay objects in stages, bakes ground and flying NavMesh data, binds runtime references, resets the level, and enters the existing spell-combat loop.",
+    title: "From sketch to playable cave",
+    copy: "Build & Play generates geometry, collision, and NavMesh data, connects the gameplay systems, and drops you into the level.",
   },
   "content-budget": {
     kicker: "Browser constraints",
-    title: "Live content budgets",
-    copy: "The footer reports map dimensions, cave cells, pits, markers, and a pre-build triangle estimate. Browser-focused limits stop oversized content before expensive geometry and NavMesh generation begin.",
+    title: "See the cost before building",
+    copy: "Live counts show map size, pits, markers, and estimated triangles so oversized maps are caught early.",
   },
 };
 
@@ -1106,6 +1106,138 @@ function initializeProjectGallery(gallery) {
 }
 
 document.querySelectorAll("[data-project-gallery]").forEach(initializeProjectGallery);
+
+function initializeExtraCarousel(carousel) {
+  const slides = [...carousel.querySelectorAll("[data-extra-slide]")];
+  const tabs = [...carousel.querySelectorAll("[data-extra-tab]")];
+  const previous = carousel.querySelector("[data-extra-previous]");
+  const next = carousel.querySelector("[data-extra-next]");
+  const currentLabel = carousel.querySelector("[data-extra-current]");
+  const totalLabel = carousel.querySelector("[data-extra-total]");
+  let activeIndex = 0;
+  let transitionTimer = 0;
+  let animationTimer = 0;
+
+  const formatIndex = (index) => String(index + 1).padStart(2, "0");
+  const wrapIndex = (index) => (index + slides.length) % slides.length;
+
+  function applySlide(nextIndex, focusTab) {
+    activeIndex = wrapIndex(nextIndex);
+
+    slides.forEach((slide, index) => {
+      const isCurrent = index === activeIndex;
+      slide.hidden = !isCurrent;
+      slide.setAttribute("aria-hidden", String(!isCurrent));
+      slide.classList.remove("is-leaving", "is-entering");
+    });
+
+    tabs.forEach((tab, index) => {
+      const isCurrent = index === activeIndex;
+      tab.setAttribute("aria-selected", String(isCurrent));
+      tab.tabIndex = isCurrent ? 0 : -1;
+    });
+
+    if (currentLabel) {
+      currentLabel.textContent = formatIndex(activeIndex);
+    }
+
+    const activeSlide = slides[activeIndex];
+
+    if (!reducedMotion.matches && document.documentElement.classList.contains("is-ready")) {
+      activeSlide.classList.add("is-entering");
+      animationTimer = window.setTimeout(() => {
+        activeSlide.classList.remove("is-entering");
+      }, 280);
+    }
+
+    if (focusTab) {
+      tabs[activeIndex]?.focus();
+    }
+  }
+
+  function setExtraSlide(nextIndex, { focusTab = false } = {}) {
+    if (!slides.length) {
+      return;
+    }
+
+    const normalizedIndex = wrapIndex(nextIndex);
+
+    window.clearTimeout(transitionTimer);
+    window.clearTimeout(animationTimer);
+    slides.forEach((slide) => slide.classList.remove("is-leaving", "is-entering"));
+
+    if (normalizedIndex === activeIndex) {
+      if (focusTab) {
+        tabs[activeIndex]?.focus();
+      }
+      return;
+    }
+
+    const activeSlide = slides[activeIndex];
+
+    if (reducedMotion.matches || !document.documentElement.classList.contains("is-ready")) {
+      applySlide(normalizedIndex, focusTab);
+      return;
+    }
+
+    activeSlide.classList.add("is-leaving");
+    transitionTimer = window.setTimeout(() => {
+      applySlide(normalizedIndex, focusTab);
+    }, 130);
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => setExtraSlide(index));
+    tab.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (event.key === "Home") {
+        setExtraSlide(0, { focusTab: true });
+      } else if (event.key === "End") {
+        setExtraSlide(slides.length - 1, { focusTab: true });
+      } else {
+        setExtraSlide(index + (event.key === "ArrowRight" ? 1 : -1), {
+          focusTab: true,
+        });
+      }
+    });
+  });
+
+  previous?.addEventListener("click", () => setExtraSlide(activeIndex - 1));
+  next?.addEventListener("click", () => setExtraSlide(activeIndex + 1));
+
+  if (totalLabel) {
+    totalLabel.textContent = String(slides.length).padStart(2, "0");
+  }
+
+  applySlide(0, false);
+}
+
+document.querySelectorAll("[data-extra-carousel]").forEach(initializeExtraCarousel);
+
+document.querySelectorAll("[data-project-build-jump]").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const projectName = link.dataset.projectBuildJump;
+    const projectsIndex = sectionIndexFromTarget("projects");
+
+    if (!projectName || projectsIndex < 0) {
+      return;
+    }
+
+    event.preventDefault();
+    setProject(projectName);
+    setSection(projectsIndex, {
+      historyMode: "none",
+      focusHeading: false,
+      source: "link",
+    });
+    setProjectView("build", { historyMode: "push", announce: true });
+  });
+});
 
 const initialSection = sectionIndexFromHash();
 const initialProject = projectNameFromHash() ?? "project-1";

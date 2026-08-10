@@ -180,33 +180,22 @@
                       >
                     </div>
 
-                    <div class="intro-reel__item intro-reel__item--profile">
+                    <div class="intro-reel__item intro-reel__item--project intro-reel__item--workshop">
                       <img
-                        src="assets/images/noam-github-avatar.png"
-                        width="378"
-                        height="378"
+                        src="assets/images/game-two-workshop-belt.webp"
+                        width="1400"
+                        height="728"
                         alt=""
                         loading="lazy"
                         decoding="async"
                       >
                     </div>
 
-                    <div class="intro-reel__item intro-reel__item--project">
+                    <div class="intro-reel__item intro-reel__item--project intro-reel__item--gameplay">
                       <img
-                        src="assets/images/project-one-hero.webp"
-                        width="1456"
-                        height="1080"
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      >
-                    </div>
-
-                    <div class="intro-reel__item intro-reel__item--profile">
-                      <img
-                        src="assets/images/noam-github-avatar.png"
-                        width="378"
-                        height="378"
+                        src="assets/images/game-two-gameplay-belt.webp"
+                        width="1400"
+                        height="728"
                         alt=""
                         loading="lazy"
                         decoding="async"
@@ -226,33 +215,22 @@
                       >
                     </div>
 
-                    <div class="intro-reel__item intro-reel__item--profile">
+                    <div class="intro-reel__item intro-reel__item--project intro-reel__item--workshop">
                       <img
-                        src="assets/images/noam-github-avatar.png"
-                        width="378"
-                        height="378"
+                        src="assets/images/game-two-workshop-belt.webp"
+                        width="1400"
+                        height="728"
                         alt=""
                         loading="lazy"
                         decoding="async"
                       >
                     </div>
 
-                    <div class="intro-reel__item intro-reel__item--project">
+                    <div class="intro-reel__item intro-reel__item--project intro-reel__item--gameplay">
                       <img
-                        src="assets/images/project-one-hero.webp"
-                        width="1456"
-                        height="1080"
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      >
-                    </div>
-
-                    <div class="intro-reel__item intro-reel__item--profile">
-                      <img
-                        src="assets/images/noam-github-avatar.png"
-                        width="378"
-                        height="378"
+                        src="assets/images/game-two-gameplay-belt.webp"
+                        width="1400"
+                        height="728"
                         alt=""
                         loading="lazy"
                         decoding="async"
@@ -650,7 +628,7 @@
                                 data-interactive-scene
                                 data-scene-overview-kicker="Interactive picture"
                                 data-scene-overview-title="Inspect the workshop"
-                                data-scene-overview-copy="Hover on desktop or tap on a phone to inspect how the authoring tool becomes a playable cave."
+                                data-scene-overview-copy="Choose a target to see what the tool does. The full engineering breakdown is in Extra."
                               >
                                 <img
                                   class="interactive-scene__image"
@@ -727,8 +705,8 @@
                                 class="interactive-scene interactive-scene--gameplay"
                                 data-interactive-scene
                                 data-scene-overview-kicker="Picture 02"
-                                data-scene-overview-title="Spell-combat gameplay"
-                                data-scene-overview-copy="This gameplay capture is included in the gallery without annotations for now."
+                                data-scene-overview-title="The generated cave in play"
+                                data-scene-overview-copy="The map becomes the real combat level, using the project’s existing movement, spells, enemies, and reset systems."
                               >
                                 <img
                                   class="interactive-scene__image"
@@ -810,7 +788,7 @@
                             <p>Runtime tools · procedural generation</p>
                             <h3 id="project-2-summary-title">Cave Map Workshop</h3>
                             <p>
-                              I turned a mature Unity cave editor into a desktop-and-web runtime tool: paint and validate layered 64 × 64 maps, then use the same C# pipeline to generate and play the full 3D cave in WebGPU.
+                              I built a runtime cave-making toolkit for Unity: draw and validate a layered map, generate the full 3D level and NavMesh, then play it on desktop or in the WebGPU build.
                             </p>
                             <ul class="project-tags" aria-label="Project technologies">
                               <li>Unity 6</li>
@@ -835,7 +813,7 @@
                               </div>
                               <h4 data-scene-title>Inspect the workshop</h4>
                               <p data-scene-copy>
-                                Hover on desktop or tap on a phone to inspect how the authoring tool becomes a playable cave.
+                                Choose a target to see what the tool does. The full engineering breakdown is in Extra.
                               </p>
                             </div>
                           </div>
@@ -1004,146 +982,214 @@
         <div class="section-page__scroller" data-section-scroller>
           <div class="extra-layout section-content">
             <header class="extra-heading">
-              <p class="section-kicker">Extra</p>
-              <h2 id="extra-title" tabindex="-1">Project deep dives</h2>
-              <p>
-                The systems, constraints, and decisions behind the selected work.
-              </p>
+              <p class="section-kicker">Extra · Project deep dive</p>
+              <h2 id="extra-title" tabindex="-1">Inside Cave Map Workshop</h2>
             </header>
 
-            <div class="extra-project-tabs" role="tablist" aria-label="Choose a project deep dive">
-              <button
-                type="button"
-                role="tab"
-                aria-selected="false"
-                aria-disabled="true"
-                disabled
-              >
-                <span>01</span>
-                <span><strong>Project One</strong><small>No extra entry</small></span>
-              </button>
-              <button
-                type="button"
-                role="tab"
-                aria-selected="true"
-                aria-controls="extra-project-2"
-              >
-                <span>02</span>
-                <span><strong>Cave Map Workshop</strong><small>Editor + runtime</small></span>
-              </button>
-            </div>
-
-            <article class="extra-case-study" id="extra-project-2" role="tabpanel">
-              <header class="extra-case-study__hero">
-                <div>
-                  <p class="extra-case-study__eyebrow">Unity runtime tool · procedural level generation</p>
-                  <h3>Cave Map Workshop</h3>
-                  <p class="extra-case-study__lead">
-                    I rebuilt an editor-only cave construction workflow as a product people can use at runtime. A designer can draw a layered 2D map, catch invalid topology before building, generate the complete 3D cave and navigation, and enter the existing spell-combat game without leaving the tool.
-                  </p>
-                  <div class="extra-case-study__actions">
-                    <a class="button button--primary" href="builds/project-two/" target="_blank" rel="noopener">
-                      <span>Open the WebGPU build</span>
-                      <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
+            <div class="extra-workspace" data-extra-carousel>
+              <header class="extra-workspace__toolbar">
+                <div class="extra-project-switcher" role="group" aria-label="Project deep dives">
+                  <span class="extra-project-switcher__empty" aria-disabled="true">
+                    <span>01</span>
+                    <span><strong>Project One</strong><small>No extra entry</small></span>
+                  </span>
+                  <span class="extra-project-switcher__current">
+                    <span>02</span>
+                    <span><strong>Cave Map Workshop</strong><small>Editor + runtime</small></span>
+                  </span>
                 </div>
-                <dl class="extra-meta">
-                  <div><dt>Engine</dt><dd>Unity 6000.4.1f1 · URP 17.4</dd></div>
-                  <div><dt>Core</dt><dd>C# · runtime authoring · procedural generation</dd></div>
-                  <div><dt>Platforms</dt><dd>Desktop Unity · desktop web browsers</dd></div>
-                  <div><dt>Web renderer</dt><dd>WebGPU only · no WebGL fallback</dd></div>
-                </dl>
+
+                <div class="extra-carousel-controls" role="group" aria-label="Deep-dive controls">
+                  <button type="button" data-extra-previous aria-label="Previous deep-dive window">←</button>
+                  <span aria-live="polite" aria-atomic="true">
+                    <strong data-extra-current>01</strong>
+                    <span aria-hidden="true"> / </span>
+                    <span data-extra-total>06</span>
+                  </span>
+                  <button type="button" data-extra-next aria-label="Next deep-dive window">→</button>
+                </div>
               </header>
 
-              <section class="extra-story extra-story--problem" aria-labelledby="extra-problem-title">
-                <div class="extra-story__heading">
-                  <p>01 · The problem</p>
-                  <h4 id="extra-problem-title">Keep the mature map rules. Replace everything that could not ship.</h4>
-                </div>
-                <div class="extra-story__copy">
-                  <p>
-                    The original map painter was an approximately 5,000-line Unity <code>EditorWindow</code>. It depended on editor Undo, <code>AssetDatabase</code>, prefab and mesh saving, scene mutation, and arbitrary project references. Those systems were useful in development, but none could become a browser product.
-                  </p>
-                  <p>
-                    I separated the portable map data, editing transactions, validation, build coordination, persistence, UI, and generated-resource ownership into runtime-safe systems. The established tile rules and procedural <code>MapBuilder</code> stayed authoritative, so desktop and web use the same map logic instead of drifting into two implementations.
-                  </p>
-                </div>
-              </section>
+              <div class="extra-stage">
+                <article
+                  class="extra-slide extra-slide--hero"
+                  id="extra-slide-overview"
+                  role="tabpanel"
+                  aria-labelledby="extra-step-overview"
+                  data-extra-slide
+                  data-extra-index="0"
+                >
+                  <div class="extra-hero-copy">
+                    <p class="extra-slide__eyebrow">Unity runtime tool · procedural level generation</p>
+                    <h3>Cave Map Workshop</h3>
+                    <p class="extra-slide__lead">
+                      I rebuilt my Unity cave editor as a tool that works at runtime. Draw and validate a layered map, generate the 3D cave and NavMesh, then jump straight into the project’s existing spell-combat loop. The same core rules drive the desktop and WebGPU versions.
+                    </p>
+                    <a
+                      class="button button--primary extra-build-jump"
+                      href="#project-2-build"
+                      data-project-build-jump="project-2"
+                    >
+                      <span>Open the WebGPU build</span>
+                      <span aria-hidden="true">↑</span>
+                    </a>
+                  </div>
+                  <dl class="extra-meta">
+                    <div><dt>Engine</dt><dd>Unity 6000.4.1f1 · URP 17.4</dd></div>
+                    <div><dt>Built with</dt><dd>C# · runtime authoring · procedural generation</dd></div>
+                    <div><dt>Runs on</dt><dd>Desktop Unity · desktop web browsers</dd></div>
+                    <div><dt>Browser renderer</dt><dd>WebGPU only · no WebGL fallback</dd></div>
+                  </dl>
+                </article>
 
-              <section class="extra-story" aria-labelledby="extra-authoring-title">
-                <div class="extra-story__heading">
-                  <p>02 · Editor and authoring</p>
-                  <h4 id="extra-authoring-title">A layered tool that protects intent while people draw.</h4>
-                </div>
-                <div class="extra-story__copy">
-                  <p>
-                    Each cell can hold a cave base, a gameplay marker, and a Guide Lamp overlay. Brush, Rectangle, Region Fill, erase, resize, and function-tile edits all pass through the same transaction service and topology rules. A drag is one undo step; fast strokes rasterize between pointer events; top-layer erase preserves the cave beneath it.
-                  </p>
-                  <ul>
-                    <li>One Player Start is normalized across the map.</li>
-                    <li>The Finish Zone remains one edge-connected region.</li>
-                    <li>Pit clusters stay attached to playable Floor.</li>
-                    <li>Enemy encounter settings survive cluster merges and splits.</li>
-                    <li>Structured validation reports errors, warnings, stable codes, and affected cells.</li>
-                  </ul>
-                  <p>
-                    The 64 × 64 canvas is rendered as one custom UI mesh rather than 4,096 GameObjects. It batches tiles, symbols, topology outlines, previews, hover state, and validation overlays, keeping the browser authoring view practical without giving up precise feedback.
-                  </p>
-                </div>
-              </section>
+                <article
+                  class="extra-slide extra-slide--story extra-slide--problem"
+                  id="extra-slide-problem"
+                  role="tabpanel"
+                  aria-labelledby="extra-step-problem"
+                  data-extra-slide
+                  data-extra-index="1"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>01 · The problem</p>
+                    <h3>The map tool worked. Unity’s editor was the part that could not ship.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      The original map painter was an approximately 5,000-line <code>EditorWindow</code> built around editor Undo, <code>AssetDatabase</code>, saved meshes, scene changes, and direct project references. I wanted the full tool in a playable build, not a smaller imitation of it.
+                    </p>
+                    <p>
+                      I kept the mature tile rules and procedural generator, then replaced the editor-only shell with runtime systems that desktop and web can share.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Portable maps</strong><span>Versioned JSON uses stable tile and catalog IDs.</span></li>
+                      <li><strong>Runtime history</strong><span>Every stroke, fill, resize, and setting change is undoable.</span></li>
+                      <li><strong>Shared validation</strong><span>The same rules protect authoring and the final build.</span></li>
+                      <li><strong>Owned resources</strong><span>Generated meshes, materials, and NavMesh data are cleaned up safely.</span></li>
+                    </ul>
+                  </div>
+                </article>
 
-              <section class="extra-story" aria-labelledby="extra-runtime-title">
-                <div class="extra-story__heading">
-                  <p>03 · Runtime generation</p>
-                  <h4 id="extra-runtime-title">The authored plan becomes the real playable level.</h4>
-                </div>
-                <div class="extra-story__copy">
-                  <ol class="runtime-pipeline" aria-label="Runtime cave generation pipeline">
-                    <li><strong>Snapshot</strong><span>Clone and revalidate the versioned map document.</span></li>
-                    <li><strong>Geometry</strong><span>Build floor chunks, curved boundary walls, roof, pits, backdrops, and seeded stalactites.</span></li>
-                    <li><strong>Gameplay</strong><span>Place spawn, encounter, finish, pool, wind, and lamp behavior from the authored layers.</span></li>
-                    <li><strong>Collision</strong><span>Separate detailed visual and spell surfaces from clean player-safe pit collision.</span></li>
-                    <li><strong>Navigation</strong><span>Bake ground and flying NavMesh data after the current geometry exists.</span></li>
-                    <li><strong>Play</strong><span>Bind gameplay references, reset into the generated map, and enter first-person combat.</span></li>
-                  </ol>
-                  <p>
-                    Generation yields during large scans and between expensive stages so the browser can keep presenting honest progress. Every generated mesh, material, NavMesh object, and hierarchy belongs to a <code>GeneratedMapLifetime</code>; leaving play mode disposes that lifetime before another build begins. Shared project assets are never destroyed.
-                  </p>
-                </div>
-              </section>
+                <article
+                  class="extra-slide extra-slide--story"
+                  id="extra-slide-authoring"
+                  role="tabpanel"
+                  aria-labelledby="extra-step-authoring"
+                  data-extra-slide
+                  data-extra-index="2"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>02 · Editor and authoring</p>
+                    <h3>The rules live under the canvas, not inside the UI.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      Brush, Rectangle, Region Fill, erase, resize, and marker settings all go through one transaction service and one set of topology rules. That keeps the tool predictable even when several kinds of data share one cell.
+                    </p>
+                    <ul class="extra-detail-grid extra-detail-grid--authoring">
+                      <li><strong>Three layers</strong><span>Cave shape, gameplay markers, and Guide Lamps can work together.</span></li>
+                      <li><strong>Safe editing</strong><span>A drag is one undo step; fast strokes fill skipped pointer cells.</span></li>
+                      <li><strong>Protected topology</strong><span>One start, one connected finish, attached pits, and stable encounter groups.</span></li>
+                      <li><strong>Clear validation</strong><span>Errors block generation. Warnings explain risk without stopping a valid map.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      <strong>64 × 64, one UI mesh.</strong> The canvas batches 4,096 cells, symbols, outlines, previews, hover states, and validation feedback instead of creating one GameObject per cell.
+                    </p>
+                  </div>
+                </article>
 
-              <section class="extra-story" aria-labelledby="extra-webgpu-title">
-                <div class="extra-story__heading">
-                  <p>04 · WebGPU delivery</p>
-                  <h4 id="extra-webgpu-title">The web build is a target, not an export checkbox.</h4>
-                </div>
-                <div class="extra-story__copy">
-                  <p>
-                    I built a dedicated Unity WebGPU renderer and quality path, then made the release validator reject any build that includes another graphics API. The browser page checks HTTPS, desktop input, <code>navigator.gpu</code>, and a high-performance adapter before downloading Unity. If WebGPU is unavailable, it stops with a useful compatibility message instead of silently switching renderers.
-                  </p>
-                  <p>
-                    The release uses Brotli-compressed, hashed Unity artifacts; a 256 MiB WebAssembly heap can grow geometrically to 2048 MiB, and device pixel ratio is capped at 1.5. The host serves the compressed JavaScript, data, and WebAssembly with their required encoding and MIME headers so streaming compilation can work correctly.
-                  </p>
-                </div>
-              </section>
+                <article
+                  class="extra-slide extra-slide--story extra-slide--runtime"
+                  id="extra-slide-runtime"
+                  role="tabpanel"
+                  aria-labelledby="extra-step-runtime"
+                  data-extra-slide
+                  data-extra-index="3"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>03 · Runtime generation</p>
+                    <h3>Build &amp; Play makes the level the game actually uses.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <ol class="runtime-pipeline" aria-label="Runtime cave generation pipeline">
+                      <li><strong>Validate</strong><span>Freeze and recheck the map.</span></li>
+                      <li><strong>Shape</strong><span>Build floors, curved walls, roof, pits, and seeded detail.</span></li>
+                      <li><strong>Place</strong><span>Add spawn, encounters, finish, pools, wind, and lamps.</span></li>
+                      <li><strong>Collide</strong><span>Keep detailed visuals and player-safe collision separate.</span></li>
+                      <li><strong>Navigate</strong><span>Bake ground and flying NavMesh data.</span></li>
+                      <li><strong>Play</strong><span>Bind the systems and enter first-person combat.</span></li>
+                    </ol>
+                    <p class="extra-callout">
+                      Generation yields between expensive stages so the browser can show honest progress. Returning to the editor disposes the generated lifetime before the next build, without touching shared project assets.
+                    </p>
+                  </div>
+                </article>
 
-              <section class="extra-evidence" aria-labelledby="extra-evidence-title">
-                <header>
-                  <p>Verified engineering evidence</p>
-                  <h4 id="extra-evidence-title">Tested across the complete edit–build–play loop.</h4>
-                </header>
-                <dl>
-                  <div><dt>23 / 23</dt><dd>runtime-map EditMode tests passed</dd></div>
-                  <div><dt>20 cycles</dt><dd>deterministic Build → Play → Edit soak passed</dd></div>
-                  <div><dt>57,068,972 B</dt><dd>production Brotli WebGPU release</dd></div>
-                  <div><dt>244 / 0</dt><dd>WebGPU / WebGL target entries in the release log</dd></div>
-                </dl>
-                <p class="extra-evidence__note">
-                  The browser version targets desktop keyboard and mouse, requires a secure WebGPU-capable setup, and deliberately has no WebGL fallback. Runtime NavMesh baking remains a measured main-thread stage, so map dimensions, geometry, pits, objects, enemies, and estimated triangles are budgeted before generation begins.
-                </p>
-              </section>
-            </article>
+                <article
+                  class="extra-slide extra-slide--story extra-slide--webgpu"
+                  id="extra-slide-webgpu"
+                  role="tabpanel"
+                  aria-labelledby="extra-step-webgpu"
+                  data-extra-slide
+                  data-extra-index="4"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>04 · WebGPU delivery</p>
+                    <h3>I designed the browser version around Unity 6 WebGPU from the start.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      The project has a dedicated renderer, quality path, browser preflight, and release validator. A production build is rejected unless WebGPU is the only graphics API.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Useful preflight</strong><span>HTTPS, desktop input, WebGPU, and a high-performance adapter are checked before Unity downloads.</span></li>
+                      <li><strong>No quiet fallback</strong><span>An unsupported setup gets a clear message instead of a hidden WebGL switch.</span></li>
+                      <li><strong>Browser budgets</strong><span>The heap can grow from 256 to 2,048 MiB; device pixel ratio is capped at 1.5.</span></li>
+                      <li><strong>Correct delivery</strong><span>Hashed Brotli files are served with the MIME and encoding headers Unity needs.</span></li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--proof"
+                  id="extra-slide-proof"
+                  role="tabpanel"
+                  aria-labelledby="extra-step-proof"
+                  data-extra-slide
+                  data-extra-index="5"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>Verified engineering evidence</p>
+                    <h3>I tested the loop I expect people to repeat.</h3>
+                  </header>
+                  <div class="extra-proof-body">
+                    <dl class="extra-evidence-grid">
+                      <div><dt>23 / 23</dt><dd>runtime-map EditMode tests passed</dd></div>
+                      <div><dt>20 cycles</dt><dd>Build → Play → Edit soak passed</dd></div>
+                      <div><dt>57,068,972 B</dt><dd>production Brotli WebGPU release</dd></div>
+                      <div><dt>244 / 0</dt><dd>WebGPU / WebGL entries in the release log</dd></div>
+                    </dl>
+                    <p>
+                      The first release targets desktop keyboard and mouse in a secure WebGPU-capable browser. Runtime NavMesh baking still runs on the main thread, so the workshop checks map size, geometry, pits, objects, enemies, and estimated triangles before generation.
+                    </p>
+                  </div>
+                </article>
+              </div>
+
+              <div class="extra-step-tabs" role="tablist" aria-label="Choose a Cave Map Workshop topic">
+                <button type="button" role="tab" id="extra-step-overview" aria-controls="extra-slide-overview" aria-selected="true" tabindex="0" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
+                <button type="button" role="tab" id="extra-step-problem" aria-controls="extra-slide-problem" aria-selected="false" tabindex="-1" data-extra-tab="1"><span>01</span><strong>Problem</strong></button>
+                <button type="button" role="tab" id="extra-step-authoring" aria-controls="extra-slide-authoring" aria-selected="false" tabindex="-1" data-extra-tab="2"><span>02</span><strong>Authoring</strong></button>
+                <button type="button" role="tab" id="extra-step-runtime" aria-controls="extra-slide-runtime" aria-selected="false" tabindex="-1" data-extra-tab="3"><span>03</span><strong>Runtime</strong></button>
+                <button type="button" role="tab" id="extra-step-webgpu" aria-controls="extra-slide-webgpu" aria-selected="false" tabindex="-1" data-extra-tab="4"><span>04</span><strong>WebGPU</strong></button>
+                <button type="button" role="tab" id="extra-step-proof" aria-controls="extra-slide-proof" aria-selected="false" tabindex="-1" data-extra-tab="5"><span>05</span><strong>Proof</strong></button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
