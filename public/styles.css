@@ -192,13 +192,13 @@ img {
 }
 
 .section-page--projects {
-  --paper-light: #f8fcfb;
+  --paper-light: #d3e4e6;
   --ink: #17343d;
-  --ink-soft: #526b73;
+  --ink-soft: #435e66;
   --green: #3d7985;
   --green-dark: #275e69;
   --mint: #cee1df;
-  --mint-light: #e3efed;
+  --mint-light: #c7dcde;
   --sky: #b7dbe2;
   --sky-light: #deedf0;
   --coral: #d96845;
@@ -220,15 +220,15 @@ img {
 }
 
 .section-page--extra {
-  --paper-light: #fffdf8;
+  --paper-light: #d2e1cf;
   --ink: #193127;
-  --ink-soft: #52675d;
+  --ink-soft: #40584d;
   --green: #356b52;
   --green-dark: #204c3a;
   --mint: #dce9d9;
-  --mint-light: #edf4e9;
+  --mint-light: #c7d9c4;
   --sky: #b9dce6;
-  --sky-light: #e3f1f3;
+  --sky-light: #c6d8d5;
   --coral: #e66b4b;
   --coral-dark: #8d301d;
   --button-ink: #25110b;
