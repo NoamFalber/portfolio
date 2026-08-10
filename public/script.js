@@ -11,7 +11,9 @@ const sectionDeck = document.querySelector(".section-deck");
 const sectionAnnouncer = document.querySelector("[data-section-announcer]");
 const skipLink = document.querySelector("[data-skip-link]");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const mobileLayout = window.matchMedia("(max-width: 42rem)");
+const buildAccessDisabled = window.matchMedia(
+  "(max-width: 42rem), (hover: none) and (pointer: coarse)",
+);
 const hoverPointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const deferredProjectImages = [
   ...document.querySelectorAll("[data-deferred-src]"),
@@ -24,7 +26,17 @@ const sectionNames = sectionPages.map(
 let currentSection = 0;
 let isTransitioning = false;
 let transitionTimer = 0;
+let transitionFocusTarget = null;
+let pendingSectionRequest = null;
 let touchStartY = null;
+
+function addMediaQueryChangeListener(query, listener) {
+  if (typeof query.addEventListener === "function") {
+    query.addEventListener("change", listener);
+  } else {
+    query.addListener(listener);
+  }
+}
 
 function loadDeferredProjectImages() {
   deferredProjectImages.forEach((image) => {
@@ -115,15 +127,47 @@ function focusSectionHeading(section) {
   }
 }
 
+function finishSectionTransition() {
+  if (!isTransitioning) {
+    return;
+  }
+
+  window.clearTimeout(transitionTimer);
+  isTransitioning = false;
+  sectionDeck?.classList.remove("is-section-transitioning");
+  sectionPages.forEach((section) => {
+    section.classList.remove("is-section-bypassed");
+  });
+
+  if (transitionFocusTarget) {
+    focusSectionHeading(transitionFocusTarget);
+    transitionFocusTarget = null;
+  }
+
+  const queuedRequest = pendingSectionRequest;
+  pendingSectionRequest = null;
+
+  if (queuedRequest && queuedRequest.nextIndex !== currentSection) {
+    window.requestAnimationFrame(() => {
+      setSection(queuedRequest.nextIndex, queuedRequest.options);
+    });
+  }
+}
+
 function setSection(
   nextIndex,
   { historyMode = "push", focusHeading = false, source = "link" } = {},
 ) {
-  if (
-    nextIndex < 0 ||
-    nextIndex >= sectionPages.length ||
-    (isTransitioning && nextIndex !== currentSection)
-  ) {
+  if (nextIndex < 0 || nextIndex >= sectionPages.length) {
+    return;
+  }
+
+  if (isTransitioning && nextIndex !== currentSection) {
+    pendingSectionRequest = {
+      nextIndex,
+      options: { historyMode, focusHeading, source },
+    };
+    transitionFocusTarget = null;
     return;
   }
 
@@ -153,6 +197,7 @@ function setSection(
   const isSkippingSection = Math.abs(nextIndex - previousIndex) > 1;
 
   isTransitioning = true;
+  transitionFocusTarget = focusHeading ? destination : null;
   sectionDeck?.classList.add("is-section-transitioning");
   window.clearTimeout(transitionTimer);
 
@@ -209,18 +254,23 @@ function setSection(
     sectionAnnouncer.textContent = `${sectionNames[nextIndex]} section`;
   }
 
-  if (focusHeading) {
-    window.setTimeout(() => focusSectionHeading(destination), 360);
+  if (!document.documentElement.classList.contains("is-ready")) {
+    window.requestAnimationFrame(finishSectionTransition);
+  } else {
+    transitionTimer = window.setTimeout(finishSectionTransition, 760);
   }
-
-  transitionTimer = window.setTimeout(() => {
-    isTransitioning = false;
-    sectionDeck?.classList.remove("is-section-transitioning");
-    sectionPages.forEach((section) => {
-      section.classList.remove("is-section-bypassed");
-    });
-  }, 700);
 }
+
+sectionDeck?.addEventListener("transitionend", (event) => {
+  if (
+    isTransitioning &&
+    event.propertyName.endsWith("transform") &&
+    event.target instanceof Element &&
+    event.target.matches('[data-section-page][data-position="current"]')
+  ) {
+    finishSectionTransition();
+  }
+});
 
 function navigateSection(direction, source) {
   if (!hasNeighbor(direction)) {
@@ -267,9 +317,12 @@ function handleBoundaryKey(event) {
     return;
   }
 
-  const interactiveTarget = event.target.closest(
-    "button, a, input, textarea, select, [contenteditable='true']",
-  );
+  const interactiveTarget =
+    event.target instanceof Element
+      ? event.target.closest(
+          "button, a, input, textarea, select, [contenteditable='true']",
+        )
+      : null;
 
   if (interactiveTarget) {
     return;
@@ -340,6 +393,10 @@ function handleTouchEnd(event) {
   navigateSection(direction, "touch");
 }
 
+function handleTouchCancel() {
+  touchStartY = null;
+}
+
 sectionLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     const nextIndex = sectionIndexFromTarget(link.dataset.sectionTarget);
@@ -368,11 +425,12 @@ sectionPages.forEach((section) => {
   scroller.addEventListener("wheel", handleWheel, { passive: false });
   scroller.addEventListener("touchstart", handleTouchStart, { passive: true });
   scroller.addEventListener("touchend", handleTouchEnd, { passive: true });
+  scroller.addEventListener("touchcancel", handleTouchCancel, { passive: true });
 });
 
 document.addEventListener("keydown", handleBoundaryKey);
 
-window.addEventListener("popstate", () => {
+function syncNavigationFromLocation() {
   const historySection = sectionIndexFromHash();
 
   setSection(historySection, {
@@ -389,7 +447,10 @@ window.addEventListener("popstate", () => {
   } else if (window.location.hash === "#projects") {
     setProjectView("showcase");
   }
-});
+}
+
+window.addEventListener("popstate", syncNavigationFromLocation);
+window.addEventListener("hashchange", syncNavigationFromLocation);
 
 const projectTabs = [...document.querySelectorAll("[data-project-tab]")];
 const projectPanels = [...document.querySelectorAll("[data-project-panel]")];
@@ -416,6 +477,38 @@ const projectBuildWindowTitle = document.querySelector(
   "[data-build-window-title]",
 );
 let projectWindowTransitionTimer = 0;
+let projectPanelAnimationTimer = 0;
+let extraProjectAnimationTimer = 0;
+
+function runPageEntrance(element, direction, candidates, previousTimer) {
+  window.clearTimeout(previousTimer);
+  candidates.forEach((candidate) => {
+    candidate.classList.remove(
+      "is-page-entering-next",
+      "is-page-entering-previous",
+    );
+  });
+
+  if (
+    !element ||
+    reducedMotion.matches ||
+    !document.documentElement.classList.contains("is-ready")
+  ) {
+    return 0;
+  }
+
+  void element.offsetWidth;
+  element.classList.add(
+    direction < 0 ? "is-page-entering-previous" : "is-page-entering-next",
+  );
+
+  return window.setTimeout(() => {
+    element.classList.remove(
+      "is-page-entering-next",
+      "is-page-entering-previous",
+    );
+  }, 340);
+}
 
 function setBuildStatus(frame, status) {
   const panel = frame.closest("[data-project-build-panel]");
@@ -619,7 +712,7 @@ function setProjectView(
   const selectedTab = selectedProjectTab();
   const hasBuild = selectedTab?.dataset.hasBuild === "true";
 
-  if (mode === "build" && (!hasBuild || mobileLayout.matches)) {
+  if (mode === "build" && (!hasBuild || buildAccessDisabled.matches)) {
     mode = "showcase";
 
     if (/^#project-\d+-build$/.test(window.location.hash) && selectedTab) {
@@ -679,12 +772,20 @@ function setProject(projectName, focusTab = false) {
     return;
   }
 
-  if (document.body.dataset.project !== projectName) {
+  const previousProjectName = document.body.dataset.project;
+  const previousProjectIndex = projectTabs.findIndex(
+    (tab) => tab.dataset.projectTab === previousProjectName,
+  );
+  const nextProjectIndex = projectTabs.indexOf(selectedTab);
+  const projectDirection =
+    previousProjectIndex >= 0 && nextProjectIndex < previousProjectIndex ? -1 : 1;
+
+  if (previousProjectName !== projectName) {
     unloadProjectBuilds();
   }
 
   document.body.dataset.project = projectName;
-  setExtraProject(projectName);
+  setExtraProject(projectName, previousProjectName);
 
   projectTabs.forEach((tab) => {
     const isSelected = tab === selectedTab;
@@ -696,6 +797,23 @@ function setProject(projectName, focusTab = false) {
     panel.hidden = panel.dataset.projectPanel !== projectName;
   });
 
+  if (
+    previousProjectName &&
+    previousProjectName !== projectName &&
+    document.body.dataset.section === "projects" &&
+    document.body.dataset.projectView === "showcase"
+  ) {
+    const selectedPanel = projectPanels.find(
+      (panel) => panel.dataset.projectPanel === projectName,
+    );
+    projectPanelAnimationTimer = runPageEntrance(
+      selectedPanel,
+      projectDirection,
+      projectPanels,
+      projectPanelAnimationTimer,
+    );
+  }
+
   applyProjectViewState();
   updateProjectViewButton();
 
@@ -704,7 +822,7 @@ function setProject(projectName, focusTab = false) {
   }
 }
 
-function setExtraProject(projectName) {
+function setExtraProject(projectName, previousProjectName = null) {
   const panels = [...document.querySelectorAll("[data-extra-project-panel]")];
   const selectedPanel = panels.find(
     (panel) => panel.dataset.extraProjectPanel === projectName,
@@ -717,6 +835,23 @@ function setExtraProject(projectName) {
   panels.forEach((panel) => {
     panel.hidden = panel !== selectedPanel;
   });
+
+  if (
+    previousProjectName &&
+    previousProjectName !== projectName &&
+    document.body.dataset.section === "extra"
+  ) {
+    const previousIndex = panels.findIndex(
+      (panel) => panel.dataset.extraProjectPanel === previousProjectName,
+    );
+    const nextIndex = panels.indexOf(selectedPanel);
+    extraProjectAnimationTimer = runPageEntrance(
+      selectedPanel,
+      previousIndex >= 0 && nextIndex < previousIndex ? -1 : 1,
+      panels,
+      extraProjectAnimationTimer,
+    );
+  }
 
   document.querySelectorAll("[data-extra-project-select]").forEach((button) => {
     button.setAttribute(
@@ -781,7 +916,7 @@ projectBuildReturnButton?.addEventListener("click", () => {
   });
 });
 
-mobileLayout.addEventListener("change", (event) => {
+addMediaQueryChangeListener(buildAccessDisabled, (event) => {
   if (event.matches && document.body.dataset.projectView === "build") {
     setProjectView("showcase", { historyMode: "replace" });
   }
@@ -976,6 +1111,7 @@ function initializeProjectGallery(gallery) {
     ?.querySelector("[data-scene-inspector]");
   const sceneStates = new WeakMap();
   let activeSlideIndex = 0;
+  let slideAnimationTimer = 0;
 
   const formatIndex = (index) => String(index + 1).padStart(2, "0");
   const activeScene = () =>
@@ -1098,11 +1234,22 @@ function initializeProjectGallery(gallery) {
       return;
     }
 
-    activeSlideIndex = Math.min(Math.max(nextIndex, 0), slides.length - 1);
+    const previousSlideIndex = activeSlideIndex;
+    const normalizedIndex = Math.min(Math.max(nextIndex, 0), slides.length - 1);
+    activeSlideIndex = normalizedIndex;
 
     slides.forEach((slide, index) => {
       slide.hidden = index !== activeSlideIndex;
     });
+
+    if (activeSlideIndex !== previousSlideIndex) {
+      slideAnimationTimer = runPageEntrance(
+        slides[activeSlideIndex],
+        activeSlideIndex < previousSlideIndex ? -1 : 1,
+        slides,
+        slideAnimationTimer,
+      );
+    }
 
     thumbnails.forEach((thumbnail) => {
       const isCurrent = Number(thumbnail.dataset.galleryThumbnail) === activeSlideIndex;
@@ -1261,6 +1408,7 @@ function initializeExtraCarousel(carousel) {
   const currentLabel = carousel.querySelector("[data-extra-current]");
   const totalLabel = carousel.querySelector("[data-extra-total]");
   let activeIndex = 0;
+  let requestedIndex = 0;
   let transitionTimer = 0;
   let animationTimer = 0;
 
@@ -1269,6 +1417,7 @@ function initializeExtraCarousel(carousel) {
 
   function applySlide(nextIndex, focusTab) {
     activeIndex = wrapIndex(nextIndex);
+    requestedIndex = activeIndex;
 
     slides.forEach((slide, index) => {
       const isCurrent = index === activeIndex;
@@ -1307,6 +1456,7 @@ function initializeExtraCarousel(carousel) {
     }
 
     const normalizedIndex = wrapIndex(nextIndex);
+    requestedIndex = normalizedIndex;
 
     window.clearTimeout(transitionTimer);
     window.clearTimeout(animationTimer);
@@ -1353,8 +1503,8 @@ function initializeExtraCarousel(carousel) {
     });
   });
 
-  previous?.addEventListener("click", () => setExtraSlide(activeIndex - 1));
-  next?.addEventListener("click", () => setExtraSlide(activeIndex + 1));
+  previous?.addEventListener("click", () => setExtraSlide(requestedIndex - 1));
+  next?.addEventListener("click", () => setExtraSlide(requestedIndex + 1));
 
   if (totalLabel) {
     totalLabel.textContent = String(slides.length).padStart(2, "0");
@@ -1391,6 +1541,12 @@ document.querySelectorAll("[data-extra-project-select]").forEach((button) => {
 
 document.querySelectorAll("[data-project-build-jump]").forEach((link) => {
   link.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    if (buildAccessDisabled.matches) {
+      return;
+    }
+
     const projectName = link.dataset.projectBuildJump;
     const projectsIndex = sectionIndexFromTarget("projects");
 
@@ -1398,7 +1554,6 @@ document.querySelectorAll("[data-project-build-jump]").forEach((link) => {
       return;
     }
 
-    event.preventDefault();
     setProject(projectName);
     setSection(projectsIndex, {
       historyMode: "none",
@@ -1446,11 +1601,22 @@ if (sectionDeck) {
   sectionDeck.scrollLeft = 0;
 }
 
+const initialScroller = activeScroller();
+if (initialScroller) {
+  initialScroller.scrollTop = 0;
+  initialScroller.scrollLeft = 0;
+}
+
 window.requestAnimationFrame(() => {
   window.requestAnimationFrame(() => {
     if (sectionDeck) {
       sectionDeck.scrollTop = 0;
       sectionDeck.scrollLeft = 0;
+    }
+
+    if (initialScroller) {
+      initialScroller.scrollTop = 0;
+      initialScroller.scrollLeft = 0;
     }
 
     document.documentElement.classList.add("is-ready");

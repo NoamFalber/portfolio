@@ -261,7 +261,8 @@ img {
   position: absolute;
   inset: 0;
   min-height: 0;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   transition: transform 680ms var(--ease-page);
 }
 
@@ -287,18 +288,18 @@ img {
 
 .js .section-page[data-position="before"] {
   z-index: 1;
-  transform: translateY(-100%);
+  transform: translate3d(0, -100%, 0);
   pointer-events: none;
 }
 
 .js .section-page[data-position="current"] {
   z-index: 2;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .js .section-page[data-position="after"] {
   z-index: 1;
-  transform: translateY(100%);
+  transform: translate3d(0, 100%, 0);
   pointer-events: none;
 }
 
@@ -1049,6 +1050,28 @@ html:not(.js) .project-panel {
   height: 100%;
   min-width: 0;
   min-height: 0;
+}
+
+.project-panel.is-page-entering-next,
+.project-panel.is-page-entering-previous,
+.gallery-slide.is-page-entering-next,
+.gallery-slide.is-page-entering-previous,
+.extra-workspace.is-page-entering-next,
+.extra-workspace.is-page-entering-previous {
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.project-panel.is-page-entering-next,
+.gallery-slide.is-page-entering-next,
+.extra-workspace.is-page-entering-next {
+  animation: page-enter-next 320ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+.project-panel.is-page-entering-previous,
+.gallery-slide.is-page-entering-previous,
+.extra-workspace.is-page-entering-previous {
+  animation: page-enter-previous 320ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
 }
 
 .project-showcase {
@@ -2681,6 +2704,30 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
+@keyframes page-enter-next {
+  from {
+    transform: translate3d(1rem, 0, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes page-enter-previous {
+  from {
+    transform: translate3d(-1rem, 0, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
 @keyframes extra-slide-in {
   from {
     transform: translateX(1rem);
@@ -3036,6 +3083,19 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
+@media (max-width: 42rem), (hover: none) and (pointer: coarse) {
+  .project-build-link,
+  .extra-build-jump,
+  .workspace-window--build {
+    display: none;
+  }
+
+  body[data-project-view="build"] .workspace-window--showcase {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+}
+
 @media (max-width: 42rem) {
   :root {
     --rail-space: 0rem;
@@ -3216,15 +3276,8 @@ html:not(.js) .extra-step-tabs {
   }
 
   .project-tab small,
-  .project-tab > span:last-child,
-  .project-build-link,
-  .workspace-window--build {
+  .project-tab > span:last-child {
     display: none;
-  }
-
-  body[data-project-view="build"] .workspace-window--showcase {
-    transform: translateX(0);
-    pointer-events: auto;
   }
 
   .project-inspector__selection {
