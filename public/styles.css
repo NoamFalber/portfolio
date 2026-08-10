@@ -1426,6 +1426,11 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   line-height: 0.9;
 }
 
+#project-1 .project-inspector__project h3 {
+  font-size: clamp(2rem, 4.2vh, 3.4rem);
+  line-height: 0.9;
+}
+
 #project-2 .project-inspector__project > p:last-of-type {
   font-size: clamp(0.74rem, 1.35vh, 0.88rem);
 }
@@ -1903,29 +1908,34 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   grid-template-columns: minmax(12rem, 0.72fr) minmax(16rem, 1fr);
 }
 
-.extra-project-switcher > span {
+.extra-project-switcher > button {
   display: grid;
   min-width: 0;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 0.65rem;
   align-items: center;
   padding: 0.6rem 0.85rem;
+  border: 0;
+  background: var(--mint-light);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
 }
 
-.extra-project-switcher > span + span {
+.extra-project-switcher > button + button {
   border-left: 1px solid var(--ink);
 }
 
-.extra-project-switcher__empty {
-  color: var(--ink-soft);
-  opacity: 0.7;
+.extra-project-switcher > button:hover {
+  background: var(--paper-light);
 }
 
-.extra-project-switcher__current {
+.extra-project-switcher > button[aria-pressed="true"],
+.extra-project-switcher > button[aria-pressed="true"]:hover {
   background: var(--sun);
 }
 
-.extra-project-switcher > span > span:first-child {
+.extra-project-switcher > button > span:first-child {
   display: grid;
   width: 1.9rem;
   height: 1.9rem;
@@ -1936,7 +1946,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   font-weight: 700;
 }
 
-.extra-project-switcher > span > span:last-child {
+.extra-project-switcher > button > span:last-child {
   display: grid;
   min-width: 0;
   gap: 0.15rem;
@@ -2287,6 +2297,10 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   background: var(--paper-light);
 }
 
+.extra-step-tabs--seven {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
 .extra-step-tabs button {
   display: grid;
   min-width: 0;
@@ -2341,6 +2355,11 @@ html:not(.js) .extra-workspace,
 html:not(.js) .extra-stage {
   display: block;
   overflow: visible;
+}
+
+html:not(.js) .extra-workspace[hidden] {
+  display: block !important;
+  margin-top: 1.5rem;
 }
 
 html:not(.js) .extra-slide,
@@ -2875,7 +2894,7 @@ html:not(.js) .extra-step-tabs {
     grid-template-columns: minmax(10rem, 0.7fr) minmax(13rem, 1fr);
   }
 
-  .extra-project-switcher > span {
+  .extra-project-switcher > button {
     padding-inline: 0.65rem;
   }
 
@@ -3147,6 +3166,10 @@ html:not(.js) .extra-step-tabs {
     font-size: clamp(2.3rem, 10vw, 3.3rem);
   }
 
+  #project-1 .project-inspector__project h3 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
   .extra-layout {
     gap: 0.5rem;
     padding-top: 0.75rem;
@@ -3177,32 +3200,34 @@ html:not(.js) .extra-step-tabs {
   }
 
   .extra-project-switcher {
-    display: block;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .extra-project-switcher__empty {
-    display: none !important;
-  }
-
-  .extra-project-switcher > .extra-project-switcher__current {
+  .extra-project-switcher > button {
     display: grid;
     height: 100%;
     grid-template-columns: auto minmax(0, 1fr);
-    border-left: 0;
+    gap: 0.3rem;
+    padding: 0.35rem;
   }
 
-  .extra-project-switcher > span > span:first-child {
+  .extra-project-switcher > button > span:first-child {
     width: 1.7rem;
     height: 1.7rem;
     font-size: 0.66rem;
   }
 
   .extra-project-switcher strong {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    line-height: 1.05;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
   }
 
   .extra-project-switcher small {
-    font-size: 0.64rem;
+    display: none;
   }
 
   .extra-carousel-controls {
@@ -3394,6 +3419,28 @@ html:not(.js) .extra-step-tabs {
     min-height: 30rem;
   }
 
+}
+
+@media (max-width: 42rem) and (max-height: 42rem) {
+  #extra-p1-slide-overview .extra-hero-copy {
+    padding-block: 0.4rem;
+  }
+
+  #extra-p1-slide-overview h3 {
+    font-size: 2.05rem;
+  }
+
+  #extra-p1-slide-overview .extra-slide__lead {
+    margin-top: 0.4rem;
+  }
+
+  #extra-p1-slide-overview .extra-build-jump {
+    margin-top: 0.45rem;
+  }
+
+  #extra-p1-slide-trails .extra-slide__body {
+    padding-block: 0.5rem;
+  }
 }
 
 @media (max-width: 28rem) {

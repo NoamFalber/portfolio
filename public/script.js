@@ -684,6 +684,7 @@ function setProject(projectName, focusTab = false) {
   }
 
   document.body.dataset.project = projectName;
+  setExtraProject(projectName);
 
   projectTabs.forEach((tab) => {
     const isSelected = tab === selectedTab;
@@ -700,6 +701,33 @@ function setProject(projectName, focusTab = false) {
 
   if (focusTab) {
     selectedTab.focus();
+  }
+}
+
+function setExtraProject(projectName) {
+  const panels = [...document.querySelectorAll("[data-extra-project-panel]")];
+  const selectedPanel = panels.find(
+    (panel) => panel.dataset.extraProjectPanel === projectName,
+  );
+
+  if (!selectedPanel) {
+    return;
+  }
+
+  panels.forEach((panel) => {
+    panel.hidden = panel !== selectedPanel;
+  });
+
+  document.querySelectorAll("[data-extra-project-select]").forEach((button) => {
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.extraProjectSelect === projectName),
+    );
+  });
+
+  const title = document.querySelector("[data-extra-project-title]");
+  if (title) {
+    title.textContent = selectedPanel.dataset.extraProjectTitle;
   }
 }
 
@@ -761,24 +789,24 @@ mobileLayout.addEventListener("change", (event) => {
 
 const sceneHighlightDetails = {
   clouds: {
-    kicker: "Inspecting the scene",
-    title: "Clouds",
-    copy: "The cloud group spanning the upper-right part of the frame.",
+    kicker: "Volumetric rendering",
+    title: "One draw, up to 64 clouds",
+    copy: "Compact instance data drives raymarched volumes and a compute shadow field, giving the clouds stable shape and terrain shade without per-cloud Renderers.",
   },
   sky: {
-    kicker: "Inspecting the scene",
-    title: "Sky",
-    copy: "The open blue area separating the clouds from the grass.",
+    kicker: "Visual foundation",
+    title: "One sun connects the whole image",
+    copy: "The analytical sky, atmosphere, clouds, grass, terrain, and balls share one directional light, keeping warm highlights and cool distance coherent.",
   },
   grass: {
-    kicker: "Inspecting the scene",
-    title: "Grass",
-    copy: "The sunlit field filling the lower-left foreground.",
+    kicker: "GPU grass",
+    title: "Dense grass in three indirect draws",
+    copy: "Compute culling sorts deterministic blades into near, middle, and far LOD buffers. The terrain continues the same canopy after real blades fade.",
   },
   ball: {
-    kicker: "Inspecting the scene",
-    title: "Ball",
-    copy: "The white ball set against the darker grass near the right.",
+    kicker: "Interaction",
+    title: "The ball makes the meadow respond",
+    copy: "Physics-driven movement creates immediate blade contact and persistent recovering trails while testing speed, slopes, collision, and camera feel.",
   },
   "map-palette": {
     kicker: "Editor and authoring",
@@ -1218,6 +1246,30 @@ function initializeExtraCarousel(carousel) {
 }
 
 document.querySelectorAll("[data-extra-carousel]").forEach(initializeExtraCarousel);
+
+document.querySelectorAll("[data-extra-project-select]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const projectName = button.dataset.extraProjectSelect;
+
+    if (!projectName) {
+      return;
+    }
+
+    setProject(projectName);
+
+    const selectedPanel = document.querySelector(
+      `[data-extra-project-panel="${projectName}"]`,
+    );
+    selectedPanel
+      ?.querySelector(`[data-extra-project-select="${projectName}"]`)
+      ?.focus({ preventScroll: true });
+
+    if (sectionAnnouncer) {
+      sectionAnnouncer.textContent =
+        selectedPanel?.dataset.extraProjectTitle ?? "Project deep dive";
+    }
+  });
+});
 
 document.querySelectorAll("[data-project-build-jump]").forEach((link) => {
   link.addEventListener("click", (event) => {

@@ -339,14 +339,14 @@
                     aria-selected="true"
                     aria-controls="project-1"
                     data-project-tab="project-1"
-                    data-project-title="Project One"
+                    data-project-title="Surreal Landscape Prototype"
                     data-build-target="project-1-build"
                     data-has-build="true"
                   >
                     <span>01</span>
                     <span>
-                      <strong>Project One</strong>
-                      <small>Featured selection</small>
+                      <strong>Surreal Landscape</strong>
+                      <small>GPU grassland study</small>
                     </span>
                     <span aria-hidden="true">→</span>
                   </button>
@@ -405,7 +405,7 @@
                   >▶</span>
                   <span>
                     <small data-build-link-kicker>Web build</small>
-                    <strong data-build-link-label>Open Project One build</strong>
+                    <strong data-build-link-label>Open Surreal Landscape Prototype build</strong>
                   </span>
                   <span aria-hidden="true" data-build-link-arrow>←</span>
                 </button>
@@ -421,14 +421,14 @@
                 >
                   <section
                     class="project-showcase"
-                    aria-label="Project One interactive pictures"
+                    aria-label="Surreal Landscape Prototype interactive pictures"
                   >
                       <div class="project-panel__body">
                         <div class="project-gallery" data-project-gallery>
                           <header class="gallery-heading">
                             <div>
                               <p>Interactive picture</p>
-                              <strong>Inspect the scene</strong>
+                              <strong>Inspect the landscape</strong>
                             </div>
                             <p>Hover on desktop or tap on a phone to inspect a target. Keyboard users can focus it.</p>
                             <div class="gallery-pager" role="group" aria-label="Picture navigation">
@@ -449,12 +449,18 @@
                               data-gallery-slide
                               data-gallery-index="0"
                             >
-                              <div class="interactive-scene" data-interactive-scene>
+                              <div
+                                class="interactive-scene"
+                                data-interactive-scene
+                                data-scene-overview-kicker="Interactive picture"
+                                data-scene-overview-title="Inspect the landscape"
+                                data-scene-overview-copy="Choose a target for a short explanation. The complete technical breakdown is in Extra."
+                              >
                                 <img
                                   class="interactive-scene__image"
                                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
                                   data-deferred-src="assets/images/project-one-hero.webp"
-                                  data-deferred-alt="A bright blue sky above a sunlit grass field with a white ball."
+                                  data-deferred-alt="Art-direction reference showing a pale ball in a luminous grassland beneath a wide cyan sky and bright clouds."
                                   data-deferred-priority="high"
                                   width="1456"
                                   height="1080"
@@ -467,7 +473,7 @@
                                     src="assets/images/project-one-hero.webp"
                                     width="1456"
                                     height="1080"
-                                    alt="A bright blue sky above a sunlit grass field with a white ball."
+                                    alt="Art-direction reference showing a pale ball in a luminous grassland beneath a wide cyan sky and bright clouds."
                                   >
                                 </noscript>
 
@@ -507,8 +513,7 @@
                                 </div>
                               </div>
                               <figcaption>
-                                Provisional reference visual; not yet verified
-                                as project output.
+                                Art-direction reference for the project; this is not a captured frame from the build.
                               </figcaption>
                             </figure>
                           </div>
@@ -539,7 +544,7 @@
                                 </noscript>
                                 <span>
                                   <small>Picture 01</small>
-                                  <strong>Scene overview</strong>
+                                  <strong>Visual reference</strong>
                                 </span>
                               </button>
                             </div>
@@ -551,13 +556,16 @@
                           aria-labelledby="project-1-summary-title"
                         >
                           <div class="project-inspector__project">
-                            <p>Featured selection</p>
-                            <h3 id="project-1-summary-title">Project One</h3>
+                            <p>Technical art · real-time rendering</p>
+                            <h3 id="project-1-summary-title">Surreal Landscape Prototype</h3>
                             <p>
-                              The first selected visual. Its final title,
-                              Noam’s contribution, tools, and production details
-                              still need confirmation.
+                              I built a playable Unity 6 grassland with GPU-driven grass, infinite terrain, recovering trails, raymarched clouds, and measured desktop and WebGPU production profiles.
                             </p>
+                            <ul class="project-tags" aria-label="Project technologies">
+                              <li>Unity 6</li>
+                              <li>HLSL</li>
+                              <li>WebGPU</li>
+                            </ul>
                           </div>
 
                           <div
@@ -574,10 +582,9 @@
                               <div class="project-inspector__selection-head">
                                 <p data-scene-kicker>Interactive picture</p>
                               </div>
-                              <h4 data-scene-title>Choose a target</h4>
+                              <h4 data-scene-title>Inspect the landscape</h4>
                               <p data-scene-copy>
-                                Hover on desktop or tap on a phone to show a
-                                target’s explanation. Keyboard users can focus it.
+                                Choose a target for a short explanation. The complete technical breakdown is in Extra.
                               </p>
                             </div>
                           </div>
@@ -865,7 +872,7 @@
                 <header class="build-window__toolbar">
                   <div>
                     <p>Web build</p>
-                    <h3 id="build-window-title" data-build-window-title>Project One</h3>
+                    <h3 id="build-window-title" data-build-window-title>Surreal Landscape Prototype</h3>
                   </div>
                   <button
                     class="project-build-link project-build-return"
@@ -875,7 +882,7 @@
                     <span class="project-build-link__icon" aria-hidden="true">↩</span>
                     <span>
                       <small>Interactive picture</small>
-                      <strong data-build-return-label>Return to Project One</strong>
+                      <strong data-build-return-label>Return to Surreal Landscape Prototype</strong>
                     </span>
                     <span aria-hidden="true">←</span>
                   </button>
@@ -890,8 +897,8 @@
                   >
                     <div class="build-player">
                       <header class="build-player__bar">
-                        <h3 class="sr-only" id="project-1-build-title">Project One playable web build</h3>
-                        <span>Project One / Unity WebGPU</span>
+                        <h3 class="sr-only" id="project-1-build-title">Surreal Landscape Prototype playable web build</h3>
+                        <span>Surreal Landscape Prototype / Unity WebGPU</span>
                         <strong aria-live="polite">
                           <span class="build-player__status-dot" aria-hidden="true"></span>
                           <span data-build-status-label>Ready to load</span>
@@ -904,7 +911,7 @@
                         </div>
                         <iframe
                           class="build-player__frame"
-                          title="Project One playable web build"
+                          title="Surreal Landscape Prototype playable web build"
                           data-build-frame
                           data-build-src="builds/project-one/"
                           allow="autoplay; fullscreen; gamepad; webgpu"
@@ -983,20 +990,267 @@
           <div class="extra-layout section-content">
             <header class="extra-heading">
               <p class="section-kicker">Extra · Project deep dive</p>
-              <h2 id="extra-title" tabindex="-1">Inside Cave Map Workshop</h2>
+              <h2 id="extra-title" tabindex="-1" data-extra-project-title>Inside Surreal Landscape Prototype</h2>
             </header>
 
-            <div class="extra-workspace" data-extra-carousel>
+            <div
+              class="extra-workspace"
+              data-extra-carousel
+              data-extra-project-panel="project-1"
+              data-extra-project-title="Inside Surreal Landscape Prototype"
+            >
               <header class="extra-workspace__toolbar">
                 <div class="extra-project-switcher" role="group" aria-label="Project deep dives">
-                  <span class="extra-project-switcher__empty" aria-disabled="true">
+                  <button type="button" aria-pressed="true" data-extra-project-select="project-1">
                     <span>01</span>
-                    <span><strong>Project One</strong><small>No extra entry</small></span>
-                  </span>
-                  <span class="extra-project-switcher__current">
+                    <span><strong>Surreal Landscape</strong><small>Rendering + systems</small></span>
+                  </button>
+                  <button type="button" aria-pressed="false" data-extra-project-select="project-2">
                     <span>02</span>
                     <span><strong>Cave Map Workshop</strong><small>Editor + runtime</small></span>
+                  </button>
+                </div>
+
+                <div class="extra-carousel-controls" role="group" aria-label="Deep-dive controls">
+                  <button type="button" data-extra-previous aria-label="Previous deep-dive window">←</button>
+                  <span aria-live="polite" aria-atomic="true">
+                    <strong data-extra-current>01</strong>
+                    <span aria-hidden="true"> / </span>
+                    <span data-extra-total>07</span>
                   </span>
+                  <button type="button" data-extra-next aria-label="Next deep-dive window">→</button>
+                </div>
+              </header>
+
+              <div class="extra-stage">
+                <article
+                  class="extra-slide extra-slide--hero"
+                  id="extra-p1-slide-overview"
+                  role="tabpanel"
+                  aria-labelledby="extra-p1-step-overview"
+                  data-extra-slide
+                  data-extra-index="0"
+                >
+                  <div class="extra-hero-copy">
+                    <p class="extra-slide__eyebrow">Unity 6 technical-art study · GPU rendering</p>
+                    <h3>Surreal Landscape Prototype</h3>
+                    <p class="extra-slide__lead">
+                      I built a luminous rolling-ball meadow where deterministic terrain, GPU grass, recovering trails, wandering encounters, and raymarched clouds share a bounded runtime. Dedicated desktop and WebGPU profiles keep the complete experience playable in both.
+                    </p>
+                    <a
+                      class="button button--primary extra-build-jump"
+                      href="#project-1-build"
+                      data-project-build-jump="project-1"
+                    >
+                      <span>Open the WebGPU build</span>
+                      <span aria-hidden="true">↑</span>
+                    </a>
+                  </div>
+                  <dl class="extra-meta">
+                    <div><dt>Engine</dt><dd>Unity 6000.3.21f1 · URP 17.3</dd></div>
+                    <div><dt>Built with</dt><dd>C# · ShaderLab/HLSL · compute shaders</dd></div>
+                    <div><dt>Runs on</dt><dd>Linux desktop · desktop web browsers</dd></div>
+                    <div><dt>Production profiles</dt><dd>Desktop Vulkan · WebGPU High</dd></div>
+                  </dl>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story extra-slide--problem"
+                  id="extra-p1-slide-world"
+                  role="tabpanel"
+                  aria-labelledby="extra-p1-step-world"
+                  data-extra-slide
+                  data-extra-index="1"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>01 · Bounded world</p>
+                    <h3>The meadow feels endless because every system owns a finite moving window.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      One deterministic height field keeps terrain, collision, grass roots, the player, and wandering balls on the same surface. Global identity stays stable while local resources stream around the action.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Terrain</strong><span>About 130 active LOD tiles; a representative view submits roughly 50–55.</span></li>
+                      <li><strong>Collision</strong><span>One local double-buffered patch replaces world-sized MeshColliders.</span></li>
+                      <li><strong>Encounters</strong><span>Eleven prewarmed balls keep ten active without normal Instantiate or Destroy.</span></li>
+                      <li><strong>Ownership</strong><span>Deterministic generation is global; memory, objects, and frame work stay bounded.</span></li>
+                    </ul>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story"
+                  id="extra-p1-slide-grass"
+                  role="tabpanel"
+                  aria-labelledby="extra-p1-step-grass"
+                  data-extra-slide
+                  data-extra-index="2"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>02 · Grass and terrain</p>
+                    <h3>Three indirect draws carry the real grass; the terrain finishes the field.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      Deterministic candidates live in world-aligned cells. Compute culling rejects hidden blades, chooses LOD, packs interaction data, and sends retained blades into three append buffers.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Stable identity</strong><span>8 m distribution cells group into 16 m chunks with an 80-chunk cache.</span></li>
+                      <li><strong>Three LODs</strong><span>Near, middle, and far blades use 30, 15, and 3 generated vertices.</span></li>
+                      <li><strong>Physical wind</strong><span>Four pressure fields bend rooted blade arcs instead of painting moving color bands.</span></li>
+                      <li><strong>No grass ring</strong><span>A shared virtual-canopy material continues the same field after geometry fades.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      <strong>160 candidates per m² at full density.</strong> The CPU owns cache and scheduling; the GPU owns culling, deformation, lighting, and the three draws.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story extra-slide--runtime"
+                  id="extra-p1-slide-trails"
+                  role="tabpanel"
+                  aria-labelledby="extra-p1-step-trails"
+                  data-extra-slide
+                  data-extra-index="3"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>03 · Contact and trails</p>
+                    <h3>The trail bends immediately, persists in world space, and still has a fixed budget.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      A swept sphere bends nearby blades during culling. Sparse pages then preserve direction, ownership, age, and recovery after the ball moves on.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Instant contact</strong><span>Live bend data reuses spare bits in the existing blade payload.</span></li>
+                      <li><strong>Sparse memory</strong><span>8 m CPU pages are created only where the player or an encounter touches grass.</span></li>
+                      <li><strong>Fixed GPU atlas</strong><span>512 texture-array slices hold an 8 MB persistent field.</span></li>
+                      <li><strong>Exact recovery</strong><span>Grass stays pressed for 57.8 seconds, then returns over 2.2 seconds.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      WebGPU uploads at most four 16 KiB pages per frame while protecting player-near work. Wandering balls share the trail system.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story"
+                  id="extra-p1-slide-clouds"
+                  role="tabpanel"
+                  aria-labelledby="extra-p1-step-clouds"
+                  data-extra-slide
+                  data-extra-index="4"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>04 · Clouds and lighting</p>
+                    <h3>I replaced flat cloud sheets with stable raymarched volumes.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      The final field keeps the original compact streaming architecture, but one procedural draw now raymarches camera-independent volumes with readable parallax, internal depth, and terrain shadows.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Compact field</strong><span>Up to 64 clouds fit in one 3,072-byte instance buffer.</span></li>
+                      <li><strong>Bounded raymarch</strong><span>Near and far clouds use 32 and 26 steps with early exit.</span></li>
+                      <li><strong>Shared shade</strong><span>A 256 × 256 compute field shades grass, terrain, balls, and meadow VFX.</span></li>
+                      <li><strong>One visual contract</strong><span>Sky, atmosphere, clouds, and surfaces derive from the same sun.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      A cloud that vanished in the camera centre turned out to be a signed Vulkan projection error, not density or TAA. Fixing the proxy coordinate space restored it.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story extra-slide--webgpu"
+                  id="extra-p1-slide-webgpu"
+                  role="tabpanel"
+                  aria-labelledby="extra-p1-step-webgpu"
+                  data-extra-slide
+                  data-extra-index="5"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>05 · WebGPU product</p>
+                    <h3>I treated the browser build as its own measured production profile.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      WebGPU High preserves the dense grass, trails, encounters, volumetric clouds, and final image while changing how work is prepared, scheduled, measured, and delivered.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Protected profiles</strong><span>Web setup hashes the Desktop High assets and fails if it changes them.</span></li>
+                      <li><strong>Real warmup</strong><span>A preparation screen exercises the production scene instead of faking a timer.</span></li>
+                      <li><strong>Browser scheduling</strong><span>Grass, collision, trails, particles, clouds, and memory use explicit Web budgets.</span></li>
+                      <li><strong>Reproducible evidence</strong><span>A Node/Playwright harness records workloads, rAF, memory, errors, and manifests.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      The stripped production output was 19,408,640 bytes before filesystem overhead. Accepted runs held the Wasm heap at exactly 256 MiB.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--proof"
+                  id="extra-p1-slide-proof"
+                  role="tabpanel"
+                  aria-labelledby="extra-p1-step-proof"
+                  data-extra-slide
+                  data-extra-index="6"
+                  hidden
+                >
+                  <header class="extra-slide__heading">
+                    <p>Verified engineering evidence</p>
+                    <h3>I measured frame tails, ownership, and browser delivery—not only average FPS.</h3>
+                  </header>
+                  <div class="extra-proof-body">
+                    <dl class="extra-evidence-grid">
+                      <div><dt>135 / 135</dt><dd>latest complete Web-era EditMode suite passed</dd></div>
+                      <div><dt>2.932–3.920 ms</dt><dd>median main work across the cold WebGPU matrix</dd></div>
+                      <div><dt>9.605 ms</dt><dd>worst stress p99 in the accepted WebGPU runs</dd></div>
+                      <div><dt>100.143 → 8.578 ms</dt><dd>measured maximum after collision-streaming work</dd></div>
+                    </dl>
+                    <p>
+                      Web results were recorded at 960 × 600 on a Ryzen 7 3700X and RTX 3070 across seven three-repeat scenarios. They show workload headroom on that machine, not a promise for every browser or GPU; long soaks, 1280 × 720, Edge, and automated visual comparisons were not claimed.
+                    </p>
+                  </div>
+                </article>
+              </div>
+
+              <div class="extra-step-tabs extra-step-tabs--seven" role="tablist" aria-label="Choose a Surreal Landscape Prototype topic">
+                <button type="button" role="tab" id="extra-p1-step-overview" aria-controls="extra-p1-slide-overview" aria-selected="true" tabindex="0" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
+                <button type="button" role="tab" id="extra-p1-step-world" aria-controls="extra-p1-slide-world" aria-selected="false" tabindex="-1" data-extra-tab="1"><span>01</span><strong>World</strong></button>
+                <button type="button" role="tab" id="extra-p1-step-grass" aria-controls="extra-p1-slide-grass" aria-selected="false" tabindex="-1" data-extra-tab="2"><span>02</span><strong>Grass</strong></button>
+                <button type="button" role="tab" id="extra-p1-step-trails" aria-controls="extra-p1-slide-trails" aria-selected="false" tabindex="-1" data-extra-tab="3"><span>03</span><strong>Trails</strong></button>
+                <button type="button" role="tab" id="extra-p1-step-clouds" aria-controls="extra-p1-slide-clouds" aria-selected="false" tabindex="-1" data-extra-tab="4"><span>04</span><strong>Clouds</strong></button>
+                <button type="button" role="tab" id="extra-p1-step-webgpu" aria-controls="extra-p1-slide-webgpu" aria-selected="false" tabindex="-1" data-extra-tab="5"><span>05</span><strong>WebGPU</strong></button>
+                <button type="button" role="tab" id="extra-p1-step-proof" aria-controls="extra-p1-slide-proof" aria-selected="false" tabindex="-1" data-extra-tab="6"><span>06</span><strong>Proof</strong></button>
+              </div>
+            </div>
+
+            <div
+              class="extra-workspace"
+              data-extra-carousel
+              data-extra-project-panel="project-2"
+              data-extra-project-title="Inside Cave Map Workshop"
+              hidden
+            >
+              <header class="extra-workspace__toolbar">
+                <div class="extra-project-switcher" role="group" aria-label="Project deep dives">
+                  <button type="button" aria-pressed="false" data-extra-project-select="project-1">
+                    <span>01</span>
+                    <span><strong>Surreal Landscape</strong><small>Rendering + systems</small></span>
+                  </button>
+                  <button type="button" aria-pressed="true" data-extra-project-select="project-2">
+                    <span>02</span>
+                    <span><strong>Cave Map Workshop</strong><small>Editor + runtime</small></span>
+                  </button>
                 </div>
 
                 <div class="extra-carousel-controls" role="group" aria-label="Deep-dive controls">
@@ -1013,9 +1267,9 @@
               <div class="extra-stage">
                 <article
                   class="extra-slide extra-slide--hero"
-                  id="extra-slide-overview"
+                  id="extra-p2-slide-overview"
                   role="tabpanel"
-                  aria-labelledby="extra-step-overview"
+                  aria-labelledby="extra-p2-step-overview"
                   data-extra-slide
                   data-extra-index="0"
                 >
@@ -1044,9 +1298,9 @@
 
                 <article
                   class="extra-slide extra-slide--story extra-slide--problem"
-                  id="extra-slide-problem"
+                  id="extra-p2-slide-problem"
                   role="tabpanel"
-                  aria-labelledby="extra-step-problem"
+                  aria-labelledby="extra-p2-step-problem"
                   data-extra-slide
                   data-extra-index="1"
                   hidden
@@ -1073,9 +1327,9 @@
 
                 <article
                   class="extra-slide extra-slide--story"
-                  id="extra-slide-authoring"
+                  id="extra-p2-slide-authoring"
                   role="tabpanel"
-                  aria-labelledby="extra-step-authoring"
+                  aria-labelledby="extra-p2-step-authoring"
                   data-extra-slide
                   data-extra-index="2"
                   hidden
@@ -1102,9 +1356,9 @@
 
                 <article
                   class="extra-slide extra-slide--story extra-slide--runtime"
-                  id="extra-slide-runtime"
+                  id="extra-p2-slide-runtime"
                   role="tabpanel"
-                  aria-labelledby="extra-step-runtime"
+                  aria-labelledby="extra-p2-step-runtime"
                   data-extra-slide
                   data-extra-index="3"
                   hidden
@@ -1130,9 +1384,9 @@
 
                 <article
                   class="extra-slide extra-slide--story extra-slide--webgpu"
-                  id="extra-slide-webgpu"
+                  id="extra-p2-slide-webgpu"
                   role="tabpanel"
-                  aria-labelledby="extra-step-webgpu"
+                  aria-labelledby="extra-p2-step-webgpu"
                   data-extra-slide
                   data-extra-index="4"
                   hidden
@@ -1156,9 +1410,9 @@
 
                 <article
                   class="extra-slide extra-slide--proof"
-                  id="extra-slide-proof"
+                  id="extra-p2-slide-proof"
                   role="tabpanel"
-                  aria-labelledby="extra-step-proof"
+                  aria-labelledby="extra-p2-step-proof"
                   data-extra-slide
                   data-extra-index="5"
                   hidden
@@ -1182,12 +1436,12 @@
               </div>
 
               <div class="extra-step-tabs" role="tablist" aria-label="Choose a Cave Map Workshop topic">
-                <button type="button" role="tab" id="extra-step-overview" aria-controls="extra-slide-overview" aria-selected="true" tabindex="0" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
-                <button type="button" role="tab" id="extra-step-problem" aria-controls="extra-slide-problem" aria-selected="false" tabindex="-1" data-extra-tab="1"><span>01</span><strong>Problem</strong></button>
-                <button type="button" role="tab" id="extra-step-authoring" aria-controls="extra-slide-authoring" aria-selected="false" tabindex="-1" data-extra-tab="2"><span>02</span><strong>Authoring</strong></button>
-                <button type="button" role="tab" id="extra-step-runtime" aria-controls="extra-slide-runtime" aria-selected="false" tabindex="-1" data-extra-tab="3"><span>03</span><strong>Runtime</strong></button>
-                <button type="button" role="tab" id="extra-step-webgpu" aria-controls="extra-slide-webgpu" aria-selected="false" tabindex="-1" data-extra-tab="4"><span>04</span><strong>WebGPU</strong></button>
-                <button type="button" role="tab" id="extra-step-proof" aria-controls="extra-slide-proof" aria-selected="false" tabindex="-1" data-extra-tab="5"><span>05</span><strong>Proof</strong></button>
+                <button type="button" role="tab" id="extra-p2-step-overview" aria-controls="extra-p2-slide-overview" aria-selected="true" tabindex="0" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
+                <button type="button" role="tab" id="extra-p2-step-problem" aria-controls="extra-p2-slide-problem" aria-selected="false" tabindex="-1" data-extra-tab="1"><span>01</span><strong>Problem</strong></button>
+                <button type="button" role="tab" id="extra-p2-step-authoring" aria-controls="extra-p2-slide-authoring" aria-selected="false" tabindex="-1" data-extra-tab="2"><span>02</span><strong>Authoring</strong></button>
+                <button type="button" role="tab" id="extra-p2-step-runtime" aria-controls="extra-p2-slide-runtime" aria-selected="false" tabindex="-1" data-extra-tab="3"><span>03</span><strong>Runtime</strong></button>
+                <button type="button" role="tab" id="extra-p2-step-webgpu" aria-controls="extra-p2-slide-webgpu" aria-selected="false" tabindex="-1" data-extra-tab="4"><span>04</span><strong>WebGPU</strong></button>
+                <button type="button" role="tab" id="extra-p2-step-proof" aria-controls="extra-p2-slide-proof" aria-selected="false" tabindex="-1" data-extra-tab="5"><span>05</span><strong>Proof</strong></button>
               </div>
             </div>
           </div>
