@@ -223,7 +223,7 @@ img {
 .section-page--extra {
   --paper-light: #d2e1cf;
   --ink: #193127;
-  --ink-soft: #40584d;
+  --ink-soft: #2d463a;
   --green: #356b52;
   --green-dark: #204c3a;
   --mint: #dce9d9;
@@ -237,7 +237,7 @@ img {
   --sun: #f3c964;
   --line: #a9b8ad;
   --shadow: #193127;
-  --wallpaper-wash: rgba(237, 244, 233, 0.58);
+  --wallpaper-wash: rgba(241, 246, 238, 0.74);
   --proof-line: #789084;
   --proof-copy: #d5e5da;
   --proof-copy-strong: #eef6f0;
