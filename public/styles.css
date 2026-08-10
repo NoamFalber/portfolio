@@ -22,7 +22,8 @@
   font-synthesis: none;
   --paper: #f4efe4;
   --paper-light: #fffdf8;
-  --intro-paper: #eee4d0;
+  --intro-paper: #f2f3eb;
+  --intro-paper-rgb: 242, 243, 235;
   --ink: #193127;
   --ink-soft: #52675d;
   --green: #356b52;
@@ -33,6 +34,8 @@
   --sky-light: #e3f1f3;
   --coral: #e66b4b;
   --coral-dark: #8d301d;
+  --button-ink: #25110b;
+  --coral-hover: #ee7c5f;
   --sun: #f3c964;
   --line: #a9b8ad;
   --shadow: #193127;
@@ -159,28 +162,13 @@ img {
 
 .section-page--intro::before {
   background-image: url("assets/wallpapers/intro-flow.svg");
+  opacity: 0.58;
 }
 
 .section-page--about {
-  background: var(--mint);
-}
-
-.section-page--about::before {
-  background-image: url("assets/wallpapers/about-flow.svg");
-}
-
-.section-page--projects {
-  background: var(--sky-light);
-}
-
-.section-page--projects::before {
-  background-image: url("assets/wallpapers/projects-flow.svg");
-}
-
-.section-page--extra {
   --paper-light: #fff8ec;
   --ink: #1b2b33;
-  --ink-soft: #566169;
+  --ink-soft: #45535a;
   --green: #3d6474;
   --green-dark: #294f5f;
   --mint: #dccfba;
@@ -189,6 +177,8 @@ img {
   --sky-light: #d8e1e4;
   --coral: #c96838;
   --coral-dark: #84401f;
+  --button-ink: #1b2b33;
+  --coral-hover: #d77c4e;
   --sun: #e7ba58;
   --line: #aea28f;
   --shadow: #1b2b33;
@@ -196,8 +186,66 @@ img {
   color: var(--ink);
 }
 
-.section-page--extra::before {
+.section-page--about::before {
   background-image: url("assets/wallpapers/extra-flow.svg");
+  opacity: 0.72;
+}
+
+.section-page--projects {
+  --paper-light: #f8fcfb;
+  --ink: #17343d;
+  --ink-soft: #526b73;
+  --green: #3d7985;
+  --green-dark: #275e69;
+  --mint: #cee1df;
+  --mint-light: #e3efed;
+  --sky: #b7dbe2;
+  --sky-light: #deedf0;
+  --coral: #d96845;
+  --coral-dark: #8c3f26;
+  --button-ink: #10242a;
+  --coral-hover: #e17b5a;
+  --sun: #e8c866;
+  --line: #9db9bc;
+  --shadow: #17343d;
+  --project-light-rgb: 248, 252, 251;
+  --project-ink-rgb: 23, 52, 61;
+  --project-coral-rgb: 217, 104, 69;
+  background: var(--sky-light);
+  color: var(--ink);
+}
+
+.section-page--projects::before {
+  background-image: url("assets/wallpapers/projects-flow.svg");
+}
+
+.section-page--extra {
+  --paper-light: #fffdf8;
+  --ink: #193127;
+  --ink-soft: #52675d;
+  --green: #356b52;
+  --green-dark: #204c3a;
+  --mint: #dce9d9;
+  --mint-light: #edf4e9;
+  --sky: #b9dce6;
+  --sky-light: #e3f1f3;
+  --coral: #e66b4b;
+  --coral-dark: #8d301d;
+  --button-ink: #25110b;
+  --coral-hover: #ee7c5f;
+  --sun: #f3c964;
+  --line: #a9b8ad;
+  --shadow: #193127;
+  --wallpaper-wash: rgba(237, 244, 233, 0.3);
+  --proof-line: #789084;
+  --proof-copy: #d5e5da;
+  --proof-copy-strong: #eef6f0;
+  background: var(--mint);
+  color: var(--ink);
+}
+
+.section-page--extra::before {
+  background-image: url("assets/wallpapers/about-flow.svg");
   opacity: 0.72;
 }
 
@@ -308,11 +356,11 @@ img {
 
 .button--primary {
   background: var(--coral);
-  color: #25110b;
+  color: var(--button-ink);
 }
 
 .button--primary:hover {
-  background: #ee7c5f;
+  background: var(--coral-hover);
 }
 
 .button--ink {
@@ -537,7 +585,7 @@ img {
     to bottom,
     transparent 0%,
     transparent 8%,
-    rgba(238, 228, 208, 0.82) 15%,
+    rgba(var(--intro-paper-rgb), 0.82) 15%,
     var(--intro-paper) 18%,
     var(--intro-paper) 100%
   );
@@ -869,7 +917,7 @@ body[data-project-view="build"] .workspace-window--build {
   padding: 0.75rem 1rem;
   border: 0;
   background: var(--coral);
-  color: #25110b;
+  color: var(--button-ink);
   cursor: pointer;
   font: inherit;
   text-align: left;
@@ -891,7 +939,7 @@ body[data-project-view="build"] .workspace-window--build {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 253, 248, 0.72),
+    rgba(var(--project-light-rgb), 0.72),
     transparent
   );
   content: "";
@@ -903,7 +951,7 @@ body[data-project-view="build"] .workspace-window--build {
   position: absolute;
   z-index: 0;
   inset: 0.38rem;
-  border: 2px solid rgba(37, 17, 11, 0.5);
+  border: 2px solid rgba(var(--project-ink-rgb), 0.5);
   content: "";
   pointer-events: none;
   animation: build-button-pulse 1.65s ease-in-out infinite;
@@ -911,14 +959,14 @@ body[data-project-view="build"] .workspace-window--build {
 
 .project-build-link:hover {
   padding-right: 0.75rem;
-  background: #ee7c5f;
+  background: var(--coral-hover);
 }
 
 .project-build-link:disabled {
   padding-right: 1rem;
-  background: #d4d9d4;
+  background: var(--line);
   box-shadow: none;
-  color: #4c5851;
+  color: var(--ink-soft);
   cursor: not-allowed;
 }
 
@@ -1151,7 +1199,7 @@ html:not(.js) .project-panel {
   transform: translate(-50%, -50%);
   border: 0;
   background: transparent;
-  color: rgba(255, 253, 248, 0.74);
+  color: rgba(var(--project-light-rgb), 0.74);
   cursor: default;
   pointer-events: auto;
   transition: color 170ms ease;
@@ -1169,10 +1217,10 @@ html:not(.js) .project-panel {
   width: 1.95rem;
   height: 1.95rem;
   border: 2px solid currentColor;
-  background: rgba(25, 49, 39, 0.1);
+  background: rgba(var(--project-ink-rgb), 0.1);
   box-shadow:
-    0 0 0 0.12rem rgba(25, 49, 39, 0.28),
-    0.12rem 0.12rem 0 rgba(25, 49, 39, 0.42);
+    0 0 0 0.12rem rgba(var(--project-ink-rgb), 0.28),
+    0.12rem 0.12rem 0 rgba(var(--project-ink-rgb), 0.42);
   transition:
     background-color 240ms ease,
     border-color 240ms ease,
@@ -1184,7 +1232,7 @@ html:not(.js) .project-panel {
   width: 0.5rem;
   height: 0.5rem;
   background: currentColor;
-  box-shadow: 0 0 0 0.12rem rgba(25, 49, 39, 0.3);
+  box-shadow: 0 0 0 0.12rem rgba(var(--project-ink-rgb), 0.3);
   transition:
     background-color 170ms ease,
     transform 170ms ease;
@@ -1302,20 +1350,20 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 .scene-hotspot:hover,
 .scene-hotspot:focus-visible,
 .scene-hotspot.is-active {
-  color: rgba(230, 107, 75, 0.96);
+  color: rgba(var(--project-coral-rgb), 0.96);
 }
 
 .scene-hotspot:hover::before,
 .scene-hotspot:focus-visible::before,
 .scene-hotspot.is-active::before {
-  background: rgba(230, 107, 75, 0.26);
+  background: rgba(var(--project-coral-rgb), 0.26);
   box-shadow:
-    0.18rem 0.18rem 0 rgba(25, 49, 39, 0.62),
-    0 0 0 0.22rem rgba(230, 107, 75, 0.22);
+    0.18rem 0.18rem 0 rgba(var(--project-ink-rgb), 0.62),
+    0 0 0 0.22rem rgba(var(--project-coral-rgb), 0.22);
 }
 
 .scene-hotspot.is-active::before {
-  background: rgba(230, 107, 75, 0.4);
+  background: rgba(var(--project-coral-rgb), 0.4);
 }
 
 .scene-hotspot:hover::before,
@@ -2026,13 +2074,13 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 [data-extra-project-panel="project-1"] .extra-stage {
   background-image:
-    linear-gradient(rgba(255, 248, 236, 0.28), rgba(255, 248, 236, 0.28)),
+    linear-gradient(var(--wallpaper-wash), var(--wallpaper-wash)),
     url("assets/wallpapers/extra-surreal-landscape.webp");
 }
 
 [data-extra-project-panel="project-2"] .extra-stage {
   background-image:
-    linear-gradient(rgba(255, 248, 236, 0.28), rgba(255, 248, 236, 0.28)),
+    linear-gradient(var(--wallpaper-wash), var(--wallpaper-wash)),
     url("assets/wallpapers/extra-cave-workshop.webp");
 }
 
@@ -2282,21 +2330,21 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .extra-proof-body {
-  border-left-color: #71838b;
-  color: #d5e0e3;
+  border-left-color: var(--proof-line);
+  color: var(--proof-copy);
 }
 
 .extra-evidence-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
-  border: 1px solid #71838b;
+  border: 1px solid var(--proof-line);
 }
 
 .extra-evidence-grid > div {
   min-width: 0;
   padding: clamp(0.7rem, 1.8vh, 1rem);
-  border-right: 1px solid #71838b;
+  border-right: 1px solid var(--proof-line);
 }
 
 .extra-evidence-grid > div:nth-child(2n) {
@@ -2304,7 +2352,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .extra-evidence-grid > div:nth-child(n + 3) {
-  border-top: 1px solid #71838b;
+  border-top: 1px solid var(--proof-line);
 }
 
 .extra-evidence-grid dt {
@@ -2316,7 +2364,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .extra-evidence-grid dd {
   margin: 0.35rem 0 0;
-  color: #eef2f0;
+  color: var(--proof-copy-strong);
   font-size: 0.82rem;
   line-height: 1.4;
 }
@@ -3378,7 +3426,7 @@ html:not(.js) .extra-step-tabs {
   }
 
   .extra-proof-body {
-    border-top-color: #789084;
+    border-top-color: var(--proof-line);
   }
 
   .extra-detail-grid li,
