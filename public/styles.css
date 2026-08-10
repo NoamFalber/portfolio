@@ -3723,7 +3723,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .section-page--intro::before {
-  opacity: 0.34;
+  opacity: 0.58;
 }
 
 .section-page--about {
@@ -3746,8 +3746,8 @@ html:not(.js) .extra-step-tabs {
 }
 
 .section-page--about::before {
-  opacity: 0.16;
-  filter: saturate(0.55) contrast(1.08);
+  opacity: 0.72;
+  filter: none;
 }
 
 .section-page--projects {
@@ -3770,8 +3770,8 @@ html:not(.js) .extra-step-tabs {
 }
 
 .section-page--projects::before {
-  opacity: 0.18;
-  filter: grayscale(0.25) contrast(1.1);
+  opacity: 1;
+  filter: none;
 }
 
 .section-page--extra {
@@ -3789,13 +3789,13 @@ html:not(.js) .extra-step-tabs {
   --sun: #dfbf60;
   --line: #9da99d;
   --shadow: #152a25;
-  --wallpaper-wash: rgba(246, 239, 226, 0.82);
+  --wallpaper-wash: rgba(241, 246, 238, 0.74);
   border-top-color: #d96645;
   background: #ddd3c2;
 }
 
 .section-page--extra::before {
-  opacity: 0.26;
+  opacity: 0.72;
 }
 
 .section-kicker {
