@@ -43,7 +43,8 @@
               </p>
               <p class="intro-summary">
                 I build ambitious game systems, then make them practical to
-                use, profile, and ship—from GPU-driven worlds to in-game tools.
+                use, profile, and ship. That can mean anything from worlds
+                driven by the GPU to tools that run inside the game.
               </p>
               <p class="intro-proof">
                 <span>Go-to toolkit</span>
@@ -65,7 +66,7 @@
                   data-section-link
                   data-section-target="about"
                 >
-                  How I approach the work
+                  How I work
                   <span aria-hidden="true">↓</span>
                 </a>
                 <nav
@@ -263,10 +264,10 @@
 
             <div class="about-copy">
               <p class="about-copy__lead">
-                Give me the problem that does not fit neatly inside one
-                discipline. I like learning how the system actually behaves,
-                testing ideas in the real project, and following the bottleneck
-                until the result is dependable.
+                Give me a problem that needs both code and visual thinking. I
+                want to know how the whole system behaves, so I try solutions
+                where they will actually be used and trace the bottleneck until
+                the result holds up.
               </p>
               <p>
                 Art is part of that process. Understanding the visual target
@@ -408,9 +409,8 @@
                           <header class="gallery-heading">
                             <div>
                               <p>Project visual</p>
-                              <strong>See the world as one system</strong>
+                              <strong>Rendering and interaction highlights</strong>
                             </div>
-                            <p>Use a marker to inspect how each visible layer supports the same bounded, reactive world.</p>
                             <div class="gallery-pager" role="group" aria-label="Picture navigation">
                               <button type="button" data-gallery-previous aria-label="Previous picture">←</button>
                               <span>
@@ -433,8 +433,8 @@
                                 class="interactive-scene"
                                 data-interactive-scene
                                 data-scene-overview-kicker="Project visual"
-                                data-scene-overview-title="See the world as one system"
-                                data-scene-overview-copy="Use a marker to inspect how each visible layer supports the same bounded, reactive world."
+                                data-scene-overview-title="See how the grassland works"
+                                data-scene-overview-copy="Select a highlighted area for a close look at the technical work behind the scene: volumetric clouds, shared lighting, grass rendering driven by compute shaders, and persistent trails."
                               >
                                 <img
                                   class="interactive-scene__image"
@@ -547,11 +547,13 @@
                             <p>Rendering systems · browser delivery</p>
                             <h3 id="project-1-summary-title">Surreal Landscape Prototype</h3>
                             <p>
-                              A dense, reactive grassland built around GPU
-                              rendering, streaming, and persistent interaction.
-                              I kept its defining grass, trails, terrain,
-                              encounters, and volumetric clouds intact while
-                              turning it into a measured WebGPU release.
+                              Compute shaders handle grass culling and cloud
+                              shadows, while custom shaders handle trails,
+                              terrain, atmosphere, and raymarched clouds. The
+                              WebGPU build keeps the full feature set intact. At
+                              960 × 600 on the documented RTX 3070 reference
+                              system, median main work stayed between 2.932 and
+                              3.920 ms across seven browser scenarios.
                             </p>
                             <ul class="project-tags" aria-label="Project technologies">
                               <li>Unity 6</li>
@@ -575,9 +577,9 @@
                               <div class="project-inspector__selection-head">
                                 <p data-scene-kicker>Project visual</p>
                               </div>
-                              <h4 data-scene-title>See the world as one system</h4>
+                              <h4 data-scene-title>See how the grassland works</h4>
                               <p data-scene-copy>
-                                Use a marker to inspect how each visible layer supports the same bounded, reactive world.
+                                Select a highlighted area for a close look at the technical work behind the scene: volumetric clouds, shared lighting, grass rendering driven by compute shaders, and persistent trails.
                               </p>
                             </div>
                           </div>
@@ -602,9 +604,8 @@
                           <header class="gallery-heading">
                             <div>
                               <p>Project visual</p>
-                              <strong>Follow the authoring-to-play loop</strong>
+                              <strong>Map building and playtesting</strong>
                             </div>
-                            <p>Use a marker to inspect how map data becomes a validated, generated, playable level.</p>
                             <div class="gallery-pager" role="group" aria-label="Picture navigation">
                               <button type="button" data-gallery-previous aria-label="Previous picture">←</button>
                               <span>
@@ -627,8 +628,8 @@
                                 class="interactive-scene interactive-scene--workshop"
                                 data-interactive-scene
                                 data-scene-overview-kicker="Project visual"
-                                data-scene-overview-title="Follow the authoring-to-play loop"
-                                data-scene-overview-copy="Use a marker to inspect how map data becomes a validated, generated, playable level."
+                                data-scene-overview-title="How a map becomes a playable cave"
+                                data-scene-overview-copy="Select a highlighted area for a close look at the complete workflow, from editing and validation to cave generation and combat."
                               >
                                 <img
                                   class="interactive-scene__image"
@@ -717,8 +718,8 @@
                                 class="interactive-scene interactive-scene--gameplay"
                                 data-interactive-scene
                                 data-scene-overview-kicker="Picture 02"
-                                data-scene-overview-title="The generated cave in play"
-                                data-scene-overview-copy="The 2D plan becomes the real combat level, including movement, spells, enemies, pickups, and the full finish-or-retry loop."
+                                data-scene-overview-title="Generated cave gameplay"
+                                data-scene-overview-copy="The workshop output runs as the actual combat level, using the project’s existing movement, spells, enemies, pickups, death, finish, and reset systems."
                               >
                                 <img
                                   class="interactive-scene__image"
@@ -741,7 +742,7 @@
                                 </noscript>
                               </div>
                               <figcaption>
-                                The generated cave is not a preview: it runs the project’s first-person movement, spells, enemies, pickups, death, finish, and reset systems.
+                                First person gameplay inside a cave generated from the workshop map in Picture 01.
                               </figcaption>
                             </figure>
                           </div>
@@ -827,9 +828,9 @@
                               <div class="project-inspector__selection-head">
                                 <p data-scene-kicker>Project visual</p>
                               </div>
-                              <h4 data-scene-title>Follow the authoring-to-play loop</h4>
+                              <h4 data-scene-title>How a map becomes a playable cave</h4>
                               <p data-scene-copy>
-                                Use a marker to inspect how map data becomes a validated, generated, playable level.
+                                Select a highlighted area for a close look at the complete workflow, from editing and validation to cave generation and combat.
                               </p>
                             </div>
                           </div>

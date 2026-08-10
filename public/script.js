@@ -902,54 +902,54 @@ addMediaQueryChangeListener(buildAccessDisabled, (event) => {
 
 const sceneHighlightDetails = {
   clouds: {
-    kicker: "Volumetric sky",
-    title: "Clouds with depth, movement, and consequence",
-    copy: "I replaced flat camera-facing cards with bounded raymarched volumes. The full field uses one procedural draw, while a compute-generated shadow map connects the sky to the landscape below.",
+    kicker: "Cloud rendering",
+    title: "Raymarched volumetric clouds",
+    copy: "The clouds are rendered as bounded 3D volumes in a single procedural draw. A shadow map generated with a compute shader projects their shade onto the grass, terrain, balls, and meadow effects.",
   },
   sky: {
-    kicker: "Shared lighting",
-    title: "One sun explains the whole image",
-    copy: "The analytical sky, atmosphere, clouds, grass, terrain, and balls all derive from the same directional light. Warm highlights and cool distance therefore stay coherent as the camera moves.",
+    kicker: "Lighting and atmosphere",
+    title: "Shared sun and atmospheric lighting",
+    copy: "The sky, atmosphere, clouds, grass, terrain, and balls use the same directional light. This keeps highlights, shadows, and distance color consistent as the camera moves.",
   },
   grass: {
-    kicker: "GPU-driven meadow",
-    title: "Dense nearby blades become one distant canopy",
-    copy: "Compute work selects visible grass and the useful level of detail before three indirect draws. A matching terrain material continues the same lighting, wind, and interaction after real geometry fades.",
+    kicker: "Grass rendering",
+    title: "Compute culling and three grass detail levels",
+    copy: "A compute shader selects only the visible grass and the right level of detail. Three indirect draws render the result, while the terrain shader continues the same grass lighting and movement into the distance.",
   },
   ball: {
-    kicker: "World interaction",
-    title: "Movement leaves a trail the world remembers",
-    copy: "The rolling ball bends grass immediately, including between fast movement samples, then writes a sparse directional trail that recovers over time. Wandering balls share the same bounded system.",
+    kicker: "Grass interaction",
+    title: "Persistent grass trails",
+    copy: "The rolling ball bends nearby blades immediately and records a directional trail, even during fast movement. The trail remains visible before the grass gradually returns to its original shape, and the wandering balls use the same system.",
   },
   "map-palette": {
-    kicker: "Layered authoring",
-    title: "Shape the cave, then give it gameplay meaning",
-    copy: "Brush, Rectangle, and Fill edit the cave footprint. Independent marker and function layers add the player start, encounters, hazards, healing, and the finish without losing the base geometry.",
+    kicker: "Layered map tools",
+    title: "Cave geometry and gameplay markers",
+    copy: "Brush, Rectangle, and Fill edit the cave footprint. Separate marker and function layers place the player start, encounters, hazards, healing, and finish without changing the underlying cave shape.",
   },
   "map-canvas": {
-    kicker: "Editor and authoring",
-    title: "One responsive canvas carries 4,096 cells",
-    copy: "The grid, symbols, topology outlines, previews, hover state, and validation feedback are batched into one UI mesh instead of thousands of interface objects.",
+    kicker: "Map canvas",
+    title: "A single UI mesh for 4,096 cells",
+    copy: "The 64 × 64 grid, symbols, outlines, previews, hover states, and validation feedback are combined into one UI mesh. This avoids creating thousands of separate interface objects.",
   },
   "map-readiness": {
-    kicker: "Validation",
-    title: "The tool explains what blocks a playable map",
-    copy: "Structured checks catch missing markers, illegal layers, broken routes, and content-budget problems before generation. Warnings remain visible without blocking a valid build.",
+    kicker: "Map validation",
+    title: "Build readiness checks",
+    copy: "The checklist catches missing markers, invalid layer combinations, broken routes, and content budget errors before generation. Warnings stay visible but do not stop a valid map from building.",
   },
   "marker-inspector": {
-    kicker: "Editor and authoring",
-    title: "Behavior stays attached to the authored marker",
-    copy: "A contextual inspector edits spawn direction, encounter composition, or a lamp’s valid wall side without sending the user away from the map.",
+    kicker: "Marker inspector",
+    title: "Settings for the selected marker",
+    copy: "The inspector edits spawn direction, encounter contents, and a lamp’s valid wall side beside the map. The user does not have to open a separate editor.",
   },
   "build-play": {
-    kicker: "Runtime generation",
-    title: "The 2D plan becomes the real combat level",
-    copy: "Build & Play validates a snapshot, generates the cave and player-safe collision, builds ground and flying navigation, connects the existing combat systems, and enters play.",
+    kicker: "Build and Play",
+    title: "From 2D map to playable cave",
+    copy: "Build & Play validates a snapshot, generates the cave geometry and collision, builds ground and flying navigation, connects the existing combat systems, and starts the level.",
   },
   "content-budget": {
-    kicker: "Browser constraints",
-    title: "Cost is visible before generation begins",
-    copy: "Live counts expose cave size, pits, markers, enemies, and estimated geometry so a browser cannot be asked to build an unbounded document.",
+    kicker: "Content budget",
+    title: "Live generation cost estimates",
+    copy: "The workshop tracks cave size, pits, markers, enemies, and estimated geometry as the map changes. It blocks documents that would ask the browser to generate more than the defined limits.",
   },
 };
 
@@ -1164,7 +1164,7 @@ function initializeProjectGallery(gallery) {
       title: scene.dataset.sceneOverviewTitle || "Choose a target",
       copy:
         scene.dataset.sceneOverviewCopy ||
-        "Hover with a mouse or tap a marker to show its explanation.",
+        "Select a highlighted area to read its technical breakdown.",
     });
 
     controlsForScene(scene).forEach((control) => {
