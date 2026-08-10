@@ -178,21 +178,21 @@ img {
 }
 
 .section-page--extra {
-  --paper-light: #fffaf6;
-  --ink: #34273d;
-  --ink-soft: #66586d;
-  --green: #725b79;
-  --green-dark: #503d59;
-  --mint: #e5d9e7;
-  --mint-light: #f1e8f0;
-  --sky: #d8cce2;
-  --sky-light: #ebe4f1;
-  --coral: #e29573;
-  --coral-dark: #8f4052;
-  --sun: #d8acd0;
-  --line: #b4a6b7;
-  --shadow: #34273d;
-  background: #ded3e2;
+  --paper-light: #fffaf0;
+  --ink: #153034;
+  --ink-soft: #4a615e;
+  --green: #2f6c61;
+  --green-dark: #1d5149;
+  --mint: #cbdccf;
+  --mint-light: #e3ece1;
+  --sky: #9ebfc0;
+  --sky-light: #d9e7e3;
+  --coral: #d77839;
+  --coral-dark: #8b3e1f;
+  --sun: #e4b654;
+  --line: #9cafaa;
+  --shadow: #153034;
+  background: #c9dbd2;
   color: var(--ink);
 }
 
@@ -2026,13 +2026,13 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 [data-extra-project-panel="project-1"] .extra-stage {
   background-image:
-    linear-gradient(rgba(255, 250, 246, 0.16), rgba(255, 250, 246, 0.16)),
+    linear-gradient(rgba(255, 250, 240, 0.06), rgba(255, 250, 240, 0.06)),
     url("assets/wallpapers/extra-surreal-landscape.webp");
 }
 
 [data-extra-project-panel="project-2"] .extra-stage {
   background-image:
-    linear-gradient(rgba(255, 250, 246, 0.2), rgba(255, 250, 246, 0.2)),
+    linear-gradient(rgba(255, 250, 240, 0.08), rgba(255, 250, 240, 0.08)),
     url("assets/wallpapers/extra-cave-workshop.webp");
 }
 
@@ -2282,21 +2282,21 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .extra-proof-body {
-  border-left-color: #94849d;
-  color: #d9cedd;
+  border-left-color: #718f89;
+  color: #d5e4df;
 }
 
 .extra-evidence-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
-  border: 1px solid #94849d;
+  border: 1px solid #718f89;
 }
 
 .extra-evidence-grid > div {
   min-width: 0;
   padding: clamp(0.7rem, 1.8vh, 1rem);
-  border-right: 1px solid #94849d;
+  border-right: 1px solid #718f89;
 }
 
 .extra-evidence-grid > div:nth-child(2n) {
@@ -2304,7 +2304,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .extra-evidence-grid > div:nth-child(n + 3) {
-  border-top: 1px solid #94849d;
+  border-top: 1px solid #718f89;
 }
 
 .extra-evidence-grid dt {
@@ -2316,7 +2316,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .extra-evidence-grid dd {
   margin: 0.35rem 0 0;
-  color: #eee6ef;
+  color: #edf3ef;
   font-size: 0.82rem;
   line-height: 1.4;
 }
@@ -2498,45 +2498,6 @@ html:not(.js) .extra-step-tabs {
 
 .section-rail__copy strong {
   font-size: 0.9rem;
-}
-
-body[data-section="extra"] .section-rail {
-  border-color: #34273d;
-  background: #fffaf6;
-  box-shadow: 0.38rem 0.38rem 0 #34273d;
-}
-
-body[data-section="extra"] .section-rail__label {
-  border-bottom-color: #34273d;
-  color: #503d59;
-}
-
-body[data-section="extra"] .section-rail li + li {
-  border-top-color: #b4a6b7;
-}
-
-body[data-section="extra"] .section-rail a {
-  color: #66586d;
-}
-
-body[data-section="extra"] .section-rail a:hover {
-  background: #ebe4f1;
-  color: #34273d;
-}
-
-body[data-section="extra"] .section-rail a[aria-current="page"] {
-  border-left-color: #8f4052;
-  background: #e29573;
-  color: #34273d;
-}
-
-body[data-section="extra"]
-  .section-rail
-  a[aria-current="page"]
-  .section-rail__number {
-  border-color: #725b79;
-  background: #725b79;
-  color: #fffaf6;
 }
 
 @keyframes build-button-shine {

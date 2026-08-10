@@ -567,7 +567,7 @@
                             <p>Technical art · real-time rendering</p>
                             <h3 id="project-1-summary-title">Surreal Landscape Prototype</h3>
                             <p>
-                              I built a playable Unity 6 grassland with GPU-driven grass, infinite terrain, recovering trails, raymarched clouds, and measured desktop and WebGPU production profiles.
+                              I made this Unity 6 grassland to work on GPU rendering: three indirect grass draws, an endless tiled terrain, trails that slowly recover, and raymarched clouds. I profiled it on desktop and WebGPU.
                             </p>
                             <ul class="project-tags" aria-label="Project technologies">
                               <li>Unity 6</li>
@@ -815,7 +815,7 @@
                             <p>Runtime tools · procedural generation</p>
                             <h3 id="project-2-summary-title">Cave Map Workshop</h3>
                             <p>
-                              I built a runtime cave-making toolkit for Unity: draw and validate a layered map, generate the full 3D level and NavMesh, then play it on desktop or in the WebGPU build.
+                              I rebuilt my Unity cave editor so it could run inside the game. You can paint and validate a map, generate the 3D cave and NavMesh, and play it in the desktop or WebGPU build.
                             </p>
                             <ul class="project-tags" aria-label="Project technologies">
                               <li>Unity 6</li>
@@ -1055,7 +1055,7 @@
                     <p class="extra-slide__eyebrow">Unity 6 technical-art study · GPU rendering</p>
                     <h3>Surreal Landscape Prototype</h3>
                     <p class="extra-slide__lead">
-                      I built a luminous rolling-ball meadow where deterministic terrain, GPU grass, recovering trails, wandering encounters, and raymarched clouds share a bounded runtime. Dedicated desktop and WebGPU profiles keep the complete experience playable in both.
+                      This started as a rolling-ball meadow and grew into a rendering-systems study. The terrain streams around the player, grass is culled on the GPU, trails recover over time, and the clouds are raymarched. I keep separate settings for desktop and WebGPU.
                     </p>
                     <a
                       class="button button--primary extra-build-jump"
@@ -1085,17 +1085,17 @@
                 >
                   <header class="extra-slide__heading">
                     <p>01 · Bounded world</p>
-                    <h3>The meadow feels endless because every system owns a finite moving window.</h3>
+                    <h3>The world repeats around a finite moving window.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      One deterministic height field keeps terrain, collision, grass roots, the player, and wandering balls on the same surface. Global identity stays stable while local resources stream around the action.
+                      One deterministic height function places the terrain, collision, grass, player, and wandering balls on the same surface. Small local buffers move with the player, while the generated world stays consistent.
                     </p>
                     <ul class="extra-detail-grid">
                       <li><strong>Terrain</strong><span>About 130 active LOD tiles; a representative view submits roughly 50–55.</span></li>
                       <li><strong>Collision</strong><span>One local double-buffered patch replaces world-sized MeshColliders.</span></li>
                       <li><strong>Encounters</strong><span>Eleven prewarmed balls keep ten active without normal Instantiate or Destroy.</span></li>
-                      <li><strong>Ownership</strong><span>Deterministic generation is global; memory, objects, and frame work stay bounded.</span></li>
+                      <li><strong>Frame budget</strong><span>The world can repeat indefinitely while memory, objects, and per-frame work stay fixed.</span></li>
                     </ul>
                   </div>
                 </article>
@@ -1111,20 +1111,20 @@
                 >
                   <header class="extra-slide__heading">
                     <p>02 · Grass and terrain</p>
-                    <h3>Three indirect draws carry the real grass; the terrain finishes the field.</h3>
+                    <h3>The grass is culled on the GPU and drawn in three LOD passes.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Deterministic candidates live in world-aligned cells. Compute culling rejects hidden blades, chooses LOD, packs interaction data, and sends retained blades into three append buffers.
+                      Grass candidates come from world-aligned cells. A compute pass removes hidden blades, picks an LOD, packs the interaction data, and writes the remaining blades to three append buffers.
                     </p>
                     <ul class="extra-detail-grid">
                       <li><strong>Stable identity</strong><span>8 m distribution cells group into 16 m chunks with an 80-chunk cache.</span></li>
                       <li><strong>Three LODs</strong><span>Near, middle, and far blades use 30, 15, and 3 generated vertices.</span></li>
-                      <li><strong>Physical wind</strong><span>Four pressure fields bend rooted blade arcs instead of painting moving color bands.</span></li>
-                      <li><strong>No grass ring</strong><span>A shared virtual-canopy material continues the same field after geometry fades.</span></li>
+                      <li><strong>Wind</strong><span>Four pressure fields bend each rooted blade arc.</span></li>
+                      <li><strong>Distant field</strong><span>A virtual-canopy material continues the grass after the geometry fades.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      <strong>160 candidates per m² at full density.</strong> The CPU owns cache and scheduling; the GPU owns culling, deformation, lighting, and the three draws.
+                      <strong>160 candidates per m² at full density.</strong> The CPU manages the cache and dispatches. Compute shaders handle culling, deformation, lighting, and the three draws.
                     </p>
                   </div>
                 </article>
@@ -1140,11 +1140,11 @@
                 >
                   <header class="extra-slide__heading">
                     <p>03 · Contact and trails</p>
-                    <h3>The trail bends immediately, persists in world space, and still has a fixed budget.</h3>
+                    <h3>The ball leaves trails that recover after one minute.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      A swept sphere bends nearby blades during culling. Sparse pages then preserve direction, ownership, age, and recovery after the ball moves on.
+                      During culling, a swept-sphere test bends nearby blades. Touched cells are saved in sparse pages so the trail keeps its direction, age, and recovery after the ball moves on.
                     </p>
                     <ul class="extra-detail-grid">
                       <li><strong>Instant contact</strong><span>Live bend data reuses spare bits in the existing blade payload.</span></li>
@@ -1153,7 +1153,7 @@
                       <li><strong>Exact recovery</strong><span>Grass stays pressed for 57.8 seconds, then returns over 2.2 seconds.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      WebGPU uploads at most four 16 KiB pages per frame while protecting player-near work. Wandering balls share the trail system.
+                      The WebGPU profile uploads at most four 16 KiB pages per frame, starting with the pages nearest the player. Wandering balls use the same trail system.
                     </p>
                   </div>
                 </article>
@@ -1169,20 +1169,20 @@
                 >
                   <header class="extra-slide__heading">
                     <p>04 · Clouds and lighting</p>
-                    <h3>I replaced flat cloud sheets with stable raymarched volumes.</h3>
+                    <h3>Up to 64 raymarched clouds share one draw.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      The final field keeps the original compact streaming architecture, but one procedural draw now raymarches camera-independent volumes with readable parallax, internal depth, and terrain shadows.
+                      Each cloud is a small instance record. One procedural draw raymarches the volumes, giving them parallax and internal depth, while a compute field adds their shadows to the terrain.
                     </p>
                     <ul class="extra-detail-grid">
                       <li><strong>Compact field</strong><span>Up to 64 clouds fit in one 3,072-byte instance buffer.</span></li>
                       <li><strong>Bounded raymarch</strong><span>Near and far clouds use 32 and 26 steps with early exit.</span></li>
                       <li><strong>Shared shade</strong><span>A 256 × 256 compute field shades grass, terrain, balls, and meadow VFX.</span></li>
-                      <li><strong>One visual contract</strong><span>Sky, atmosphere, clouds, and surfaces derive from the same sun.</span></li>
+                      <li><strong>Lighting</strong><span>The sky, atmosphere, clouds, and surfaces all use the same sun.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      A cloud that vanished in the camera centre turned out to be a signed Vulkan projection error, not density or TAA. Fixing the proxy coordinate space restored it.
+                      A cloud that vanished at the centre of the screen came from a signed Vulkan projection error. Correcting the proxy coordinate space fixed it.
                     </p>
                   </div>
                 </article>
@@ -1198,17 +1198,17 @@
                 >
                   <header class="extra-slide__heading">
                     <p>05 · WebGPU product</p>
-                    <h3>I treated the browser build as its own measured production profile.</h3>
+                    <h3>The browser build has its own settings and benchmark run.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      WebGPU High preserves the dense grass, trails, encounters, volumetric clouds, and final image while changing how work is prepared, scheduled, measured, and delivered.
+                      WebGPU High keeps the grass, trails, encounters, and volumetric clouds, but uses browser-specific scheduling, memory limits, warmup, and build settings.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Protected profiles</strong><span>Web setup hashes the Desktop High assets and fails if it changes them.</span></li>
-                      <li><strong>Real warmup</strong><span>A preparation screen exercises the production scene instead of faking a timer.</span></li>
-                      <li><strong>Browser scheduling</strong><span>Grass, collision, trails, particles, clouds, and memory use explicit Web budgets.</span></li>
-                      <li><strong>Reproducible evidence</strong><span>A Node/Playwright harness records workloads, rAF, memory, errors, and manifests.</span></li>
+                      <li><strong>Profile guard</strong><span>The web setup hashes the Desktop High assets and fails if it changes them.</span></li>
+                      <li><strong>Warmup</strong><span>The preparation screen runs the production scene before play begins.</span></li>
+                      <li><strong>Frame budgets</strong><span>Grass, collision, trails, particles, clouds, and memory each have web limits.</span></li>
+                      <li><strong>Benchmark harness</strong><span>Node and Playwright record workloads, rAF, memory, errors, and build manifests.</span></li>
                     </ul>
                     <p class="extra-callout">
                       The stripped production output was 19,408,640 bytes before filesystem overhead. Accepted runs held the Wasm heap at exactly 256 MiB.
@@ -1226,18 +1226,18 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>Verified engineering evidence</p>
-                    <h3>I measured frame tails, ownership, and browser delivery—not only average FPS.</h3>
+                    <p>WebGPU benchmark</p>
+                    <h3>Frame-time results from the browser build.</h3>
                   </header>
                   <div class="extra-proof-body">
                     <dl class="extra-evidence-grid">
-                      <div><dt>135 / 135</dt><dd>latest complete Web-era EditMode suite passed</dd></div>
-                      <div><dt>2.932–3.920 ms</dt><dd>median main work across the cold WebGPU matrix</dd></div>
-                      <div><dt>9.605 ms</dt><dd>worst stress p99 in the accepted WebGPU runs</dd></div>
-                      <div><dt>100.143 → 8.578 ms</dt><dd>measured maximum after collision-streaming work</dd></div>
+                      <div><dt>135 / 135</dt><dd>EditMode tests passed</dd></div>
+                      <div><dt>2.932–3.920 ms</dt><dd>median main-thread work across the cold WebGPU runs</dd></div>
+                      <div><dt>9.605 ms</dt><dd>highest stress-test p99 frame time</dd></div>
+                      <div><dt>100.143 → 8.578 ms</dt><dd>maximum frame time before and after collision streaming</dd></div>
                     </dl>
                     <p>
-                      Web results were recorded at 960 × 600 on a Ryzen 7 3700X and RTX 3070 across seven three-repeat scenarios. They show workload headroom on that machine, not a promise for every browser or GPU; long soaks, 1280 × 720, Edge, and automated visual comparisons were not claimed.
+                      Benchmarks ran at 960 × 600 on a Ryzen 7 3700X and RTX 3070. Each of the seven scenarios was run three times.
                     </p>
                   </div>
                 </article>
@@ -1297,7 +1297,7 @@
                     <p class="extra-slide__eyebrow">Unity runtime tool · procedural level generation</p>
                     <h3>Cave Map Workshop</h3>
                     <p class="extra-slide__lead">
-                      I rebuilt my Unity cave editor as a tool that works at runtime. Draw and validate a layered map, generate the 3D cave and NavMesh, then jump straight into the project’s existing spell-combat loop. The same core rules drive the desktop and WebGPU versions.
+                      The original cave map tool only ran in Unity’s editor. I moved it into runtime so I could draw and validate a map in the build, generate the 3D cave and NavMesh, and start a combat run without leaving the game. Desktop and WebGPU use the same map rules.
                     </p>
                     <a
                       class="button button--primary extra-build-jump"
@@ -1327,20 +1327,20 @@
                 >
                   <header class="extra-slide__heading">
                     <p>01 · The problem</p>
-                    <h3>The map tool worked. Unity’s editor was the part that could not ship.</h3>
+                    <h3>Moving a 5,000-line EditorWindow into the game.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      The original map painter was an approximately 5,000-line <code>EditorWindow</code> built around editor Undo, <code>AssetDatabase</code>, saved meshes, scene changes, and direct project references. I wanted the full tool in a playable build, not a smaller imitation of it.
+                      The original map painter was a roughly 5,000-line <code>EditorWindow</code> tied to editor Undo, <code>AssetDatabase</code>, saved meshes, scene changes, and direct project references. Those APIs are not available in a player build.
                     </p>
                     <p>
-                      I kept the mature tile rules and procedural generator, then replaced the editor-only shell with runtime systems that desktop and web can share.
+                      I kept the existing tile rules and procedural generator, then wrote a runtime shell that works on desktop and the web.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Portable maps</strong><span>Versioned JSON uses stable tile and catalog IDs.</span></li>
-                      <li><strong>Runtime history</strong><span>Every stroke, fill, resize, and setting change is undoable.</span></li>
-                      <li><strong>Shared validation</strong><span>The same rules protect authoring and the final build.</span></li>
-                      <li><strong>Owned resources</strong><span>Generated meshes, materials, and NavMesh data are cleaned up safely.</span></li>
+                      <li><strong>Map format</strong><span>Versioned JSON uses stable tile and catalog IDs.</span></li>
+                      <li><strong>Undo</strong><span>Every stroke, fill, resize, and setting change can be reversed.</span></li>
+                      <li><strong>Validation</strong><span>The editor and the build run the same checks.</span></li>
+                      <li><strong>Cleanup</strong><span>Generated meshes, materials, and NavMesh data are released between builds.</span></li>
                     </ul>
                   </div>
                 </article>
@@ -1356,20 +1356,20 @@
                 >
                   <header class="extra-slide__heading">
                     <p>02 · Editor and authoring</p>
-                    <h3>The rules live under the canvas, not inside the UI.</h3>
+                    <h3>One set of rules handles every editing tool.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Brush, Rectangle, Region Fill, erase, resize, and marker settings all go through one transaction service and one set of topology rules. That keeps the tool predictable even when several kinds of data share one cell.
+                      Brush, Rectangle, Region Fill, erase, resize, and marker settings all go through one transaction service and the same topology checks. Several kinds of data can share a cell without each tool needing its own rules.
                     </p>
                     <ul class="extra-detail-grid extra-detail-grid--authoring">
                       <li><strong>Three layers</strong><span>Cave shape, gameplay markers, and Guide Lamps can work together.</span></li>
-                      <li><strong>Safe editing</strong><span>A drag is one undo step; fast strokes fill skipped pointer cells.</span></li>
-                      <li><strong>Protected topology</strong><span>One start, one connected finish, attached pits, and stable encounter groups.</span></li>
-                      <li><strong>Clear validation</strong><span>Errors block generation. Warnings explain risk without stopping a valid map.</span></li>
+                      <li><strong>Editing</strong><span>A drag is one undo step; fast strokes fill skipped pointer cells.</span></li>
+                      <li><strong>Topology</strong><span>One start, one connected finish, attached pits, and stable encounter groups.</span></li>
+                      <li><strong>Messages</strong><span>Errors block generation. Warnings stay visible without stopping a valid map.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      <strong>64 × 64, one UI mesh.</strong> The canvas batches 4,096 cells, symbols, outlines, previews, hover states, and validation feedback instead of creating one GameObject per cell.
+                      <strong>64 × 64, one UI mesh.</strong> A single mesh batches all 4,096 cells along with their symbols, outlines, previews, hover states, and validation feedback.
                     </p>
                   </div>
                 </article>
@@ -1385,7 +1385,7 @@
                 >
                   <header class="extra-slide__heading">
                     <p>03 · Runtime generation</p>
-                    <h3>Build &amp; Play makes the level the game actually uses.</h3>
+                    <h3>Build &amp; Play turns the map into a playable level.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <ol class="runtime-pipeline" aria-label="Runtime cave generation pipeline">
@@ -1397,7 +1397,7 @@
                       <li><strong>Play</strong><span>Bind the systems and enter first-person combat.</span></li>
                     </ol>
                     <p class="extra-callout">
-                      Generation yields between expensive stages so the browser can show honest progress. Returning to the editor disposes the generated lifetime before the next build, without touching shared project assets.
+                      Each expensive stage yields so the browser can update the progress screen. Before the next build, the tool clears the generated meshes, materials, and NavMesh data while leaving shared project assets alone.
                     </p>
                   </div>
                 </article>
@@ -1413,17 +1413,17 @@
                 >
                   <header class="extra-slide__heading">
                     <p>04 · WebGPU delivery</p>
-                    <h3>I designed the browser version around Unity 6 WebGPU from the start.</h3>
+                    <h3>The WebGPU build has a separate renderer and release checks.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      The project has a dedicated renderer, quality path, browser preflight, and release validator. A production build is rejected unless WebGPU is the only graphics API.
+                      The browser profile has its own renderer, quality settings, preflight page, and release validator. The build is rejected unless WebGPU is its only graphics API.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Useful preflight</strong><span>HTTPS, desktop input, WebGPU, and a high-performance adapter are checked before Unity downloads.</span></li>
-                      <li><strong>No quiet fallback</strong><span>An unsupported setup gets a clear message instead of a hidden WebGL switch.</span></li>
-                      <li><strong>Browser budgets</strong><span>The heap can grow from 256 to 2,048 MiB; device pixel ratio is capped at 1.5.</span></li>
-                      <li><strong>Correct delivery</strong><span>Hashed Brotli files are served with the MIME and encoding headers Unity needs.</span></li>
+                      <li><strong>Preflight</strong><span>HTTPS, desktop input, WebGPU, and a high-performance adapter are checked before Unity downloads.</span></li>
+                      <li><strong>WebGPU only</strong><span>Unsupported setups get an error message; the build does not switch to WebGL.</span></li>
+                      <li><strong>Memory</strong><span>The heap can grow from 256 to 2,048 MiB; device pixel ratio is capped at 1.5.</span></li>
+                      <li><strong>Delivery</strong><span>Hashed Brotli files use the MIME and encoding headers required by Unity.</span></li>
                     </ul>
                   </div>
                 </article>
@@ -1438,8 +1438,8 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>Verified engineering evidence</p>
-                    <h3>I tested the loop I expect people to repeat.</h3>
+                    <p>Runtime and release checks</p>
+                    <h3>Tests for the edit, build, and play loop.</h3>
                   </header>
                   <div class="extra-proof-body">
                     <dl class="extra-evidence-grid">
