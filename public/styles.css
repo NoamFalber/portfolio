@@ -178,21 +178,21 @@ img {
 }
 
 .section-page--extra {
-  --paper-light: #fffaf0;
-  --ink: #153034;
-  --ink-soft: #4a615e;
-  --green: #2f6c61;
-  --green-dark: #1d5149;
-  --mint: #cbdccf;
-  --mint-light: #e3ece1;
-  --sky: #9ebfc0;
-  --sky-light: #d9e7e3;
-  --coral: #d77839;
-  --coral-dark: #8b3e1f;
-  --sun: #e4b654;
-  --line: #9cafaa;
-  --shadow: #153034;
-  background: #c9dbd2;
+  --paper-light: #fff8ec;
+  --ink: #1b2b33;
+  --ink-soft: #566169;
+  --green: #3d6474;
+  --green-dark: #294f5f;
+  --mint: #dccfba;
+  --mint-light: #efe5d2;
+  --sky: #a8bbc5;
+  --sky-light: #d8e1e4;
+  --coral: #c96838;
+  --coral-dark: #84401f;
+  --sun: #e7ba58;
+  --line: #aea28f;
+  --shadow: #1b2b33;
+  background: #d9c7aa;
   color: var(--ink);
 }
 
@@ -2026,13 +2026,13 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 [data-extra-project-panel="project-1"] .extra-stage {
   background-image:
-    linear-gradient(rgba(255, 250, 240, 0.06), rgba(255, 250, 240, 0.06)),
+    linear-gradient(rgba(255, 248, 236, 0.28), rgba(255, 248, 236, 0.28)),
     url("assets/wallpapers/extra-surreal-landscape.webp");
 }
 
 [data-extra-project-panel="project-2"] .extra-stage {
   background-image:
-    linear-gradient(rgba(255, 250, 240, 0.08), rgba(255, 250, 240, 0.08)),
+    linear-gradient(rgba(255, 248, 236, 0.28), rgba(255, 248, 236, 0.28)),
     url("assets/wallpapers/extra-cave-workshop.webp");
 }
 
@@ -2282,21 +2282,21 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .extra-proof-body {
-  border-left-color: #718f89;
-  color: #d5e4df;
+  border-left-color: #71838b;
+  color: #d5e0e3;
 }
 
 .extra-evidence-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
-  border: 1px solid #718f89;
+  border: 1px solid #71838b;
 }
 
 .extra-evidence-grid > div {
   min-width: 0;
   padding: clamp(0.7rem, 1.8vh, 1rem);
-  border-right: 1px solid #718f89;
+  border-right: 1px solid #71838b;
 }
 
 .extra-evidence-grid > div:nth-child(2n) {
@@ -2304,7 +2304,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .extra-evidence-grid > div:nth-child(n + 3) {
-  border-top: 1px solid #718f89;
+  border-top: 1px solid #71838b;
 }
 
 .extra-evidence-grid dt {
@@ -2316,7 +2316,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .extra-evidence-grid dd {
   margin: 0.35rem 0 0;
-  color: #edf3ef;
+  color: #eef2f0;
   font-size: 0.82rem;
   line-height: 1.4;
 }
