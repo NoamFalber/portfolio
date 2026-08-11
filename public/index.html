@@ -56,6 +56,7 @@
                   data-section-link
                   data-section-target="projects"
                 >
+                  <span class="control-shine" aria-hidden="true"></span>
                   <span>View selected projects</span>
                   <span aria-hidden="true">↓</span>
                 </a>
@@ -277,6 +278,7 @@
                 data-section-link
                 data-section-target="projects"
               >
+                <span class="control-shine" aria-hidden="true"></span>
                 <span>View selected projects</span>
                 <span aria-hidden="true">↓</span>
               </a>
@@ -375,12 +377,13 @@
                   type="button"
                   data-project-build-link
                 >
+                  <span class="control-shine" aria-hidden="true"></span>
                   <span
                     class="project-build-link__icon"
                     aria-hidden="true"
                     data-build-link-icon
                   >▶</span>
-                  <span>
+                  <span class="project-build-link__copy">
                     <small data-build-link-kicker>Web build</small>
                     <strong data-build-link-label>Open Surreal Landscape Prototype build</strong>
                   </span>
@@ -390,7 +393,7 @@
 
                 <div class="project-stage">
                 <div
-                  class="project-panel project-panel--featured"
+                  class="project-panel"
                   id="project-1"
                   role="tabpanel"
                   aria-labelledby="project-1-tab"
@@ -561,7 +564,7 @@
                               playable in WebGPU without cutting the features
                               that define it.
                             </p>
-                            <ul class="project-tags" aria-label="Project technologies">
+                            <ul class="project-tags">
                               <li>Unity 6</li>
                               <li>C#</li>
                               <li>HLSL</li>
@@ -595,7 +598,7 @@
                 </div>
 
                 <div
-                  class="project-panel project-panel--featured"
+                  class="project-panel"
                   id="project-2"
                   role="tabpanel"
                   aria-labelledby="project-2-tab"
@@ -817,7 +820,7 @@
                               Players can now author, validate, generate, and
                               immediately play their own caves in the browser.
                             </p>
-                            <ul class="project-tags" aria-label="Project technologies">
+                            <ul class="project-tags">
                               <li>Unity 6</li>
                               <li>C#</li>
                               <li>WebGPU</li>
@@ -869,8 +872,9 @@
                     type="button"
                     data-project-build-return
                   >
+                    <span class="control-shine" aria-hidden="true"></span>
                     <span class="project-build-link__icon" aria-hidden="true">↩</span>
-                    <span>
+                    <span class="project-build-link__copy">
                       <small>Project visual</small>
                       <strong data-build-return-label>Return to Surreal Landscape Prototype</strong>
                     </span>
@@ -927,7 +931,7 @@
                     aria-labelledby="project-2-build-title"
                     hidden
                   >
-                    <div class="build-player build-player--project-two">
+                    <div class="build-player">
                       <header class="build-player__bar">
                         <h3 class="sr-only" id="project-2-build-title">Cave Map Workshop playable web build</h3>
                         <span>Cave Map Workshop / Unity WebGPU</span>
@@ -1037,6 +1041,7 @@
                       href="#project-1-build"
                       data-project-build-jump="project-1"
                     >
+                      <span class="control-shine" aria-hidden="true"></span>
                       <span>Open the WebGPU build</span>
                       <span aria-hidden="true">↑</span>
                     </a>
@@ -1114,7 +1119,7 @@
                 </article>
 
                 <article
-                  class="extra-slide extra-slide--story extra-slide--runtime"
+                  class="extra-slide extra-slide--story"
                   id="extra-p1-slide-trails"
                   role="tabpanel"
                   aria-labelledby="extra-p1-step-trails"
@@ -1182,7 +1187,7 @@
                 </article>
 
                 <article
-                  class="extra-slide extra-slide--story extra-slide--webgpu"
+                  class="extra-slide extra-slide--story"
                   id="extra-p1-slide-webgpu"
                   role="tabpanel"
                   aria-labelledby="extra-p1-step-webgpu"
@@ -1315,6 +1320,7 @@
                       href="#project-2-build"
                       data-project-build-jump="project-2"
                     >
+                      <span class="control-shine" aria-hidden="true"></span>
                       <span>Open the WebGPU build</span>
                       <span aria-hidden="true">↑</span>
                     </a>
@@ -1383,7 +1389,7 @@
                       topology, selected settings, warnings, and build
                       readiness while editing.
                     </p>
-                    <ul class="extra-detail-grid extra-detail-grid--authoring">
+                    <ul class="extra-detail-grid">
                       <li><strong>Layered editing</strong><span>Cave shape, gameplay objects, and wall functions remain independently editable.</span></li>
                       <li><strong>Continuous gestures</strong><span>Fast drags fill skipped cells and commit as one undo step.</span></li>
                       <li><strong>Topology rules</strong><span>Every tool preserves one player start, connected finish zones, attached pits, and configured encounter groups.</span></li>
@@ -1399,7 +1405,7 @@
                 </article>
 
                 <article
-                  class="extra-slide extra-slide--story extra-slide--runtime"
+                  class="extra-slide extra-slide--story"
                   id="extra-p2-slide-runtime"
                   role="tabpanel"
                   aria-labelledby="extra-p2-step-runtime"
@@ -1412,7 +1418,7 @@
                     <h3>Build and Play turns the authored map into the complete combat level.</h3>
                   </header>
                   <div class="extra-slide__body">
-                    <ol class="runtime-pipeline" aria-label="Runtime cave generation pipeline">
+                    <ol class="runtime-pipeline">
                       <li><strong>Validate</strong><span>Check a stable copy of the map before generation begins.</span></li>
                       <li><strong>Shape</strong><span>Generate floors, curved walls, a roof, pits, and repeatable seeded detail.</span></li>
                       <li><strong>Place</strong><span>Add the player start, enemies, finish, healing pools, wind hazards, and guide lamps.</span></li>
@@ -1431,7 +1437,7 @@
                 </article>
 
                 <article
-                  class="extra-slide extra-slide--story extra-slide--webgpu"
+                  class="extra-slide extra-slide--story"
                   id="extra-p2-slide-webgpu"
                   role="tabpanel"
                   aria-labelledby="extra-p2-step-webgpu"

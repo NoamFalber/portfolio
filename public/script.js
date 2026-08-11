@@ -16,6 +16,17 @@ const buildAccessDisabled = window.matchMedia("(max-width: 42rem)");
 const deferredProjectImages = [
   ...document.querySelectorAll("[data-deferred-src]"),
 ];
+const supportsInert = "inert" in HTMLElement.prototype;
+const inertFocusableSelector = [
+  "a[href]",
+  "button",
+  "input",
+  "select",
+  "textarea",
+  "iframe",
+  "[contenteditable='true']",
+  "[tabindex]",
+].join(",");
 
 const sectionNames = sectionPages.map(
   (section) => section.id.charAt(0).toUpperCase() + section.id.slice(1),
@@ -33,6 +44,61 @@ function addMediaQueryChangeListener(query, listener) {
     query.addEventListener("change", listener);
   } else {
     query.addListener(listener);
+  }
+}
+
+function syncInertFallback() {
+  if (supportsInert) {
+    return;
+  }
+
+  document.querySelectorAll(inertFocusableSelector).forEach((element) => {
+    const isInsideInertContent = Boolean(element.closest("[inert]"));
+    const storedTabIndex = element.getAttribute("data-inert-tabindex");
+
+    if (isInsideInertContent) {
+      if (storedTabIndex === null) {
+        element.setAttribute(
+          "data-inert-tabindex",
+          element.hasAttribute("tabindex")
+            ? element.getAttribute("tabindex")
+            : "__none__",
+        );
+      }
+
+      element.setAttribute("tabindex", "-1");
+      return;
+    }
+
+    if (storedTabIndex === null) {
+      return;
+    }
+
+    if (storedTabIndex === "__none__") {
+      element.removeAttribute("tabindex");
+    } else {
+      element.setAttribute("tabindex", storedTabIndex);
+    }
+
+    element.removeAttribute("data-inert-tabindex");
+  });
+}
+
+function setElementInert(element, shouldBeInert) {
+  if (!element) {
+    return;
+  }
+
+  if (shouldBeInert) {
+    element.setAttribute("inert", "");
+  } else {
+    element.removeAttribute("inert");
+  }
+
+  if (supportsInert) {
+    element.inert = shouldBeInert;
+  } else {
+    syncInertFallback();
   }
 }
 
@@ -225,7 +291,7 @@ function setSection(
     const isCurrent = index === nextIndex;
     section.dataset.position = index < nextIndex ? "before" : index > nextIndex ? "after" : "current";
     section.setAttribute("aria-hidden", String(!isCurrent));
-    section.inert = !isCurrent;
+    setElementInert(section, !isCurrent);
   });
 
   sectionRailLinks.forEach((link) => {
@@ -645,7 +711,7 @@ function applyProjectViewState() {
   workspaceWindows.forEach((windowElement) => {
     const isCurrentWindow = windowElement.dataset.workspaceWindow === activeMode;
     windowElement.setAttribute("aria-hidden", String(!isCurrentWindow));
-    windowElement.inert = !isCurrentWindow;
+    setElementInert(windowElement, !isCurrentWindow);
   });
 
   projectBuildPanels.forEach((panel) => {
@@ -1606,7 +1672,7 @@ sectionPages.forEach((section, index) => {
         ? "after"
         : "current";
   section.setAttribute("aria-hidden", String(!isCurrent));
-  section.inert = !isCurrent;
+  setElementInert(section, !isCurrent);
 });
 
 sectionRailLinks.forEach((link) => {

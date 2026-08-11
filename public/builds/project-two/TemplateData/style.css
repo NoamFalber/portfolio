@@ -75,7 +75,7 @@ button::before, a::before {
   transition: clip-path var(--key-motion), transform var(--key-motion);
 }
 
-button:hover, a:hover {
+button:hover:not(:disabled), a:hover {
   border-color: var(--key-edge);
   background: #2b3037;
   box-shadow:
@@ -83,14 +83,16 @@ button:hover, a:hover {
     inset -1px -1px 0 rgba(0, 0, 0, .24);
   transform: translate3d(2px, calc(0px - var(--key-depth) + 2px), 0);
 }
-button:hover::before, a:hover::before { clip-path: polygon(calc(100% - var(--key-depth) + 2px) 2px, 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, 2px calc(100% - var(--key-depth) + 2px), calc(100% - var(--key-depth) + 2px) calc(100% - var(--key-depth) + 2px)); transform: translate3d(-2px, -2px, 0); }
-button:active, a:active {
+button:hover:not(:disabled)::before, a:hover::before { clip-path: polygon(calc(100% - var(--key-depth) + 2px) 2px, 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, 2px calc(100% - var(--key-depth) + 2px), calc(100% - var(--key-depth) + 2px) calc(100% - var(--key-depth) + 2px)); transform: translate3d(-2px, -2px, 0); }
+button:active:not(:disabled), a:active {
   z-index: 1;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, .32);
   transform: translate3d(var(--key-press), calc(0px - var(--key-depth) + var(--key-press)), 0);
   transition: background-color 90ms ease-out, border-color 90ms ease-out, box-shadow var(--key-press-motion), transform var(--key-press-motion);
 }
-button:active::before, a:active::before { clip-path: polygon(calc(100% - var(--key-depth) + var(--key-press)) var(--key-press), 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, var(--key-press) calc(100% - var(--key-depth) + var(--key-press)), calc(100% - var(--key-depth) + var(--key-press)) calc(100% - var(--key-depth) + var(--key-press))); transform: translate3d(calc(0px - var(--key-press)), calc(0px - var(--key-press)), 0); transition: clip-path var(--key-press-motion), transform var(--key-press-motion); }
+button:active:not(:disabled)::before, a:active::before { clip-path: polygon(calc(100% - var(--key-depth) + var(--key-press)) var(--key-press), 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, var(--key-press) calc(100% - var(--key-depth) + var(--key-press)), calc(100% - var(--key-depth) + var(--key-press)) calc(100% - var(--key-depth) + var(--key-press))); transform: translate3d(calc(0px - var(--key-press)), calc(0px - var(--key-press)), 0); transition: clip-path var(--key-press-motion), transform var(--key-press-motion); }
+button:disabled { cursor: not-allowed; transform: translate3d(0, calc(0px - var(--key-depth)), 0); transition: none; }
+button:disabled::before { transform: translate3d(0, 0, 0); transition: none; }
 button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid #e6a66f; outline-offset: 2px; }
 
 .shell { width: min(100vw, 1800px); margin: auto; padding: 14px clamp(10px, 2vw, 28px) 18px; }
