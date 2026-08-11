@@ -794,15 +794,18 @@
                           aria-labelledby="project-2-summary-title"
                         >
                           <div class="project-inspector__project">
-                            <p>Runtime tools · complete gameplay pipeline</p>
+                            <p>Team project · runtime tools · technical art</p>
                             <h3 id="project-2-summary-title">Cave Map Workshop</h3>
                             <p>
-                              I turned a mature editor-only cave builder into a
-                              complete runtime product. You can design and
-                              validate a layered map, generate the full cave and
-                              navigation, fight through it, then return to
-                              editing and rebuild, all inside the browser. Every
-                              step runs on the project’s real game systems.
+                              Cave Map Workshop began as a team game for my
+                              second-year final assignment at Tiltan. I owned
+                              the system design, external map-making tool,
+                              shaders, and visual effects. The original game
+                              included a preview level. I wanted the tool itself
+                              in the playable build, so I rebuilt it for
+                              runtime. Players can now author, validate,
+                              generate, and immediately play their own caves in
+                              the browser.
                             </p>
                             <ul class="project-tags" aria-label="Project technologies">
                               <li>Unity 6</li>
@@ -967,24 +970,24 @@
           <div class="extra-layout section-content">
             <header class="extra-heading">
               <p class="section-kicker">Project breakdown</p>
-              <h2 id="extra-title" tabindex="-1" data-extra-project-title>Surreal Landscape — decisions and proof</h2>
+              <h2 id="extra-title" tabindex="-1" data-extra-project-title>Surreal Landscape Prototype</h2>
             </header>
 
             <div
               class="extra-workspace"
               data-extra-carousel
               data-extra-project-panel="project-1"
-              data-extra-project-title="Surreal Landscape — decisions and proof"
+              data-extra-project-title="Surreal Landscape Prototype"
             >
               <header class="extra-workspace__toolbar">
                 <div class="extra-project-switcher" role="group" aria-label="Project deep dives">
                   <button type="button" aria-pressed="true" data-extra-project-select="project-1">
                     <span>01</span>
-                    <span><strong>Surreal Landscape</strong><small>World systems + WebGPU delivery</small></span>
+                    <span><strong>Surreal Landscape</strong><small>Rendering, simulation, and WebGPU</small></span>
                   </button>
                   <button type="button" aria-pressed="false" data-extra-project-select="project-2">
                     <span>02</span>
-                    <span><strong>Cave Map Workshop</strong><small>Runtime authoring + gameplay</small></span>
+                    <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
                   </button>
                 </div>
 
@@ -1009,14 +1012,15 @@
                   data-extra-index="0"
                 >
                   <div class="extra-hero-copy">
-                    <p class="extra-slide__eyebrow">Technical art · rendering · performance</p>
+                    <p class="extra-slide__eyebrow">Solo project · rendering · browser performance</p>
                     <h3>Surreal Landscape Prototype</h3>
                     <p class="extra-slide__lead">
-                      A quiet rolling-ball meadow where movement reveals the
-                      rendering work: grass bends, trails remain, clouds shade
-                      the hills, and wandering forms cross the horizon. I built
-                      the gameplay and visual systems together so every effect
-                      responds to the same world.
+                      Surreal Landscape is a solo project that combines GPU
+                      rendering, world streaming, interaction, and gameplay in
+                      one continuously moving scene. I carried the complete
+                      visual feature set into WebGPU, built a dedicated browser
+                      profile, and qualified the production release with
+                      repeatable tests.
                     </p>
                     <a
                       class="button button--primary extra-build-jump"
@@ -1030,8 +1034,8 @@
                   <dl class="extra-meta">
                     <div><dt>Role</dt><dd>Solo developer and technical artist</dd></div>
                     <div><dt>Stack</dt><dd>Unity 6 · C# · HLSL · GPU compute</dd></div>
-                    <div><dt>Core problem</dt><dd>A rich world with fixed runtime budgets</dd></div>
-                    <div><dt>Delivery</dt><dd>Desktop Vulkan · measured WebGPU release</dd></div>
+                    <div><dt>Main challenge</dt><dd>Stream a dense reactive scene within fixed runtime budgets</dd></div>
+                    <div><dt>Result</dt><dd>Complete visual feature set retained in a measured WebGPU release</dd></div>
                   </dl>
                 </article>
 
@@ -1045,21 +1049,22 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>01 · World architecture</p>
-                    <h3>The world feels endless because every system knows its limit.</h3>
+                    <p>01 · Bounded world streaming</p>
+                    <h3>Fixed budgets support continuous travel in every direction.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      I built the landscape from deterministic world data and
-                      small moving working sets. The player can travel in any
-                      direction while terrain, collision, vegetation, and
-                      encounters reuse a controlled amount of memory and work.
+                      I generate the landscape from deterministic world
+                      coordinates and move limited working sets with the
+                      player. Terrain meshes, collision tiles, grass data, and
+                      wandering encounters reuse fixed pools instead of
+                      accumulating as the player travels.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>One surface</strong><span>Rendering, collision, grass, and wandering actors sample the same terrain definition.</span></li>
-                      <li><strong>Streaming</strong><span>Only the useful area around the player stays detailed and physically active.</span></li>
-                      <li><strong>Continuity</strong><span>Old coverage remains until its replacement is ready, avoiding holes during fast travel.</span></li>
-                      <li><strong>Ownership</strong><span>Tiles, actors, buffers, and collision all have explicit reusable budgets.</span></li>
+                      <li><strong>Shared height field</strong><span>Terrain, collision, grass, and wandering actors sample the same surface definition.</span></li>
+                      <li><strong>Active area</strong><span>Only the required range around the player stays detailed and physically active.</span></li>
+                      <li><strong>Streaming handoff</strong><span>Existing coverage stays active until replacement tiles are ready, preventing gaps during fast travel.</span></li>
+                      <li><strong>Fixed pools</strong><span>Tiles, actors, buffers, and collision reuse defined capacities.</span></li>
                     </ul>
                   </div>
                 </article>
@@ -1074,27 +1079,26 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>02 · Rendering handoff</p>
-                    <h3>One grass system carries the image from individual blades to the horizon.</h3>
+                    <p>02 · Grass rendering</p>
+                    <h3>Three GPU-driven detail levels render dense grass from the player to the horizon.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Dense nearby blades and distant terrain are different
-                      representations of the same meadow. I made them share
-                      placement, lighting, wind, trails, and atmosphere so the
-                      change in geometry does not reveal the edge of the
-                      system.
+                      A compute shader culls hidden blades and assigns visible
+                      grass to close, middle, or distant geometry. Beyond the
+                      blade range, the terrain shader continues the same
+                      distribution, lighting, wind, trails, and atmosphere to
+                      remove the visible edge around the rendered grass.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>GPU selection</strong><span>Compute work rejects hidden grass and assigns the useful geometry level before drawing.</span></li>
-                      <li><strong>Three draw paths</strong><span>Close, middle, and distant blades spend detail where it changes the image.</span></li>
-                      <li><strong>Physical wind</strong><span>Pressure fields change blade posture and normals instead of painting motion over the color.</span></li>
-                      <li><strong>Virtual canopy</strong><span>The terrain continues the same material response after real blades fade.</span></li>
+                      <li><strong>Compute culling</strong><span>The GPU rejects hidden blades and assigns the required geometry level before drawing.</span></li>
+                      <li><strong>Three indirect draws</strong><span>Close, middle, and distant blades use separate geometry budgets.</span></li>
+                      <li><strong>Blade wind</strong><span>Pressure fields change blade position, posture, and normals rather than shifting color alone.</span></li>
+                      <li><strong>Terrain handoff</strong><span>The ground shader continues the grass response after full blade geometry ends.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      The visible grass ring disappeared only after I stopped
-                      treating the terrain as unrelated ground and made it the
-                      far representation of the same canopy.
+                      The terrain handoff removed the visible grass ring
+                      without extending full blade geometry into the distance.
                     </p>
                   </div>
                 </article>
@@ -1109,27 +1113,26 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>03 · World interaction</p>
-                    <h3>Movement leaves a physical memory in the landscape.</h3>
+                    <p>03 · Persistent interaction</p>
+                    <h3>Fast movement produces continuous grass trails that recover over time.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      The ball bends grass at first contact, even during fast
-                      movement, then leaves a directional trail that gradually
-                      stands back up. Only touched areas persist, so the effect
-                      can outlive the camera without allocating an entire
-                      world-sized texture.
+                      Swept sphere contact bends blades immediately and fills
+                      gaps between movement samples. Sparse CPU pages retain
+                      only touched areas, then upload directional trail data to
+                      a fixed 8 MB GPU atlas so trails remain after leaving the
+                      camera view.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Immediate response</strong><span>A swept contact test closes the visual gap before persistent data reaches the GPU.</span></li>
-                      <li><strong>Sparse history</strong><span>Memory exists only for grass the player or a wandering ball has touched.</span></li>
-                      <li><strong>Dimensional result</strong><span>Pressed blades change shape, direction, normals, and distant relief—not just color.</span></li>
-                      <li><strong>Recovery</strong><span>One timed envelope restores geometry, lighting, wind authority, and memory ownership.</span></li>
+                      <li><strong>Swept contact</strong><span>Continuous collision closes gaps between fast movement samples.</span></li>
+                      <li><strong>Sparse storage</strong><span>Trail memory exists only for grass touched by the player or a wandering ball.</span></li>
+                      <li><strong>Geometry response</strong><span>Pressed blades change position, direction, normals, and distant surface relief.</span></li>
+                      <li><strong>Timed recovery</strong><span>Grass returns to its original shape before the system releases its stored trail data.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      A bounded, fair upload schedule keeps the nearest contact
-                      responsive without allowing trail updates to take over a
-                      browser frame.
+                      Trail uploads prioritize the nearest contact and use a
+                      fixed per-frame limit to protect the browser frame budget.
                     </p>
                   </div>
                 </article>
@@ -1144,26 +1147,26 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>04 · Visual cohesion</p>
-                    <h3>The sky is part of the world system, not a backdrop.</h3>
+                    <p>04 · Volumetric clouds and lighting</p>
+                    <h3>Raymarched clouds, projected shadows, and shared lighting stay consistent from every view.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      I replaced flat cloud cards with camera-independent
-                      volumes and connected their light and shadows to the same
-                      sun used by the terrain, grass, atmosphere, balls, and
-                      meadow effects.
+                      I replaced flat cloud cards with bounded 3D volumes. Up
+                      to 64 clouds render through one procedural draw, while a
+                      compute-generated shadow field moves their shade across
+                      grass, terrain, balls, and meadow effects.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Real volume</strong><span>Raymarched forms keep their shape and parallax as the camera moves around them.</span></li>
-                      <li><strong>One submission</strong><span>A compact instance set renders the full cloud field through one procedural draw.</span></li>
-                      <li><strong>Shared shadows</strong><span>One GPU-generated field moves cloud shade across every world material.</span></li>
-                      <li><strong>One light source</strong><span>Warm highlights, cool shade, sky, and atmosphere agree from any view.</span></li>
+                      <li><strong>3D volume</strong><span>Raymarched density preserves cloud form and parallax as the camera moves.</span></li>
+                      <li><strong>Single draw</strong><span>A compact instance buffer renders the complete cloud field in one procedural submission.</span></li>
+                      <li><strong>Projected shadows</strong><span>A GPU-generated field applies cloud shade to every world material.</span></li>
+                      <li><strong>Shared sun</strong><span>Clouds, terrain, grass, sky, atmosphere, and actors use the same directional light.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      A cloud that vanished only at the centre of a gameplay
-                      orbit turned out to be a signed projection mismatch—not
-                      a density or visual-tuning problem.
+                      A cloud disappeared at the centre of the camera orbit
+                      because of a signed projection error. Correcting the
+                      coordinate conversion fixed the view-dependent failure.
                     </p>
                   </div>
                 </article>
@@ -1178,28 +1181,28 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>05 · Browser product</p>
-                    <h3>The WebGPU release keeps the project’s reason for existing.</h3>
+                    <p>05 · WebGPU release</p>
+                    <h3>The browser build retains the complete visual system and meets its measured performance targets.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Moving this GPU-heavy scene into a browser exposed a
-                      different set of costs: single-threaded managed work,
-                      first-use pipelines, memory growth, presentation timing,
-                      and higher submission overhead. I built a separate
-                      production profile around those constraints instead of
-                      stripping out the defining visuals.
+                      WebGPU changed the costs of managed code, first-use
+                      pipelines, memory growth, frame presentation, and GPU
+                      submissions. I built dedicated browser rendering, pacing,
+                      memory, and scheduling profiles while keeping the native
+                      cloud path and every defining scene feature.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Separate profiles</strong><span>Desktop quality stays protected while the browser owns its renderer, pacing, memory, and schedules.</span></li>
-                      <li><strong>Prepared first use</strong><span>The real scene warms its shaders, buffers, terrain, collision, and pools before control begins.</span></li>
-                      <li><strong>Bounded work</strong><span>Streaming, uploads, collision, particles, and diagnostics each have explicit release behavior.</span></li>
-                      <li><strong>Qualification</strong><span>An automated browser harness measures workload, cadence, memory, errors, and repeatable scenarios.</span></li>
+                      <li><strong>Platform profiles</strong><span>Desktop and browser builds use separate renderers, pacing rules, memory settings, and schedules.</span></li>
+                      <li><strong>First-use warmup</strong><span>The production scene prepares shaders, buffers, terrain, collision, and pools before control begins.</span></li>
+                      <li><strong>Frame budgets</strong><span>Streaming, uploads, collision, particles, and diagnostics each have explicit limits.</span></li>
+                      <li><strong>Browser benchmarks</strong><span>An automated harness measures workload, cadence, memory, errors, and repeatable scenarios.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      I kept the native cloud path after it met the stress
-                      target; a lower-resolution reconstruction would have
-                      added ghosting risk without solving a measured problem.
+                      The full-resolution native cloud path met the stress
+                      target, so I kept it. A lower-resolution reconstruction
+                      would have introduced ghosting without solving a measured
+                      bottleneck.
                     </p>
                   </div>
                 </article>
@@ -1214,8 +1217,8 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>Release evidence</p>
-                    <h3>Measured as a product, not judged inside the editor.</h3>
+                    <p>06 · Release evidence</p>
+                    <h3>Automated tests and browser benchmarks verify the complete release.</h3>
                   </header>
                   <div class="extra-proof-body">
                     <dl class="extra-evidence-grid">
@@ -1225,10 +1228,10 @@
                       <div><dt>100.143 → 8.578 ms</dt><dd>worst collision-streaming frame before and after the fix</dd></div>
                     </dl>
                     <p>
-                      Recorded at 960 × 600 on a Ryzen 7 3700X and RTX
-                      3070. Each cold workload ran three times, with browser
-                      cadence reported separately from the time Unity needed
-                      to prepare a frame.
+                      These results were recorded at 960 × 600 on a Ryzen 7
+                      3700X and RTX 3070. Each cold workload ran three times.
+                      Browser cadence is reported separately from the time
+                      Unity needed to prepare a frame.
                     </p>
                   </div>
                 </article>
@@ -1249,18 +1252,18 @@
               class="extra-workspace"
               data-extra-carousel
               data-extra-project-panel="project-2"
-              data-extra-project-title="Cave Map Workshop — decisions and proof"
+              data-extra-project-title="Cave Map Workshop"
               hidden
             >
               <header class="extra-workspace__toolbar">
                 <div class="extra-project-switcher" role="group" aria-label="Project deep dives">
                   <button type="button" aria-pressed="false" data-extra-project-select="project-1">
                     <span>01</span>
-                    <span><strong>Surreal Landscape</strong><small>World systems + WebGPU delivery</small></span>
+                    <span><strong>Surreal Landscape</strong><small>Rendering, simulation, and WebGPU</small></span>
                   </button>
                   <button type="button" aria-pressed="true" data-extra-project-select="project-2">
                     <span>02</span>
-                    <span><strong>Cave Map Workshop</strong><small>Runtime authoring + gameplay</small></span>
+                    <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
                   </button>
                 </div>
 
@@ -1285,14 +1288,17 @@
                   data-extra-index="0"
                 >
                   <div class="extra-hero-copy">
-                    <p class="extra-slide__eyebrow">Runtime tools · procedural generation · gameplay</p>
+                    <p class="extra-slide__eyebrow">Team assignment · runtime tools · technical art</p>
                     <h3>Cave Map Workshop</h3>
                     <p class="extra-slide__lead">
-                      Moving the workflow into runtime meant treating
-                      authoring, generation, and gameplay as one product. The
-                      map document survives each mode change, generated
-                      resources have explicit owners, and the same rules govern
-                      what the user draws and what the game builds.
+                      Cave Map Workshop began as a team game for my
+                      second-year final assignment at Tiltan. I owned the
+                      system design, external map-making tool, shaders, and
+                      visual effects. The original game included a preview
+                      level. I wanted the map-making tool itself in the playable
+                      build, so I rebuilt it for runtime. The browser version
+                      now supports the complete authoring, generation, and
+                      playtesting loop.
                     </p>
                     <a
                       class="button button--primary extra-build-jump"
@@ -1304,10 +1310,10 @@
                     </a>
                   </div>
                   <dl class="extra-meta">
-                    <div><dt>Role</dt><dd>Developer · systems, tools, and delivery</dd></div>
+                    <div><dt>My role</dt><dd>System design, map tools, shaders, and visual effects</dd></div>
                     <div><dt>Stack</dt><dd>Unity 6 · C# · runtime NavMesh · WebGPU</dd></div>
-                    <div><dt>Core problem</dt><dd>Turn editor infrastructure into a player-facing product</dd></div>
-                    <div><dt>Result</dt><dd>Author → validate → generate → play → revise</dd></div>
+                    <div><dt>Original project</dt><dd>Second-year team assignment at Tiltan</dd></div>
+                    <div><dt>Runtime result</dt><dd>Author → validate → generate → play → revise</dd></div>
                   </dl>
                 </article>
 
@@ -1321,25 +1327,27 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>01 · Product migration</p>
-                    <h3>The useful rules were trapped inside a tool that could never ship.</h3>
+                    <p>01 · Runtime conversion</p>
+                    <h3>The original map tool depended on Unity editor APIs.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      The mature map painter was a roughly 5,000-line Unity
-                      editor window. Its undo, asset saving, scene mutation,
-                      generated meshes, and direct project references all
-                      depended on development-only APIs.
+                      The external map tool was a roughly 5,000-line Unity
+                      editor window. Undo, asset saving, scene changes,
+                      generated mesh assets, and direct project references all
+                      used editor-only systems that cannot run in a player or
+                      browser build.
                     </p>
                     <p>
-                      I kept the proven rules and generator as the authority,
-                      then rebuilt everything around them for runtime use.
+                      I kept the established map rules and procedural generator,
+                      then replaced the surrounding editor infrastructure with
+                      runtime systems.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Portable document</strong><span>Maps store stable tile, theme, and enemy identities instead of Unity object references.</span></li>
-                      <li><strong>Runtime history</strong><span>Gestures and settings become bounded, reversible transactions.</span></li>
-                      <li><strong>One rule set</strong><span>Editing, validation, and generation agree on what makes a legal map.</span></li>
-                      <li><strong>Explicit lifetime</strong><span>Generated geometry, materials, and navigation are owned and released before rebuilding.</span></li>
+                      <li><strong>Portable document</strong><span>Maps store stable tile, theme, and enemy IDs instead of Unity object references.</span></li>
+                      <li><strong>Runtime undo</strong><span>Drawing gestures and setting changes become bounded, reversible transactions.</span></li>
+                      <li><strong>Shared validation</strong><span>Editing and generation enforce the same legal map rules.</span></li>
+                      <li><strong>Resource ownership</strong><span>The runtime releases generated geometry, materials, and navigation before rebuilding.</span></li>
                     </ul>
                   </div>
                 </article>
@@ -1354,28 +1362,28 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>02 · Authoring experience</p>
-                    <h3>The interface explains the rules while the player is building.</h3>
+                    <p>02 · Runtime map authoring</p>
+                    <h3>The workshop combines cave layout, gameplay placement, validation, and build status.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Cave shape, gameplay markers, and wall-mounted functions
-                      can share a cell, but the user should not need to think
-                      like the data model. The canvas makes active tools,
-                      topology, legal placement, warnings, and build readiness
-                      visible at the point of editing.
+                      The map stores cave shape, gameplay markers, and
+                      wall-mounted functions as separate layers. I designed the
+                      canvas to show the active tool, legal placement,
+                      topology, selected settings, warnings, and build
+                      readiness while editing.
                     </p>
                     <ul class="extra-detail-grid extra-detail-grid--authoring">
-                      <li><strong>Layered meaning</strong><span>Cave shape, gameplay objects, and wall functions remain independently editable.</span></li>
-                      <li><strong>Reliable gestures</strong><span>A fast drag fills gaps and becomes one understandable undo step.</span></li>
-                      <li><strong>Topology protection</strong><span>Unique starts, connected finishes, attached pits, and encounter groups survive every tool.</span></li>
-                      <li><strong>Actionable feedback</strong><span>Errors point to affected cells; warnings inform without blocking a playable map.</span></li>
+                      <li><strong>Layered editing</strong><span>Cave shape, gameplay objects, and wall functions remain independently editable.</span></li>
+                      <li><strong>Continuous gestures</strong><span>Fast drags fill skipped cells and commit as one undo step.</span></li>
+                      <li><strong>Topology rules</strong><span>Every tool preserves one player start, connected finish zones, attached pits, and configured encounter groups.</span></li>
+                      <li><strong>Clear validation</strong><span>Errors identify affected cells, while warnings remain visible without blocking a valid build.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      <strong>64 × 64, one UI mesh.</strong> The canvas batches
-                      4,096 cells and their symbols, outlines, previews, and
-                      feedback instead of maintaining one interface object per
-                      cell.
+                      <strong>4,096 cells in one custom UI mesh.</strong> The 64
+                      × 64 canvas batches its symbols, outlines, previews, and
+                      validation feedback instead of creating thousands of
+                      interface objects.
                     </p>
                   </div>
                 </article>
@@ -1390,23 +1398,24 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>03 · From plan to play</p>
-                    <h3>One action carries authored intent into the real game.</h3>
+                    <p>03 · Runtime generation</p>
+                    <h3>Build and Play turns the authored map into the complete combat level.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <ol class="runtime-pipeline" aria-label="Runtime cave generation pipeline">
-                      <li><strong>Validate</strong><span>Freeze the document and confirm the cave is ready.</span></li>
-                      <li><strong>Shape</strong><span>Build floors, curved walls, roof, pits, and repeatable seeded detail.</span></li>
-                      <li><strong>Place</strong><span>Add the player start, enemies, finish, pools, wind, and lamps.</span></li>
-                      <li><strong>Collide</strong><span>Build simpler, player-safe collision separately from the detailed visuals.</span></li>
-                      <li><strong>Navigate</strong><span>Build walkable routes for ground and flying enemies using NavMesh.</span></li>
-                      <li><strong>Play</strong><span>Connect the combat systems and enter the finished cave.</span></li>
+                      <li><strong>Validate</strong><span>Check a stable copy of the map before generation begins.</span></li>
+                      <li><strong>Shape</strong><span>Generate floors, curved walls, a roof, pits, and repeatable seeded detail.</span></li>
+                      <li><strong>Place</strong><span>Add the player start, enemies, finish, healing pools, wind hazards, and guide lamps.</span></li>
+                      <li><strong>Collide</strong><span>Generate player-safe collision separately from the detailed cave meshes.</span></li>
+                      <li><strong>Navigate</strong><span>Build ground and flying enemy routes with runtime NavMesh.</span></li>
+                      <li><strong>Play</strong><span>Connect the existing combat systems and enter the generated cave.</span></li>
                     </ol>
                     <p class="extra-callout">
-                      The build runs in measured stages so the browser can keep
-                      reporting honest progress. The result is the existing
-                      combat loop—not a disconnected preview—with reset,
-                      enemies, pickups, hazards, completion, and return to edit.
+                      Generation runs in measured stages and reports progress
+                      in the browser. The generated level uses the game’s
+                      movement, spells, enemies, pickups, hazards, death,
+                      completion, and reset systems. Players can return to the
+                      workshop, edit the same map, and rebuild it.
                     </p>
                   </div>
                 </article>
@@ -1421,22 +1430,22 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>04 · Browser delivery</p>
-                    <h3>The browser build is treated as a product configuration.</h3>
+                    <p>04 · Browser release</p>
+                    <h3>A dedicated WebGPU build supports runtime generation, persistence, and repeated playtesting.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Runtime generation, pointer lock, persistent documents,
-                      memory growth, compressed Unity files, and GPU support all
-                      behave differently in a browser. The WebGPU profile owns
-                      those constraints explicitly and refuses to ship in an
-                      unintended fallback mode.
+                      Browser delivery required more than changing Unity’s
+                      target platform. I added capability checks, focus and
+                      pointer-lock handling, persistent map storage, resource
+                      cleanup, memory limits, compressed delivery, and build
+                      validation.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Capability gate</strong><span>Secure context, desktop input, WebGPU, and a suitable adapter are checked before the game downloads.</span></li>
-                      <li><strong>Honest support</strong><span>Unsupported setups get a clear stop instead of a silent graphics downgrade.</span></li>
-                      <li><strong>Browser lifecycle</strong><span>Focus, pointer lock, pause UI, storage sync, and rebuild cleanup have explicit owners.</span></li>
-                      <li><strong>Delivery contract</strong><span>The release validates renderer settings, memory, caching, Brotli headers, and required assets before building.</span></li>
+                      <li><strong>WebGPU preflight</strong><span>The page checks secure context, desktop input, WebGPU, and a suitable adapter before downloading the game.</span></li>
+                      <li><strong>Clear support boundary</strong><span>Unsupported setups receive an explanation instead of loading an unintended graphics fallback.</span></li>
+                      <li><strong>Browser session</strong><span>Focus, pointer lock, pause UI, storage sync, and rebuild cleanup have explicit runtime owners.</span></li>
+                      <li><strong>Release validation</strong><span>The build checks renderer settings, memory, caching, Brotli headers, and required assets before shipping.</span></li>
                     </ul>
                   </div>
                 </article>
@@ -1451,8 +1460,8 @@
                   hidden
                 >
                   <header class="extra-slide__heading">
-                    <p>Reliability evidence</p>
-                    <h3>The test was whether the complete loop could survive rebuilding.</h3>
+                    <p>05 · Reliability evidence</p>
+                    <h3>Tests verify editing, generation, gameplay, cleanup, and rebuilding.</h3>
                   </header>
                   <div class="extra-proof-body">
                     <dl class="extra-evidence-grid">
@@ -1462,10 +1471,9 @@
                       <div><dt>WebGPU only</dt><dd>release validation rejects unintended WebGL output before shipping</dd></div>
                     </dl>
                     <p>
-                      Runtime navigation still performs meaningful main-thread
-                      work. The workshop therefore checks content budgets before
-                      generation and reports progress through the stages instead
-                      of hiding that constraint.
+                      Runtime NavMesh baking remains a meaningful synchronous
+                      generation cost. The workshop checks map complexity
+                      before building and reports progress through each stage.
                     </p>
                   </div>
                 </article>
