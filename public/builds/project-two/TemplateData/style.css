@@ -40,7 +40,7 @@ button, a {
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, .16),
     inset -1px -1px 0 rgba(0, 0, 0, .28);
-  transform: translate3d(0, -6px, 0);
+  transform: translate3d(0, 0, 0);
   transition:
     background-color 190ms ease,
     border-color 190ms ease,
@@ -50,11 +50,11 @@ button, a {
 
 button::before, a::before {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   top: 0;
   left: 0;
-  width: calc(100% + 6px);
-  height: calc(100% + 6px);
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
   background:
     linear-gradient(45deg, transparent 0 calc(50% - 1px), var(--key-edge) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px) 100%) 100% 0 / 6px 6px no-repeat,
     linear-gradient(var(--key-edge), var(--key-edge)) 100% 6px / 2px calc(100% - 6px) no-repeat,
@@ -65,7 +65,7 @@ button::before, a::before {
     linear-gradient(45deg, var(--key-side-bottom) 0 calc(50% - 1px), var(--key-edge) calc(50% - 1px) calc(50% + 1px), var(--key-side-right) calc(50% + 1px) 100%) 100% 100% / 6px 6px no-repeat;
   clip-path: polygon(calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px), calc(100% - 6px) calc(100% - 6px));
   content: "";
-  filter: none;
+  filter: drop-shadow(1px 0 0 var(--key-edge)) drop-shadow(-1px 0 0 var(--key-edge)) drop-shadow(0 1px 0 var(--key-edge)) drop-shadow(0 -1px 0 var(--key-edge));
   pointer-events: none;
   transition: clip-path 230ms cubic-bezier(.22, .78, .24, 1), filter 230ms cubic-bezier(.22, .78, .24, 1), transform 230ms cubic-bezier(.22, .78, .24, 1);
 }
@@ -76,13 +76,13 @@ button:hover, a:hover {
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, .14),
     inset -1px -1px 0 rgba(0, 0, 0, .24);
-  transform: translate3d(2px, -4px, 0);
+  transform: translate3d(2px, 2px, 0);
 }
-button:hover::before, a:hover::before { clip-path: polygon(calc(100% - 4px) 2px, 100% 6px, 100% 100%, 6px 100%, 2px calc(100% - 4px), calc(100% - 4px) calc(100% - 4px)); transform: translate3d(-2px, -2px, 0); filter: none; }
+button:hover::before, a:hover::before { clip-path: polygon(calc(100% - 4px) 2px, 100% 6px, 100% 100%, 6px 100%, 2px calc(100% - 4px), calc(100% - 4px) calc(100% - 4px)); transform: translate3d(-2px, -2px, 0); filter: drop-shadow(1px 0 0 var(--key-edge)) drop-shadow(-1px 0 0 var(--key-edge)) drop-shadow(0 1px 0 var(--key-edge)) drop-shadow(0 -1px 0 var(--key-edge)); }
 button:active, a:active {
   z-index: 1;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, .32);
-  transform: translate3d(6px, 0, 0);
+  transform: translate3d(6px, 6px, 0);
 }
 button:active::before, a:active::before { clip-path: polygon(100% 6px, 100% 6px, 100% 100%, 6px 100%, 6px 100%, 100% 100%); transform: translate3d(-6px, -6px, 0); filter: none; }
 button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid #e6a66f; outline-offset: 2px; }
@@ -93,7 +93,7 @@ button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid
 h1, h2, p { margin-top: 0; }
 h1 { margin-bottom: 0; font-size: clamp(1.25rem, 2.2vw, 2rem); letter-spacing: .02em; }
 .eyebrow { margin-bottom: .18rem; color: #de8a4a; font-size: .7rem; font-weight: 800; letter-spacing: .16em; }
-.actions, .button-row { display: flex; gap: 0; flex-wrap: wrap; padding: 0 6px 0 0; }
+.actions, .button-row { display: flex; gap: 0; flex-wrap: wrap; padding: 0; }
 
 .stage {
   position: relative;

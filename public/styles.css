@@ -5549,7 +5549,7 @@ html:not(.js) .extra-step-tabs {
   box-shadow:
     inset 0.08rem 0.08rem 0 var(--control-highlight),
     inset -0.08rem -0.08rem 0 var(--control-shade);
-  transform: translate3d(0, calc(0rem - var(--control-depth)), 0);
+  transform: translate3d(0, 0, 0);
   transition:
     background-color 190ms ease,
     border-color 190ms ease,
@@ -5575,12 +5575,12 @@ html:not(.js) .extra-step-tabs {
 .section-rail a::before,
 .skip-link::before {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   top: 0;
   left: 0;
   display: block;
-  width: calc(100% + var(--control-depth));
-  height: calc(100% + var(--control-depth));
+  width: calc(100% + var(--control-depth) + var(--control-stroke));
+  height: calc(100% + var(--control-depth) + var(--control-stroke));
   transform: translate3d(0, 0, 0);
   background:
     linear-gradient(
@@ -5626,7 +5626,11 @@ html:not(.js) .extra-step-tabs {
     calc(100% - var(--control-depth)) calc(100% - var(--control-depth))
   );
   content: "";
-  filter: none;
+  filter:
+    drop-shadow(1px 0 0 var(--control-edge))
+    drop-shadow(-1px 0 0 var(--control-edge))
+    drop-shadow(0 1px 0 var(--control-edge))
+    drop-shadow(0 -1px 0 var(--control-edge));
   pointer-events: none;
   animation: none;
   transition:
@@ -5716,7 +5720,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-build-link {
-  margin: 0 var(--control-depth) 0 0;
+  margin: 0;
 }
 
 .project-build-link__icon,
@@ -5735,7 +5739,7 @@ html:not(.js) .extra-step-tabs {
 
 .gallery-pager {
   gap: 0;
-  padding: 0 0.38rem 0 0;
+  padding: 0;
   border-color: #0f3031;
   background: var(--gallery-surface);
 }
@@ -5844,7 +5848,7 @@ html:not(.js) .extra-step-tabs {
 .extra-step-tabs,
 .section-rail ol {
   gap: 0;
-  padding: 0 0.38rem 0 0;
+  padding: 0;
 }
 
 .project-tabs {
@@ -5858,7 +5862,7 @@ html:not(.js) .extra-step-tabs {
 
 .extra-carousel-controls {
   gap: 0;
-  padding: 0 0.38rem 0 0;
+  padding: 0;
   border-left: 0;
 }
 
@@ -5949,11 +5953,7 @@ html:not(.js) .extra-step-tabs {
       inset 0.06rem 0.06rem 0 var(--control-highlight),
       inset -0.06rem -0.06rem 0 var(--control-shade);
     z-index: 1;
-    transform: translate3d(
-      0.11rem,
-      calc(0.11rem - var(--control-depth)),
-      0
-    );
+    transform: translate3d(0.11rem, 0.11rem, 0);
   }
 
   .project-tab[aria-selected="true"]:hover,
@@ -5995,7 +5995,11 @@ html:not(.js) .extra-step-tabs {
         calc(100% - var(--control-depth) + 0.11rem)
     );
     transform: translate3d(-0.11rem, -0.11rem, 0);
-    filter: none;
+    filter:
+      drop-shadow(1px 0 0 var(--control-edge))
+      drop-shadow(-1px 0 0 var(--control-edge))
+      drop-shadow(0 1px 0 var(--control-edge))
+      drop-shadow(0 -1px 0 var(--control-edge));
   }
 }
 
@@ -6021,7 +6025,7 @@ html:not(.js) .extra-step-tabs {
   box-shadow:
     inset 0 0.12rem 0 var(--control-shade),
     inset 0 -0.04rem 0 var(--control-highlight);
-  transform: translate3d(var(--control-depth), 0, 0);
+  transform: translate3d(var(--control-depth), var(--control-depth), 0);
 }
 
 :is(
@@ -6056,14 +6060,14 @@ html:not(.js) .extra-step-tabs {
 }
 
 .skip-link:focus {
-  transform: translate3d(0, calc(0rem - var(--control-depth)), 0);
+  transform: translate3d(0, 0, 0);
 }
 
 .skip-link:focus:active {
   box-shadow:
     inset 0.08rem 0.1rem 0 rgba(15, 42, 44, 0.22),
     inset -0.03rem -0.04rem 0 rgba(255, 255, 255, 0.48);
-  transform: translate3d(var(--control-depth), 0, 0);
+  transform: translate3d(var(--control-depth), var(--control-depth), 0);
 }
 
 .gallery-pager button:disabled,
@@ -6072,7 +6076,7 @@ html:not(.js) .extra-step-tabs {
   box-shadow:
     inset 0.06rem 0.06rem 0 rgba(255, 255, 255, 0.25),
     inset -0.06rem -0.06rem 0 rgba(15, 42, 44, 0.2);
-  transform: translate3d(0, calc(0rem - var(--control-depth)), 0);
+  transform: translate3d(0, 0, 0);
   opacity: 0.58;
 }
 
@@ -6091,24 +6095,32 @@ html:not(.js) .extra-step-tabs {
 
 .intro-actions {
   gap: 0;
-  padding: 0 0.38rem 0 0;
+  padding: 0;
 }
 
 .contact-links {
   gap: 0;
-  padding: 0 0.38rem 0 0;
+  padding: 0;
 }
 
 .gallery-thumbnails {
   gap: 0;
-  padding-right: 0.38rem;
+  padding-right: 0;
   padding-bottom: 0;
 }
 
 .project-workspace,
 .extra-workspace {
-  overflow-x: clip;
-  overflow-y: visible;
+  overflow: visible;
+}
+
+.project-workspace.is-project-transitioning {
+  overflow: hidden;
+}
+
+.project-workspace:not(.is-project-transitioning)
+  .workspace-window[aria-hidden="true"] {
+  visibility: hidden;
 }
 
 @media (max-width: 24rem) {
