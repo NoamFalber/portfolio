@@ -28,7 +28,9 @@ button, a {
   --key-stroke: 1px;
   --key-edge-width: 1px;
   --key-depth: 7px;
+  --key-press: 4px;
   --key-motion: 320ms cubic-bezier(.2, .74, .22, 1);
+  --key-press-motion: 120ms cubic-bezier(.2, .82, .24, 1);
   position: relative;
   z-index: 1;
   min-height: 44px;
@@ -44,7 +46,7 @@ button, a {
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, .16),
     inset -1px -1px 0 rgba(0, 0, 0, .28);
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, calc(0px - var(--key-depth)), 0);
   transition:
     background-color 190ms ease,
     border-color 190ms ease,
@@ -79,15 +81,16 @@ button:hover, a:hover {
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, .14),
     inset -1px -1px 0 rgba(0, 0, 0, .24);
-  transform: translate3d(2px, 2px, 0);
+  transform: translate3d(2px, calc(0px - var(--key-depth) + 2px), 0);
 }
 button:hover::before, a:hover::before { clip-path: polygon(calc(100% - var(--key-depth) + 2px) 2px, 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, 2px calc(100% - var(--key-depth) + 2px), calc(100% - var(--key-depth) + 2px) calc(100% - var(--key-depth) + 2px)); transform: translate3d(-2px, -2px, 0); }
 button:active, a:active {
   z-index: 1;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, .32);
-  transform: translate3d(var(--key-depth), var(--key-depth), 0);
+  transform: translate3d(var(--key-press), calc(0px - var(--key-depth) + var(--key-press)), 0);
+  transition: background-color 90ms ease-out, border-color 90ms ease-out, box-shadow var(--key-press-motion), transform var(--key-press-motion);
 }
-button:active::before, a:active::before { clip-path: polygon(100% var(--key-depth), 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, var(--key-depth) 100%, 100% 100%); transform: translate3d(calc(0px - var(--key-depth)), calc(0px - var(--key-depth)), 0); }
+button:active::before, a:active::before { clip-path: polygon(calc(100% - var(--key-depth) + var(--key-press)) var(--key-press), 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, var(--key-press) calc(100% - var(--key-depth) + var(--key-press)), calc(100% - var(--key-depth) + var(--key-press)) calc(100% - var(--key-depth) + var(--key-press))); transform: translate3d(calc(0px - var(--key-press)), calc(0px - var(--key-press)), 0); transition: clip-path var(--key-press-motion), transform var(--key-press-motion); }
 button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid #e6a66f; outline-offset: 2px; }
 
 .shell { width: min(100vw, 1800px); margin: auto; padding: 14px clamp(10px, 2vw, 28px) 18px; }

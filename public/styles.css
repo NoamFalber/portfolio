@@ -5287,6 +5287,18 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
+@keyframes control-front-shine {
+  0%,
+  38% {
+    background-position: 190% 0;
+  }
+
+  68%,
+  100% {
+    background-position: -190% 0;
+  }
+}
+
 /* Physical controls: close-set boombox keys with molded diagonal casings. */
 
 .button,
@@ -5311,7 +5323,10 @@ html:not(.js) .extra-step-tabs {
   --control-stroke: 1px;
   --control-edge-width: 1px;
   --control-depth: 0.44rem;
+  --control-hover-travel: 0.11rem;
+  --control-press-travel: 0.24rem;
   --control-motion: 320ms cubic-bezier(0.2, 0.74, 0.22, 1);
+  --control-press-motion: 120ms cubic-bezier(0.2, 0.82, 0.24, 1);
   --control-highlight: rgba(255, 255, 255, 0.48);
   --control-shade: rgba(15, 42, 44, 0.22);
   position: relative;
@@ -5329,7 +5344,7 @@ html:not(.js) .extra-step-tabs {
   box-shadow:
     inset 0.08rem 0.08rem 0 var(--control-highlight),
     inset -0.08rem -0.08rem 0 var(--control-shade);
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, calc(0rem - var(--control-depth)), 0);
   transition:
     background-color 190ms ease,
     border-color 190ms ease,
@@ -5446,6 +5461,34 @@ html:not(.js) .extra-step-tabs {
   --control-shade: rgba(65, 24, 15, 0.24);
 }
 
+.button--primary::after,
+.about-copy .button::after,
+.project-build-link:not(:disabled)::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image: linear-gradient(
+    108deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.44) 48%,
+    rgba(255, 246, 224, 0.7) 50%,
+    rgba(255, 255, 255, 0.44) 52%,
+    transparent 60%
+  );
+  background-position: 190% 0;
+  background-size: 260% 100%;
+  content: "";
+  pointer-events: none;
+  animation: control-front-shine 3.2s ease-in-out infinite;
+}
+
+.section-page[aria-hidden="true"] .button--primary::after,
+.section-page[aria-hidden="true"] .about-copy .button::after,
+.section-page[aria-hidden="true"] .project-build-link::after,
+.workspace-window[aria-hidden="true"] .project-build-link::after {
+  animation-play-state: paused;
+}
+
 .button--ink {
   --control-face: var(--ink);
   --control-face-hover: var(--green-dark);
@@ -5534,6 +5577,11 @@ html:not(.js) .extra-step-tabs {
 
 .gallery-thumbnails button {
   min-height: 3.3rem;
+}
+
+.gallery-thumbnails button:only-child {
+  width: min(13rem, 100%);
+  justify-self: start;
 }
 
 .build-player__external {
@@ -5697,12 +5745,15 @@ html:not(.js) .extra-step-tabs {
 
 .skip-link {
   --control-depth: 0.44rem;
+  --control-hover-travel: 0.11rem;
+  --control-press-travel: 0.24rem;
   --control-side-right: #a9b5ae;
   --control-side-bottom: #6d8380;
   --control-edge: #132f33;
   --control-stroke: 1px;
   --control-edge-width: 1px;
   --control-motion: 320ms cubic-bezier(0.2, 0.74, 0.22, 1);
+  --control-press-motion: 120ms cubic-bezier(0.2, 0.82, 0.24, 1);
   border: var(--control-stroke) solid var(--control-edge);
   border-radius: 0;
   box-shadow:
@@ -5738,7 +5789,11 @@ html:not(.js) .extra-step-tabs {
       inset 0.06rem 0.06rem 0 var(--control-highlight),
       inset -0.06rem -0.06rem 0 var(--control-shade);
     z-index: 1;
-    transform: translate3d(0.11rem, 0.11rem, 0);
+    transform: translate3d(
+      var(--control-hover-travel),
+      calc(0rem - var(--control-depth) + var(--control-hover-travel)),
+      0
+    );
   }
 
   .project-tab[aria-selected="true"]:hover,
@@ -5771,15 +5826,21 @@ html:not(.js) .extra-step-tabs {
       .section-rail a
     ):hover::before {
     clip-path: polygon(
-      calc(100% - var(--control-depth) + 0.11rem) 0.11rem,
+      calc(100% - var(--control-depth) + var(--control-hover-travel))
+        var(--control-hover-travel),
       100% var(--control-depth),
       100% 100%,
       var(--control-depth) 100%,
-      0.11rem calc(100% - var(--control-depth) + 0.11rem),
-      calc(100% - var(--control-depth) + 0.11rem)
-        calc(100% - var(--control-depth) + 0.11rem)
+      var(--control-hover-travel)
+        calc(100% - var(--control-depth) + var(--control-hover-travel)),
+      calc(100% - var(--control-depth) + var(--control-hover-travel))
+        calc(100% - var(--control-depth) + var(--control-hover-travel))
     );
-    transform: translate3d(-0.11rem, -0.11rem, 0);
+    transform: translate3d(
+      calc(0rem - var(--control-hover-travel)),
+      calc(0rem - var(--control-hover-travel)),
+      0
+    );
   }
 }
 
@@ -5805,7 +5866,17 @@ html:not(.js) .extra-step-tabs {
   box-shadow:
     inset 0 0.12rem 0 var(--control-shade),
     inset 0 -0.04rem 0 var(--control-highlight);
-  transform: translate3d(var(--control-depth), var(--control-depth), 0);
+  transform: translate3d(
+    var(--control-press-travel),
+    calc(0rem - var(--control-depth) + var(--control-press-travel)),
+    0
+  );
+  transition:
+    background-color 90ms ease-out,
+    border-color 90ms ease-out,
+    box-shadow var(--control-press-motion),
+    color 90ms ease-out,
+    transform var(--control-press-motion);
 }
 
 :is(
@@ -5824,18 +5895,24 @@ html:not(.js) .extra-step-tabs {
     .skip-link
   ):active::before {
   clip-path: polygon(
-    100% var(--control-depth),
+    calc(100% - var(--control-depth) + var(--control-press-travel))
+      var(--control-press-travel),
     100% var(--control-depth),
     100% 100%,
     var(--control-depth) 100%,
-    var(--control-depth) 100%,
-    100% 100%
+    var(--control-press-travel)
+      calc(100% - var(--control-depth) + var(--control-press-travel)),
+    calc(100% - var(--control-depth) + var(--control-press-travel))
+      calc(100% - var(--control-depth) + var(--control-press-travel))
   );
   transform: translate3d(
-    calc(0rem - var(--control-depth)),
-    calc(0rem - var(--control-depth)),
+    calc(0rem - var(--control-press-travel)),
+    calc(0rem - var(--control-press-travel)),
     0
   );
+  transition:
+    clip-path var(--control-press-motion),
+    transform var(--control-press-motion);
 }
 
 .skip-link:focus {
@@ -5846,7 +5923,11 @@ html:not(.js) .extra-step-tabs {
   box-shadow:
     inset 0.08rem 0.1rem 0 rgba(15, 42, 44, 0.22),
     inset -0.03rem -0.04rem 0 rgba(255, 255, 255, 0.48);
-  transform: translate3d(var(--control-depth), var(--control-depth), 0);
+  transform: translate3d(
+    var(--control-press-travel),
+    var(--control-press-travel),
+    0
+  );
 }
 
 .gallery-pager button:disabled,
@@ -5866,7 +5947,7 @@ html:not(.js) .extra-step-tabs {
   box-shadow:
     inset 0.06rem 0.06rem 0 rgba(255, 255, 255, 0.25),
     inset -0.06rem -0.06rem 0 rgba(15, 42, 44, 0.2);
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, calc(0rem - var(--control-depth)), 0);
   opacity: 1;
 }
 
@@ -5880,13 +5961,76 @@ html:not(.js) .extra-step-tabs {
   padding: 0;
 }
 
+.intro-actions > .button,
+.intro-actions > .text-link {
+  min-height: 3.35rem;
+}
+
 .contact-links {
   gap: 0;
   padding: 0;
 }
 
+/* Keep control decks outside the bordered content stages. Their casing bottoms
+   meet the stage edge while the raised faces remain above it. */
+
 .project-workspace,
 .extra-workspace {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.project-toolbar,
+.build-window__toolbar,
+.extra-workspace__toolbar,
+.extra-step-tabs {
+  border: 0;
+  background: transparent;
+}
+
+.build-window__toolbar {
+  background: var(--project-surface);
+}
+
+.project-panel,
+.build-player,
+.extra-stage {
+  border: 1.5px solid var(--ink);
+  box-shadow: 0.42rem 0.42rem 0 var(--shadow);
+}
+
+.extra-workspace {
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.extra-workspace__toolbar {
+  grid-row: 1;
+}
+
+.extra-step-tabs {
+  grid-row: 2;
+}
+
+.extra-stage {
+  grid-row: 3;
+}
+
+.project-workspace,
+.extra-workspace,
+.project-toolbar,
+.project-tabs,
+.gallery-heading,
+.gallery-pager,
+.gallery-controls,
+.gallery-thumbnails,
+.build-window__toolbar,
+.extra-workspace__toolbar,
+.extra-project-switcher,
+.extra-carousel-controls,
+.extra-step-tabs,
+.section-rail,
+.section-rail ol {
   overflow: visible;
 }
 

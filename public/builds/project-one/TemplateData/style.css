@@ -18,7 +18,9 @@ body { padding: 0; margin: 0 }
   --key-stroke: 1px;
   --key-edge-width: 1px;
   --key-depth: 7px;
+  --key-press: 4px;
   --key-motion: 320ms cubic-bezier(.2, .74, .22, 1);
+  --key-press-motion: 120ms cubic-bezier(.2, .82, .24, 1);
   box-sizing: border-box;
   appearance: none;
   position: relative;
@@ -35,7 +37,7 @@ body { padding: 0; margin: 0 }
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, 0.2),
     inset -1px -1px 0 rgba(0, 0, 0, 0.25);
-  transform: translate(0, 0);
+  transform: translate(0, calc(0px - var(--key-depth)));
   transition: box-shadow var(--key-motion), transform var(--key-motion), background-color 190ms ease;
 }
 #unity-fullscreen-button::before {
@@ -63,14 +65,15 @@ body { padding: 0; margin: 0 }
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, 0.18),
     inset -1px -1px 0 rgba(0, 0, 0, 0.22);
-  transform: translate(2px, 2px);
+  transform: translate(2px, calc(0px - var(--key-depth) + 2px));
 }
 #unity-fullscreen-button:hover::before { clip-path: polygon(calc(100% - var(--key-depth) + 2px) 2px, 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, 2px calc(100% - var(--key-depth) + 2px), calc(100% - var(--key-depth) + 2px) calc(100% - var(--key-depth) + 2px)); transform: translate(-2px, -2px) }
 #unity-fullscreen-button:active {
   z-index: 1;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, 0.3);
-  transform: translate(var(--key-depth), var(--key-depth));
+  transform: translate(var(--key-press), calc(0px - var(--key-depth) + var(--key-press)));
+  transition: background-color 90ms ease-out, box-shadow var(--key-press-motion), transform var(--key-press-motion);
 }
-#unity-fullscreen-button:active::before { clip-path: polygon(100% var(--key-depth), 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, var(--key-depth) 100%, 100% 100%); transform: translate(calc(0px - var(--key-depth)), calc(0px - var(--key-depth))) }
+#unity-fullscreen-button:active::before { clip-path: polygon(calc(100% - var(--key-depth) + var(--key-press)) var(--key-press), 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, var(--key-press) calc(100% - var(--key-depth) + var(--key-press)), calc(100% - var(--key-depth) + var(--key-press)) calc(100% - var(--key-depth) + var(--key-press))); transform: translate(calc(0px - var(--key-press)), calc(0px - var(--key-press))); transition: clip-path var(--key-press-motion), transform var(--key-press-motion) }
 #unity-fullscreen-button:focus-visible { outline: 3px solid #ebc75b; outline-offset: 2px }
 #unity-warning { position: absolute; z-index: 2; left: 50%; top: 5%; width: min(34rem, calc(100% - 2rem)); box-sizing: border-box; transform: translate(-50%); background: white; padding: 10px; display: none; font-family: arial, sans-serif }
