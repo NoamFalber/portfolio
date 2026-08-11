@@ -1527,11 +1527,6 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   font-size: 0.78rem;
 }
 
-.project-gallery.is-single .gallery-pager,
-.project-gallery.is-single .gallery-controls {
-  display: none;
-}
-
 .project-inspector {
   display: grid;
   min-width: 0;

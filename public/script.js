@@ -1383,7 +1383,6 @@ function initializeProjectGallery(gallery) {
     totalLabel.textContent = String(slides.length).padStart(2, "0");
   }
 
-  gallery.classList.toggle("is-single", slides.length <= 1);
   setSlide(0);
 }
 
