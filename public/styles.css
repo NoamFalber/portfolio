@@ -3885,23 +3885,23 @@ html:not(.js) .extra-step-tabs {
 
 .workspace-window--build,
 .build-player {
-  background: var(--project-surface);
+  background: var(--gallery-surface);
 }
 
 .build-player__bar,
 .build-player__footer {
-  border-color: var(--project-surface-line);
-  background: var(--project-surface-strong);
-  color: var(--ink-soft);
+  border-color: #73918e;
+  background: #214d4e;
+  color: #d5e4e1;
 }
 
 .build-player__bar strong,
 .build-player__external {
-  color: var(--coral-dark);
+  color: var(--sun);
 }
 
 .build-player__external:hover {
-  color: var(--ink);
+  color: #fffaf0;
 }
 
 .extra-workspace {
