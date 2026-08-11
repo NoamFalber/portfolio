@@ -18,6 +18,13 @@ const deferredProjectImages = [
   ...document.querySelectorAll("[data-deferred-src]"),
 ];
 const supportsInert = "inert" in HTMLElement.prototype;
+const motionDuration = Object.freeze({
+  section: 820,
+  pageEntrance: 440,
+  projectView: 800,
+  breakdownExit: 190,
+  breakdownEntrance: 400,
+});
 const inertFocusableSelector = [
   "a[href]",
   "button",
@@ -318,7 +325,10 @@ function setSection(
   if (!document.documentElement.classList.contains("is-ready")) {
     window.requestAnimationFrame(finishSectionTransition);
   } else {
-    transitionTimer = window.setTimeout(finishSectionTransition, 760);
+    transitionTimer = window.setTimeout(
+      finishSectionTransition,
+      motionDuration.section,
+    );
   }
 }
 
@@ -587,7 +597,6 @@ function runPageEntrance(element, direction, candidates, previousTimer) {
 
   if (
     !element ||
-    reducedMotion.matches ||
     !document.documentElement.classList.contains("is-ready")
   ) {
     return 0;
@@ -603,7 +612,7 @@ function runPageEntrance(element, direction, candidates, previousTimer) {
       "is-page-entering-next",
       "is-page-entering-previous",
     );
-  }, 340);
+  }, motionDuration.pageEntrance);
 }
 
 function setBuildStatus(frame, status) {
@@ -682,11 +691,21 @@ window.addEventListener("message", (event) => {
 });
 
 function projectNameFromHash() {
-  return window.location.hash.match(/^#(project-\d+)(?:$|-)/)?.[1] ?? null;
+  const projectName =
+    window.location.hash.match(/^#(project-\d+)(?:$|-)/)?.[1] ?? null;
+  const selectedTab = projectTabs.find(
+    (tab) => tab.dataset.projectTab === projectName,
+  );
+
+  return selectedTab && !selectedTab.disabled && !selectedTab.hidden
+    ? projectName
+    : null;
 }
 
 function projectViewFromHash() {
-  return /^#project-\d+-build$/.test(window.location.hash) ? "build" : "showcase";
+  return projectNameFromHash() && /^#project-\d+-build$/.test(window.location.hash)
+    ? "build"
+    : "showcase";
 }
 
 function selectedProjectTab() {
@@ -699,7 +718,6 @@ function animateProjectViewChange(mode, previousMode) {
   if (
     !projectWorkspace ||
     mode === previousMode ||
-    reducedMotion.matches ||
     !document.documentElement.classList.contains("is-ready")
   ) {
     return;
@@ -723,7 +741,7 @@ function animateProjectViewChange(mode, previousMode) {
       "is-transitioning-to-build",
       "is-transitioning-to-showcase",
     );
-  }, 720);
+  }, motionDuration.projectView);
 }
 
 function applyProjectViewState() {
@@ -864,15 +882,18 @@ function setProject(projectName) {
     (tab) => tab.dataset.projectTab === projectName,
   );
 
-  if (!selectedTab) {
+  if (!selectedTab || selectedTab.disabled || selectedTab.hidden) {
     return;
   }
 
+  const selectableTabs = projectTabs.filter(
+    (tab) => !tab.disabled && !tab.hidden,
+  );
   const previousProjectName = document.body.dataset.project;
-  const previousProjectIndex = projectTabs.findIndex(
+  const previousProjectIndex = selectableTabs.findIndex(
     (tab) => tab.dataset.projectTab === previousProjectName,
   );
-  const nextProjectIndex = projectTabs.indexOf(selectedTab);
+  const nextProjectIndex = selectableTabs.indexOf(selectedTab);
   const projectDirection =
     previousProjectIndex >= 0 && nextProjectIndex < previousProjectIndex ? -1 : 1;
 
@@ -991,10 +1012,13 @@ projectTabs.forEach((tab) => {
   });
 
   tab.addEventListener("keydown", (event) => {
+    const selectableTabs = projectTabs.filter(
+      (candidate) => !candidate.disabled && !candidate.hidden,
+    );
     const nextIndex = tabIndexFromKey(
       event,
-      projectTabs.indexOf(tab),
-      projectTabs.length,
+      selectableTabs.indexOf(tab),
+      selectableTabs.length,
     );
 
     if (nextIndex === null) {
@@ -1002,8 +1026,8 @@ projectTabs.forEach((tab) => {
     }
 
     event.preventDefault();
-    projectTabs[nextIndex].focus({ preventScroll: true });
-    projectTabs[nextIndex].click();
+    selectableTabs[nextIndex].focus({ preventScroll: true });
+    selectableTabs[nextIndex].click();
   });
 });
 
@@ -1572,11 +1596,11 @@ function initializeExtraCarousel(carousel) {
 
     const activeSlide = slides[activeIndex];
 
-    if (!reducedMotion.matches && document.documentElement.classList.contains("is-ready")) {
+    if (document.documentElement.classList.contains("is-ready")) {
       activeSlide.classList.add("is-entering");
       animationTimer = window.setTimeout(() => {
         activeSlide.classList.remove("is-entering");
-      }, 280);
+      }, motionDuration.breakdownEntrance);
     }
   }
 
@@ -1598,7 +1622,7 @@ function initializeExtraCarousel(carousel) {
 
     const activeSlide = slides[activeIndex];
 
-    if (reducedMotion.matches || !document.documentElement.classList.contains("is-ready")) {
+    if (!document.documentElement.classList.contains("is-ready")) {
       applySlide(normalizedIndex);
       return;
     }
@@ -1606,7 +1630,7 @@ function initializeExtraCarousel(carousel) {
     activeSlide.classList.add("is-leaving");
     transitionTimer = window.setTimeout(() => {
       applySlide(normalizedIndex);
-    }, 130);
+    }, motionDuration.breakdownExit);
   }
 
   function alignCarouselAfterControl() {

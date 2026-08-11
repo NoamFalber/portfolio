@@ -44,7 +44,13 @@
   --page-width: 94rem;
   --gutter: clamp(1rem, 4vw, 4.5rem);
   --rail-space: 11.5rem;
-  --ease-page: cubic-bezier(0.72, 0, 0.16, 1);
+  --ease-page: cubic-bezier(0.65, 0, 0.2, 1);
+  --ease-content: cubic-bezier(0.16, 1, 0.3, 1);
+  --section-motion-duration: 740ms;
+  --page-motion-duration: 400ms;
+  --workspace-motion-duration: 740ms;
+  --breakdown-enter-duration: 360ms;
+  --breakdown-exit-duration: 170ms;
 }
 
 * {
@@ -267,7 +273,7 @@ img {
   overflow: clip;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
-  transition: transform 680ms var(--ease-page);
+  transition: transform var(--section-motion-duration) var(--ease-page);
 }
 
 .js .section-deck.is-section-transitioning .section-page {
@@ -763,12 +769,14 @@ body[data-project-view="build"] .workspace-window--build {
 
 .project-workspace.is-transitioning-to-build .workspace-window--showcase,
 .project-workspace.is-transitioning-to-showcase .workspace-window--build {
-  animation: workspace-slide-out-left 680ms var(--ease-page) both;
+  animation: workspace-slide-out-left var(--workspace-motion-duration)
+    var(--ease-page) both;
 }
 
 .project-workspace.is-transitioning-to-build .workspace-window--build,
 .project-workspace.is-transitioning-to-showcase .workspace-window--showcase {
-  animation: workspace-slide-in-left 680ms var(--ease-page) both;
+  animation: workspace-slide-in-left var(--workspace-motion-duration)
+    var(--ease-page) both;
 }
 
 .project-toolbar {
@@ -945,13 +953,15 @@ html:not(.js) .project-panel {
 .project-panel.is-page-entering-next,
 .gallery-slide.is-page-entering-next,
 .extra-workspace.is-page-entering-next {
-  animation: page-enter-next 320ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+  animation: page-enter-next var(--page-motion-duration) var(--ease-content)
+    both;
 }
 
 .project-panel.is-page-entering-previous,
 .gallery-slide.is-page-entering-previous,
 .extra-workspace.is-page-entering-previous {
-  animation: page-enter-previous 320ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+  animation: page-enter-previous var(--page-motion-duration)
+    var(--ease-content) both;
 }
 
 .project-showcase {
@@ -1435,8 +1445,8 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   align-content: center;
   transition:
     border-color 180ms ease,
-    opacity 100ms ease,
-    transform 100ms ease;
+    opacity 120ms ease,
+    transform 120ms ease;
 }
 
 .project-inspector__content.is-exiting {
@@ -1445,7 +1455,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .project-inspector__content.is-entering {
-  animation: inspector-content-in 280ms var(--ease-page) both;
+  animation: inspector-content-in 340ms var(--ease-content) both;
 }
 
 .project-inspector__selection-head {
@@ -1795,11 +1805,12 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .extra-slide.is-entering {
-  animation: extra-slide-in 260ms cubic-bezier(0.2, 0.75, 0.2, 1) both;
+  animation: extra-slide-in var(--breakdown-enter-duration)
+    var(--ease-content) both;
 }
 
 .extra-slide.is-leaving {
-  animation: extra-slide-out 130ms ease-in both;
+  animation: extra-slide-out var(--breakdown-exit-duration) ease-in both;
 }
 
 .extra-slide--hero {
@@ -5714,7 +5725,27 @@ html:not(.js) .extra-step-tabs {
   }
 
   .js.is-ready .section-page {
-    transition-duration: 680ms !important;
+    transition-duration: var(--section-motion-duration) !important;
+  }
+
+  .project-workspace.is-project-transitioning .workspace-window {
+    animation-duration: var(--workspace-motion-duration) !important;
+  }
+
+  :is(
+      .project-panel,
+      .gallery-slide,
+      .extra-workspace
+    ):is(.is-page-entering-next, .is-page-entering-previous) {
+    animation-duration: var(--page-motion-duration) !important;
+  }
+
+  .extra-slide.is-entering {
+    animation-duration: var(--breakdown-enter-duration) !important;
+  }
+
+  .extra-slide.is-leaving {
+    animation-duration: var(--breakdown-exit-duration) !important;
   }
 
   .js.is-ready .intro-reel__track {

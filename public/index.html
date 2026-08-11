@@ -396,6 +396,24 @@
                     </span>
                     <span aria-hidden="true">→</span>
                   </button>
+
+                  <button
+                    class="project-tab"
+                    id="project-3-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="project-3"
+                    aria-disabled="true"
+                    data-project-tab="project-3"
+                    data-project-title="Project Three"
+                    data-has-build="false"
+                    data-project-draft
+                    hidden
+                    disabled
+                  >
+                    <span>03</span>
+                  </button>
                 </div>
 
                 <button
@@ -899,6 +917,16 @@
                   </section>
                 </div>
 
+                <div
+                  class="project-panel"
+                  id="project-3"
+                  role="tabpanel"
+                  aria-labelledby="project-3-tab"
+                  data-project-panel="project-3"
+                  data-project-draft
+                  hidden
+                ></div>
+
                 </div>
               </div>
 
@@ -1049,6 +1077,9 @@
                   <button type="button" aria-pressed="false" data-extra-project-select="project-2">
                     <span>02</span>
                     <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
+                  </button>
+                  <button type="button" aria-pressed="false" aria-disabled="true" data-extra-project-select="project-3" data-project-draft hidden disabled>
+                    <span>03</span>
                   </button>
                 </div>
 
@@ -1320,6 +1351,9 @@
                     <span>02</span>
                     <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
                   </button>
+                  <button type="button" aria-pressed="false" aria-disabled="true" data-extra-project-select="project-3" data-project-draft hidden disabled>
+                    <span>03</span>
+                  </button>
                 </div>
 
                 <div class="extra-carousel-controls" role="group" aria-label="Deep-dive controls">
@@ -1539,6 +1573,14 @@
                 <button type="button" role="tab" id="extra-p2-step-proof" aria-controls="extra-p2-slide-proof" aria-selected="false" data-extra-tab="5"><span>05</span><strong>Proof</strong></button>
               </div>
             </div>
+
+            <div
+              class="extra-workspace"
+              data-extra-project-panel="project-3"
+              data-extra-project-title="Project Three"
+              data-project-draft
+              hidden
+            ></div>
           </div>
         </div>
       </section>
