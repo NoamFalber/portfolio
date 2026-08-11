@@ -36,7 +36,6 @@
   --coral-dark: #913d2a;
   --button-ink: #24130e;
   --coral-hover: #e87959;
-  --button-shine: rgba(255, 255, 255, 0.68);
   --sun: #ebc75b;
   --selection: #ebc75b;
   --selection-edge: #1c4243;
@@ -350,39 +349,16 @@ img {
   justify-content: space-between;
   gap: 2rem;
   padding: 0.85rem 1rem;
-  border: 2px solid var(--ink);
-  box-shadow: 0.28rem 0.28rem 0 var(--shadow);
   font-weight: 700;
   text-decoration: none;
-  transition:
-    box-shadow 150ms ease,
-    transform 150ms ease,
-    background-color 150ms ease;
-}
-
-.button:hover {
-  box-shadow: 0.12rem 0.12rem 0 var(--shadow);
-  transform: translate(0.16rem, 0.16rem);
 }
 
 .button--primary {
-  background: var(--coral);
   color: var(--button-ink);
 }
 
-.button--primary:hover {
-  background: var(--coral-hover);
-}
-
 .button--ink {
-  background: var(--ink);
-  box-shadow: 0.28rem 0.28rem 0 var(--coral);
   color: var(--paper-light);
-}
-
-.button--ink:hover {
-  background: var(--green-dark);
-  box-shadow: 0.12rem 0.12rem 0 var(--coral);
 }
 
 .text-link {
@@ -410,23 +386,10 @@ img {
   column-gap: 0.45rem;
   align-items: center;
   padding: 0.4rem 0.55rem;
-  border: 1px solid var(--ink);
-  background: var(--paper-light);
-  box-shadow: 0.16rem 0.16rem 0 var(--shadow);
   color: var(--ink);
   font-size: 0.9rem;
   font-weight: 700;
   text-decoration: none;
-  transition:
-    box-shadow 150ms ease,
-    transform 150ms ease,
-    background-color 150ms ease;
-}
-
-.contact-link:hover {
-  background: var(--sun);
-  box-shadow: 0.06rem 0.06rem 0 var(--shadow);
-  transform: translate(0.1rem, 0.1rem);
 }
 
 .contact-link svg {
@@ -944,7 +907,7 @@ body[data-project-view="build"] .workspace-window--build {
   grid-template-columns: auto 1fr auto;
   gap: 0.85rem;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   padding: 0.75rem 1rem;
   border: 0;
   background: var(--coral);
@@ -953,63 +916,10 @@ body[data-project-view="build"] .workspace-window--build {
   font: inherit;
   text-align: left;
   text-decoration: none;
-  transition:
-    background-color 260ms ease,
-    box-shadow 260ms ease,
-    color 260ms ease,
-    padding 150ms ease;
-}
-
-.project-build-link::before {
-  position: absolute;
-  top: -120%;
-  bottom: -120%;
-  left: -45%;
-  width: 28%;
-  transform: rotate(18deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--button-shine),
-    transparent
-  );
-  content: "";
-  pointer-events: none;
-  animation: build-button-shine 2.45s ease-in-out infinite;
-}
-
-.project-build-link::after {
-  position: absolute;
-  z-index: 0;
-  inset: 0.38rem;
-  border: 2px solid rgba(var(--project-ink-rgb), 0.5);
-  content: "";
-  pointer-events: none;
-  animation: build-button-pulse 1.65s ease-in-out infinite;
-}
-
-.project-build-link:hover {
-  padding-right: 0.75rem;
-  background: var(--coral-hover);
 }
 
 .project-build-link:disabled {
-  padding-right: 1rem;
-  background: var(--line);
-  box-shadow: none;
-  color: var(--ink-soft);
   cursor: not-allowed;
-}
-
-.project-build-link:disabled::before,
-.project-build-link:disabled::after,
-.project-build-link:disabled > span:last-child {
-  animation: none;
-}
-
-.project-build-link:disabled::before,
-.project-build-link:disabled::after {
-  display: none;
 }
 
 .project-build-link__icon {
@@ -1045,7 +955,6 @@ body[data-project-view="build"] .workspace-window--build {
   z-index: 1;
   font-size: 1.2rem;
   font-weight: 700;
-  animation: build-arrow-nudge 1.35s ease-in-out infinite;
 }
 
 .project-stage {
@@ -1203,7 +1112,6 @@ html:not(.js) .project-panel {
   margin: 0;
   border: 1.5px solid var(--project-surface);
   background: var(--ink);
-  box-shadow: 0.48rem 0.48rem 0 var(--coral);
 }
 
 .gallery-slides {
@@ -1384,13 +1292,7 @@ html:not(.js) .project-panel {
   will-change: transform, opacity;
 }
 
-.workspace-window[aria-hidden="true"] .project-build-link::before,
-.workspace-window[aria-hidden="true"] .project-build-link::after,
-.workspace-window[aria-hidden="true"] .project-build-link > span:last-child,
 .workspace-window[aria-hidden="true"] .scene-hotspot > span,
-body:not([data-section="projects"]) .project-build-link::before,
-body:not([data-section="projects"]) .project-build-link::after,
-body:not([data-section="projects"]) .project-build-link > span:last-child,
 body:not([data-section="projects"]) .scene-hotspot > span {
   animation-play-state: paused;
 }
@@ -1481,16 +1383,19 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .gallery-thumbnails {
-  display: flex;
-  gap: 0.6rem;
-  overflow-x: auto;
-  padding: 0.55rem;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 0;
+  overflow: visible;
+  padding: 0;
   background: var(--mint-light);
 }
 
 .gallery-thumbnails button {
   display: grid;
-  width: min(13rem, 100%);
+  width: 100%;
+  min-width: 0;
   grid-template-columns: 3.5rem 1fr;
   gap: 0.6rem;
   align-items: center;
@@ -1500,6 +1405,10 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   color: var(--ink);
   cursor: pointer;
   text-align: left;
+}
+
+.gallery-thumbnails button + button {
+  border-left: 0;
 }
 
 .gallery-thumbnails button[aria-pressed="true"] {
@@ -2233,34 +2142,12 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   position: relative;
   min-height: 3.15rem;
   margin-top: clamp(0.8rem, 2vh, 1.25rem);
-  overflow: hidden;
-}
-
-.extra-build-jump::before {
-  position: absolute;
-  top: -120%;
-  bottom: -120%;
-  left: -45%;
-  width: 28%;
-  transform: rotate(18deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--button-shine),
-    transparent
-  );
-  content: "";
-  pointer-events: none;
-  animation: build-button-shine 2.45s ease-in-out infinite;
+  overflow: visible;
 }
 
 .extra-build-jump > span {
   position: relative;
   z-index: 1;
-}
-
-body:not([data-section="extra"]) .extra-build-jump::before {
-  animation-play-state: paused;
 }
 
 .extra-meta {
@@ -2661,42 +2548,6 @@ html:not(.js) .extra-step-tabs {
 
 .section-rail__copy strong {
   font-size: 0.9rem;
-}
-
-@keyframes build-button-shine {
-  0%,
-  42% {
-    transform: translate3d(0, 0, 0) rotate(18deg);
-  }
-
-  76%,
-  100% {
-    transform: translate3d(650%, 0, 0) rotate(18deg);
-  }
-}
-
-@keyframes build-button-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.42;
-  }
-
-  50% {
-    transform: scale(0.975);
-    opacity: 1;
-  }
-}
-
-@keyframes build-arrow-nudge {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  50% {
-    transform: translateX(0.32rem);
-  }
 }
 
 @keyframes build-loader-spin {
@@ -4116,25 +3967,6 @@ html:not(.js) .extra-step-tabs {
   content: "";
 }
 
-.button {
-  border-width: 1.5px;
-  box-shadow: 0.32rem 0.32rem 0 var(--shadow);
-}
-
-.button:hover {
-  box-shadow: 0.12rem 0.12rem 0 var(--shadow);
-}
-
-.contact-link {
-  border-width: 1.5px;
-  box-shadow: 0.28rem 0.28rem 0 var(--shadow);
-}
-
-.contact-link:hover {
-  box-shadow: 0.1rem 0.1rem 0 var(--shadow);
-  transform: translate3d(0.18rem, 0.18rem, 0);
-}
-
 /* Introduction: identity, role, proof, action */
 
 .intro-layout {
@@ -4332,11 +4164,6 @@ html:not(.js) .extra-step-tabs {
 
 .project-tab[aria-selected="true"] {
   box-shadow: inset 0 -0.32rem 0 var(--selection-edge);
-}
-
-.project-build-link::after {
-  inset: 0.42rem;
-  border-width: 1.5px;
 }
 
 .project-gallery {
@@ -4991,40 +4818,6 @@ html:not(.js) .extra-step-tabs {
 
 /* Viewport-fit and interaction polish */
 
-.button--primary {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-
-.button--primary::before {
-  position: absolute;
-  z-index: 0;
-  top: -120%;
-  bottom: -120%;
-  left: -45%;
-  width: 28%;
-  transform: translate3d(0, 0, 0) rotate(18deg);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--button-shine),
-    transparent
-  );
-  content: "";
-  pointer-events: none;
-  animation: build-button-shine 3.4s ease-in-out infinite;
-  animation-delay: -0.6s;
-  will-change: transform;
-}
-
-.project-build-link::before,
-.extra-build-jump::before {
-  transform: translate3d(0, 0, 0) rotate(18deg);
-  animation-delay: -0.6s;
-  will-change: transform;
-}
-
 .gallery-slides {
   position: relative;
   overflow: hidden;
@@ -5039,22 +4832,9 @@ html:not(.js) .extra-step-tabs {
   pointer-events: none;
 }
 
-.gallery-slides::after {
-  position: absolute;
-  top: clamp(0.4rem, 0.75vw, 0.7rem);
-  left: clamp(0.4rem, 0.75vw, 0.7rem);
-  width: clamp(2.5rem, 5vw, 4.5rem);
-  height: 0.2rem;
-  background: var(--coral);
-  content: "";
-  pointer-events: none;
-}
-
 .gallery-slide {
   z-index: 1;
-  box-shadow:
-    0.42rem 0.42rem 0 var(--coral),
-    0 0 0 1px rgba(var(--project-light-rgb), 0.2);
+  box-shadow: 0 0 0 1px rgba(var(--project-light-rgb), 0.2);
 }
 
 @media (min-width: 56.01rem) {
@@ -5304,11 +5084,10 @@ html:not(.js) .extra-step-tabs {
   }
 
   .gallery-thumbnails {
-    padding: 0.38rem;
+    padding: 0;
   }
 
   .gallery-thumbnails button {
-    width: min(11.5rem, 100%);
     padding: 0.25rem;
   }
 
@@ -5528,10 +5307,11 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: var(--mint-light);
   --control-side-right: #a9b5ae;
   --control-side-bottom: #6d8380;
-  --control-edge: #050b0d;
-  --control-stroke: 2px;
-  --control-depth: 0.38rem;
-  --control-motion: 230ms cubic-bezier(0.22, 0.78, 0.24, 1);
+  --control-edge: #132f33;
+  --control-stroke: 1px;
+  --control-edge-width: 1px;
+  --control-depth: 0.44rem;
+  --control-motion: 320ms cubic-bezier(0.2, 0.74, 0.22, 1);
   --control-highlight: rgba(255, 255, 255, 0.48);
   --control-shade: rgba(15, 42, 44, 0.22);
   position: relative;
@@ -5585,23 +5365,23 @@ html:not(.js) .extra-step-tabs {
   background:
     linear-gradient(
         45deg,
-        transparent 0 calc(50% - 1px),
-        var(--control-edge) calc(50% - 1px) calc(50% + 1px),
-        transparent calc(50% + 1px) 100%
+        transparent 0 calc(50% - 0.5px),
+        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px) 100%
       )
       100% 0 / var(--control-depth) var(--control-depth) no-repeat,
     linear-gradient(var(--control-edge), var(--control-edge))
-      100% var(--control-depth) / var(--control-stroke)
+      100% var(--control-depth) / var(--control-edge-width)
       calc(100% - var(--control-depth)) no-repeat,
     linear-gradient(var(--control-edge), var(--control-edge))
       var(--control-depth) 100% / calc(100% - var(--control-depth))
-      var(--control-stroke)
+      var(--control-edge-width)
       no-repeat,
     linear-gradient(
         45deg,
-        transparent 0 calc(50% - 1px),
-        var(--control-edge) calc(50% - 1px) calc(50% + 1px),
-        transparent calc(50% + 1px) 100%
+        transparent 0 calc(50% - 0.5px),
+        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px) 100%
       )
       0 100% / var(--control-depth) var(--control-depth) no-repeat,
     linear-gradient(var(--control-side-right), var(--control-side-right))
@@ -5612,9 +5392,9 @@ html:not(.js) .extra-step-tabs {
       var(--control-depth) no-repeat,
     linear-gradient(
         45deg,
-        var(--control-side-bottom) 0 calc(50% - 1px),
-        var(--control-edge) calc(50% - 1px) calc(50% + 1px),
-        var(--control-side-right) calc(50% + 1px) 100%
+        var(--control-side-bottom) 0 calc(50% - 0.5px),
+        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
+        var(--control-side-right) calc(50% + 0.5px) 100%
       )
       100% 100% / var(--control-depth) var(--control-depth) no-repeat;
   clip-path: polygon(
@@ -5626,16 +5406,10 @@ html:not(.js) .extra-step-tabs {
     calc(100% - var(--control-depth)) calc(100% - var(--control-depth))
   );
   content: "";
-  filter:
-    drop-shadow(1px 0 0 var(--control-edge))
-    drop-shadow(-1px 0 0 var(--control-edge))
-    drop-shadow(0 1px 0 var(--control-edge))
-    drop-shadow(0 -1px 0 var(--control-edge));
   pointer-events: none;
   animation: none;
   transition:
     clip-path var(--control-motion),
-    filter var(--control-motion),
     transform var(--control-motion);
   will-change: transform, clip-path;
 }
@@ -5657,7 +5431,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .button {
-  min-height: 3.25rem;
+  min-height: 3.35rem;
 }
 
 .button--primary,
@@ -5667,6 +5441,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: var(--coral-hover);
   --control-side-right: #c5573e;
   --control-side-bottom: #803526;
+  --control-edge: var(--ink);
   --control-highlight: rgba(255, 255, 255, 0.3);
   --control-shade: rgba(65, 24, 15, 0.24);
 }
@@ -5676,6 +5451,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: var(--green-dark);
   --control-side-right: #2b5a56;
   --control-side-bottom: #0f292d;
+  --control-edge: #071c20;
   --control-highlight: rgba(255, 255, 255, 0.14);
   --control-shade: rgba(0, 0, 0, 0.28);
 }
@@ -5701,6 +5477,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: #c4dde0;
   --control-side-right: #9bb6ba;
   --control-side-bottom: #607d82;
+  --control-edge: #102f36;
 }
 
 .project-tab[aria-selected="true"],
@@ -5709,6 +5486,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: #b5d9dc;
   --control-side-right: #739ba1;
   --control-side-bottom: #456c72;
+  --control-edge: #102f36;
   box-shadow:
     inset 0.08rem 0.08rem 0 var(--control-highlight),
     inset -0.08rem -0.08rem 0 var(--control-shade);
@@ -5735,6 +5513,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: #cce1e4;
   --control-side-right: #a6babd;
   --control-side-bottom: #6e898e;
+  --control-edge: #102f36;
 }
 
 .gallery-pager {
@@ -5762,6 +5541,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: #34716b;
   --control-side-right: #35635e;
   --control-side-bottom: #123735;
+  --control-edge: #071f21;
   --control-highlight: rgba(255, 255, 255, 0.13);
   --control-shade: rgba(0, 0, 0, 0.25);
   display: inline-flex;
@@ -5780,6 +5560,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: #2a5b58;
   --control-side-right: #2d5b57;
   --control-side-bottom: #123432;
+  --control-edge: #071f21;
   --control-highlight: rgba(255, 255, 255, 0.14);
   --control-shade: rgba(0, 0, 0, 0.3);
 }
@@ -5790,6 +5571,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: #acd0c7;
   --control-side-right: #668f86;
   --control-side-bottom: #365f58;
+  --control-edge: #092727;
   --control-highlight: rgba(255, 255, 255, 0.35);
   --control-shade: rgba(15, 47, 44, 0.22);
   box-shadow:
@@ -5807,6 +5589,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: #e1e9df;
   --control-side-right: #c8cec3;
   --control-side-bottom: #899b93;
+  --control-edge: #183b3b;
 }
 
 .extra-step-tabs button[aria-selected="true"] {
@@ -5814,6 +5597,7 @@ html:not(.js) .extra-step-tabs {
   --control-face-hover: #d4e5dc;
   --control-side-right: #91afa3;
   --control-side-bottom: #647f76;
+  --control-edge: #102f2d;
   box-shadow:
     inset 0.08rem 0.08rem 0 var(--control-highlight),
     inset -0.08rem -0.08rem 0 var(--control-shade);
@@ -5912,12 +5696,13 @@ html:not(.js) .extra-step-tabs {
 }
 
 .skip-link {
-  --control-depth: 0.38rem;
+  --control-depth: 0.44rem;
   --control-side-right: #a9b5ae;
   --control-side-bottom: #6d8380;
-  --control-edge: #050b0d;
-  --control-stroke: 2px;
-  --control-motion: 230ms cubic-bezier(0.22, 0.78, 0.24, 1);
+  --control-edge: #132f33;
+  --control-stroke: 1px;
+  --control-edge-width: 1px;
+  --control-motion: 320ms cubic-bezier(0.2, 0.74, 0.22, 1);
   border: var(--control-stroke) solid var(--control-edge);
   border-radius: 0;
   box-shadow:
@@ -5995,11 +5780,6 @@ html:not(.js) .extra-step-tabs {
         calc(100% - var(--control-depth) + 0.11rem)
     );
     transform: translate3d(-0.11rem, -0.11rem, 0);
-    filter:
-      drop-shadow(1px 0 0 var(--control-edge))
-      drop-shadow(-1px 0 0 var(--control-edge))
-      drop-shadow(0 1px 0 var(--control-edge))
-      drop-shadow(0 -1px 0 var(--control-edge));
   }
 }
 
@@ -6056,7 +5836,6 @@ html:not(.js) .extra-step-tabs {
     calc(0rem - var(--control-depth)),
     0
   );
-  filter: none;
 }
 
 .skip-link:focus {
@@ -6072,25 +5851,28 @@ html:not(.js) .extra-step-tabs {
 
 .gallery-pager button:disabled,
 .project-build-link:disabled {
-  background-color: var(--line);
+  --control-face: #aab9bb;
+  --control-face-hover: #aab9bb;
+  --control-side-right: #829497;
+  --control-side-bottom: #5d7478;
+  background-color: var(--control-face);
+  background-image: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--control-face) 90%, white 10%),
+    var(--control-face) 72%,
+    color-mix(in srgb, var(--control-face) 90%, var(--ink) 10%)
+  );
+  color: #415e63;
   box-shadow:
     inset 0.06rem 0.06rem 0 rgba(255, 255, 255, 0.25),
     inset -0.06rem -0.06rem 0 rgba(15, 42, 44, 0.2);
   transform: translate3d(0, 0, 0);
-  opacity: 0.58;
-}
-
-.project-build-link::after {
-  display: none;
+  opacity: 1;
 }
 
 .project-build-link:disabled::before {
   display: block;
-  opacity: 0.45;
-}
-
-.project-build-link > span:last-child {
-  animation: none;
+  opacity: 1;
 }
 
 .intro-actions {
@@ -6101,12 +5883,6 @@ html:not(.js) .extra-step-tabs {
 .contact-links {
   gap: 0;
   padding: 0;
-}
-
-.gallery-thumbnails {
-  gap: 0;
-  padding-right: 0;
-  padding-bottom: 0;
 }
 
 .project-workspace,

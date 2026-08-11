@@ -188,10 +188,8 @@ function setSection(
   }
 
   const previousIndex = currentSection;
-  const direction = nextIndex > previousIndex ? 1 : -1;
   const destination = sectionPages[nextIndex];
   const destinationScroller = destination.querySelector("[data-section-scroller]");
-  const boundarySources = new Set(["wheel", "touch"]);
   const isSkippingSection = Math.abs(nextIndex - previousIndex) > 1;
 
   isTransitioning = true;
@@ -211,9 +209,7 @@ function setSection(
     });
   }
 
-  if (boundarySources.has(source)) {
-    destinationScroller.scrollTop = direction > 0 ? 0 : destinationScroller.scrollHeight;
-  } else if (source === "link") {
+  if (destinationScroller) {
     destinationScroller.scrollTop = 0;
   }
 

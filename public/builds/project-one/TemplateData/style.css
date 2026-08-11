@@ -14,6 +14,11 @@ body { padding: 0; margin: 0 }
 #unity-logo-title-footer { float:left; width: 102px; height: 54px; background: url('unity-logo-title-footer.png') no-repeat center }
 #unity-build-title { float: right; margin-right: 10px; line-height: 54px; font-family: arial; font-size: 18px }
 #unity-fullscreen-button {
+  --key-edge: #181416;
+  --key-stroke: 1px;
+  --key-edge-width: 1px;
+  --key-depth: 7px;
+  --key-motion: 320ms cubic-bezier(.2, .74, .22, 1);
   box-sizing: border-box;
   appearance: none;
   position: relative;
@@ -24,35 +29,34 @@ body { padding: 0; margin: 0 }
   height: 44px;
   margin: 2px 8px 8px 0;
   padding: 0;
-  border: 2px solid #050708;
+  border: var(--key-stroke) solid var(--key-edge);
   border-radius: 0;
   background: #383334 url('fullscreen-button.png') no-repeat center;
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, 0.2),
     inset -1px -1px 0 rgba(0, 0, 0, 0.25);
   transform: translate(0, 0);
-  transition: box-shadow 230ms cubic-bezier(.22, .78, .24, 1), transform 230ms cubic-bezier(.22, .78, .24, 1), background-color 190ms ease;
+  transition: box-shadow var(--key-motion), transform var(--key-motion), background-color 190ms ease;
 }
 #unity-fullscreen-button::before {
   position: absolute;
   z-index: 0;
   top: 0;
   left: 0;
-  width: calc(100% + 8px);
-  height: calc(100% + 8px);
+  width: calc(100% + var(--key-depth) + var(--key-stroke));
+  height: calc(100% + var(--key-depth) + var(--key-stroke));
   background:
-    linear-gradient(45deg, transparent 0 calc(50% - 1px), #050708 calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px) 100%) 100% 0 / 6px 6px no-repeat,
-    linear-gradient(#050708, #050708) 100% 6px / 2px calc(100% - 6px) no-repeat,
-    linear-gradient(#050708, #050708) 6px 100% / calc(100% - 6px) 2px no-repeat,
-    linear-gradient(45deg, transparent 0 calc(50% - 1px), #050708 calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px) 100%) 0 100% / 6px 6px no-repeat,
-    linear-gradient(#706568, #706568) 100% 0 / 6px calc(100% - 6px) no-repeat,
-    linear-gradient(#3b3436, #3b3436) 0 100% / calc(100% - 6px) 6px no-repeat,
-    linear-gradient(45deg, #3b3436 0 calc(50% - 1px), #050708 calc(50% - 1px) calc(50% + 1px), #706568 calc(50% + 1px) 100%) 100% 100% / 6px 6px no-repeat;
-  clip-path: polygon(calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px), calc(100% - 6px) calc(100% - 6px));
+    linear-gradient(45deg, transparent 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px) 100%) 100% 0 / var(--key-depth) var(--key-depth) no-repeat,
+    linear-gradient(var(--key-edge), var(--key-edge)) 100% var(--key-depth) / var(--key-edge-width) calc(100% - var(--key-depth)) no-repeat,
+    linear-gradient(var(--key-edge), var(--key-edge)) var(--key-depth) 100% / calc(100% - var(--key-depth)) var(--key-edge-width) no-repeat,
+    linear-gradient(45deg, transparent 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px) 100%) 0 100% / var(--key-depth) var(--key-depth) no-repeat,
+    linear-gradient(#706568, #706568) 100% 0 / var(--key-depth) calc(100% - var(--key-depth)) no-repeat,
+    linear-gradient(#3b3436, #3b3436) 0 100% / calc(100% - var(--key-depth)) var(--key-depth) no-repeat,
+    linear-gradient(45deg, #3b3436 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), #706568 calc(50% + .5px) 100%) 100% 100% / var(--key-depth) var(--key-depth) no-repeat;
+  clip-path: polygon(calc(100% - var(--key-depth)) 0, 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, 0 calc(100% - var(--key-depth)), calc(100% - var(--key-depth)) calc(100% - var(--key-depth)));
   content: "";
-  filter: drop-shadow(1px 0 0 #050708) drop-shadow(-1px 0 0 #050708) drop-shadow(0 1px 0 #050708) drop-shadow(0 -1px 0 #050708);
   pointer-events: none;
-  transition: clip-path 230ms cubic-bezier(.22, .78, .24, 1), filter 230ms cubic-bezier(.22, .78, .24, 1), transform 230ms cubic-bezier(.22, .78, .24, 1);
+  transition: clip-path var(--key-motion), transform var(--key-motion);
 }
 #unity-fullscreen-button:hover {
   background-color: #51484a;
@@ -61,12 +65,12 @@ body { padding: 0; margin: 0 }
     inset -1px -1px 0 rgba(0, 0, 0, 0.22);
   transform: translate(2px, 2px);
 }
-#unity-fullscreen-button:hover::before { clip-path: polygon(calc(100% - 4px) 2px, 100% 6px, 100% 100%, 6px 100%, 2px calc(100% - 4px), calc(100% - 4px) calc(100% - 4px)); transform: translate(-2px, -2px); filter: drop-shadow(1px 0 0 #050708) drop-shadow(-1px 0 0 #050708) drop-shadow(0 1px 0 #050708) drop-shadow(0 -1px 0 #050708) }
+#unity-fullscreen-button:hover::before { clip-path: polygon(calc(100% - var(--key-depth) + 2px) 2px, 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, 2px calc(100% - var(--key-depth) + 2px), calc(100% - var(--key-depth) + 2px) calc(100% - var(--key-depth) + 2px)); transform: translate(-2px, -2px) }
 #unity-fullscreen-button:active {
   z-index: 1;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, 0.3);
-  transform: translate(6px, 6px);
+  transform: translate(var(--key-depth), var(--key-depth));
 }
-#unity-fullscreen-button:active::before { clip-path: polygon(100% 6px, 100% 6px, 100% 100%, 6px 100%, 6px 100%, 100% 100%); transform: translate(-6px, -6px); filter: none }
+#unity-fullscreen-button:active::before { clip-path: polygon(100% var(--key-depth), 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, var(--key-depth) 100%, 100% 100%); transform: translate(calc(0px - var(--key-depth)), calc(0px - var(--key-depth))) }
 #unity-fullscreen-button:focus-visible { outline: 3px solid #ebc75b; outline-offset: 2px }
 #unity-warning { position: absolute; z-index: 2; left: 50%; top: 5%; width: min(34rem, calc(100% - 2rem)); box-sizing: border-box; transform: translate(-50%); background: white; padding: 10px; display: none; font-family: arial, sans-serif }
