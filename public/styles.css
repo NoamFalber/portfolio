@@ -5508,120 +5508,380 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
-/* Tactile controls: raised at rest, pressed toward their shadow on input. */
+/* Physical controls: short, sharp keycaps with one shared press motion. */
 
 .button,
+.text-link,
 .contact-link,
-.gallery-thumbnails button {
-  transform: translate3d(0, 0, 0);
-  will-change: transform, box-shadow;
-}
-
-.button:active,
-.contact-link:active,
-.gallery-thumbnails button:active {
-  box-shadow: none;
-  transform: translate3d(0.28rem, 0.28rem, 0);
-}
-
-.gallery-thumbnails button {
-  box-shadow: 0.22rem 0.22rem 0 var(--shadow);
-  transition:
-    background-color 150ms ease,
-    box-shadow 150ms ease,
-    color 150ms ease,
-    transform 150ms ease;
-}
-
-.gallery-thumbnails button[aria-pressed="true"] {
-  box-shadow:
-    0.22rem 0.22rem 0 var(--shadow),
-    inset 0 -0.25rem 0 var(--selection-edge);
-}
-
 .project-tab,
 .project-build-link,
 .gallery-pager button,
+.gallery-thumbnails button,
+.build-player__external,
 .extra-project-switcher > button,
 .extra-carousel-controls button,
-.extra-step-tabs button {
-  box-shadow: inset -0.18rem -0.18rem 0 rgba(22, 50, 56, 0.34);
+.extra-step-tabs button,
+.section-rail a {
+  --control-face: var(--paper-light);
+  --control-face-hover: var(--sun);
+  --control-border: var(--ink);
+  --control-side: color-mix(in srgb, var(--control-face) 72%, var(--ink) 28%);
+  --control-edge: var(--shadow);
+  --control-highlight: rgba(255, 255, 255, 0.48);
+  --control-shade: rgba(15, 42, 44, 0.22);
+  position: relative;
+  z-index: 1;
+  border: 1.5px solid var(--control-border);
+  border-radius: 0;
+  background-color: var(--control-face);
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--control-face) 88%, white 12%) 0%,
+    var(--control-face) 58%,
+    color-mix(in srgb, var(--control-face) 88%, var(--ink) 12%) 100%
+  );
+  box-shadow:
+    inset 0.08rem 0.08rem 0 var(--control-highlight),
+    inset -0.08rem 0 0 var(--control-shade),
+    inset 0 -0.18rem 0 var(--control-shade),
+    0 0.2rem 0 var(--control-side),
+    0 0.34rem 0 var(--control-edge);
+  transform: translate3d(0, 0, 0);
   transition:
-    background-color 150ms ease,
-    box-shadow 150ms ease,
-    color 150ms ease,
-    padding 150ms ease,
-    transform 150ms ease;
+    background-color 170ms ease,
+    box-shadow 170ms cubic-bezier(0.2, 0.72, 0.25, 1),
+    color 170ms ease,
+    transform 170ms cubic-bezier(0.2, 0.72, 0.25, 1);
+  backface-visibility: hidden;
 }
 
-.project-tab[aria-selected="true"] {
-  box-shadow:
-    inset 0 -0.32rem 0 var(--selection-edge),
-    inset -0.18rem 0 0 rgba(22, 50, 56, 0.34);
+.button > *,
+.contact-link > *,
+.project-tab > *,
+.project-build-link > *,
+.gallery-thumbnails button > *,
+.extra-project-switcher > button > *,
+.extra-step-tabs button > * {
+  position: relative;
+  z-index: 1;
 }
 
-.extra-project-switcher > button[aria-pressed="true"] {
-  box-shadow:
-    inset 0 -0.32rem 0 var(--selection-edge),
-    inset -0.18rem 0 0 rgba(22, 50, 56, 0.34);
+.contact-link::after {
+  position: relative;
+  z-index: 1;
 }
 
-.extra-step-tabs button[aria-selected="true"] {
+.button {
+  min-height: 3.25rem;
+}
+
+.button--primary,
+.about-copy .button,
+.project-build-link {
+  --control-face: var(--coral);
+  --control-face-hover: var(--coral-hover);
+  --control-side: var(--coral-dark);
+  --control-edge: var(--ink);
+  --control-highlight: rgba(255, 255, 255, 0.3);
+  --control-shade: rgba(65, 24, 15, 0.24);
+}
+
+.button--ink {
+  --control-face: var(--ink);
+  --control-face-hover: var(--green-dark);
+  --control-side: var(--green-dark);
+  --control-edge: var(--coral);
+  --control-highlight: rgba(255, 255, 255, 0.14);
+  --control-shade: rgba(0, 0, 0, 0.28);
+}
+
+.about-copy .button {
+  color: var(--button-ink);
+}
+
+.text-link {
+  min-height: 3rem;
+  padding: 0.58rem 0.85rem;
+  color: var(--green-dark);
+  text-decoration: none;
+}
+
+.contact-link {
+  --control-face-hover: var(--sun);
+  min-height: 2.75rem;
+}
+
+.project-tab {
+  --control-face: var(--project-surface-strong);
+  --control-face-hover: #c4dde0;
+  --control-side: #789399;
+  --control-edge: var(--gallery-surface);
+}
+
+.project-tab[aria-selected="true"],
+.gallery-thumbnails button[aria-pressed="true"] {
+  --control-face: var(--selection);
+  --control-face-hover: var(--selection);
+  --control-side: #b18d2e;
+  --control-edge: var(--selection-edge);
+}
+
+.project-build-link {
+  margin: 0.06rem 0.06rem 0.34rem;
+}
+
+.project-build-link__icon,
+.extra-project-switcher > button > span:first-child {
+  border-radius: 0;
+}
+
+.gallery-pager button,
+.gallery-thumbnails button {
+  --control-face: var(--project-surface);
+  --control-face-hover: var(--sun);
+  --control-side: var(--project-surface-line);
+  --control-edge: var(--gallery-surface);
+}
+
+.gallery-pager {
+  gap: 0.06rem;
+  padding: 0.06rem 0.06rem 0.34rem;
+  border-color: #0f3031;
+  background: var(--gallery-surface);
+}
+
+.gallery-pager > span {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--project-surface-line);
+  background: var(--project-surface);
+}
+
+.gallery-thumbnails button {
+  min-height: 3.3rem;
+}
+
+.build-player__external {
+  --control-face: #285653;
+  --control-face-hover: #34716b;
+  --control-border: #8eaaa3;
+  --control-side: #163a39;
+  --control-edge: #102b2b;
+  --control-highlight: rgba(255, 255, 255, 0.13);
+  --control-shade: rgba(0, 0, 0, 0.25);
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: 0.48rem 0.65rem;
+  color: var(--sun);
+  text-decoration: none;
+}
+
+.extra-project-switcher > button,
+.extra-carousel-controls button,
+.section-rail a {
+  --control-face: #214949;
+  --control-face-hover: #2a5b58;
+  --control-border: rgba(255, 250, 240, 0.5);
+  --control-side: #143637;
+  --control-edge: #0c2829;
+  --control-highlight: rgba(255, 255, 255, 0.14);
+  --control-shade: rgba(0, 0, 0, 0.3);
+}
+
+.extra-project-switcher > button[aria-pressed="true"],
+.extra-step-tabs button[aria-selected="true"],
+.section-rail a[aria-current="page"] {
+  --control-face: var(--selection);
+  --control-face-hover: var(--selection);
+  --control-border: var(--selection-edge);
+  --control-side: #b18d2e;
+  --control-edge: var(--selection-edge);
+  --control-highlight: rgba(255, 255, 255, 0.3);
+  --control-shade: rgba(45, 37, 12, 0.2);
+}
+
+.extra-carousel-controls button {
+  min-width: 3rem;
+  min-height: 3rem;
+}
+
+.extra-step-tabs button {
+  --control-face: #fffaf0;
+  --control-face-hover: #e1e9df;
+  --control-side: #a7b5ae;
+  --control-edge: #183b3b;
+}
+
+.section-rail a {
+  color: #f4f0e8;
+}
+
+.section-rail a[aria-current="page"] {
+  color: #173332;
+}
+
+.project-tabs,
+.extra-project-switcher,
+.extra-step-tabs,
+.section-rail ol {
+  gap: 0.06rem;
+  padding: 0.06rem 0.06rem 0.34rem;
+}
+
+.project-tabs {
+  overflow: visible;
+}
+
+.extra-carousel-controls {
+  gap: 0.06rem;
+  padding: 0.06rem 0.06rem 0.34rem;
+}
+
+.extra-carousel-controls button + span,
+.extra-carousel-controls span + button,
+.extra-project-switcher > button + button,
+.section-rail li + li {
+  border: 0;
+}
+
+.extra-carousel-controls > span {
+  min-height: 3rem;
+  border: 1px solid rgba(255, 250, 240, 0.4);
+}
+
+.section-rail ol {
+  overflow: visible;
+}
+
+.project-tab:last-child,
+.extra-step-tabs button:last-child {
+  border-right: 1.5px solid var(--control-border);
+}
+
+.skip-link {
+  border-radius: 0;
   box-shadow:
-    inset 0 0.24rem 0 var(--selection-edge),
-    inset -0.18rem -0.18rem 0 rgba(22, 50, 56, 0.34);
+    inset 0.08rem 0.08rem 0 rgba(255, 255, 255, 0.48),
+    inset -0.08rem 0 0 rgba(15, 42, 44, 0.22),
+    inset 0 -0.18rem 0 rgba(15, 42, 44, 0.22),
+    0 0.2rem 0 var(--line),
+    0 0.34rem 0 var(--shadow);
+  transition:
+    box-shadow 170ms cubic-bezier(0.2, 0.72, 0.25, 1),
+    transform 170ms cubic-bezier(0.2, 0.72, 0.25, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .gallery-thumbnails button:hover {
-    box-shadow: 0.08rem 0.08rem 0 var(--shadow);
-    transform: translate3d(0.14rem, 0.14rem, 0);
-  }
-
-  .gallery-thumbnails button[aria-pressed="true"]:hover {
-    box-shadow:
-      0.08rem 0.08rem 0 var(--shadow),
-      inset 0 -0.18rem 0 var(--selection-edge);
-  }
-
+  .button:hover,
+  .text-link:hover,
+  .contact-link:hover,
   .project-tab:hover,
-  .project-build-link:hover,
+  .project-build-link:hover:not(:disabled),
   .gallery-pager button:hover:not(:disabled),
+  .gallery-thumbnails button:hover,
+  .build-player__external:hover,
   .extra-project-switcher > button:hover,
   .extra-carousel-controls button:hover,
-  .extra-step-tabs button:hover {
-    box-shadow: inset -0.07rem -0.07rem 0 rgba(22, 50, 56, 0.34);
-    transform: translate3d(0.07rem, 0.07rem, 0);
-  }
-
-  .project-tab[aria-selected="true"]:hover,
-  .extra-project-switcher > button[aria-pressed="true"]:hover {
+  .extra-step-tabs button:hover,
+  .section-rail a:hover {
+    background-color: var(--control-face-hover);
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--control-face-hover) 88%, white 12%) 0%,
+      var(--control-face-hover) 60%,
+      color-mix(in srgb, var(--control-face-hover) 88%, var(--ink) 12%) 100%
+    );
     box-shadow:
-      inset 0 -0.2rem 0 var(--selection-edge),
-      inset -0.07rem 0 0 rgba(22, 50, 56, 0.34);
-  }
-
-  .extra-step-tabs button[aria-selected="true"]:hover {
-    box-shadow:
-      inset 0 0.16rem 0 var(--selection-edge),
-      inset -0.07rem -0.07rem 0 rgba(22, 50, 56, 0.34);
+      inset 0.06rem 0.06rem 0 var(--control-highlight),
+      inset -0.06rem 0 0 var(--control-shade),
+      inset 0 -0.1rem 0 var(--control-shade),
+      0 0.06rem 0 var(--control-side),
+      0 0.13rem 0 var(--control-edge);
+    transform: translate3d(0, 0.21rem, 0);
   }
 }
 
+.button:active,
+.text-link:active,
+.contact-link:active,
 .project-tab:active,
-.project-build-link:active,
+.project-build-link:active:not(:disabled),
 .gallery-pager button:active:not(:disabled),
+.gallery-thumbnails button:active,
+.build-player__external:active,
 .extra-project-switcher > button:active,
 .extra-carousel-controls button:active,
-.extra-step-tabs button:active {
-  box-shadow: inset 0.12rem 0.12rem 0 rgba(22, 50, 56, 0.34);
-  transform: translate3d(0.07rem, 0.07rem, 0);
+.extra-step-tabs button:active,
+.section-rail a:active {
+  background-color: var(--control-face-hover);
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--control-face-hover) 90%, var(--ink) 10%),
+    var(--control-face-hover)
+  );
+  box-shadow:
+    inset 0 0.12rem 0 var(--control-shade),
+    inset 0 -0.04rem 0 var(--control-highlight);
+  transform: translate3d(0, 0.34rem, 0);
+}
+
+.skip-link:focus {
+  transform: translate3d(0, 0, 0);
+}
+
+.skip-link:focus:active {
+  box-shadow:
+    inset 0.08rem 0.1rem 0 rgba(15, 42, 44, 0.22),
+    inset -0.03rem -0.04rem 0 rgba(255, 255, 255, 0.48);
+  transform: translate3d(0, 0.34rem, 0);
 }
 
 .gallery-pager button:disabled,
 .project-build-link:disabled {
+  background-color: var(--line);
+  box-shadow:
+    inset 0.06rem 0.06rem 0 rgba(255, 255, 255, 0.25),
+    inset -0.06rem 0 0 rgba(15, 42, 44, 0.2),
+    inset 0 -0.12rem 0 rgba(15, 42, 44, 0.2),
+    0 0.14rem 0 var(--control-edge);
   transform: none;
-  box-shadow: none;
+  opacity: 0.58;
+}
+
+.button--primary::before,
+.project-build-link::before,
+.project-build-link::after {
+  display: none;
+}
+
+.project-build-link > span:last-child {
+  animation: none;
+}
+
+.intro-actions {
+  column-gap: 0.2rem;
+}
+
+.contact-links {
+  gap: 0.12rem;
+}
+
+.gallery-thumbnails {
+  gap: 0.12rem;
+}
+
+@media (max-width: 24rem) {
+  .extra-step-tabs,
+  .extra-step-tabs--seven {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .extra-step-tabs:not(.extra-step-tabs--seven) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
