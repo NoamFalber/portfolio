@@ -1,0 +1,11 @@
+{
+  "name": "noam-falber-portfolio",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "deploy:check": "wrangler deploy --dry-run"
+  },
+  "devDependencies": {
+    "wrangler": "4.121.0"
+  }
+}

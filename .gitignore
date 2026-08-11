@@ -4,3 +4,6 @@
 
 # Local drop folder for exported game builds; deployable copies live in public/.
 /GameWebBuilds/
+
+# Local deployment tooling
+/node_modules/
