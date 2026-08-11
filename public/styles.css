@@ -5289,13 +5289,25 @@ html:not(.js) .extra-step-tabs {
 
 @keyframes control-front-shine {
   0%,
-  38% {
-    background-position: 190% 0;
+  58% {
+    transform: translate3d(-38%, 0, 0);
+    opacity: 0;
   }
 
-  68%,
+  67% {
+    transform: translate3d(-18%, 0, 0);
+    opacity: 0.72;
+  }
+
+  81% {
+    transform: translate3d(18%, 0, 0);
+    opacity: 0.72;
+  }
+
+  90%,
   100% {
-    background-position: -190% 0;
+    transform: translate3d(38%, 0, 0);
+    opacity: 0;
   }
 }
 
@@ -5469,17 +5481,18 @@ html:not(.js) .extra-step-tabs {
   inset: 0;
   background-image: linear-gradient(
     108deg,
-    transparent 40%,
-    rgba(255, 255, 255, 0.44) 48%,
+    transparent 43%,
+    rgba(255, 255, 255, 0.44) 48.5%,
     rgba(255, 246, 224, 0.7) 50%,
-    rgba(255, 255, 255, 0.44) 52%,
-    transparent 60%
+    rgba(255, 255, 255, 0.44) 51.5%,
+    transparent 57%
   );
-  background-position: 190% 0;
-  background-size: 260% 100%;
+  opacity: 0;
+  transform: translate3d(-38%, 0, 0);
   content: "";
   pointer-events: none;
   animation: control-front-shine 3.2s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .section-page[aria-hidden="true"] .button--primary::after,
@@ -5997,7 +6010,64 @@ html:not(.js) .extra-step-tabs {
 .build-player,
 .extra-stage {
   border: 1.5px solid var(--ink);
-  box-shadow: 0.42rem 0.42rem 0 var(--shadow);
+  box-shadow: none;
+}
+
+/* The key faces and casings provide their own edges. Remove the former deck
+   frames and backing colors so no legacy line can show between close keys. */
+
+.project-tabs,
+.gallery-pager,
+.gallery-controls,
+.gallery-thumbnails,
+.extra-project-switcher,
+.extra-carousel-controls,
+.extra-step-tabs,
+.section-rail ol {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.project-inspector__project {
+  padding-left: clamp(1rem, 1.8vw, 1.45rem);
+}
+
+.project-inspector__project::before {
+  content: none;
+}
+
+.project-inspector__selection {
+  padding-left: clamp(1rem, 1.8vw, 1.45rem);
+}
+
+.project-inspector__content {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.project-gallery {
+  background: var(--gallery-surface);
+}
+
+.gallery-slides::before {
+  content: none;
+}
+
+.gallery-slide {
+  box-shadow: none;
+}
+
+.section-rail {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.section-rail__label {
+  border: 1px solid var(--ink);
+  border-bottom: 0;
+  background: #183b3b;
 }
 
 .extra-workspace {
