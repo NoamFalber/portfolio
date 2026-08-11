@@ -567,7 +567,7 @@ img {
 
 .intro-reel {
   --reel-gap: 0rem;
-  --reel-overlap: clamp(3.5rem, 7vw, 7rem);
+  --reel-overlap: clamp(7.5rem, 12vw, 13rem);
   position: absolute;
   z-index: 0;
   right: 0;
@@ -585,8 +585,10 @@ img {
   background: linear-gradient(
     90deg,
     var(--intro-paper) 0%,
-    transparent 10%,
-    transparent 90%,
+    rgba(var(--intro-paper-rgb), 0.5) 4%,
+    transparent 12%,
+    transparent 88%,
+    rgba(var(--intro-paper-rgb), 0.5) 96%,
     var(--intro-paper) 100%
   );
   content: "";
@@ -595,14 +597,7 @@ img {
 .intro-reel__viewport {
   height: 100%;
   overflow: hidden;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 8%,
-    rgba(var(--intro-paper-rgb), 0.82) 15%,
-    var(--intro-paper) 18%,
-    var(--intro-paper) 100%
-  );
+  background: var(--intro-paper);
 }
 
 .intro-reel__track {
@@ -615,15 +610,15 @@ img {
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    transparent 18%,
-    #000 28%,
+    rgba(0, 0, 0, 0.08) 9%,
+    #000 27%,
     #000 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    transparent 18%,
-    #000 28%,
+    rgba(0, 0, 0, 0.08) 9%,
+    #000 27%,
     #000 100%
   );
 }
@@ -652,16 +647,14 @@ img {
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent 0%,
-    #000 16%,
-    #000 84%,
-    transparent 100%
+    #000 var(--reel-overlap),
+    #000 100%
   );
   mask-image: linear-gradient(
     90deg,
     transparent 0%,
-    #000 16%,
-    #000 84%,
-    transparent 100%
+    #000 var(--reel-overlap),
+    #000 100%
   );
 }
 
@@ -3711,7 +3704,7 @@ html:not(.js) .extra-step-tabs {
 
 .section-page--extra {
   --sun: #dfbf60;
-  --wallpaper-wash: rgba(241, 246, 238, 0.6);
+  --wallpaper-wash: rgba(241, 246, 238, 0.46);
 }
 
 .section-page--intro::before,
@@ -3866,41 +3859,45 @@ html:not(.js) .extra-step-tabs {
 }
 
 .extra-hero-copy {
-  background: rgba(255, 250, 240, 0.18);
+  background: rgba(255, 250, 240, 0.14);
 }
 
 .extra-meta {
-  background: rgba(222, 233, 222, 0.88);
+  background: rgba(222, 233, 222, 0.8);
 }
 
 [data-extra-project-panel="project-2"] .extra-meta {
-  background: rgba(235, 224, 206, 0.88);
+  background: rgba(235, 224, 206, 0.8);
 }
 
-.extra-slide__heading {
-  background: rgba(222, 233, 222, 0.86);
+.extra-slide__heading,
+.extra-slide--problem .extra-slide__heading {
+  background: rgba(222, 233, 222, 0.68);
 }
 
 [data-extra-project-panel="project-2"] .extra-slide__heading {
-  background: rgba(235, 224, 206, 0.86);
+  background: rgba(235, 224, 206, 0.68);
 }
 
 .extra-slide__body {
-  background: rgba(255, 250, 240, 0.84);
+  background: rgba(255, 250, 240, 0.68);
 }
 
 .extra-callout {
-  background: rgba(233, 238, 218, 0.9);
+  background: rgba(233, 238, 218, 0.82);
 }
 
 [data-extra-project-panel="project-2"] .extra-callout {
-  background: rgba(239, 226, 205, 0.9);
+  background: rgba(239, 226, 205, 0.82);
 }
 
-.extra-slide--proof,
+.extra-slide--proof {
+  background: transparent;
+}
+
 .extra-slide--proof .extra-slide__heading,
 .extra-slide--proof .extra-proof-body {
-  background: rgba(25, 58, 51, 0.93);
+  background: rgba(25, 58, 51, 0.82);
 }
 
 .extra-step-tabs,
@@ -4152,8 +4149,8 @@ html:not(.js) .extra-step-tabs {
 }
 
 .intro-reel__track {
-  opacity: 0.34;
-  filter: blur(2.4px) saturate(0.82) contrast(0.96);
+  opacity: 0.4;
+  filter: blur(1.45px) saturate(0.88) contrast(1.01);
 }
 
 /* About: working method and capability map */
@@ -4164,7 +4161,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .about-heading {
-  align-self: center;
+  align-self: start;
   padding-left: clamp(1rem, 2vw, 1.6rem);
   border-left: 0.38rem solid var(--coral);
 }
@@ -4176,7 +4173,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .about-copy {
-  align-self: center;
+  align-self: start;
   padding: clamp(1.4rem, 2.5vw, 2.25rem);
   border: 1.5px solid var(--ink);
   background: rgba(255, 250, 240, 0.92);
@@ -4320,6 +4317,9 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-inspector {
+  --inspector-rail-gap: clamp(1rem, 1.65vw, 1.35rem);
+  --inspector-rail-inset: clamp(0.95rem, 1.35vw, 1.2rem);
+  --inspector-rail-width: 0.24rem;
   grid-template-rows: minmax(0, 1.15fr) minmax(0, 0.75fr);
 }
 
@@ -4330,15 +4330,18 @@ html:not(.js) .extra-step-tabs {
     clamp(1.1rem, 2.6vh, 1.9rem)
     clamp(1.2rem, 2.2vw, 2rem)
     clamp(1.1rem, 2.6vh, 1.9rem)
-    clamp(2.35rem, 3.1vw, 2.85rem);
+    calc(
+      var(--inspector-rail-inset) + var(--inspector-rail-width) +
+        var(--inspector-rail-gap)
+    );
 }
 
 .project-inspector__project::before {
   position: absolute;
   top: clamp(1.1rem, 2.6vh, 1.9rem);
   bottom: clamp(1.1rem, 2.6vh, 1.9rem);
-  left: clamp(0.95rem, 1.35vw, 1.2rem);
-  width: 0.24rem;
+  left: var(--inspector-rail-inset);
+  width: var(--inspector-rail-width);
   background: #7fa39a;
   content: "";
 }
@@ -4351,10 +4354,12 @@ html:not(.js) .extra-step-tabs {
 
 #project-1 .project-inspector__project > p:last-of-type,
 #project-2 .project-inspector__project > p:last-of-type {
-  font-size: clamp(0.82rem, 1.45vh, 0.92rem);
+  font-size: clamp(0.94rem, 1.65vh, 1rem);
+  line-height: 1.48;
 }
 
 .project-inspector__selection {
+  padding-left: var(--inspector-rail-inset);
   border-top-width: 1.5px;
   background: #1f4b49;
   color: #fffaf0;
@@ -4365,6 +4370,8 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-inspector__content {
+  padding-left: var(--inspector-rail-gap);
+  border-left-width: var(--inspector-rail-width);
   border-left-color: #7fa39a;
 }
 
@@ -4553,6 +4560,12 @@ html:not(.js) .extra-step-tabs {
 
   .project-panel__body {
     grid-template-columns: 1fr;
+  }
+
+  #project-1 .project-inspector__project > p:last-of-type,
+  #project-2 .project-inspector__project > p:last-of-type {
+    font-size: 1rem;
+    line-height: 1.52;
   }
 
   .extra-workspace {
@@ -4850,9 +4863,15 @@ html:not(.js) .extra-step-tabs {
 }
 
 @media (min-width: 42.01rem) and (max-height: 42rem) {
+  .js .section-page--about .section-page__scroller,
   .js .section-page--projects .section-page__scroller,
   .js .section-page--extra .section-page__scroller {
     overflow-y: auto;
+  }
+
+  .js .about-layout {
+    height: auto;
+    min-height: 100%;
   }
 
   .js .projects-layout {
@@ -4879,6 +4898,22 @@ html:not(.js) .extra-step-tabs {
   .project-workspace {
     height: 40.75rem;
     min-height: 40.75rem;
+  }
+}
+
+@media (min-width: 56.01rem) and (max-height: 48rem) {
+  .js .section-page--projects .section-page__scroller {
+    overflow-y: auto;
+  }
+
+  .js .projects-layout {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .project-workspace {
+    height: 45rem;
+    min-height: 45rem;
   }
 }
 
