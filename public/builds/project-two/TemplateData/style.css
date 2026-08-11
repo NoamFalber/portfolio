@@ -24,11 +24,11 @@ body {
 button, a {
   --key-side-right: #4b555c;
   --key-side-bottom: #293138;
-  --key-edge: #07090b;
+  --key-edge: #050708;
   position: relative;
   z-index: 1;
   min-height: 44px;
-  border: 1px solid #a8afb5;
+  border: 2px solid var(--key-edge);
   border-radius: 0;
   background: var(--raised);
   color: var(--ink);
@@ -56,13 +56,13 @@ button::before, a::before {
   width: calc(100% + 6px);
   height: calc(100% + 6px);
   background:
-    linear-gradient(45deg, transparent 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px) 100%) 100% 0 / 6px 6px no-repeat,
-    linear-gradient(var(--key-edge), var(--key-edge)) 100% 6px / 1px calc(100% - 6px) no-repeat,
-    linear-gradient(var(--key-edge), var(--key-edge)) 6px 100% / calc(100% - 6px) 1px no-repeat,
-    linear-gradient(45deg, transparent 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px) 100%) 0 100% / 6px 6px no-repeat,
+    linear-gradient(45deg, transparent 0 calc(50% - 1px), var(--key-edge) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px) 100%) 100% 0 / 6px 6px no-repeat,
+    linear-gradient(var(--key-edge), var(--key-edge)) 100% 6px / 2px calc(100% - 6px) no-repeat,
+    linear-gradient(var(--key-edge), var(--key-edge)) 6px 100% / calc(100% - 6px) 2px no-repeat,
+    linear-gradient(45deg, transparent 0 calc(50% - 1px), var(--key-edge) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px) 100%) 0 100% / 6px 6px no-repeat,
     linear-gradient(var(--key-side-right), var(--key-side-right)) 100% 0 / 6px calc(100% - 6px) no-repeat,
     linear-gradient(var(--key-side-bottom), var(--key-side-bottom)) 0 100% / calc(100% - 6px) 6px no-repeat,
-    linear-gradient(45deg, var(--key-side-bottom) 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), var(--key-side-right) calc(50% + .5px) 100%) 100% 100% / 6px 6px no-repeat;
+    linear-gradient(45deg, var(--key-side-bottom) 0 calc(50% - 1px), var(--key-edge) calc(50% - 1px) calc(50% + 1px), var(--key-side-right) calc(50% + 1px) 100%) 100% 100% / 6px 6px no-repeat;
   clip-path: polygon(calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px), calc(100% - 6px) calc(100% - 6px));
   content: "";
   filter: none;
@@ -71,7 +71,7 @@ button::before, a::before {
 }
 
 button:hover, a:hover {
-  border-color: var(--accent);
+  border-color: var(--key-edge);
   background: #2b3037;
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, .14),
