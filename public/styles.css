@@ -1309,9 +1309,10 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .gallery-thumbnails {
   display: grid;
-  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-columns: minmax(0, 13rem);
   grid-auto-flow: column;
   gap: 0;
+  justify-content: start;
   overflow: visible;
   padding: 0;
 }
@@ -5041,8 +5042,14 @@ html:not(.js) .extra-step-tabs {
 }
 
 .gallery-thumbnails button:only-child {
-  width: min(13rem, 100%);
+  width: 100%;
   justify-self: start;
+}
+
+@media (max-width: 30rem) {
+  .gallery-thumbnails {
+    grid-auto-columns: minmax(0, 1fr);
+  }
 }
 
 .build-player__external {
@@ -5225,18 +5232,19 @@ html:not(.js) .extra-step-tabs {
     transform var(--control-motion);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .button:hover,
+@media (hover: hover) and (pointer: fine),
+  (any-hover: hover) and (any-pointer: fine) {
+  .button:hover:not(:disabled),
   .text-link:hover,
   .contact-link:hover,
-  .project-tab:hover,
+  .project-tab:hover:not(:disabled),
   .project-build-link:hover:not(:disabled),
   .gallery-pager button:hover:not(:disabled),
-  .gallery-thumbnails button:hover,
+  .gallery-thumbnails button:hover:not(:disabled),
   .build-player__external:hover,
-  .extra-project-switcher > button:hover,
-  .extra-carousel-controls button:hover,
-  .extra-step-tabs button:hover,
+  .extra-project-switcher > button:hover:not(:disabled),
+  .extra-carousel-controls button:hover:not(:disabled),
+  .extra-step-tabs button:hover:not(:disabled),
   .section-rail a:hover {
     background-color: var(--control-face-hover);
     background-image: linear-gradient(
@@ -5257,10 +5265,10 @@ html:not(.js) .extra-step-tabs {
     );
   }
 
-  .project-tab[aria-selected="true"]:hover,
-  .gallery-thumbnails button[aria-pressed="true"]:hover,
-  .extra-project-switcher > button[aria-pressed="true"]:hover,
-  .extra-step-tabs button[aria-selected="true"]:hover,
+  .project-tab[aria-selected="true"]:hover:not(:disabled),
+  .gallery-thumbnails button[aria-pressed="true"]:hover:not(:disabled),
+  .extra-project-switcher > button[aria-pressed="true"]:hover:not(:disabled),
+  .extra-step-tabs button[aria-selected="true"]:hover:not(:disabled),
   .section-rail a[aria-current="page"]:hover {
     background-color: var(--control-face-hover);
     background-image: linear-gradient(
@@ -5285,7 +5293,7 @@ html:not(.js) .extra-step-tabs {
       .extra-carousel-controls button,
       .extra-step-tabs button,
       .section-rail a
-    ):hover::before {
+    ):not(:disabled):hover::before {
     clip-path: polygon(
       calc(100% - var(--control-depth) + var(--control-hover-travel))
         var(--control-hover-travel),
@@ -5305,17 +5313,17 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
-.button:active,
+.button:active:not(:disabled),
 .text-link:active,
 .contact-link:active,
-.project-tab:active,
+.project-tab:active:not(:disabled),
 .project-build-link:active:not(:disabled),
 .gallery-pager button:active:not(:disabled),
-.gallery-thumbnails button:active,
+.gallery-thumbnails button:active:not(:disabled),
 .build-player__external:active,
-.extra-project-switcher > button:active,
-.extra-carousel-controls button:active,
-.extra-step-tabs button:active,
+.extra-project-switcher > button:active:not(:disabled),
+.extra-carousel-controls button:active:not(:disabled),
+.extra-step-tabs button:active:not(:disabled),
 .section-rail a:active {
   z-index: 1;
   background-color: var(--control-face-hover);
@@ -5354,7 +5362,7 @@ html:not(.js) .extra-step-tabs {
     .extra-step-tabs button,
     .section-rail a,
     .skip-link
-  ):active::before {
+  ):not(:disabled):active::before {
   clip-path: polygon(
     calc(100% - var(--control-depth) + var(--control-press-travel))
       var(--control-press-travel),
@@ -5603,6 +5611,106 @@ html:not(.js) .extra-step-tabs {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  /* Keep the short, input-driven key movement available on systems that use
+     reduced motion as an OS-wide setting. These controls move only a few
+     pixels and provide immediate pressed-state feedback. */
+  :is(
+      .button,
+      .text-link,
+      .contact-link,
+      .project-tab,
+      .project-build-link,
+      .gallery-pager button,
+      .gallery-thumbnails button,
+      .build-player__external,
+      .extra-project-switcher > button,
+      .extra-carousel-controls button,
+      .extra-step-tabs button,
+      .section-rail a,
+      .skip-link
+    ):not(:disabled) {
+    transition:
+      background-color 190ms ease,
+      border-color 190ms ease,
+      box-shadow var(--control-motion),
+      color 190ms ease,
+      transform var(--control-motion) !important;
+  }
+
+  :is(
+      .button,
+      .text-link,
+      .contact-link,
+      .project-tab,
+      .project-build-link,
+      .gallery-pager button,
+      .gallery-thumbnails button,
+      .build-player__external,
+      .extra-project-switcher > button,
+      .extra-carousel-controls button,
+      .extra-step-tabs button,
+      .section-rail a,
+      .skip-link
+    ):not(:disabled)::before {
+    transition:
+      clip-path var(--control-motion),
+      transform var(--control-motion) !important;
+  }
+
+  :is(
+      .button,
+      .text-link,
+      .contact-link,
+      .project-tab,
+      .project-build-link,
+      .gallery-pager button,
+      .gallery-thumbnails button,
+      .build-player__external,
+      .extra-project-switcher > button,
+      .extra-carousel-controls button,
+      .extra-step-tabs button,
+      .section-rail a,
+      .skip-link
+    ):not(:disabled):active {
+    transition:
+      background-color 90ms ease-out,
+      border-color 90ms ease-out,
+      box-shadow var(--control-press-motion),
+      color 90ms ease-out,
+      transform var(--control-press-motion) !important;
+  }
+
+  :is(
+      .button,
+      .text-link,
+      .contact-link,
+      .project-tab,
+      .project-build-link,
+      .gallery-pager button,
+      .gallery-thumbnails button,
+      .build-player__external,
+      .extra-project-switcher > button,
+      .extra-carousel-controls button,
+      .extra-step-tabs button,
+      .section-rail a,
+      .skip-link
+    ):not(:disabled):active::before {
+    transition:
+      clip-path var(--control-press-motion),
+      transform var(--control-press-motion) !important;
+  }
+
+  .control-shine::before {
+    animation:
+      control-shine-sweep 3.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite,
+      control-shine-visibility 3.6s linear infinite !important;
+  }
+
+  .section-page[aria-hidden="true"] .control-shine::before,
+  .workspace-window[aria-hidden="true"] .control-shine::before {
+    animation-play-state: paused !important;
   }
 
   .js.is-ready .section-page {
