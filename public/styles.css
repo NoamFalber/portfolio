@@ -2671,12 +2671,12 @@ html:not(.js) .extra-step-tabs {
 @keyframes build-button-shine {
   0%,
   42% {
-    left: -45%;
+    transform: translate3d(0, 0, 0) rotate(18deg);
   }
 
   76%,
   100% {
-    left: 135%;
+    transform: translate3d(650%, 0, 0) rotate(18deg);
   }
 }
 
@@ -5008,6 +5008,527 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
+/* Viewport-fit and interaction polish */
+
+.button--primary,
+.section-page--about .about-copy .button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.button--primary::before,
+.section-page--about .about-copy .button::before {
+  position: absolute;
+  z-index: 0;
+  top: -120%;
+  bottom: -120%;
+  left: -45%;
+  width: 28%;
+  transform: translate3d(0, 0, 0) rotate(18deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--button-shine),
+    transparent
+  );
+  content: "";
+  pointer-events: none;
+  animation: build-button-shine 3.4s ease-in-out infinite;
+  animation-delay: -0.6s;
+  will-change: transform;
+}
+
+.project-build-link::before,
+.extra-build-jump::before {
+  transform: translate3d(0, 0, 0) rotate(18deg);
+  animation-delay: -0.6s;
+  will-change: transform;
+}
+
+.gallery-slides {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(0.55rem, 1vw, 0.9rem);
+}
+
+.gallery-slides::before {
+  position: absolute;
+  inset: clamp(0.4rem, 0.75vw, 0.7rem);
+  border: 1px solid rgba(var(--project-light-rgb), 0.2);
+  content: "";
+  pointer-events: none;
+}
+
+.gallery-slides::after {
+  position: absolute;
+  top: clamp(0.4rem, 0.75vw, 0.7rem);
+  left: clamp(0.4rem, 0.75vw, 0.7rem);
+  width: clamp(2.5rem, 5vw, 4.5rem);
+  height: 0.2rem;
+  background: var(--coral);
+  content: "";
+  pointer-events: none;
+}
+
+.gallery-slide {
+  z-index: 1;
+  box-shadow:
+    0.42rem 0.42rem 0 var(--coral),
+    0 0 0 1px rgba(var(--project-light-rgb), 0.2);
+}
+
+@media (min-width: 56.01rem) {
+  .js .section-page__scroller,
+  .js .section-page--about .section-page__scroller,
+  .js .section-page--projects .section-page__scroller,
+  .js .section-page--extra .section-page__scroller {
+    overflow-y: hidden;
+  }
+
+  .section-content,
+  .js .about-layout,
+  .js .projects-layout,
+  .extra-layout {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .project-workspace,
+  .extra-workspace {
+    height: auto;
+    min-height: 0;
+  }
+
+  .projects-layout,
+  .extra-layout {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .project-workspace {
+    --project-sidebar: clamp(19.5rem, 31%, 22rem);
+  }
+
+  .project-inspector {
+    grid-template-rows: minmax(0, 1.45fr) minmax(0, 0.55fr);
+  }
+
+  .project-inspector__content {
+    min-height: 0;
+  }
+}
+
+@media (min-width: 56.01rem) and (max-width: 68rem) {
+  :root {
+    --gutter: clamp(1rem, 3vw, 2rem);
+    --rail-space: 5.35rem;
+  }
+
+  .section-rail {
+    right: clamp(0.65rem, 1.5vw, 1rem);
+    width: 4.15rem;
+  }
+
+  .section-rail__label {
+    justify-content: center;
+  }
+
+  .section-rail__label span:first-child,
+  .section-rail__copy {
+    display: none;
+  }
+
+  .section-rail a,
+  .section-rail a:hover {
+    min-height: 3.35rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding: 0.45rem;
+    transform: none;
+  }
+
+  .section-rail__number {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .intro-layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(14rem, 0.65fr);
+    gap: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .about-layout {
+    grid-template-columns: minmax(0, 0.88fr) minmax(21rem, 1.12fr);
+    column-gap: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .project-workspace {
+    --project-sidebar: clamp(17rem, 36%, 19.5rem);
+  }
+
+  .extra-workspace {
+    --extra-sidebar: clamp(14rem, 30%, 17rem);
+  }
+}
+
+@media (min-width: 56.01rem) and (max-height: 46rem) {
+  .intro-layout,
+  .about-layout {
+    padding-top: clamp(0.7rem, 2vh, 1.25rem);
+    padding-bottom: clamp(0.8rem, 2.4vh, 1.5rem);
+  }
+
+  .intro-copy h1 {
+    font-size: clamp(3.8rem, 13vh, 5.9rem);
+    line-height: 0.76;
+  }
+
+  .role-line {
+    margin-top: clamp(0.7rem, 2vh, 1.1rem);
+    padding: 0.45rem 0.65rem;
+    font-size: clamp(0.95rem, 2.7vh, 1.18rem);
+  }
+
+  .intro-summary {
+    margin-top: clamp(0.55rem, 1.5vh, 0.85rem);
+    font-size: clamp(0.92rem, 2.45vh, 1.08rem);
+    line-height: 1.38;
+  }
+
+  .intro-proof {
+    margin-top: clamp(0.5rem, 1.35vh, 0.75rem);
+    padding: 0.5rem 0.7rem;
+  }
+
+  .intro-actions {
+    gap: 0.55rem 0.85rem;
+    margin-top: clamp(0.55rem, 1.6vh, 0.9rem);
+  }
+
+  .intro-actions .button,
+  .intro-actions .text-link {
+    min-height: 2.75rem;
+  }
+
+  .contact-links {
+    gap: 0.4rem;
+  }
+
+  .contact-link {
+    min-height: 2.6rem;
+    padding-block: 0.3rem;
+  }
+
+  .portrait-card {
+    width: min(100%, 43vh, 21rem);
+  }
+
+  .about-layout {
+    gap: clamp(0.7rem, 2vh, 1.1rem) clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .about-heading h2 {
+    font-size: clamp(2.55rem, 8.3vh, 3.8rem);
+    line-height: 0.92;
+  }
+
+  .about-copy {
+    padding: clamp(0.75rem, 2vh, 1.05rem);
+  }
+
+  .about-copy .about-copy__lead {
+    margin-bottom: clamp(0.5rem, 1.5vh, 0.75rem);
+    font-size: clamp(0.98rem, 2.55vh, 1.12rem);
+    line-height: 1.28;
+  }
+
+  .about-copy p {
+    font-size: clamp(0.82rem, 2.2vh, 0.94rem);
+    line-height: 1.42;
+  }
+
+  .about-copy .button {
+    min-height: 2.75rem;
+    margin-top: clamp(0.55rem, 1.6vh, 0.85rem);
+    padding-block: 0.55rem;
+  }
+
+  .about-facts > div {
+    padding: clamp(0.45rem, 1.35vh, 0.7rem) 0.75rem;
+  }
+
+  .about-facts dt {
+    font-size: 0.68rem;
+  }
+
+  .about-facts dd {
+    margin-top: 0.25rem;
+    font-size: clamp(0.76rem, 2vh, 0.88rem);
+    line-height: 1.22;
+  }
+
+  .projects-layout,
+  .extra-layout {
+    padding-top: clamp(0.55rem, 1.7vh, 0.9rem);
+    padding-bottom: clamp(0.65rem, 1.9vh, 1rem);
+  }
+
+  .projects-heading {
+    margin-bottom: clamp(0.4rem, 1.25vh, 0.65rem);
+  }
+
+  .projects-heading .section-kicker,
+  .extra-heading .section-kicker {
+    font-size: 0.76rem;
+  }
+
+  .projects-heading h2 {
+    font-size: clamp(2.55rem, 7.5vh, 3.5rem);
+    line-height: 0.84;
+  }
+
+  .project-tab,
+  .project-build-link {
+    min-height: clamp(3.55rem, 9.5vh, 4.3rem);
+    padding-block: 0.45rem;
+  }
+
+  .project-tab {
+    padding-inline: 0.65rem;
+  }
+
+  .project-tab small {
+    font-size: 0.7rem;
+  }
+
+  .project-build-link__icon {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .gallery-heading {
+    min-height: 3.25rem;
+    padding: 0.45rem 0.65rem;
+  }
+
+  .gallery-heading > div:first-child strong {
+    font-size: 0.86rem;
+  }
+
+  .gallery-heading p,
+  .gallery-slide figcaption {
+    font-size: 0.7rem;
+  }
+
+  .gallery-slide figcaption {
+    padding: 0.38rem 0.6rem;
+  }
+
+  .gallery-thumbnails {
+    padding: 0.38rem;
+  }
+
+  .gallery-thumbnails button {
+    width: min(11.5rem, 100%);
+    padding: 0.25rem;
+  }
+
+  .project-inspector {
+    --inspector-rail-gap: 0.75rem;
+    --inspector-rail-inset: 0.72rem;
+    grid-template-rows: minmax(0, 1.42fr) minmax(0, 0.58fr);
+  }
+
+  .project-inspector__project {
+    padding-top: clamp(0.65rem, 1.7vh, 0.85rem);
+    padding-right: 0.8rem;
+    padding-bottom: clamp(0.55rem, 1.5vh, 0.8rem);
+  }
+
+  .project-inspector__project::before {
+    top: clamp(0.65rem, 1.7vh, 0.85rem);
+    bottom: clamp(0.55rem, 1.5vh, 0.8rem);
+  }
+
+  .project-inspector__project > p:first-child {
+    font-size: 0.68rem;
+  }
+
+  #project-1 .project-inspector__project h3,
+  #project-2 .project-inspector__project h3 {
+    margin-top: 0.25rem;
+    font-size: clamp(1.65rem, 4.6vh, 2.15rem);
+    line-height: 0.9;
+  }
+
+  #project-1 .project-inspector__project > p:last-of-type,
+  #project-2 .project-inspector__project > p:last-of-type {
+    margin-top: clamp(0.42rem, 1.25vh, 0.65rem);
+    font-size: clamp(0.76rem, 1.8vh, 0.84rem);
+    line-height: 1.36;
+  }
+
+  .project-tags {
+    gap: 0.25rem;
+    margin-top: clamp(0.35rem, 1.1vh, 0.55rem);
+  }
+
+  .project-tags li {
+    padding: 0.16rem 0.38rem;
+    font-size: 0.62rem;
+  }
+
+  .project-inspector__selection {
+    padding-top: 0.55rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .project-inspector__content {
+    min-height: 0;
+  }
+
+  .project-inspector__selection-head p {
+    font-size: 0.66rem;
+  }
+
+  .project-inspector__content h4 {
+    margin-top: 0.4rem;
+    font-size: clamp(1.28rem, 3.5vh, 1.65rem);
+  }
+
+  .project-inspector__content > p {
+    margin-top: 0.4rem;
+    font-size: clamp(0.68rem, 1.75vh, 0.78rem);
+    line-height: 1.34;
+  }
+
+  .extra-layout {
+    gap: clamp(0.35rem, 1vh, 0.55rem);
+  }
+
+  .extra-heading h2 {
+    font-size: clamp(2rem, 6.4vh, 2.9rem);
+    line-height: 0.88;
+  }
+
+  .extra-workspace__toolbar {
+    min-height: clamp(3.45rem, 9vh, 4rem);
+  }
+
+  .extra-project-switcher > button {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .extra-project-switcher > button > span:first-child {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .extra-project-switcher small {
+    font-size: 0.66rem;
+  }
+
+  .extra-carousel-controls {
+    grid-template-columns: 3rem auto 3rem;
+  }
+
+  .extra-carousel-controls button {
+    min-width: 3rem;
+  }
+
+  .extra-step-tabs button {
+    min-height: clamp(3rem, 8vh, 3.5rem);
+    padding-block: 0.3rem;
+  }
+
+  .extra-step-tabs strong {
+    font-size: 0.7rem;
+  }
+
+  .extra-hero-copy {
+    justify-content: center;
+    padding: clamp(0.8rem, 2.2vh, 1.2rem) clamp(1rem, 2.3vw, 1.6rem);
+  }
+
+  .extra-slide--hero h3 {
+    font-size: clamp(2.4rem, 7.4vh, 3.4rem);
+    line-height: 0.84;
+  }
+
+  .extra-slide__lead {
+    margin-top: clamp(0.45rem, 1.25vh, 0.7rem);
+    font-size: clamp(0.76rem, 1.95vh, 0.88rem);
+    line-height: 1.35;
+  }
+
+  .extra-build-jump {
+    min-height: 2.7rem;
+    margin-top: clamp(0.5rem, 1.35vh, 0.75rem);
+    padding: 0.55rem 0.75rem;
+  }
+
+  .extra-meta > div {
+    padding: clamp(0.38rem, 1.1vh, 0.58rem) 0.7rem;
+  }
+
+  .extra-meta dt {
+    font-size: 0.64rem;
+  }
+
+  .extra-meta dd {
+    margin-top: 0.15rem;
+    font-size: clamp(0.68rem, 1.75vh, 0.78rem);
+    line-height: 1.25;
+  }
+
+  .extra-slide__heading,
+  .extra-slide__body,
+  .extra-proof-body {
+    padding: clamp(0.65rem, 1.8vh, 0.95rem);
+  }
+
+  .extra-slide__heading h3 {
+    margin-top: 0.35rem;
+    font-size: clamp(1.35rem, 3.8vh, 1.75rem);
+  }
+
+  .extra-slide__body,
+  .extra-proof-body {
+    gap: clamp(0.4rem, 1.1vh, 0.65rem);
+    font-size: clamp(0.7rem, 1.75vh, 0.8rem);
+    line-height: 1.32;
+  }
+
+  .extra-detail-grid li,
+  .runtime-pipeline li,
+  .extra-evidence-grid > div {
+    padding: clamp(0.35rem, 1vh, 0.55rem);
+  }
+
+  .extra-callout {
+    padding: 0.48rem 0.58rem;
+  }
+
+  .extra-evidence-grid dt {
+    font-size: clamp(1rem, 3vh, 1.35rem);
+  }
+
+  .extra-evidence-grid dd {
+    margin-top: 0.18rem;
+    font-size: 0.7rem;
+    line-height: 1.28;
+  }
+}
+
+@media (min-width: 42.01rem) and (hover: none) and (pointer: coarse) {
+  .project-build-link,
+  .extra-build-jump,
+  .workspace-window--build {
+    display: grid;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -5028,6 +5549,14 @@ html:not(.js) .extra-step-tabs {
 
   .js.is-ready .intro-reel__track {
     animation-duration: 76s !important;
+    animation-iteration-count: infinite !important;
+  }
+
+  .button--primary::before,
+  .section-page--about .about-copy .button::before,
+  .project-build-link::before,
+  .extra-build-jump::before {
+    animation-duration: 3.4s !important;
     animation-iteration-count: infinite !important;
   }
 
