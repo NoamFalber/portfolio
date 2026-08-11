@@ -40,6 +40,7 @@
   --sun: #ebc75b;
   --selection: #ebc75b;
   --selection-edge: #1c4243;
+  --gallery-surface: #1c4243;
   --line: #8ea29f;
   --shadow: #163238;
   --page-width: 94rem;
@@ -1191,14 +1192,23 @@ html:not(.js) .project-panel {
 
 .gallery-slide {
   display: grid;
-  height: 100%;
+  width: 100%;
+  height: auto;
   min-height: 0;
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  overflow: hidden;
   margin: 0;
+  border: 1.5px solid #fffaf0;
+  background: var(--ink);
+  box-shadow: 0.48rem 0.48rem 0 var(--coral);
 }
 
 .gallery-slides {
+  display: grid;
   min-height: 0;
+  place-items: center;
+  padding: clamp(0.9rem, 2vw, 1.6rem);
+  background: var(--gallery-surface);
   touch-action: pan-y pinch-zoom;
 }
 
@@ -1207,7 +1217,7 @@ html:not(.js) .project-panel {
   height: 100%;
   min-height: 0;
   overflow: hidden;
-  background: var(--ink);
+  background: var(--gallery-surface);
   isolation: isolate;
 }
 
@@ -1223,7 +1233,21 @@ html:not(.js) .project-panel {
 .interactive-scene--workshop,
 .interactive-scene--gameplay,
 .interactive-scene--landscape {
-  background: #090d12;
+  width: 100%;
+  height: auto;
+  background: var(--gallery-surface);
+}
+
+.interactive-scene--landscape {
+  aspect-ratio: 1378 / 693;
+}
+
+.interactive-scene--workshop {
+  aspect-ratio: 2558 / 1329;
+}
+
+.interactive-scene--gameplay {
+  aspect-ratio: 2003 / 1041;
 }
 
 .interactive-scene--workshop .interactive-scene__image,
@@ -1301,13 +1325,13 @@ html:not(.js) .project-panel {
 }
 
 .scene-hotspot--grass {
-  --scene-hotspot-x: 84%;
-  --scene-hotspot-y: 72%;
+  --scene-hotspot-x: 28%;
+  --scene-hotspot-y: 70%;
 }
 
 .scene-hotspot--trail {
-  --scene-hotspot-x: 39%;
-  --scene-hotspot-y: 70%;
+  --scene-hotspot-x: 70.5%;
+  --scene-hotspot-y: 86%;
 }
 
 .scene-hotspot--ball {
@@ -4307,7 +4331,8 @@ html:not(.js) .extra-step-tabs {
   position: relative;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   border-bottom-width: 1.5px;
-  background: #1c4243;
+  border-bottom-color: var(--gallery-surface);
+  background: var(--gallery-surface);
   color: #fffaf0;
 }
 
