@@ -5584,20 +5584,18 @@ html:not(.js) .extra-step-tabs {
   transform: translate3d(0, 0, 0);
   background:
     linear-gradient(var(--control-side-right), var(--control-side-right))
-      right 1px top 1px / calc(var(--control-depth) - 2px)
-      calc(100% - var(--control-depth) - 2px) no-repeat,
+      100% 0 / var(--control-depth)
+      calc(100% - var(--control-depth)) no-repeat,
     linear-gradient(var(--control-side-bottom), var(--control-side-bottom))
-      left 1px bottom 1px / calc(100% - var(--control-depth) - 2px)
-      calc(var(--control-depth) - 2px) no-repeat,
+      0 100% / calc(100% - var(--control-depth))
+      var(--control-depth) no-repeat,
     linear-gradient(
-        135deg,
-        var(--control-side-right) 0 calc(50% - 0.6px),
-        var(--control-edge) calc(50% - 0.6px) calc(50% + 0.6px),
-        var(--control-side-bottom) calc(50% + 0.6px) 100%
+        45deg,
+        var(--control-side-bottom) 0 calc(50% - 0.45px),
+        var(--control-edge) calc(50% - 0.45px) calc(50% + 0.45px),
+        var(--control-side-right) calc(50% + 0.45px) 100%
       )
-      right 1px bottom 1px / calc(var(--control-depth) - 2px)
-      calc(var(--control-depth) - 2px) no-repeat,
-    var(--control-edge);
+      100% 100% / var(--control-depth) var(--control-depth) no-repeat;
   clip-path: polygon(
     calc(100% - var(--control-depth)) 0,
     100% var(--control-depth),
@@ -5607,7 +5605,7 @@ html:not(.js) .extra-step-tabs {
     calc(100% - var(--control-depth)) calc(100% - var(--control-depth))
   );
   content: "";
-  filter: drop-shadow(0.04rem 0.04rem 0 var(--control-edge));
+  filter: drop-shadow(0.045rem 0.045rem 0 var(--control-edge));
   pointer-events: none;
   animation: none;
   transition:
@@ -5929,7 +5927,7 @@ html:not(.js) .extra-step-tabs {
     box-shadow:
       inset 0.06rem 0.06rem 0 var(--control-highlight),
       inset -0.06rem -0.06rem 0 var(--control-shade);
-    z-index: 3;
+    z-index: 1;
     transform: translate3d(
       0.11rem,
       calc(0.11rem - var(--control-depth)),
@@ -5983,7 +5981,7 @@ html:not(.js) .extra-step-tabs {
 .extra-carousel-controls button:active,
 .extra-step-tabs button:active,
 .section-rail a:active {
-  z-index: 4;
+  z-index: 1;
   background-color: var(--control-face-hover);
   background-image: linear-gradient(
     180deg,

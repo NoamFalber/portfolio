@@ -41,13 +41,12 @@ body { padding: 0; margin: 0 }
   width: calc(100% + 6px);
   height: calc(100% + 6px);
   background:
-    linear-gradient(#706568, #706568) right 1px top 1px / 4px calc(100% - 8px) no-repeat,
-    linear-gradient(#3b3436, #3b3436) left 1px bottom 1px / calc(100% - 8px) 4px no-repeat,
-    linear-gradient(135deg, #706568 0 42%, #0f0d0e 42% 58%, #3b3436 58% 100%) right 1px bottom 1px / 4px 4px no-repeat,
-    #0f0d0e;
+    linear-gradient(#706568, #706568) 100% 0 / 6px calc(100% - 6px) no-repeat,
+    linear-gradient(#3b3436, #3b3436) 0 100% / calc(100% - 6px) 6px no-repeat,
+    linear-gradient(45deg, #3b3436 0 calc(50% - .45px), #0f0d0e calc(50% - .45px) calc(50% + .45px), #706568 calc(50% + .45px) 100%) 100% 100% / 6px 6px no-repeat;
   clip-path: polygon(calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px), calc(100% - 6px) calc(100% - 6px));
   content: "";
-  filter: drop-shadow(.5px .5px 0 #0f0d0e);
+  filter: drop-shadow(.75px .75px 0 #0f0d0e);
   pointer-events: none;
   transition: filter 230ms cubic-bezier(.22, .78, .24, 1), transform 230ms cubic-bezier(.22, .78, .24, 1);
 }
@@ -60,7 +59,7 @@ body { padding: 0; margin: 0 }
 }
 #unity-fullscreen-button:hover::before { transform: translate(-2px, -2px); filter: none }
 #unity-fullscreen-button:active {
-  z-index: 0;
+  z-index: 1;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, 0.3);
   transform: translate(6px, 0);
 }

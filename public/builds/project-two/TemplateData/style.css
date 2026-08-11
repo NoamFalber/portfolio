@@ -56,13 +56,12 @@ button::before, a::before {
   width: calc(100% + 6px);
   height: calc(100% + 6px);
   background:
-    linear-gradient(var(--key-side-right), var(--key-side-right)) right 1px top 1px / 4px calc(100% - 8px) no-repeat,
-    linear-gradient(var(--key-side-bottom), var(--key-side-bottom)) left 1px bottom 1px / calc(100% - 8px) 4px no-repeat,
-    linear-gradient(135deg, var(--key-side-right) 0 42%, var(--key-edge) 42% 58%, var(--key-side-bottom) 58% 100%) right 1px bottom 1px / 4px 4px no-repeat,
-    var(--key-edge);
+    linear-gradient(var(--key-side-right), var(--key-side-right)) 100% 0 / 6px calc(100% - 6px) no-repeat,
+    linear-gradient(var(--key-side-bottom), var(--key-side-bottom)) 0 100% / calc(100% - 6px) 6px no-repeat,
+    linear-gradient(45deg, var(--key-side-bottom) 0 calc(50% - .45px), var(--key-edge) calc(50% - .45px) calc(50% + .45px), var(--key-side-right) calc(50% + .45px) 100%) 100% 100% / 6px 6px no-repeat;
   clip-path: polygon(calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px), calc(100% - 6px) calc(100% - 6px));
   content: "";
-  filter: drop-shadow(.5px .5px 0 var(--key-edge));
+  filter: drop-shadow(.75px .75px 0 var(--key-edge));
   pointer-events: none;
   transition: filter 230ms cubic-bezier(.22, .78, .24, 1), transform 230ms cubic-bezier(.22, .78, .24, 1);
 }
@@ -77,7 +76,7 @@ button:hover, a:hover {
 }
 button:hover::before, a:hover::before { transform: translate3d(-2px, -2px, 0); filter: none; }
 button:active, a:active {
-  z-index: 0;
+  z-index: 1;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, .32);
   transform: translate3d(6px, 0, 0);
 }
