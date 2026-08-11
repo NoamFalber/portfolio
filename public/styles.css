@@ -3409,7 +3409,7 @@ html:not(.js) .extra-step-tabs {
     justify-content: normal;
   }
 
-  .contact-link:last-child {
+  .contact-link:last-child:nth-child(odd) {
     grid-column: 1 / -1;
   }
 
