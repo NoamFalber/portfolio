@@ -906,7 +906,7 @@ const sceneHighlightDetails = {
     title: "Raymarched volumetric clouds",
     copy: "The clouds are rendered as bounded 3D volumes in a single procedural draw. A shadow map generated with a compute shader projects their shade onto the grass, terrain, balls, and meadow effects.",
   },
-  sky: {
+  sun: {
     kicker: "Lighting and atmosphere",
     title: "Shared sun and atmospheric lighting",
     copy: "The sky, atmosphere, clouds, grass, terrain, and balls use the same directional light. This keeps highlights, shadows, and distance color consistent as the camera moves.",
@@ -916,10 +916,15 @@ const sceneHighlightDetails = {
     title: "Compute culling and three grass detail levels",
     copy: "A compute shader selects only the visible grass and the right level of detail. Three indirect draws render the result, while the terrain shader continues the same grass lighting and movement into the distance.",
   },
-  ball: {
+  trail: {
     kicker: "Grass interaction",
     title: "Persistent grass trails",
-    copy: "The rolling ball bends nearby blades immediately and records a directional trail, even during fast movement. The trail remains visible before the grass gradually returns to its original shape, and the wandering balls use the same system.",
+    copy: "Swept sphere contact fills gaps during fast movement, while sparse pages store only touched grass in a fixed 8 MB GPU atlas. The blades recover and release that stored trail data over time.",
+  },
+  ball: {
+    kicker: "Player movement",
+    title: "Physics-driven rolling ball",
+    copy: "The player steers a Rigidbody-driven ball with camera-relative control, jumping, braking, and speed-preserving turns. Its contact with the field drives the grass response.",
   },
   "map-palette": {
     kicker: "Layered map tools",

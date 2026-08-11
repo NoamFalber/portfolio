@@ -169,9 +169,9 @@
                   <div class="intro-reel__group">
                     <div class="intro-reel__item intro-reel__item--project">
                       <img
-                        src="assets/images/project-one-hero.webp"
-                        width="1456"
-                        height="1080"
+                        src="assets/images/GameOneHero.png"
+                        width="1378"
+                        height="693"
                         alt=""
                         decoding="async"
                       >
@@ -203,9 +203,9 @@
                   <div class="intro-reel__group">
                     <div class="intro-reel__item intro-reel__item--project">
                       <img
-                        src="assets/images/project-one-hero.webp"
-                        width="1456"
-                        height="1080"
+                        src="assets/images/GameOneHero.png"
+                        width="1378"
+                        height="693"
                         alt=""
                         loading="lazy"
                         decoding="async"
@@ -242,73 +242,11 @@
       </section>
 
       <section
-        class="section-page section-page--about"
-        id="about"
-        aria-labelledby="about-title"
-        data-section-page
-        data-section-index="1"
-        data-position="after"
-      >
-        <div class="section-page__scroller" data-section-scroller>
-          <div class="about-layout section-content">
-            <header class="about-heading">
-              <p class="section-kicker">About</p>
-              <h2 id="about-title" tabindex="-1">
-                I like building the parts other people build with.
-              </h2>
-            </header>
-
-            <div class="about-copy">
-              <p class="about-copy__lead">
-                Give me a problem that needs both code and visual thinking. I
-                do my best work when I’m learning something new and pushing
-                through the hard technical problems until the idea becomes a
-                system that makes the whole game better.
-              </p>
-              <p>
-                Art is part of that process. Understanding the visual target
-                and the person using a tool leads to better technical
-                decisions. I thrive in teams where developers, artists, and
-                designers shape the result together.
-              </p>
-              <a
-                class="button button--ink"
-                href="#projects"
-                data-section-link
-                data-section-target="projects"
-              >
-                <span>View selected projects</span>
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
-
-            <dl class="about-facts">
-              <div class="about-facts__tools">
-                <dt>Primary depth</dt>
-                <dd>
-                  C# · Unity<br>
-                  MonoGame engine development
-                </dd>
-              </div>
-              <div>
-                <dt>Supporting experience</dt>
-                <dd>C++ · C · Java · JavaScript · HLSL<br>Godot · Unreal Engine 5 · raylib</dd>
-              </div>
-              <div>
-                <dt>Education</dt>
-                <dd>Game development, Tiltan<br>Haifa · 2024–2026</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
-
-      <section
         class="section-page section-page--projects"
         id="projects"
         aria-labelledby="projects-title"
         data-section-page
-        data-section-index="2"
+        data-section-index="1"
         data-position="after"
       >
         <div class="section-page__scroller" data-section-scroller>
@@ -426,30 +364,30 @@
                               data-gallery-index="0"
                             >
                               <div
-                                class="interactive-scene"
+                                class="interactive-scene interactive-scene--landscape"
                                 data-interactive-scene
                                 data-scene-overview-kicker="Project visual"
-                                data-scene-overview-title="See how the grassland works"
-                                data-scene-overview-copy="Select a highlighted area for a close look at the technical work behind the scene: volumetric clouds, shared lighting, grass rendering driven by compute shaders, and persistent trails."
+                                data-scene-overview-title="Inspect the real-time systems"
+                                data-scene-overview-copy="Select the ball, grass, trail, clouds, or sun to inspect the system behind it."
                               >
                                 <img
                                   class="interactive-scene__image"
                                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                                  data-deferred-src="assets/images/project-one-hero.webp"
-                                  data-deferred-alt="Art-direction reference showing a pale ball in a luminous grassland beneath a wide cyan sky and bright clouds."
+                                  data-deferred-src="assets/images/GameOneHero.png"
+                                  data-deferred-alt="In-game capture of Surreal Landscape Prototype showing a white ball in dense grass beneath volumetric clouds and a bright sun."
                                   data-deferred-priority="high"
-                                  width="1456"
-                                  height="1080"
+                                  width="1378"
+                                  height="693"
                                   alt=""
                                   decoding="async"
                                 >
                                 <noscript>
                                   <img
                                     class="interactive-scene__image"
-                                    src="assets/images/project-one-hero.webp"
-                                    width="1456"
-                                    height="1080"
-                                    alt="Art-direction reference showing a pale ball in a luminous grassland beneath a wide cyan sky and bright clouds."
+                                    src="assets/images/GameOneHero.png"
+                                    width="1378"
+                                    height="693"
+                                    alt="In-game capture of Surreal Landscape Prototype showing a white ball in dense grass beneath volumetric clouds and a bright sun."
                                   >
                                 </noscript>
 
@@ -459,18 +397,18 @@
                                     type="button"
                                     aria-label="Inspect the clouds"
                                     data-scene-highlight="clouds"
-                                    data-hotspot-x="73"
-                                    data-hotspot-y="17"
+                                    data-hotspot-x="67"
+                                    data-hotspot-y="10.5"
                                   >
                                     <span aria-hidden="true"></span>
                                   </button>
                                   <button
-                                    class="scene-hotspot scene-hotspot--sky"
+                                    class="scene-hotspot scene-hotspot--sun"
                                     type="button"
-                                    aria-label="Inspect the sky"
-                                    data-scene-highlight="sky"
-                                    data-hotspot-x="43"
-                                    data-hotspot-y="35"
+                                    aria-label="Inspect the sun lighting"
+                                    data-scene-highlight="sun"
+                                    data-hotspot-x="60.3"
+                                    data-hotspot-y="22.5"
                                   >
                                     <span aria-hidden="true"></span>
                                   </button>
@@ -479,8 +417,18 @@
                                     type="button"
                                     aria-label="Inspect the grass"
                                     data-scene-highlight="grass"
-                                    data-hotspot-x="25"
-                                    data-hotspot-y="74"
+                                    data-hotspot-x="84"
+                                    data-hotspot-y="72"
+                                  >
+                                    <span aria-hidden="true"></span>
+                                  </button>
+                                  <button
+                                    class="scene-hotspot scene-hotspot--trail"
+                                    type="button"
+                                    aria-label="Inspect the persistent grass trail"
+                                    data-scene-highlight="trail"
+                                    data-hotspot-x="39"
+                                    data-hotspot-y="70"
                                   >
                                     <span aria-hidden="true"></span>
                                   </button>
@@ -489,7 +437,7 @@
                                     type="button"
                                     aria-label="Inspect the ball"
                                     data-scene-highlight="ball"
-                                    data-hotspot-x="70"
+                                    data-hotspot-x="60.7"
                                     data-hotspot-y="68"
                                   >
                                     <span aria-hidden="true"></span>
@@ -497,7 +445,7 @@
                                 </div>
                               </div>
                               <figcaption>
-                                Art-direction reference for the project; this is not a captured frame from the build.
+                                In-game capture from the playable Surreal Landscape Prototype.
                               </figcaption>
                             </figure>
                           </div>
@@ -512,23 +460,23 @@
                               >
                                 <img
                                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                                  data-deferred-src="assets/images/project-one-hero.webp"
+                                  data-deferred-src="assets/images/GameOneHero.png"
                                   width="96"
-                                  height="72"
+                                  height="48"
                                   alt=""
                                   decoding="async"
                                 >
                                 <noscript>
                                   <img
-                                    src="assets/images/project-one-hero.webp"
+                                    src="assets/images/GameOneHero.png"
                                     width="96"
-                                    height="72"
+                                    height="48"
                                     alt=""
                                   >
                                 </noscript>
                                 <span>
                                   <small>Picture 01</small>
-                                  <strong>Visual reference</strong>
+                                  <strong>In-game capture</strong>
                                 </span>
                               </button>
                             </div>
@@ -573,9 +521,9 @@
                               <div class="project-inspector__selection-head">
                                 <p data-scene-kicker>Project visual</p>
                               </div>
-                              <h4 data-scene-title>See how the grassland works</h4>
+                              <h4 data-scene-title>Inspect the real-time systems</h4>
                               <p data-scene-copy>
-                                Select a highlighted area for a close look at the technical work behind the scene: volumetric clouds, shared lighting, grass rendering driven by compute shaders, and persistent trails.
+                                Select the ball, grass, trail, clouds, or sun to inspect the system behind it.
                               </p>
                             </div>
                           </div>
@@ -794,18 +742,18 @@
                           aria-labelledby="project-2-summary-title"
                         >
                           <div class="project-inspector__project">
-                            <p>Team project · runtime tools · technical art</p>
+                            <p>Three-person team · April–July 2026</p>
                             <h3 id="project-2-summary-title">Cave Map Workshop</h3>
                             <p>
-                              Cave Map Workshop began as a team game for my
-                              second-year final assignment at Tiltan. I owned
-                              the system design, external map-making tool,
-                              shaders, and visual effects. The original game
-                              included a preview level. I wanted the tool itself
-                              in the playable build, so I rebuilt it for
-                              runtime. Players can now author, validate,
-                              generate, and immediately play their own caves in
-                              the browser.
+                              Cave Map Workshop began as my second-year final
+                              assignment at Tiltan, built over three months
+                              with a 2D artist and a game designer. I owned the
+                              system design, external map-making tool, shaders,
+                              and visual effects. The original game included a
+                              preview level. I wanted the tool itself in the
+                              playable build, so I rebuilt it for runtime.
+                              Players can now author, validate, generate, and
+                              immediately play their own caves in the browser.
                             </p>
                             <ul class="project-tags" aria-label="Project technologies">
                               <li>Unity 6</li>
@@ -956,6 +904,68 @@
             </div>
             </div>
           </div>
+      </section>
+
+      <section
+        class="section-page section-page--about"
+        id="about"
+        aria-labelledby="about-title"
+        data-section-page
+        data-section-index="2"
+        data-position="after"
+      >
+        <div class="section-page__scroller" data-section-scroller>
+          <div class="about-layout section-content">
+            <header class="about-heading">
+              <p class="section-kicker">About</p>
+              <h2 id="about-title" tabindex="-1">
+                I like building the parts other people build with.
+              </h2>
+            </header>
+
+            <div class="about-copy">
+              <p class="about-copy__lead">
+                Give me a problem that needs both code and visual thinking. I
+                do my best work when I’m learning something new and pushing
+                through the hard technical problems until the idea becomes a
+                system that makes the whole game better.
+              </p>
+              <p>
+                Art is part of that process. Understanding the visual target
+                and the person using a tool leads to better technical
+                decisions. I thrive in teams where developers, artists, and
+                designers shape the result together.
+              </p>
+              <a
+                class="button button--ink"
+                href="#projects"
+                data-section-link
+                data-section-target="projects"
+              >
+                <span>View selected projects</span>
+                <span aria-hidden="true">←</span>
+              </a>
+            </div>
+
+            <dl class="about-facts">
+              <div class="about-facts__tools">
+                <dt>Primary depth</dt>
+                <dd>
+                  C# · Unity<br>
+                  MonoGame engine development
+                </dd>
+              </div>
+              <div>
+                <dt>Supporting experience</dt>
+                <dd>C++ · C · Java · JavaScript · HLSL<br>Godot · Unreal Engine 5 · raylib</dd>
+              </div>
+              <div>
+                <dt>Education</dt>
+                <dd>Game development, Tiltan<br>Haifa · 2024–2026</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
       </section>
 
       <section
@@ -1288,17 +1298,17 @@
                   data-extra-index="0"
                 >
                   <div class="extra-hero-copy">
-                    <p class="extra-slide__eyebrow">Team assignment · runtime tools · technical art</p>
+                    <p class="extra-slide__eyebrow">Three-person team · April–July 2026</p>
                     <h3>Cave Map Workshop</h3>
                     <p class="extra-slide__lead">
-                      Cave Map Workshop began as a team game for my
-                      second-year final assignment at Tiltan. I owned the
-                      system design, external map-making tool, shaders, and
-                      visual effects. The original game included a preview
-                      level. I wanted the map-making tool itself in the playable
-                      build, so I rebuilt it for runtime. The browser version
-                      now supports the complete authoring, generation, and
-                      playtesting loop.
+                      Cave Map Workshop began as my second-year final
+                      assignment at Tiltan, developed over three months with a
+                      2D artist and a game designer. I owned the system design,
+                      external map-making tool, shaders, and visual effects.
+                      The original game included a preview level. I wanted the
+                      map-making tool itself in the playable build, so I rebuilt
+                      it for runtime. The browser version now supports the
+                      complete authoring, generation, and playtesting loop.
                     </p>
                     <a
                       class="button button--primary extra-build-jump"
@@ -1311,8 +1321,8 @@
                   </div>
                   <dl class="extra-meta">
                     <div><dt>My role</dt><dd>System design, map tools, shaders, and visual effects</dd></div>
-                    <div><dt>Stack</dt><dd>Unity 6 · C# · runtime NavMesh · WebGPU</dd></div>
-                    <div><dt>Original project</dt><dd>Second-year team assignment at Tiltan</dd></div>
+                    <div><dt>Team</dt><dd>Three people · developer / technical artist · 2D artist · game designer</dd></div>
+                    <div><dt>Timeline</dt><dd>Three months · April–July 2026</dd></div>
                     <div><dt>Runtime result</dt><dd>Author → validate → generate → play → revise</dd></div>
                   </dl>
                 </article>
@@ -1511,25 +1521,25 @@
         </li>
         <li>
           <a
-            href="#about"
+            href="#projects"
             data-section-link
-            data-section-target="about"
+            data-section-target="projects"
           >
             <span class="section-rail__number">02</span>
             <span class="section-rail__copy">
-              <strong>About</strong>
+              <strong>Projects</strong>
             </span>
           </a>
         </li>
         <li>
           <a
-            href="#projects"
+            href="#about"
             data-section-link
-            data-section-target="projects"
+            data-section-target="about"
           >
             <span class="section-rail__number">03</span>
             <span class="section-rail__copy">
-              <strong>Projects</strong>
+              <strong>About</strong>
             </span>
           </a>
         </li>
