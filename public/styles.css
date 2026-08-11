@@ -3868,16 +3868,6 @@ html:not(.js) .extra-step-tabs {
   background: #dce9e3;
 }
 
-#project-2 .project-inspector__selection {
-  background: #eee3d1;
-}
-
-#project-2 .project-tags li {
-  border-color: #b4a288;
-  background: #eee4d5;
-  color: #65462f;
-}
-
 .workspace-window--build,
 .build-player {
   background: var(--gallery-surface);
@@ -4137,12 +4127,12 @@ html:not(.js) .extra-step-tabs {
 
 .contact-link {
   border-width: 1.5px;
-  box-shadow: none;
+  box-shadow: 0.28rem 0.28rem 0 var(--shadow);
 }
 
 .contact-link:hover {
-  box-shadow: inset 0 -0.22rem 0 var(--sun);
-  transform: none;
+  box-shadow: 0.1rem 0.1rem 0 var(--shadow);
+  transform: translate3d(0.18rem, 0.18rem, 0);
 }
 
 /* Introduction: identity, role, proof, action */
@@ -4449,10 +4439,6 @@ html:not(.js) .extra-step-tabs {
   border-top-width: 1.5px;
   background: #1f4b49;
   color: #fffaf0;
-}
-
-#project-2 .project-inspector__selection {
-  background: #38484b;
 }
 
 .project-inspector__content {
@@ -5005,15 +4991,13 @@ html:not(.js) .extra-step-tabs {
 
 /* Viewport-fit and interaction polish */
 
-.button--primary,
-.section-page--about .about-copy .button {
+.button--primary {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
 
-.button--primary::before,
-.section-page--about .about-copy .button::before {
+.button--primary::before {
   position: absolute;
   z-index: 0;
   top: -120%;
@@ -5524,6 +5508,122 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
+/* Tactile controls: raised at rest, pressed toward their shadow on input. */
+
+.button,
+.contact-link,
+.gallery-thumbnails button {
+  transform: translate3d(0, 0, 0);
+  will-change: transform, box-shadow;
+}
+
+.button:active,
+.contact-link:active,
+.gallery-thumbnails button:active {
+  box-shadow: none;
+  transform: translate3d(0.28rem, 0.28rem, 0);
+}
+
+.gallery-thumbnails button {
+  box-shadow: 0.22rem 0.22rem 0 var(--shadow);
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.gallery-thumbnails button[aria-pressed="true"] {
+  box-shadow:
+    0.22rem 0.22rem 0 var(--shadow),
+    inset 0 -0.25rem 0 var(--selection-edge);
+}
+
+.project-tab,
+.project-build-link,
+.gallery-pager button,
+.extra-project-switcher > button,
+.extra-carousel-controls button,
+.extra-step-tabs button {
+  box-shadow: inset -0.18rem -0.18rem 0 rgba(22, 50, 56, 0.34);
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease,
+    padding 150ms ease,
+    transform 150ms ease;
+}
+
+.project-tab[aria-selected="true"] {
+  box-shadow:
+    inset 0 -0.32rem 0 var(--selection-edge),
+    inset -0.18rem 0 0 rgba(22, 50, 56, 0.34);
+}
+
+.extra-project-switcher > button[aria-pressed="true"] {
+  box-shadow:
+    inset 0 -0.32rem 0 var(--selection-edge),
+    inset -0.18rem 0 0 rgba(22, 50, 56, 0.34);
+}
+
+.extra-step-tabs button[aria-selected="true"] {
+  box-shadow:
+    inset 0 0.24rem 0 var(--selection-edge),
+    inset -0.18rem -0.18rem 0 rgba(22, 50, 56, 0.34);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-thumbnails button:hover {
+    box-shadow: 0.08rem 0.08rem 0 var(--shadow);
+    transform: translate3d(0.14rem, 0.14rem, 0);
+  }
+
+  .gallery-thumbnails button[aria-pressed="true"]:hover {
+    box-shadow:
+      0.08rem 0.08rem 0 var(--shadow),
+      inset 0 -0.18rem 0 var(--selection-edge);
+  }
+
+  .project-tab:hover,
+  .project-build-link:hover,
+  .gallery-pager button:hover:not(:disabled),
+  .extra-project-switcher > button:hover,
+  .extra-carousel-controls button:hover,
+  .extra-step-tabs button:hover {
+    box-shadow: inset -0.07rem -0.07rem 0 rgba(22, 50, 56, 0.34);
+    transform: translate3d(0.07rem, 0.07rem, 0);
+  }
+
+  .project-tab[aria-selected="true"]:hover,
+  .extra-project-switcher > button[aria-pressed="true"]:hover {
+    box-shadow:
+      inset 0 -0.2rem 0 var(--selection-edge),
+      inset -0.07rem 0 0 rgba(22, 50, 56, 0.34);
+  }
+
+  .extra-step-tabs button[aria-selected="true"]:hover {
+    box-shadow:
+      inset 0 0.16rem 0 var(--selection-edge),
+      inset -0.07rem -0.07rem 0 rgba(22, 50, 56, 0.34);
+  }
+}
+
+.project-tab:active,
+.project-build-link:active,
+.gallery-pager button:active:not(:disabled),
+.extra-project-switcher > button:active,
+.extra-carousel-controls button:active,
+.extra-step-tabs button:active {
+  box-shadow: inset 0.12rem 0.12rem 0 rgba(22, 50, 56, 0.34);
+  transform: translate3d(0.07rem, 0.07rem, 0);
+}
+
+.gallery-pager button:disabled,
+.project-build-link:disabled {
+  transform: none;
+  box-shadow: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -5544,14 +5644,6 @@ html:not(.js) .extra-step-tabs {
 
   .js.is-ready .intro-reel__track {
     animation-duration: 76s !important;
-    animation-iteration-count: infinite !important;
-  }
-
-  .button--primary::before,
-  .section-page--about .about-copy .button::before,
-  .project-build-link::before,
-  .extra-build-jump::before {
-    animation-duration: 3.4s !important;
     animation-iteration-count: infinite !important;
   }
 
