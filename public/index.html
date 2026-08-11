@@ -242,11 +242,73 @@
       </section>
 
       <section
+        class="section-page section-page--about"
+        id="about"
+        aria-labelledby="about-title"
+        data-section-page
+        data-section-index="1"
+        data-position="after"
+      >
+        <div class="section-page__scroller" data-section-scroller>
+          <div class="about-layout section-content">
+            <header class="about-heading">
+              <p class="section-kicker">About</p>
+              <h2 id="about-title" tabindex="-1">
+                I like building the parts other people build with.
+              </h2>
+            </header>
+
+            <div class="about-copy">
+              <p class="about-copy__lead">
+                Give me a problem that needs both code and visual thinking. I
+                do my best work when I’m learning something new and pushing
+                through the hard technical problems until the idea becomes a
+                system that makes the whole game better.
+              </p>
+              <p>
+                Art is part of that process. Understanding the visual target
+                and the person using a tool leads to better technical
+                decisions. I thrive in teams where developers, artists, and
+                designers shape the result together.
+              </p>
+              <a
+                class="button button--ink"
+                href="#projects"
+                data-section-link
+                data-section-target="projects"
+              >
+                <span>View selected projects</span>
+                <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+
+            <dl class="about-facts">
+              <div class="about-facts__tools">
+                <dt>Primary depth</dt>
+                <dd>
+                  C# · Unity<br>
+                  MonoGame engine development
+                </dd>
+              </div>
+              <div>
+                <dt>Supporting experience</dt>
+                <dd>C++ · C · Java · JavaScript · HLSL<br>Godot · Unreal Engine 5 · raylib</dd>
+              </div>
+              <div>
+                <dt>Education</dt>
+                <dd>Game development, Tiltan<br>Haifa · 2024–2026</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section
         class="section-page section-page--projects"
         id="projects"
         aria-labelledby="projects-title"
         data-section-page
-        data-section-index="1"
+        data-section-index="2"
         data-position="after"
       >
         <div class="section-page__scroller" data-section-scroller>
@@ -907,68 +969,6 @@
       </section>
 
       <section
-        class="section-page section-page--about"
-        id="about"
-        aria-labelledby="about-title"
-        data-section-page
-        data-section-index="2"
-        data-position="after"
-      >
-        <div class="section-page__scroller" data-section-scroller>
-          <div class="about-layout section-content">
-            <header class="about-heading">
-              <p class="section-kicker">About</p>
-              <h2 id="about-title" tabindex="-1">
-                I like building the parts other people build with.
-              </h2>
-            </header>
-
-            <div class="about-copy">
-              <p class="about-copy__lead">
-                Give me a problem that needs both code and visual thinking. I
-                do my best work when I’m learning something new and pushing
-                through the hard technical problems until the idea becomes a
-                system that makes the whole game better.
-              </p>
-              <p>
-                Art is part of that process. Understanding the visual target
-                and the person using a tool leads to better technical
-                decisions. I thrive in teams where developers, artists, and
-                designers shape the result together.
-              </p>
-              <a
-                class="button button--ink"
-                href="#projects"
-                data-section-link
-                data-section-target="projects"
-              >
-                <span>View selected projects</span>
-                <span aria-hidden="true">←</span>
-              </a>
-            </div>
-
-            <dl class="about-facts">
-              <div class="about-facts__tools">
-                <dt>Primary depth</dt>
-                <dd>
-                  C# · Unity<br>
-                  MonoGame engine development
-                </dd>
-              </div>
-              <div>
-                <dt>Supporting experience</dt>
-                <dd>C++ · C · Java · JavaScript · HLSL<br>Godot · Unreal Engine 5 · raylib</dd>
-              </div>
-              <div>
-                <dt>Education</dt>
-                <dd>Game development, Tiltan<br>Haifa · 2024–2026</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
-
-      <section
         class="section-page section-page--extra"
         id="extra"
         aria-labelledby="extra-title"
@@ -1521,25 +1521,25 @@
         </li>
         <li>
           <a
-            href="#projects"
+            href="#about"
             data-section-link
-            data-section-target="projects"
+            data-section-target="about"
           >
             <span class="section-rail__number">02</span>
             <span class="section-rail__copy">
-              <strong>Projects</strong>
+              <strong>About</strong>
             </span>
           </a>
         </li>
         <li>
           <a
-            href="#about"
+            href="#projects"
             data-section-link
-            data-section-target="about"
+            data-section-target="projects"
           >
             <span class="section-rail__number">03</span>
             <span class="section-rail__copy">
-              <strong>About</strong>
+              <strong>Projects</strong>
             </span>
           </a>
         </li>

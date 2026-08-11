@@ -210,6 +210,9 @@ img {
   --button-ink: #20120e;
   --coral-hover: #e77959;
   --sun: #edc75a;
+  --project-surface: #e3eef0;
+  --project-surface-strong: #d3e5e8;
+  --project-surface-line: #789399;
   --line: #839b9f;
   --shadow: #14333b;
   --project-light-rgb: 255, 250, 240;
@@ -1198,7 +1201,7 @@ html:not(.js) .project-panel {
   grid-template-rows: auto auto;
   overflow: hidden;
   margin: 0;
-  border: 1.5px solid #fffaf0;
+  border: 1.5px solid var(--project-surface);
   background: var(--ink);
   box-shadow: 0.48rem 0.48rem 0 var(--coral);
 }
@@ -3800,20 +3803,32 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-workspace {
-  background: #fffaf0;
+  background: var(--project-surface);
 }
 
-.project-toolbar,
+.project-toolbar {
+  background: var(--project-surface);
+}
+
 .build-window__toolbar {
-  background: #edf2ec;
+  background: var(--gallery-surface);
+  color: #fffaf0;
+}
+
+.build-window__toolbar p {
+  color: var(--sun);
+}
+
+.build-window__toolbar h3 {
+  color: #fffaf0;
 }
 
 .project-tabs {
-  background: #dce8e3;
+  background: var(--project-surface-strong);
 }
 
 .project-tab {
-  background: #dce8e3;
+  background: var(--project-surface-strong);
   color: #405d61;
 }
 
@@ -3834,18 +3849,18 @@ html:not(.js) .extra-step-tabs {
 
 .gallery-heading,
 .gallery-thumbnails {
-  background: #e9efea;
+  background: var(--project-surface-strong);
 }
 
 .gallery-pager,
 .gallery-thumbnails button,
 .gallery-slide figcaption {
-  background: #fffaf0;
+  background: var(--project-surface);
 }
 
 .project-inspector,
 .project-inspector__project {
-  background: #fffaf0;
+  background: var(--project-surface);
 }
 
 .project-tags li {
@@ -3870,7 +3885,23 @@ html:not(.js) .extra-step-tabs {
 
 .workspace-window--build,
 .build-player {
-  background: #fffaf0;
+  background: var(--gallery-surface);
+}
+
+.build-player__bar,
+.build-player__footer {
+  border-color: #73918e;
+  background: #214d4e;
+  color: #d5e4e1;
+}
+
+.build-player__bar strong,
+.build-player__external {
+  color: var(--sun);
+}
+
+.build-player__external:hover {
+  color: #fffaf0;
 }
 
 .extra-workspace {
@@ -4353,8 +4384,8 @@ html:not(.js) .extra-step-tabs {
   top: 50%;
   right: 0.85rem;
   transform: translateY(-50%);
-  border-color: #fffaf0;
-  background: #fffaf0;
+  border-color: var(--project-surface-line);
+  background: var(--project-surface);
   color: var(--ink);
 }
 
@@ -4364,7 +4395,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .gallery-thumbnails {
-  background: #dfe9e4;
+  background: var(--project-surface-strong);
 }
 
 .gallery-thumbnails button {
