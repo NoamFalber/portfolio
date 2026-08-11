@@ -40,12 +40,12 @@ button, a {
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, .16),
     inset -1px -1px 0 rgba(0, 0, 0, .28);
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, -6px, 0);
   transition:
-    background-color 170ms ease,
-    border-color 170ms ease,
-    box-shadow 170ms cubic-bezier(.2, .72, .25, 1),
-    transform 170ms cubic-bezier(.2, .72, .25, 1);
+    background-color 190ms ease,
+    border-color 190ms ease,
+    box-shadow 230ms cubic-bezier(.22, .78, .24, 1),
+    transform 230ms cubic-bezier(.22, .78, .24, 1);
 }
 
 button::before, a::before {
@@ -53,17 +53,18 @@ button::before, a::before {
   z-index: -1;
   top: 0;
   left: 0;
-  width: calc(100% + 5px);
-  height: calc(100% + 5px);
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
   background:
-    linear-gradient(var(--key-side-right), var(--key-side-right)) 100% 0 / 5px calc(100% - 5px) no-repeat,
-    linear-gradient(var(--key-side-bottom), var(--key-side-bottom)) 0 100% / calc(100% - 5px) 5px no-repeat,
-    linear-gradient(135deg, var(--key-side-right) 0 48%, var(--key-side-bottom) 52% 100%) 100% 100% / 5px 5px no-repeat;
-  clip-path: polygon(calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px), calc(100% - 5px) calc(100% - 5px));
+    linear-gradient(var(--key-side-right), var(--key-side-right)) right 1px top 1px / 4px calc(100% - 8px) no-repeat,
+    linear-gradient(var(--key-side-bottom), var(--key-side-bottom)) left 1px bottom 1px / calc(100% - 8px) 4px no-repeat,
+    linear-gradient(135deg, var(--key-side-right) 0 42%, var(--key-edge) 42% 58%, var(--key-side-bottom) 58% 100%) right 1px bottom 1px / 4px 4px no-repeat,
+    var(--key-edge);
+  clip-path: polygon(calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px), calc(100% - 6px) calc(100% - 6px));
   content: "";
-  filter: drop-shadow(1px 1px 0 var(--key-edge));
+  filter: drop-shadow(.5px .5px 0 var(--key-edge));
   pointer-events: none;
-  transition: filter 170ms cubic-bezier(.2, .72, .25, 1), opacity 120ms ease, transform 170ms cubic-bezier(.2, .72, .25, 1);
+  transition: filter 230ms cubic-bezier(.22, .78, .24, 1), transform 230ms cubic-bezier(.22, .78, .24, 1);
 }
 
 button:hover, a:hover {
@@ -72,15 +73,15 @@ button:hover, a:hover {
   box-shadow:
     inset 1px 1px 0 rgba(255, 255, 255, .14),
     inset -1px -1px 0 rgba(0, 0, 0, .24);
-  transform: translate3d(3px, 3px, 0);
+  transform: translate3d(2px, -4px, 0);
 }
-button:hover::before, a:hover::before { transform: translate3d(-3px, -3px, 0); filter: none; }
+button:hover::before, a:hover::before { transform: translate3d(-2px, -2px, 0); filter: none; }
 button:active, a:active {
   z-index: 0;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, .32);
-  transform: translate3d(5px, 5px, 0);
+  transform: translate3d(6px, 0, 0);
 }
-button:active::before, a:active::before { transform: translate3d(-5px, -5px, 0); opacity: 0; filter: none; }
+button:active::before, a:active::before { transform: translate3d(-6px, -6px, 0); filter: none; }
 button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid #e6a66f; outline-offset: 2px; }
 
 .shell { width: min(100vw, 1800px); margin: auto; padding: 14px clamp(10px, 2vw, 28px) 18px; }
@@ -89,7 +90,7 @@ button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid
 h1, h2, p { margin-top: 0; }
 h1 { margin-bottom: 0; font-size: clamp(1.25rem, 2.2vw, 2rem); letter-spacing: .02em; }
 .eyebrow { margin-bottom: .18rem; color: #de8a4a; font-size: .7rem; font-weight: 800; letter-spacing: .16em; }
-.actions, .button-row { display: flex; gap: .12rem; flex-wrap: wrap; }
+.actions, .button-row { display: flex; gap: 0; flex-wrap: wrap; padding: 0 6px 0 0; }
 
 .stage {
   position: relative;
