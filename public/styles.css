@@ -980,6 +980,7 @@ html:not(.js) .project-panel {
 }
 
 .project-gallery {
+  --project-visual-aspect: 1378 / 693;
   display: grid;
   min-width: 0;
   min-height: 0;
@@ -1093,19 +1094,8 @@ html:not(.js) .project-panel {
 .interactive-scene--landscape {
   width: 100%;
   height: auto;
+  aspect-ratio: var(--project-visual-aspect);
   background: var(--gallery-surface);
-}
-
-.interactive-scene--landscape {
-  aspect-ratio: 1378 / 693;
-}
-
-.interactive-scene--workshop {
-  aspect-ratio: 2558 / 1329;
-}
-
-.interactive-scene--gameplay {
-  aspect-ratio: 2003 / 1041;
 }
 
 .interactive-scene--workshop .interactive-scene__image,
@@ -1307,6 +1297,9 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .gallery-slide figcaption {
+  display: flex;
+  min-height: 3.35rem;
+  align-items: center;
   padding: 0.48rem 0.75rem;
   border-top: 2px solid var(--ink);
   background: var(--paper-light);
@@ -1534,54 +1527,15 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .build-player {
+  container-type: size;
   display: grid;
   height: 100%;
   min-height: 0;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  background: var(--ink);
+  grid-template-rows: minmax(0, 1fr);
+  place-items: center;
+  overflow: hidden;
+  background: #231f20;
   color: var(--paper-light);
-}
-
-.build-player__bar,
-.build-player__footer {
-  display: flex;
-  min-height: 3.1rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.65rem 1rem;
-  font-size: 0.73rem;
-}
-
-.build-player__bar {
-  border-bottom: 1px solid #53685e;
-}
-
-.build-player__bar strong {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  color: var(--sun);
-}
-
-.build-player__status-dot {
-  flex: 0 0 auto;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 50%;
-  background: var(--coral);
-}
-
-[data-build-status="loading"] .build-player__status-dot {
-  animation: build-status-pulse 1.1s ease-in-out infinite;
-}
-
-[data-build-status="ready"] .build-player__status-dot {
-  background: #6ee7a0;
-}
-
-[data-build-status="error"] .build-player__status-dot {
-  background: var(--coral);
 }
 
 .build-player__viewport {
@@ -1598,9 +1552,19 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .build-player__viewport--embedded {
   display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 8 / 5;
   padding: 0;
   background: #231f20;
   text-align: left;
+}
+
+@supports (width: 1cqw) {
+  .build-player__viewport--embedded {
+    width: min(100cqw, 160cqh);
+    height: min(100cqh, 62.5cqw);
+  }
 }
 
 .build-player__frame {
@@ -1648,15 +1612,6 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .build-player__viewport--embedded.is-frame-loaded .build-player__loading {
   display: none;
-}
-
-.build-player__footer {
-  border-top: 1px solid #53685e;
-}
-
-.build-player__external {
-  font-weight: 700;
-  text-underline-offset: 0.2rem;
 }
 
 .js .section-page--extra .section-page__scroller {
@@ -2233,19 +2188,6 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
-@keyframes build-status-pulse {
-  0%,
-  100% {
-    transform: scale(0.75);
-    opacity: 0.55;
-  }
-
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 @keyframes workspace-slide-out-left {
   from {
     transform: translateX(0);
@@ -2573,8 +2515,10 @@ html:not(.js) .extra-step-tabs {
     aspect-ratio: 1456 / 1080;
   }
 
-  .interactive-scene--landscape {
-    aspect-ratio: 1378 / 693;
+  .interactive-scene--landscape,
+  .interactive-scene--workshop,
+  .interactive-scene--gameplay {
+    aspect-ratio: var(--project-visual-aspect);
   }
 
   .project-inspector {
@@ -2591,11 +2535,6 @@ html:not(.js) .extra-step-tabs {
     border-left: 0;
   }
 
-  .interactive-scene--workshop,
-  .interactive-scene--gameplay {
-    aspect-ratio: 2558 / 1329;
-  }
-
   .extra-layout {
     height: 100%;
     min-height: 0;
@@ -2608,7 +2547,7 @@ html:not(.js) .extra-step-tabs {
   }
 
   .extra-project-switcher {
-    grid-template-columns: minmax(10rem, 0.7fr) minmax(13rem, 1fr);
+    grid-template-columns: repeat(3, minmax(8rem, 1fr));
   }
 
   .extra-project-switcher > button {
@@ -2875,7 +2814,7 @@ html:not(.js) .extra-step-tabs {
 
   .extra-project-switcher {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .extra-project-switcher > button {
@@ -3014,13 +2953,6 @@ html:not(.js) .extra-step-tabs {
 
   .extra-step-tabs span {
     font-size: 0.68rem;
-  }
-
-  .build-player__bar,
-  .build-player__footer {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.25rem;
   }
 
   .build-player__viewport {
@@ -3231,25 +3163,8 @@ html:not(.js) .extra-step-tabs {
   color: #285c53;
 }
 
-.workspace-window--build,
-.build-player {
+.workspace-window--build {
   background: var(--gallery-surface);
-}
-
-.build-player__bar,
-.build-player__footer {
-  border-color: #73918e;
-  background: #214d4e;
-  color: #d5e4e1;
-}
-
-.build-player__bar strong,
-.build-player__external {
-  color: var(--sun);
-}
-
-.build-player__external:hover {
-  color: #fffaf0;
 }
 
 .extra-workspace {
@@ -3377,7 +3292,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-tabs {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .project-panel__body {
@@ -3773,7 +3688,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .extra-project-switcher {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .extra-hero-copy {
@@ -3869,7 +3784,7 @@ html:not(.js) .extra-step-tabs {
   }
 
   .project-tabs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     overflow: hidden;
     border-right: 0;
     border-bottom: 1.5px solid var(--ink);
@@ -4026,7 +3941,7 @@ html:not(.js) .extra-step-tabs {
   }
 
   .project-tabs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .project-tab {
@@ -4772,7 +4687,6 @@ html:not(.js) .extra-step-tabs {
 .gallery-pager button,
 .gallery-pager > span,
 .gallery-thumbnails button,
-.build-player__external,
 .extra-project-switcher > button,
 .extra-carousel-controls button,
 .extra-carousel-controls > span,
@@ -4826,7 +4740,6 @@ html:not(.js) .extra-step-tabs {
 .gallery-pager button::before,
 .gallery-pager > span::before,
 .gallery-thumbnails button::before,
-.build-player__external::before,
 .extra-project-switcher > button::before,
 .extra-carousel-controls button::before,
 .extra-carousel-controls > span::before,
@@ -5055,22 +4968,6 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
-.build-player__external {
-  --control-face: #285653;
-  --control-face-hover: #34716b;
-  --control-side-right: #35635e;
-  --control-side-bottom: #123735;
-  --control-edge: #071f21;
-  --control-highlight: rgba(255, 255, 255, 0.13);
-  --control-shade: rgba(0, 0, 0, 0.25);
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  padding: 0.48rem 0.65rem;
-  color: var(--sun);
-  text-decoration: none;
-}
-
 .extra-project-switcher > button,
 .extra-carousel-controls button,
 .extra-carousel-controls > span,
@@ -5244,7 +5141,6 @@ html:not(.js) .extra-step-tabs {
   .project-build-link:hover:not(:disabled),
   .gallery-pager button:hover:not(:disabled),
   .gallery-thumbnails button:hover:not(:disabled),
-  .build-player__external:hover,
   .extra-project-switcher > button:hover:not(:disabled),
   .extra-carousel-controls button:hover:not(:disabled),
   .extra-step-tabs button:hover:not(:disabled),
@@ -5291,7 +5187,6 @@ html:not(.js) .extra-step-tabs {
       .project-build-link,
       .gallery-pager button,
       .gallery-thumbnails button,
-      .build-player__external,
       .extra-project-switcher > button,
       .extra-carousel-controls button,
       .extra-step-tabs button,
@@ -5323,7 +5218,6 @@ html:not(.js) .extra-step-tabs {
 .project-build-link:active:not(:disabled),
 .gallery-pager button:active:not(:disabled),
 .gallery-thumbnails button:active:not(:disabled),
-.build-player__external:active,
 .extra-project-switcher > button:active:not(:disabled),
 .extra-carousel-controls button:active:not(:disabled),
 .extra-step-tabs button:active:not(:disabled),
@@ -5359,7 +5253,6 @@ html:not(.js) .extra-step-tabs {
     .project-build-link,
     .gallery-pager button,
     .gallery-thumbnails button,
-    .build-player__external,
     .extra-project-switcher > button,
     .extra-carousel-controls button,
     .extra-step-tabs button,
@@ -5635,7 +5528,6 @@ html:not(.js) .extra-step-tabs {
       .project-build-link,
       .gallery-pager button,
       .gallery-thumbnails button,
-      .build-player__external,
       .extra-project-switcher > button,
       .extra-carousel-controls button,
       .extra-step-tabs button,
@@ -5658,7 +5550,6 @@ html:not(.js) .extra-step-tabs {
       .project-build-link,
       .gallery-pager button,
       .gallery-thumbnails button,
-      .build-player__external,
       .extra-project-switcher > button,
       .extra-carousel-controls button,
       .extra-step-tabs button,
@@ -5678,7 +5569,6 @@ html:not(.js) .extra-step-tabs {
       .project-build-link,
       .gallery-pager button,
       .gallery-thumbnails button,
-      .build-player__external,
       .extra-project-switcher > button,
       .extra-carousel-controls button,
       .extra-step-tabs button,
@@ -5701,7 +5591,6 @@ html:not(.js) .extra-step-tabs {
       .project-build-link,
       .gallery-pager button,
       .gallery-thumbnails button,
-      .build-player__external,
       .extra-project-switcher > button,
       .extra-carousel-controls button,
       .extra-step-tabs button,

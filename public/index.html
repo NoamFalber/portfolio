@@ -404,13 +404,10 @@
                     role="tab"
                     aria-selected="false"
                     aria-controls="project-3"
-                    aria-disabled="true"
+                    aria-label="Project 03"
                     data-project-tab="project-3"
-                    data-project-title="Project Three"
+                    data-project-title="Project 03"
                     data-has-build="false"
-                    data-project-draft
-                    hidden
-                    disabled
                   >
                     <span>03</span>
                   </button>
@@ -923,7 +920,6 @@
                   role="tabpanel"
                   aria-labelledby="project-3-tab"
                   data-project-panel="project-3"
-                  data-project-draft
                   hidden
                 ></div>
 
@@ -965,14 +961,8 @@
                     aria-labelledby="project-1-build-title"
                   >
                     <div class="build-player">
-                      <header class="build-player__bar">
-                        <h3 class="sr-only" id="project-1-build-title">Surreal Landscape Prototype playable web build</h3>
-                        <span>Surreal Landscape Prototype / Unity WebGPU</span>
-                        <strong aria-live="polite">
-                          <span class="build-player__status-dot" aria-hidden="true"></span>
-                          <span data-build-status-label>Ready to load</span>
-                        </strong>
-                      </header>
+                      <h3 class="sr-only" id="project-1-build-title">Surreal Landscape Prototype playable web build</h3>
+                      <span class="sr-only" data-build-status-label aria-live="polite">Ready to load</span>
                       <div class="build-player__viewport build-player__viewport--embedded" data-build-shell>
                         <div class="build-player__loading" data-build-loading>
                           <span class="build-player__loader" aria-hidden="true"></span>
@@ -987,15 +977,6 @@
                           allowfullscreen
                         ></iframe>
                       </div>
-                      <footer class="build-player__footer">
-                        <span>WebGPU required · first launch may take a moment</span>
-                        <a
-                          class="build-player__external"
-                          href="builds/project-one/"
-                          target="_blank"
-                          rel="noopener"
-                        >Open in a full window <span aria-hidden="true">↗</span></a>
-                      </footer>
                     </div>
                   </section>
 
@@ -1007,14 +988,8 @@
                     hidden
                   >
                     <div class="build-player">
-                      <header class="build-player__bar">
-                        <h3 class="sr-only" id="project-2-build-title">Cave Map Workshop playable web build</h3>
-                        <span>Cave Map Workshop / Unity WebGPU</span>
-                        <strong aria-live="polite">
-                          <span class="build-player__status-dot" aria-hidden="true"></span>
-                          <span data-build-status-label>Ready to load</span>
-                        </strong>
-                      </header>
+                      <h3 class="sr-only" id="project-2-build-title">Cave Map Workshop playable web build</h3>
+                      <span class="sr-only" data-build-status-label aria-live="polite">Ready to load</span>
                       <div class="build-player__viewport build-player__viewport--embedded" data-build-shell>
                         <div class="build-player__loading" data-build-loading>
                           <span class="build-player__loader" aria-hidden="true"></span>
@@ -1029,15 +1004,6 @@
                           allowfullscreen
                         ></iframe>
                       </div>
-                      <footer class="build-player__footer">
-                        <span>Desktop browser · WebGPU required · first launch is about 54.4 MiB compressed</span>
-                        <a
-                          class="build-player__external"
-                          href="builds/project-two/"
-                          target="_blank"
-                          rel="noopener"
-                        >Open in a full window <span aria-hidden="true">↗</span></a>
-                      </footer>
                     </div>
                   </section>
                 </div>
@@ -1078,7 +1044,7 @@
                     <span>02</span>
                     <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
                   </button>
-                  <button type="button" aria-pressed="false" aria-disabled="true" data-extra-project-select="project-3" data-project-draft hidden disabled>
+                  <button type="button" aria-pressed="false" aria-label="Project 03" data-extra-project-select="project-3">
                     <span>03</span>
                   </button>
                 </div>
@@ -1351,7 +1317,7 @@
                     <span>02</span>
                     <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
                   </button>
-                  <button type="button" aria-pressed="false" aria-disabled="true" data-extra-project-select="project-3" data-project-draft hidden disabled>
+                  <button type="button" aria-pressed="false" aria-label="Project 03" data-extra-project-select="project-3">
                     <span>03</span>
                   </button>
                 </div>
@@ -1577,10 +1543,26 @@
             <div
               class="extra-workspace"
               data-extra-project-panel="project-3"
-              data-extra-project-title="Project Three"
-              data-project-draft
+              data-extra-project-title="Project 03"
               hidden
-            ></div>
+            >
+              <header class="extra-workspace__toolbar">
+                <div class="extra-project-switcher" role="group" aria-label="Project deep dives">
+                  <button type="button" aria-pressed="false" data-extra-project-select="project-1">
+                    <span>01</span>
+                    <span><strong>Surreal Landscape</strong><small>Rendering, simulation, and WebGPU</small></span>
+                  </button>
+                  <button type="button" aria-pressed="false" data-extra-project-select="project-2">
+                    <span>02</span>
+                    <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
+                  </button>
+                  <button type="button" aria-pressed="true" aria-label="Project 03" data-extra-project-select="project-3">
+                    <span>03</span>
+                  </button>
+                </div>
+              </header>
+              <div class="extra-stage" aria-label="Empty Project 03 page"></div>
+            </div>
           </div>
         </div>
       </section>
