@@ -51,7 +51,7 @@
   --workspace-motion-duration: 740ms;
   --breakdown-enter-duration: 360ms;
   --breakdown-exit-duration: 170ms;
-  --control-depth: 0.44rem;
+  --control-depth: 7px;
   --control-casing-overhang: var(--control-depth);
 }
 
@@ -4677,7 +4677,7 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
-/* Physical controls: close-set boombox keys with molded diagonal casings. */
+/* Physical controls: close-set boombox keys with stable, pixel-aligned depth. */
 
 .button,
 .text-link,
@@ -4700,9 +4700,9 @@ html:not(.js) .extra-step-tabs {
   --control-edge: #132f33;
   --control-stroke: 1px;
   --control-edge-width: 1px;
-  --control-depth: 0.44rem;
-  --control-hover-travel: 0.11rem;
-  --control-press-travel: 0.24rem;
+  --control-depth: 7px;
+  --control-hover-travel: 2px;
+  --control-press-travel: 4px;
   --control-motion: 320ms cubic-bezier(0.2, 0.74, 0.22, 1);
   --control-press-motion: 120ms cubic-bezier(0.2, 0.82, 0.24, 1);
   --control-highlight: rgba(255, 255, 255, 0.48);
@@ -4712,16 +4712,13 @@ html:not(.js) .extra-step-tabs {
   border: var(--control-stroke) solid var(--control-edge);
   border-radius: 0;
   background-color: var(--control-face);
-  background-image: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--control-face) 88%, white 12%) 0%,
-    var(--control-face) 24%,
-    var(--control-face) 72%,
-    color-mix(in srgb, var(--control-face) 90%, var(--ink) 10%) 100%
-  );
+  background-image: none;
   box-shadow:
     inset 0.08rem 0.08rem 0 var(--control-highlight),
-    inset -0.08rem -0.08rem 0 var(--control-shade);
+    inset -0.08rem -0.08rem 0 var(--control-shade),
+    var(--control-depth) var(--control-depth) 0 var(--control-side-bottom),
+    calc(var(--control-depth) + var(--control-stroke))
+      calc(var(--control-depth) + var(--control-stroke)) 0 var(--control-edge);
   transform: translate3d(0, calc(0rem - var(--control-depth)), 0);
   transition:
     background-color 190ms ease,
@@ -4747,63 +4744,8 @@ html:not(.js) .extra-step-tabs {
 .section-rail__label::before,
 .section-rail a::before,
 .skip-link::before {
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  display: block;
-  width: calc(100% + var(--control-depth) + var(--control-stroke));
-  height: calc(100% + var(--control-depth) + var(--control-stroke));
-  transform: translate3d(0, 0, 0);
-  background:
-    linear-gradient(
-        45deg,
-        transparent 0 calc(50% - 0.5px),
-        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
-        transparent calc(50% + 0.5px) 100%
-      )
-      100% 0 / var(--control-depth) var(--control-depth) no-repeat,
-    linear-gradient(var(--control-edge), var(--control-edge))
-      100% var(--control-depth) / var(--control-edge-width)
-      calc(100% - var(--control-depth)) no-repeat,
-    linear-gradient(var(--control-edge), var(--control-edge))
-      var(--control-depth) 100% / calc(100% - var(--control-depth))
-      var(--control-edge-width)
-      no-repeat,
-    linear-gradient(
-        45deg,
-        transparent 0 calc(50% - 0.5px),
-        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
-        transparent calc(50% + 0.5px) 100%
-      )
-      0 100% / var(--control-depth) var(--control-depth) no-repeat,
-    linear-gradient(var(--control-side-right), var(--control-side-right))
-      100% 0 / var(--control-depth)
-      calc(100% - var(--control-depth)) no-repeat,
-    linear-gradient(var(--control-side-bottom), var(--control-side-bottom))
-      0 100% / calc(100% - var(--control-depth))
-      var(--control-depth) no-repeat,
-    linear-gradient(
-        45deg,
-        var(--control-side-bottom) 0 calc(50% - 0.5px),
-        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
-        var(--control-side-right) calc(50% + 0.5px) 100%
-      )
-      100% 100% / var(--control-depth) var(--control-depth) no-repeat;
-  clip-path: polygon(
-    calc(100% - var(--control-depth)) 0,
-    100% var(--control-depth),
-    100% 100%,
-    var(--control-depth) 100%,
-    0 calc(100% - var(--control-depth)),
-    calc(100% - var(--control-depth)) calc(100% - var(--control-depth))
-  );
-  content: "";
-  pointer-events: none;
-  animation: none;
-  transition:
-    clip-path var(--control-motion),
-    transform var(--control-motion);
+  display: none;
+  content: none;
 }
 
 .button > *,
@@ -4908,9 +4850,6 @@ html:not(.js) .extra-step-tabs {
   --control-side-right: #739ba1;
   --control-side-bottom: #456c72;
   --control-edge: #102f36;
-  box-shadow:
-    inset 0.08rem 0.08rem 0 var(--control-highlight),
-    inset -0.08rem -0.08rem 0 var(--control-shade);
 }
 
 .button--primary,
@@ -4990,9 +4929,6 @@ html:not(.js) .extra-step-tabs {
   --control-edge: #092727;
   --control-highlight: rgba(255, 255, 255, 0.35);
   --control-shade: rgba(15, 47, 44, 0.22);
-  box-shadow:
-    inset 0.08rem 0.08rem 0 var(--control-highlight),
-    inset -0.08rem -0.08rem 0 var(--control-shade);
 }
 
 .extra-carousel-controls button {
@@ -5014,9 +4950,6 @@ html:not(.js) .extra-step-tabs {
   --control-side-right: #91afa3;
   --control-side-bottom: #647f76;
   --control-edge: #102f2d;
-  box-shadow:
-    inset 0.08rem 0.08rem 0 var(--control-highlight),
-    inset -0.08rem -0.08rem 0 var(--control-shade);
 }
 
 .project-tab[aria-selected="true"],
@@ -5026,13 +4959,13 @@ html:not(.js) .extra-step-tabs {
 .section-rail a[aria-current="page"] {
   border-color: var(--control-edge);
   background-color: var(--control-face);
-  background-image: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--control-face) 88%, white 12%) 0%,
-    var(--control-face) 24%,
-    var(--control-face) 72%,
-    color-mix(in srgb, var(--control-face) 90%, var(--ink) 10%) 100%
-  );
+  background-image: none;
+  box-shadow:
+    inset 0.08rem 0.08rem 0 var(--control-highlight),
+    inset -0.08rem -0.08rem 0 var(--control-shade),
+    var(--control-depth) var(--control-depth) 0 var(--control-side-bottom),
+    calc(var(--control-depth) + var(--control-stroke))
+      calc(var(--control-depth) + var(--control-stroke)) 0 var(--control-edge);
 }
 
 .section-rail a {
@@ -5112,9 +5045,9 @@ html:not(.js) .extra-step-tabs {
 }
 
 .skip-link {
-  --control-depth: 0.44rem;
-  --control-hover-travel: 0.11rem;
-  --control-press-travel: 0.24rem;
+  --control-depth: 7px;
+  --control-hover-travel: 2px;
+  --control-press-travel: 4px;
   --control-side-right: #a9b5ae;
   --control-side-bottom: #6d8380;
   --control-edge: #132f33;
@@ -5146,16 +5079,22 @@ html:not(.js) .extra-step-tabs {
   .extra-step-tabs button:hover:not(:disabled),
   .section-rail a:hover {
     background-color: var(--control-face-hover);
-    background-image: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--control-face-hover) 88%, white 12%) 0%,
-      var(--control-face-hover) 26%,
-      var(--control-face-hover) 74%,
-      color-mix(in srgb, var(--control-face-hover) 90%, var(--ink) 10%) 100%
-    );
+    background-image: none;
     box-shadow:
       inset 0.06rem 0.06rem 0 var(--control-highlight),
-      inset -0.06rem -0.06rem 0 var(--control-shade);
+      inset -0.06rem -0.06rem 0 var(--control-shade),
+      calc(var(--control-depth) - var(--control-hover-travel))
+        calc(var(--control-depth) - var(--control-hover-travel)) 0
+        var(--control-side-bottom),
+      calc(
+          var(--control-depth) - var(--control-hover-travel) +
+            var(--control-stroke)
+        )
+        calc(
+          var(--control-depth) - var(--control-hover-travel) +
+            var(--control-stroke)
+        )
+        0 var(--control-edge);
     z-index: 1;
     transform: translate3d(
       var(--control-hover-travel),
@@ -5170,45 +5109,9 @@ html:not(.js) .extra-step-tabs {
   .extra-step-tabs button[aria-selected="true"]:hover:not(:disabled),
   .section-rail a[aria-current="page"]:hover {
     background-color: var(--control-face-hover);
-    background-image: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--control-face-hover) 88%, white 12%) 0%,
-      var(--control-face-hover) 26%,
-      var(--control-face-hover) 74%,
-      color-mix(in srgb, var(--control-face-hover) 90%, var(--ink) 10%) 100%
-    );
+    background-image: none;
   }
 
-  :is(
-      .button,
-      .text-link,
-      .contact-link,
-      .project-tab,
-      .project-build-link,
-      .gallery-pager button,
-      .gallery-thumbnails button,
-      .extra-project-switcher > button,
-      .extra-carousel-controls button,
-      .extra-step-tabs button,
-      .section-rail a
-    ):not(:disabled):hover::before {
-    clip-path: polygon(
-      calc(100% - var(--control-depth) + var(--control-hover-travel))
-        var(--control-hover-travel),
-      100% var(--control-depth),
-      100% 100%,
-      var(--control-depth) 100%,
-      var(--control-hover-travel)
-        calc(100% - var(--control-depth) + var(--control-hover-travel)),
-      calc(100% - var(--control-depth) + var(--control-hover-travel))
-        calc(100% - var(--control-depth) + var(--control-hover-travel))
-    );
-    transform: translate3d(
-      calc(0rem - var(--control-hover-travel)),
-      calc(0rem - var(--control-hover-travel)),
-      0
-    );
-  }
 }
 
 .button:active:not(:disabled),
@@ -5224,14 +5127,22 @@ html:not(.js) .extra-step-tabs {
 .section-rail a:active {
   z-index: 1;
   background-color: var(--control-face-hover);
-  background-image: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--control-face-hover) 90%, var(--ink) 10%),
-    var(--control-face-hover)
-  );
+  background-image: none;
   box-shadow:
     inset 0 0.12rem 0 var(--control-shade),
-    inset 0 -0.04rem 0 var(--control-highlight);
+    inset 0 -0.04rem 0 var(--control-highlight),
+    calc(var(--control-depth) - var(--control-press-travel))
+      calc(var(--control-depth) - var(--control-press-travel)) 0
+      var(--control-side-bottom),
+    calc(
+        var(--control-depth) - var(--control-press-travel) +
+          var(--control-stroke)
+      )
+      calc(
+        var(--control-depth) - var(--control-press-travel) +
+          var(--control-stroke)
+      )
+      0 var(--control-edge);
   transform: translate3d(
     var(--control-press-travel),
     calc(0rem - var(--control-depth) + var(--control-press-travel)),
@@ -5242,41 +5153,6 @@ html:not(.js) .extra-step-tabs {
     border-color 90ms ease-out,
     box-shadow var(--control-press-motion),
     color 90ms ease-out,
-    transform var(--control-press-motion);
-}
-
-:is(
-    .button,
-    .text-link,
-    .contact-link,
-    .project-tab,
-    .project-build-link,
-    .gallery-pager button,
-    .gallery-thumbnails button,
-    .extra-project-switcher > button,
-    .extra-carousel-controls button,
-    .extra-step-tabs button,
-    .section-rail a,
-    .skip-link
-  ):not(:disabled):active::before {
-  clip-path: polygon(
-    calc(100% - var(--control-depth) + var(--control-press-travel))
-      var(--control-press-travel),
-    100% var(--control-depth),
-    100% 100%,
-    var(--control-depth) 100%,
-    var(--control-press-travel)
-      calc(100% - var(--control-depth) + var(--control-press-travel)),
-    calc(100% - var(--control-depth) + var(--control-press-travel))
-      calc(100% - var(--control-depth) + var(--control-press-travel))
-  );
-  transform: translate3d(
-    calc(0rem - var(--control-press-travel)),
-    calc(0rem - var(--control-press-travel)),
-    0
-  );
-  transition:
-    clip-path var(--control-press-motion),
     transform var(--control-press-motion);
 }
 
@@ -5302,16 +5178,14 @@ html:not(.js) .extra-step-tabs {
   --control-side-right: #829497;
   --control-side-bottom: #5d7478;
   background-color: var(--control-face);
-  background-image: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--control-face) 90%, white 10%),
-    var(--control-face) 72%,
-    color-mix(in srgb, var(--control-face) 90%, var(--ink) 10%)
-  );
+  background-image: none;
   color: #415e63;
   box-shadow:
     inset 0.06rem 0.06rem 0 rgba(255, 255, 255, 0.25),
-    inset -0.06rem -0.06rem 0 rgba(15, 42, 44, 0.2);
+    inset -0.06rem -0.06rem 0 rgba(15, 42, 44, 0.2),
+    var(--control-depth) var(--control-depth) 0 var(--control-side-bottom),
+    calc(var(--control-depth) + var(--control-stroke))
+      calc(var(--control-depth) + var(--control-stroke)) 0 var(--control-edge);
   transform: translate3d(0, calc(0rem - var(--control-depth)), 0);
   transition: none;
   cursor: not-allowed;
@@ -5320,10 +5194,8 @@ html:not(.js) .extra-step-tabs {
 
 .gallery-pager button:disabled::before,
 .project-build-link:disabled::before {
-  display: block;
-  transform: translate3d(0, 0, 0);
-  transition: none;
-  opacity: 1;
+  display: none;
+  content: none;
 }
 
 .project-build-link:disabled .control-shine {
@@ -5492,6 +5364,363 @@ html:not(.js) .extra-step-tabs {
   visibility: hidden;
 }
 
+/* Project 03 reserves the complete interface without inventing project copy or
+   media. Blank rails and panels use the existing project geometry so replacing
+   them with real evidence will not require a new responsive layout. */
+.project-panel--placeholder,
+.extra-workspace--placeholder {
+  --placeholder-line: rgba(var(--project-ink-rgb), 0.2);
+  --placeholder-line-light: rgba(255, 250, 240, 0.24);
+}
+
+.project-placeholder__heading {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.project-placeholder__heading span,
+.project-placeholder__line,
+.project-placeholder__thumbnail-copy i,
+.extra-placeholder__line,
+.extra-placeholder__meta span,
+.extra-placeholder__tabs strong {
+  display: block;
+  height: 0.55rem;
+  background: var(--placeholder-line);
+}
+
+.project-placeholder__heading span:first-child,
+.project-placeholder__line--short,
+.extra-placeholder__line--short,
+.extra-placeholder__meta span:first-child {
+  width: 34%;
+}
+
+.project-placeholder__heading span:last-child {
+  width: min(72%, 19rem);
+  height: 0.8rem;
+}
+
+.project-placeholder__slide {
+  background: var(--gallery-surface);
+}
+
+.project-placeholder__visual {
+  display: grid;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--project-visual-aspect);
+  grid-template-columns: 0.7fr 1.3fr 0.7fr;
+  gap: clamp(0.45rem, 1.2vw, 0.9rem);
+  align-items: end;
+  padding: clamp(0.65rem, 1.5vw, 1.1rem);
+  background:
+    linear-gradient(rgba(var(--project-light-rgb), 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--project-light-rgb), 0.08) 1px, transparent 1px),
+    var(--gallery-surface);
+  background-size: 2rem 2rem;
+}
+
+.project-placeholder__visual > span {
+  min-height: 34%;
+  border: 1px solid rgba(var(--project-light-rgb), 0.2);
+  background: rgba(var(--project-light-rgb), 0.06);
+}
+
+.project-placeholder__visual > span:nth-child(2) {
+  min-height: 62%;
+}
+
+.project-placeholder__slide figcaption .project-placeholder__line {
+  width: 58%;
+}
+
+.project-placeholder__thumbnail {
+  width: 3.5rem;
+  height: 2.65rem;
+  border: 1px solid rgba(var(--project-ink-rgb), 0.22);
+  background:
+    linear-gradient(var(--placeholder-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--placeholder-line) 1px, transparent 1px),
+    var(--project-surface-strong);
+  background-size: 0.8rem 0.8rem;
+}
+
+.project-placeholder__thumbnail-copy {
+  align-content: center;
+}
+
+.project-placeholder__thumbnail-copy i:first-child {
+  width: 42%;
+  height: 0.4rem;
+}
+
+.project-placeholder__thumbnail-copy i:last-child {
+  width: 76%;
+  height: 0.55rem;
+}
+
+.project-placeholder__summary {
+  align-content: start;
+  gap: 0.65rem;
+}
+
+.project-placeholder__line {
+  width: 100%;
+}
+
+.project-placeholder__line--medium {
+  width: 72%;
+}
+
+.project-placeholder__line--title {
+  width: 88%;
+  height: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.project-panel--placeholder .project-tags li {
+  width: 3.5rem;
+  min-height: 1.35rem;
+  background: var(--placeholder-line);
+}
+
+.project-placeholder__selection .project-inspector__content {
+  gap: 0.6rem;
+}
+
+.project-placeholder__selection .project-placeholder__line {
+  background: var(--placeholder-line-light);
+}
+
+.extra-workspace--placeholder {
+  --project-ink-rgb: 24, 53, 46;
+}
+
+.extra-workspace--placeholder .extra-stage {
+  background:
+    linear-gradient(rgba(24, 53, 46, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 53, 46, 0.07) 1px, transparent 1px),
+    rgba(255, 250, 240, 0.9);
+  background-size: 2.5rem 2.5rem;
+}
+
+.extra-placeholder__slide {
+  background: transparent;
+}
+
+.extra-placeholder__slide .extra-hero-copy {
+  gap: 0.7rem;
+  justify-content: center;
+}
+
+.extra-placeholder__line {
+  width: min(100%, 35rem);
+  height: 0.7rem;
+}
+
+.extra-placeholder__line--medium {
+  width: min(72%, 26rem);
+}
+
+.extra-placeholder__line--title,
+.extra-placeholder__line--title-medium {
+  width: min(78%, 30rem);
+  height: clamp(2rem, 6vh, 4rem);
+}
+
+.extra-placeholder__line--title-medium {
+  width: min(56%, 21rem);
+}
+
+.extra-placeholder__meta > div {
+  gap: 0.55rem;
+}
+
+.extra-placeholder__meta span {
+  width: 88%;
+}
+
+.extra-placeholder__meta span:first-child {
+  height: 0.45rem;
+}
+
+.extra-placeholder__tabs strong {
+  width: 65%;
+  min-width: 1.5rem;
+  height: 0.5rem;
+  justify-self: center;
+}
+
+:is(
+    .gallery-thumbnails button,
+    .extra-carousel-controls button,
+    .extra-step-tabs button
+  ):disabled,
+:is(
+    .gallery-thumbnails button,
+    .extra-carousel-controls button,
+    .extra-step-tabs button
+  ):disabled:hover,
+:is(
+    .gallery-thumbnails button,
+    .extra-carousel-controls button,
+    .extra-step-tabs button
+  ):disabled:active {
+  --control-face: #aab9b4;
+  --control-face-hover: #aab9b4;
+  --control-side-right: #81928d;
+  --control-side-bottom: #5c706a;
+  background-color: var(--control-face);
+  background-image: none;
+  color: #435b55;
+  box-shadow:
+    inset 0.06rem 0.06rem 0 rgba(255, 255, 255, 0.22),
+    inset -0.06rem -0.06rem 0 rgba(15, 42, 44, 0.2),
+    var(--control-depth) var(--control-depth) 0 var(--control-side-bottom),
+    calc(var(--control-depth) + var(--control-stroke))
+      calc(var(--control-depth) + var(--control-stroke)) 0 var(--control-edge);
+  transform: translate3d(0, calc(0rem - var(--control-depth)), 0);
+  transition: none;
+  cursor: not-allowed;
+}
+
+:is(
+    .gallery-thumbnails button,
+    .extra-carousel-controls button,
+    .extra-step-tabs button
+  ):disabled::before {
+  transform: translate3d(0, 0, 0);
+  transition: none;
+}
+
+/* Short laptop screens need the project evidence, not repeated tab metadata,
+   to own the available height. Keep every control comfortably clickable while
+   collapsing the toolbar copy that is repeated in the active project panel. */
+@media (min-width: 56.01rem) and (max-height: 48rem) {
+  .projects-layout {
+    padding-top: clamp(0.45rem, 1.35vh, 0.65rem);
+    padding-bottom: clamp(0.55rem, 1.55vh, 0.8rem);
+  }
+
+  .projects-heading {
+    margin-bottom: clamp(0.35rem, 1vh, 0.55rem);
+  }
+
+  .projects-heading .section-kicker {
+    font-size: 0.75rem;
+  }
+
+  .projects-heading h2 {
+    font-size: clamp(2.45rem, 7vh, 3.35rem);
+  }
+
+  .project-tab,
+  .project-build-link {
+    min-height: 3.15rem;
+    padding-block: 0.35rem;
+  }
+
+  .project-tab {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.45rem;
+    padding-inline: 0.55rem;
+  }
+
+  .project-tab small {
+    display: none;
+  }
+
+  .project-tab strong {
+    font-size: 0.84rem;
+    line-height: 1.08;
+  }
+
+  .project-tab > span:last-child {
+    font-size: 1rem;
+  }
+
+  .project-build-link {
+    grid-template-columns: 2.1rem minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    padding-inline: 0.65rem;
+  }
+
+  .project-build-link__icon {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .project-build-link small {
+    font-size: 0.65rem;
+  }
+
+  .project-build-link strong {
+    font-size: 0.8rem;
+    line-height: 1.08;
+  }
+
+  .project-build-link > span:last-child {
+    font-size: 1rem;
+  }
+
+  .build-window__toolbar > div {
+    padding: 0.45rem 0.75rem;
+  }
+
+  .build-window__toolbar h3 {
+    font-size: clamp(1.05rem, 2.7vh, 1.3rem);
+  }
+
+  .gallery-heading {
+    min-height: 3.15rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .gallery-heading > div:first-child strong {
+    font-size: 0.84rem;
+  }
+
+  .gallery-slides {
+    padding: 0.45rem;
+  }
+
+  .gallery-slide figcaption {
+    min-height: 2.75rem;
+    padding: 0.3rem 0.55rem;
+  }
+
+  .gallery-thumbnails {
+    grid-auto-columns: minmax(0, 11.5rem);
+  }
+
+  .gallery-thumbnails button {
+    min-height: 2.75rem;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0.2rem;
+  }
+
+  .gallery-thumbnails img {
+    width: 3rem;
+    height: 2.25rem;
+  }
+
+  .gallery-thumbnails strong {
+    font-size: 0.72rem;
+  }
+
+  #project-1 .project-inspector__project > p:last-of-type,
+  #project-2 .project-inspector__project > p:last-of-type {
+    font-size: clamp(0.8rem, 1.9vh, 0.88rem);
+    line-height: 1.38;
+  }
+
+  .project-inspector__content > p {
+    font-size: clamp(0.74rem, 1.8vh, 0.8rem);
+    line-height: 1.36;
+  }
+}
+
 @media (max-width: 24rem) {
   .extra-step-tabs,
   .extra-step-tabs--seven {
@@ -5555,50 +5784,12 @@ html:not(.js) .extra-step-tabs {
       .extra-step-tabs button,
       .section-rail a,
       .skip-link
-    ):not(:disabled)::before {
-    transition:
-      clip-path var(--control-motion),
-      transform var(--control-motion) !important;
-  }
-
-  :is(
-      .button,
-      .text-link,
-      .contact-link,
-      .project-tab,
-      .project-build-link,
-      .gallery-pager button,
-      .gallery-thumbnails button,
-      .extra-project-switcher > button,
-      .extra-carousel-controls button,
-      .extra-step-tabs button,
-      .section-rail a,
-      .skip-link
     ):not(:disabled):active {
     transition:
       background-color 90ms ease-out,
       border-color 90ms ease-out,
       box-shadow var(--control-press-motion),
       color 90ms ease-out,
-      transform var(--control-press-motion) !important;
-  }
-
-  :is(
-      .button,
-      .text-link,
-      .contact-link,
-      .project-tab,
-      .project-build-link,
-      .gallery-pager button,
-      .gallery-thumbnails button,
-      .extra-project-switcher > button,
-      .extra-carousel-controls button,
-      .extra-step-tabs button,
-      .section-rail a,
-      .skip-link
-    ):not(:disabled):active::before {
-    transition:
-      clip-path var(--control-press-motion),
       transform var(--control-press-motion) !important;
   }
 
