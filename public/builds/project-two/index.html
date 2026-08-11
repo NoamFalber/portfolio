@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="TemplateData/style.css">
 </head>
 <body>
+  <script>
+    document.documentElement.classList.toggle('is-embedded', window.parent !== window);
+  </script>
   <main class="shell">
     <header class="masthead">
       <div>
@@ -129,13 +132,28 @@
       if (!adapter) {
         return ['No WebGPU adapter is available', 'The browser exposes WebGPU, but could not access a hardware adapter. Update the graphics driver, enable browser hardware acceleration, and retry. This build intentionally has no WebGL fallback.'];
       }
-      const isEmbedded = window.parent !== window;
-      const minimumWidth = isEmbedded ? 720 : 960;
-      const minimumHeight = isEmbedded ? 360 : 540;
-      if (window.innerWidth < minimumWidth || window.innerHeight < minimumHeight) {
-        return ['Window is too small', `Resize the browser to at least ${minimumWidth} × ${minimumHeight}, then retry.`];
-      }
       return null;
+    }
+
+    async function enterFullscreen() {
+      const stage = document.querySelector('#stage');
+      const requestFullscreen =
+        stage.requestFullscreen ||
+        stage.webkitRequestFullscreen ||
+        stage.webkitRequestFullScreen ||
+        stage.msRequestFullscreen;
+
+      if (requestFullscreen) {
+        try {
+          await Promise.resolve(requestFullscreen.call(stage));
+          canvas.focus();
+          return;
+        } catch (error) {
+          console.warn('The browser fullscreen request failed; trying Unity fullscreen.', error);
+        }
+      }
+
+      if (unityInstance) unityInstance.SetFullscreen(1);
     }
 
     async function boot() {
@@ -192,8 +210,7 @@
 
     document.querySelector('#retry-button').addEventListener('click', () => location.reload());
     document.querySelector('#fullscreen-button').addEventListener('click', () => {
-      if (unityInstance) unityInstance.SetFullscreen(1);
-      else document.querySelector('#stage').requestFullscreen?.();
+      void enterFullscreen();
     });
     document.querySelector('#focus-button').addEventListener('click', () => {
       canvas.focus();
@@ -210,13 +227,6 @@
       if (unityInstance) {
         unityInstance.SendMessage('Runtime Map Workshop', 'SetBrowserVisibility', document.hidden ? 'hidden' : 'visible');
       }
-    });
-    window.addEventListener('resize', () => {
-      if (!unityInstance && !compatibility.classList.contains('visible')) return;
-      const minimumWidth = window.parent !== window ? 720 : 960;
-      const minimumHeight = window.parent !== window ? 360 : 540;
-      if (window.innerWidth >= minimumWidth && window.innerHeight >= minimumHeight &&
-          compatibilityTitle.textContent === 'Window is too small') location.reload();
     });
     boot();
   </script>

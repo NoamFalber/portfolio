@@ -51,6 +51,8 @@
   --workspace-motion-duration: 740ms;
   --breakdown-enter-duration: 360ms;
   --breakdown-exit-duration: 170ms;
+  --control-depth: 0.44rem;
+  --control-casing-overhang: var(--control-depth);
 }
 
 * {
@@ -218,6 +220,7 @@ img {
   --sun: #edc75a;
   --project-surface: #e3eef0;
   --project-surface-strong: #d3e5e8;
+  --project-toolbar-surface: #b8d6da;
   --line: #839b9f;
   --shadow: #14333b;
   --project-light-rgb: 255, 250, 240;
@@ -1864,7 +1867,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   overflow: visible;
 }
 
-.extra-build-jump > span {
+.extra-build-jump > span:not(.control-shine) {
   position: relative;
   z-index: 1;
 }
@@ -4074,7 +4077,7 @@ html:not(.js) .extra-step-tabs {
   }
 
   .extra-carousel-controls {
-    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    grid-template-columns: 3rem minmax(0, 1fr) 3rem;
     min-height: calc(2.75rem + 1px);
     border-top: 1px solid rgba(255, 250, 240, 0.42);
     border-left: 0;
@@ -4735,29 +4738,27 @@ html:not(.js) .extra-step-tabs {
   }
 }
 
-@keyframes control-shine-sweep {
+@keyframes control-shine-cycle {
   0%,
-  58% {
-    transform: translate3d(-46%, 0, 0);
-  }
-
-  92%,
-  100% {
-    transform: translate3d(46%, 0, 0);
-  }
-}
-
-@keyframes control-shine-visibility {
-  0%,
-  58%,
-  94%,
-  100% {
+  54% {
+    background-position: 100% 0;
     opacity: 0;
   }
 
-  66%,
-  86% {
+  62% {
+    background-position: 82% 0;
     opacity: 0.9;
+  }
+
+  86% {
+    background-position: 18% 0;
+    opacity: 0.9;
+  }
+
+  94%,
+  100% {
+    background-position: 0 0;
+    opacity: 0;
   }
 }
 
@@ -4925,41 +4926,32 @@ html:not(.js) .extra-step-tabs {
   --control-shade: rgba(65, 24, 15, 0.24);
 }
 
-.control-shine {
+.button > .control-shine,
+.project-build-link > .control-shine {
   position: absolute;
-  z-index: 0;
+  z-index: 1;
   inset: 0;
   display: block;
   overflow: hidden;
-  contain: paint;
-  pointer-events: none;
-}
-
-.control-shine::before {
-  position: absolute;
-  inset: 0;
   background-image: linear-gradient(
     108deg,
-    transparent 38%,
-    rgba(255, 255, 255, 0.46) 46%,
+    transparent 45%,
+    rgba(255, 255, 255, 0.46) 48%,
     rgba(255, 252, 232, 0.92) 50%,
-    rgba(255, 255, 255, 0.5) 54%,
-    transparent 62%
+    rgba(255, 255, 255, 0.5) 52%,
+    transparent 55%
   );
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  background-size: 250% 100%;
   opacity: 0;
-  transform: translate3d(-46%, 0, 0);
-  content: "";
   pointer-events: none;
-  animation:
-    control-shine-sweep 3.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite,
-    control-shine-visibility 3.6s linear infinite;
-  will-change: transform, opacity;
+  animation: control-shine-cycle 3.6s linear -1.9s infinite;
 }
 
-.section-page[aria-hidden="true"] .control-shine::before,
-.workspace-window[aria-hidden="true"] .control-shine::before {
+.section-page[aria-hidden="true"] .control-shine,
+.workspace-window[aria-hidden="true"] .control-shine {
   animation-play-state: paused;
-  will-change: auto;
 }
 
 .button--ink {
@@ -5479,7 +5471,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .build-window__toolbar {
-  background: var(--project-surface);
+  background: var(--project-toolbar-surface);
 }
 
 .project-panel,
@@ -5487,6 +5479,14 @@ html:not(.js) .extra-step-tabs {
 .extra-stage {
   border: 1.5px solid var(--ink);
   box-shadow: none;
+}
+
+/* Button casings extend beyond their faces on the right. Match the content
+   stages to that visible edge so each workspace forms one aligned rectangle. */
+.project-stage,
+.build-window__stage,
+.extra-stage {
+  width: calc(100% + var(--control-casing-overhang));
 }
 
 /* The key faces and casings provide their own edges. Remove the former deck
@@ -5713,14 +5713,12 @@ html:not(.js) .extra-step-tabs {
       transform var(--control-press-motion) !important;
   }
 
-  .control-shine::before {
-    animation:
-      control-shine-sweep 3.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite,
-      control-shine-visibility 3.6s linear infinite !important;
+  .control-shine {
+    animation: control-shine-cycle 3.6s linear -1.9s infinite !important;
   }
 
-  .section-page[aria-hidden="true"] .control-shine::before,
-  .workspace-window[aria-hidden="true"] .control-shine::before {
+  .section-page[aria-hidden="true"] .control-shine,
+  .workspace-window[aria-hidden="true"] .control-shine {
     animation-play-state: paused !important;
   }
 

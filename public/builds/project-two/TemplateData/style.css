@@ -118,6 +118,46 @@ h1 { margin-bottom: 0; font-size: clamp(1.25rem, 2.2vw, 2rem); letter-spacing: .
 
 #unity-canvas { display: block; width: 100%; height: 100%; background: #090b0e; }
 
+.is-embedded,
+.is-embedded body {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.is-embedded .shell {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.is-embedded .masthead,
+.is-embedded footer {
+  display: none;
+}
+
+.is-embedded .stage,
+.stage:fullscreen {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+}
+
+.stage:-webkit-full-screen {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+}
+
 .overlay {
   position: absolute;
   inset: 0;

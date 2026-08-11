@@ -114,6 +114,27 @@
         });
       }
 
+      async function enterFullscreen(unityInstance) {
+        const container = document.querySelector("#unity-container");
+        const requestFullscreen =
+          container.requestFullscreen ||
+          container.webkitRequestFullscreen ||
+          container.webkitRequestFullScreen ||
+          container.msRequestFullscreen;
+
+        if (requestFullscreen) {
+          try {
+            await Promise.resolve(requestFullscreen.call(container));
+            canvas.focus();
+            return;
+          } catch (error) {
+            console.warn("The browser fullscreen request failed; trying Unity fullscreen.", error);
+          }
+        }
+
+        unityInstance.SetFullscreen(1);
+      }
+
       async function startUnityBuild() {
         document.querySelector("#unity-loading-bar").style.display = "block";
         reportBuildState("loading");
@@ -141,7 +162,7 @@
 
           document.querySelector("#unity-loading-bar").style.display = "none";
           document.querySelector("#unity-fullscreen-button").onclick = () => {
-            unityInstance.SetFullscreen(1);
+            void enterFullscreen(unityInstance);
           };
 
           reportBuildState("ready");
