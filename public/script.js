@@ -1,5 +1,6 @@
 "use strict";
 
+document.documentElement.classList.remove("no-js");
 document.documentElement.classList.add("js");
 
 const sectionPages = [...document.querySelectorAll("[data-section-page]")];
@@ -220,7 +221,7 @@ function finishSectionTransition() {
 
 function setSection(
   nextIndex,
-  { historyMode = "push", focusHeading = false, source = "link" } = {},
+  { historyMode = "push", focusHeading = false } = {},
 ) {
   if (nextIndex < 0 || nextIndex >= sectionPages.length) {
     return;
@@ -229,7 +230,7 @@ function setSection(
   if (isTransitioning && nextIndex !== currentSection) {
     pendingSectionRequest = {
       nextIndex,
-      options: { historyMode, focusHeading, source },
+      options: { historyMode, focusHeading },
     };
     transitionFocusTarget = null;
     return;
@@ -332,14 +333,13 @@ sectionDeck?.addEventListener("transitionend", (event) => {
   }
 });
 
-function navigateSection(direction, source) {
+function navigateSection(direction) {
   if (!hasNeighbor(direction)) {
     return;
   }
 
   setSection(currentSection + direction, {
     historyMode: "push",
-    source,
   });
 }
 
@@ -368,7 +368,7 @@ function handleWheel(event) {
   }
 
   event.preventDefault();
-  navigateSection(direction, "wheel");
+  navigateSection(direction);
 }
 
 function handleTouchStart(event) {
@@ -415,7 +415,7 @@ function handleTouchEnd(event) {
     return;
   }
 
-  navigateSection(direction, "touch");
+  navigateSection(direction);
 }
 
 function handleTouchCancel() {
@@ -473,6 +473,30 @@ function enableHorizontalSwipe(surface, onSwipe) {
   });
 }
 
+function tabIndexFromKey(event, currentIndex, tabCount) {
+  if (!tabCount) {
+    return null;
+  }
+
+  if (event.key === "Home") {
+    return 0;
+  }
+
+  if (event.key === "End") {
+    return tabCount - 1;
+  }
+
+  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+    return (currentIndex + 1) % tabCount;
+  }
+
+  if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+    return (currentIndex - 1 + tabCount) % tabCount;
+  }
+
+  return null;
+}
+
 sectionLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     const nextIndex = sectionIndexFromTarget(link.dataset.sectionTarget);
@@ -485,7 +509,6 @@ sectionLinks.forEach((link) => {
     setSection(nextIndex, {
       historyMode: "push",
       focusHeading: true,
-      source: "link",
     });
   });
 });
@@ -510,7 +533,6 @@ function syncNavigationFromLocation() {
   setSection(historySection, {
     historyMode: "none",
     focusHeading: historySection !== currentSection,
-    source: "history",
   });
 
   const projectFromHistory = projectNameFromHash();
@@ -864,6 +886,7 @@ function setProject(projectName) {
   projectTabs.forEach((tab) => {
     const isSelected = tab === selectedTab;
     tab.setAttribute("aria-selected", String(isSelected));
+    tab.tabIndex = isSelected ? 0 : -1;
   });
 
   projectPanels.forEach((panel) => {
@@ -965,6 +988,22 @@ projectTabs.forEach((tab) => {
     setProject(tab.dataset.projectTab);
     setProjectView("showcase", { historyMode: "push", announce: true });
     alignProjectWorkspaceAfterControl();
+  });
+
+  tab.addEventListener("keydown", (event) => {
+    const nextIndex = tabIndexFromKey(
+      event,
+      projectTabs.indexOf(tab),
+      projectTabs.length,
+    );
+
+    if (nextIndex === null) {
+      return;
+    }
+
+    event.preventDefault();
+    projectTabs[nextIndex].focus({ preventScroll: true });
+    projectTabs[nextIndex].click();
   });
 });
 
@@ -1125,20 +1164,42 @@ function positionSceneHotspots(scene) {
   const offsetY = resolveObjectPosition(positionY, sceneHeight - renderedHeight);
 
   controls.forEach((control) => {
-    const imageX = Number(control.dataset.hotspotX);
-    const imageY = Number(control.dataset.hotspotY);
+    const useSmallPosition = buildAccessDisabled.matches;
+    const imageX = Number(
+      useSmallPosition
+        ? control.dataset.hotspotSmallX ?? control.dataset.hotspotX
+        : control.dataset.hotspotX,
+    );
+    const imageY = Number(
+      useSmallPosition
+        ? control.dataset.hotspotSmallY ?? control.dataset.hotspotY
+        : control.dataset.hotspotY,
+    );
 
     if (!Number.isFinite(imageX) || !Number.isFinite(imageY)) {
       return;
     }
 
+    const controlMarginX = control.offsetWidth / 2 + 2;
+    const controlMarginY = control.offsetHeight / 2 + 2;
+    const desiredX = offsetX + renderedWidth * (imageX / 100);
+    const desiredY = offsetY + renderedHeight * (imageY / 100);
+    const clampedX = Math.min(
+      sceneWidth - controlMarginX,
+      Math.max(controlMarginX, desiredX),
+    );
+    const clampedY = Math.min(
+      sceneHeight - controlMarginY,
+      Math.max(controlMarginY, desiredY),
+    );
+
     control.style.setProperty(
       "--scene-hotspot-x",
-      `${offsetX + renderedWidth * (imageX / 100)}px`,
+      `${clampedX}px`,
     );
     control.style.setProperty(
       "--scene-hotspot-y",
-      `${offsetY + renderedHeight * (imageY / 100)}px`,
+      `${clampedY}px`,
     );
   });
 }
@@ -1163,6 +1224,10 @@ interactiveScenes.forEach((scene) => {
   const image = scene.querySelector(".interactive-scene__image");
   image?.addEventListener("load", () => positionSceneHotspots(scene));
   window.requestAnimationFrame(() => positionSceneHotspots(scene));
+});
+
+addMediaQueryChangeListener(buildAccessDisabled, () => {
+  interactiveScenes.forEach(positionSceneHotspots);
 });
 
 function initializeProjectGallery(gallery) {
@@ -1405,6 +1470,13 @@ function initializeProjectGallery(gallery) {
       }
     });
 
+    control.addEventListener("focus", () => {
+      const scene = controlledScene();
+      if (scene) {
+        showSceneHighlight(scene, control.dataset.sceneHighlight);
+      }
+    });
+
     control.addEventListener("click", () => {
       const scene = controlledScene();
       const state = sceneStates.get(scene);
@@ -1424,6 +1496,13 @@ function initializeProjectGallery(gallery) {
     control.addEventListener("pointerleave", () => {
       const scene = controlledScene();
       if (scene && document.activeElement !== control) {
+        restoreScene(scene);
+      }
+    });
+
+    control.addEventListener("blur", () => {
+      const scene = controlledScene();
+      if (scene) {
         restoreScene(scene);
       }
     });
@@ -1484,6 +1563,7 @@ function initializeExtraCarousel(carousel) {
     tabs.forEach((tab, index) => {
       const isCurrent = index === activeIndex;
       tab.setAttribute("aria-selected", String(isCurrent));
+      tab.tabIndex = isCurrent ? 0 : -1;
     });
 
     if (currentLabel) {
@@ -1568,6 +1648,19 @@ function initializeExtraCarousel(carousel) {
       setExtraSlide(index);
       alignCarouselAfterControl();
     });
+
+    tab.addEventListener("keydown", (event) => {
+      const nextIndex = tabIndexFromKey(event, index, tabs.length);
+
+      if (nextIndex === null) {
+        return;
+      }
+
+      event.preventDefault();
+      setExtraSlide(nextIndex);
+      tabs[nextIndex].focus({ preventScroll: true });
+      alignCarouselAfterControl();
+    });
   });
 
   previous?.addEventListener("click", () => {
@@ -1649,7 +1742,6 @@ document.querySelectorAll("[data-project-build-jump]").forEach((link) => {
     setSection(projectsIndex, {
       historyMode: "none",
       focusHeading: false,
-      source: "link",
     });
     setProjectView("build", { historyMode: "push", announce: true });
   });

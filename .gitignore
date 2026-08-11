@@ -7,3 +7,4 @@
 
 # Local deployment tooling
 /node_modules/
+/.wrangler/

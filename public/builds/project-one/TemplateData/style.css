@@ -76,4 +76,14 @@ body { padding: 0; margin: 0 }
 }
 #unity-fullscreen-button:active::before { clip-path: polygon(calc(100% - var(--key-depth) + var(--key-press)) var(--key-press), 100% var(--key-depth), 100% 100%, var(--key-depth) 100%, var(--key-press) calc(100% - var(--key-depth) + var(--key-press)), calc(100% - var(--key-depth) + var(--key-press)) calc(100% - var(--key-depth) + var(--key-press))); transform: translate(calc(0px - var(--key-press)), calc(0px - var(--key-press))); transition: clip-path var(--key-press-motion), transform var(--key-press-motion) }
 #unity-fullscreen-button:focus-visible { outline: 3px solid #ebc75b; outline-offset: 2px }
-#unity-warning { position: absolute; z-index: 2; left: 50%; top: 5%; width: min(34rem, calc(100% - 2rem)); box-sizing: border-box; transform: translate(-50%); background: white; padding: 10px; display: none; font-family: arial, sans-serif }
+#unity-warning { position: absolute; z-index: 2; left: 50%; top: 5%; width: min(34rem, calc(100% - 2rem)); box-sizing: border-box; transform: translate(-50%); display: none; font-family: arial, sans-serif }
+.unity-message { padding: 10px; background: white; color: #231f20 }
+.unity-message--warning { background: #f2cc56 }
+.unity-message--error { background: #b3261e; color: white }
+
+@media (prefers-reduced-motion: reduce) {
+  #unity-fullscreen-button,
+  #unity-fullscreen-button::before {
+    transition: none;
+  }
+}

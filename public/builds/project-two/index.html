@@ -197,7 +197,11 @@
     });
     document.querySelector('#focus-button').addEventListener('click', () => {
       canvas.focus();
-      canvas.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      canvas.scrollIntoView({
+        block: 'center',
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
     });
     const helpDialog = document.querySelector('#help-dialog');
     document.querySelector('#help-button').addEventListener('click', () => helpDialog.showModal());
