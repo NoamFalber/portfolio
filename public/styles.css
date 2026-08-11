@@ -3811,16 +3811,16 @@ html:not(.js) .extra-step-tabs {
 }
 
 .build-window__toolbar {
-  background: var(--gallery-surface);
-  color: #fffaf0;
+  background: var(--project-surface);
+  color: var(--ink);
 }
 
 .build-window__toolbar p {
-  color: var(--sun);
+  color: var(--coral-dark);
 }
 
 .build-window__toolbar h3 {
-  color: #fffaf0;
+  color: var(--ink);
 }
 
 .project-tabs {
@@ -3885,23 +3885,23 @@ html:not(.js) .extra-step-tabs {
 
 .workspace-window--build,
 .build-player {
-  background: var(--gallery-surface);
+  background: var(--project-surface);
 }
 
 .build-player__bar,
 .build-player__footer {
-  border-color: #73918e;
-  background: #214d4e;
-  color: #d5e4e1;
+  border-color: var(--project-surface-line);
+  background: var(--project-surface-strong);
+  color: var(--ink-soft);
 }
 
 .build-player__bar strong,
 .build-player__external {
-  color: var(--sun);
+  color: var(--coral-dark);
 }
 
 .build-player__external:hover {
-  color: #fffaf0;
+  color: var(--ink);
 }
 
 .extra-workspace {
