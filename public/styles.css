@@ -5583,6 +5583,26 @@ html:not(.js) .extra-step-tabs {
   height: calc(100% + var(--control-depth));
   transform: translate3d(0, 0, 0);
   background:
+    linear-gradient(
+        45deg,
+        transparent 0 calc(50% - 0.5px),
+        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px) 100%
+      )
+      100% 0 / var(--control-depth) var(--control-depth) no-repeat,
+    linear-gradient(var(--control-edge), var(--control-edge))
+      100% var(--control-depth) / 1px
+      calc(100% - var(--control-depth)) no-repeat,
+    linear-gradient(var(--control-edge), var(--control-edge))
+      var(--control-depth) 100% / calc(100% - var(--control-depth)) 1px
+      no-repeat,
+    linear-gradient(
+        45deg,
+        transparent 0 calc(50% - 0.5px),
+        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px) 100%
+      )
+      0 100% / var(--control-depth) var(--control-depth) no-repeat,
     linear-gradient(var(--control-side-right), var(--control-side-right))
       100% 0 / var(--control-depth)
       calc(100% - var(--control-depth)) no-repeat,
@@ -5591,9 +5611,9 @@ html:not(.js) .extra-step-tabs {
       var(--control-depth) no-repeat,
     linear-gradient(
         45deg,
-        var(--control-side-bottom) 0 calc(50% - 0.45px),
-        var(--control-edge) calc(50% - 0.45px) calc(50% + 0.45px),
-        var(--control-side-right) calc(50% + 0.45px) 100%
+        var(--control-side-bottom) 0 calc(50% - 0.5px),
+        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
+        var(--control-side-right) calc(50% + 0.5px) 100%
       )
       100% 100% / var(--control-depth) var(--control-depth) no-repeat;
   clip-path: polygon(
@@ -5605,13 +5625,14 @@ html:not(.js) .extra-step-tabs {
     calc(100% - var(--control-depth)) calc(100% - var(--control-depth))
   );
   content: "";
-  filter: drop-shadow(0.045rem 0.045rem 0 var(--control-edge));
+  filter: none;
   pointer-events: none;
   animation: none;
   transition:
+    clip-path var(--control-motion),
     filter var(--control-motion),
     transform var(--control-motion);
-  will-change: transform;
+  will-change: transform, clip-path;
 }
 
 .button > *,
@@ -5698,7 +5719,7 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-build-link {
-  margin: 0.06rem var(--control-depth) 0 0.06rem;
+  margin: 0 var(--control-depth) 0 0;
 }
 
 .project-build-link__icon,
@@ -5839,12 +5860,18 @@ html:not(.js) .extra-step-tabs {
 }
 
 .project-tabs {
+  padding-right: 0;
   overflow: visible;
+}
+
+.extra-project-switcher {
+  padding-right: 0;
 }
 
 .extra-carousel-controls {
   gap: 0;
   padding: 0 0.38rem 0 0;
+  border-left: 0;
 }
 
 .extra-carousel-controls button + span,
@@ -5964,8 +5991,17 @@ html:not(.js) .extra-step-tabs {
       .extra-step-tabs button,
       .section-rail a
     ):hover::before {
+    clip-path: polygon(
+      calc(100% - var(--control-depth) + 0.11rem) 0.11rem,
+      100% var(--control-depth),
+      100% 100%,
+      var(--control-depth) 100%,
+      0.11rem calc(100% - var(--control-depth) + 0.11rem),
+      calc(100% - var(--control-depth) + 0.11rem)
+        calc(100% - var(--control-depth) + 0.11rem)
+    );
     transform: translate3d(-0.11rem, -0.11rem, 0);
-    filter: drop-shadow(0.025rem 0.025rem 0 var(--control-edge));
+    filter: none;
   }
 }
 
@@ -6009,6 +6045,14 @@ html:not(.js) .extra-step-tabs {
     .section-rail a,
     .skip-link
   ):active::before {
+  clip-path: polygon(
+    100% var(--control-depth),
+    100% var(--control-depth),
+    100% 100%,
+    var(--control-depth) 100%,
+    var(--control-depth) 100%,
+    100% 100%
+  );
   transform: translate3d(
     calc(0rem - var(--control-depth)),
     calc(0rem - var(--control-depth)),

@@ -56,14 +56,18 @@ button::before, a::before {
   width: calc(100% + 6px);
   height: calc(100% + 6px);
   background:
+    linear-gradient(45deg, transparent 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px) 100%) 100% 0 / 6px 6px no-repeat,
+    linear-gradient(var(--key-edge), var(--key-edge)) 100% 6px / 1px calc(100% - 6px) no-repeat,
+    linear-gradient(var(--key-edge), var(--key-edge)) 6px 100% / calc(100% - 6px) 1px no-repeat,
+    linear-gradient(45deg, transparent 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), transparent calc(50% + .5px) 100%) 0 100% / 6px 6px no-repeat,
     linear-gradient(var(--key-side-right), var(--key-side-right)) 100% 0 / 6px calc(100% - 6px) no-repeat,
     linear-gradient(var(--key-side-bottom), var(--key-side-bottom)) 0 100% / calc(100% - 6px) 6px no-repeat,
-    linear-gradient(45deg, var(--key-side-bottom) 0 calc(50% - .45px), var(--key-edge) calc(50% - .45px) calc(50% + .45px), var(--key-side-right) calc(50% + .45px) 100%) 100% 100% / 6px 6px no-repeat;
+    linear-gradient(45deg, var(--key-side-bottom) 0 calc(50% - .5px), var(--key-edge) calc(50% - .5px) calc(50% + .5px), var(--key-side-right) calc(50% + .5px) 100%) 100% 100% / 6px 6px no-repeat;
   clip-path: polygon(calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px), calc(100% - 6px) calc(100% - 6px));
   content: "";
-  filter: drop-shadow(.75px .75px 0 var(--key-edge));
+  filter: none;
   pointer-events: none;
-  transition: filter 230ms cubic-bezier(.22, .78, .24, 1), transform 230ms cubic-bezier(.22, .78, .24, 1);
+  transition: clip-path 230ms cubic-bezier(.22, .78, .24, 1), filter 230ms cubic-bezier(.22, .78, .24, 1), transform 230ms cubic-bezier(.22, .78, .24, 1);
 }
 
 button:hover, a:hover {
@@ -74,13 +78,13 @@ button:hover, a:hover {
     inset -1px -1px 0 rgba(0, 0, 0, .24);
   transform: translate3d(2px, -4px, 0);
 }
-button:hover::before, a:hover::before { transform: translate3d(-2px, -2px, 0); filter: none; }
+button:hover::before, a:hover::before { clip-path: polygon(calc(100% - 4px) 2px, 100% 6px, 100% 100%, 6px 100%, 2px calc(100% - 4px), calc(100% - 4px) calc(100% - 4px)); transform: translate3d(-2px, -2px, 0); filter: none; }
 button:active, a:active {
   z-index: 1;
   box-shadow: inset 1px 2px 0 rgba(0, 0, 0, .32);
   transform: translate3d(6px, 0, 0);
 }
-button:active::before, a:active::before { transform: translate3d(-6px, -6px, 0); filter: none; }
+button:active::before, a:active::before { clip-path: polygon(100% 6px, 100% 6px, 100% 100%, 6px 100%, 6px 100%, 100% 100%); transform: translate3d(-6px, -6px, 0); filter: none; }
 button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid #e6a66f; outline-offset: 2px; }
 
 .shell { width: min(100vw, 1800px); margin: auto; padding: 14px clamp(10px, 2vw, 28px) 18px; }
