@@ -367,6 +367,7 @@
                     data-project-title="Surreal Landscape Prototype"
                     data-build-target="project-1-build"
                     data-has-build="true"
+                    data-build-label="WebGPU"
                   >
                     <span>01</span>
                     <span>
@@ -386,6 +387,7 @@
                     data-project-title="Cave Map Workshop"
                     data-build-target="project-2-build"
                     data-has-build="true"
+                    data-build-label="WebGPU"
                   >
                     <span>02</span>
                     <span>
@@ -401,12 +403,18 @@
                     type="button"
                     aria-pressed="false"
                     aria-controls="project-3"
-                    aria-label="Project 03"
                     data-project-tab="project-3"
-                    data-project-title="Project 03"
-                    data-has-build="false"
+                    data-project-title="Creature World"
+                    data-build-target="project-3-build"
+                    data-has-build="true"
+                    data-build-label="WebAssembly"
                   >
                     <span>03</span>
+                    <span>
+                      <strong>Creature World</strong>
+                      <small>Procedural anatomy · living simulation</small>
+                    </span>
+                    <span aria-hidden="true">→</span>
                   </button>
                 </div>
 
@@ -912,7 +920,7 @@
                 </div>
 
                 <div
-                  class="project-panel project-panel--placeholder"
+                  class="project-panel"
                   id="project-3"
                   role="region"
                   aria-labelledby="project-3-tab"
@@ -921,64 +929,196 @@
                 >
                   <section
                     class="project-showcase"
-                    aria-label="Reserved Project 03 workspace"
+                    aria-label="Creature World project visual"
                   >
                     <div class="project-panel__body">
-                      <div class="project-gallery">
+                      <div class="project-gallery" data-project-gallery>
                         <header class="gallery-heading">
-                          <div class="project-placeholder__heading" aria-hidden="true">
-                            <span></span>
-                            <span></span>
+                          <div>
+                            <p>Project visual</p>
+                            <strong>Procedural creatures and simulation</strong>
                           </div>
-                          <div class="gallery-pager" role="group" aria-label="Picture navigation unavailable">
-                            <button type="button" aria-label="Previous picture unavailable" disabled>←</button>
-                            <span aria-hidden="true"><strong>00</strong><span> / </span><span>00</span></span>
-                            <button type="button" aria-label="Next picture unavailable" disabled>→</button>
+                          <div class="gallery-pager" role="group" aria-label="Picture navigation">
+                            <button type="button" data-gallery-previous aria-label="Previous picture">←</button>
+                            <span>
+                              <strong data-gallery-current>01</strong>
+                              <span aria-hidden="true">/</span>
+                              <span data-gallery-total>01</span>
+                            </span>
+                            <button type="button" data-gallery-next aria-label="Next picture">→</button>
                           </div>
                         </header>
 
-                        <div class="gallery-slides" aria-label="Reserved visual frame">
-                          <figure class="gallery-slide project-placeholder__slide">
-                            <div class="project-placeholder__visual" aria-hidden="true">
-                              <span></span>
-                              <span></span>
-                              <span></span>
+                        <div class="gallery-slides">
+                          <figure
+                            class="gallery-slide"
+                            id="project-3-picture-1"
+                            data-gallery-slide
+                            data-gallery-index="0"
+                          >
+                            <div
+                              class="interactive-scene interactive-scene--creature-world"
+                              data-interactive-scene
+                              data-scene-overview-kicker="Project visual"
+                              data-scene-overview-title="One anatomy drives the whole creature"
+                              data-scene-overview-copy="Select a highlighted area to inspect procedural anatomy, world simulation, live diagnostics, or the lifecycle tools."
+                            >
+                              <img
+                                class="interactive-scene__image"
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                data-deferred-src="assets/images/GameThreeHero.png"
+                                data-deferred-alt="In-game capture of Creature World showing generated creatures in a green simulated world, lifecycle machines, a spacecraft arrival control, and live simulation panels."
+                                width="1618"
+                                height="826"
+                                alt=""
+                                decoding="async"
+                              >
+                              <noscript>
+                                <img
+                                  class="interactive-scene__image"
+                                  src="assets/images/GameThreeHero.png"
+                                  width="1618"
+                                  height="826"
+                                  alt="In-game capture of Creature World showing generated creatures in a green simulated world, lifecycle machines, a spacecraft arrival control, and live simulation panels."
+                                >
+                              </noscript>
+
+                              <div class="scene-hotspots" role="group" aria-label="Important systems in Creature World">
+                                <button
+                                  class="scene-hotspot scene-hotspot--species-arrival"
+                                  type="button"
+                                  aria-label="Inspect new species arrivals"
+                                  data-scene-highlight="species-arrival"
+                                  data-hotspot-x="17"
+                                  data-hotspot-y="19"
+                                ><span aria-hidden="true"></span></button>
+                                <button
+                                  class="scene-hotspot scene-hotspot--creature-anatomy"
+                                  type="button"
+                                  aria-label="Inspect anatomy-driven creatures"
+                                  data-scene-highlight="creature-anatomy"
+                                  data-hotspot-x="50"
+                                  data-hotspot-y="48"
+                                ><span aria-hidden="true"></span></button>
+                                <button
+                                  class="scene-hotspot scene-hotspot--world-simulation"
+                                  type="button"
+                                  aria-label="Inspect deterministic world movement"
+                                  data-scene-highlight="world-simulation"
+                                  data-hotspot-x="66"
+                                  data-hotspot-y="39"
+                                ><span aria-hidden="true"></span></button>
+                                <button
+                                  class="scene-hotspot scene-hotspot--lifecycle-tools"
+                                  type="button"
+                                  aria-label="Inspect the trash and duplication machines"
+                                  data-scene-highlight="lifecycle-tools"
+                                  data-hotspot-x="10"
+                                  data-hotspot-y="91"
+                                ><span aria-hidden="true"></span></button>
+                                <button
+                                  class="scene-hotspot scene-hotspot--simulation-sidebar"
+                                  type="button"
+                                  aria-label="Inspect simulation time controls"
+                                  data-scene-highlight="simulation-sidebar"
+                                  data-hotspot-x="89"
+                                  data-hotspot-y="21"
+                                ><span aria-hidden="true"></span></button>
+                                <button
+                                  class="scene-hotspot scene-hotspot--performance-sidebar"
+                                  type="button"
+                                  aria-label="Inspect browser performance diagnostics"
+                                  data-scene-highlight="performance-sidebar"
+                                  data-hotspot-x="89"
+                                  data-hotspot-y="57"
+                                ><span aria-hidden="true"></span></button>
+                                <button
+                                  class="scene-hotspot scene-hotspot--creature-inspection"
+                                  type="button"
+                                  aria-label="Inspect the creature details panel"
+                                  data-scene-highlight="creature-inspection"
+                                  data-hotspot-x="89"
+                                  data-hotspot-y="88"
+                                ><span aria-hidden="true"></span></button>
+                              </div>
                             </div>
-                            <figcaption aria-hidden="true"><span class="project-placeholder__line"></span></figcaption>
+                            <figcaption>
+                              In-game capture of the living world, browser diagnostics, and creature lifecycle tools.
+                            </figcaption>
                           </figure>
                         </div>
 
-                        <div class="gallery-controls">
-                          <div class="gallery-thumbnails">
-                            <button type="button" aria-label="Reserved picture slot" disabled>
-                              <span class="project-placeholder__thumbnail" aria-hidden="true"></span>
-                              <span class="project-placeholder__thumbnail-copy" aria-hidden="true">
-                                <i></i>
-                                <i></i>
+                        <footer class="gallery-controls">
+                          <div class="gallery-thumbnails" role="group" aria-label="Choose a picture">
+                            <button
+                              type="button"
+                              aria-pressed="true"
+                              aria-controls="project-3-picture-1"
+                              data-gallery-thumbnail="0"
+                            >
+                              <img
+                                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                                data-deferred-src="assets/images/GameThreeHero.png"
+                                width="96"
+                                height="49"
+                                alt=""
+                                decoding="async"
+                              >
+                              <noscript><img src="assets/images/GameThreeHero.png" width="96" height="49" alt=""></noscript>
+                              <span>
+                                <small>Picture 01</small>
+                                <strong>Living world</strong>
                               </span>
                             </button>
                           </div>
-                        </div>
+                        </footer>
                       </div>
 
-                      <aside class="project-inspector" aria-label="Reserved Project 03 details">
-                        <div class="project-inspector__project project-placeholder__summary" aria-hidden="true">
-                          <span class="project-placeholder__line project-placeholder__line--short"></span>
-                          <span class="project-placeholder__line project-placeholder__line--title"></span>
-                          <span class="project-placeholder__line"></span>
-                          <span class="project-placeholder__line project-placeholder__line--medium"></span>
+                      <aside
+                        class="project-inspector"
+                        aria-labelledby="project-3-summary-title"
+                      >
+                        <div class="project-inspector__project">
+                          <p>C# simulation · procedural rendering</p>
+                          <h3 id="project-3-summary-title">Creature World</h3>
+                          <p>
+                            Creature World generates fifteen species, builds
+                            each one from a connected procedural body graph, and
+                            releases them into a deterministic living world. The
+                            same anatomy defines each creature’s silhouette,
+                            condition, walking or crawling, top speed, Energy
+                            cost, animation, ground contact, and draw order. I
+                            built the complete C# experience to run locally in
+                            the browser, with precise dragging and throws,
+                            lifecycle machines, new-species spacecraft arrivals,
+                            time controls, and live inspection.
+                          </p>
                           <ul class="project-tags">
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                            <li>C#</li>
+                            <li>MonoGame</li>
+                            <li>WebAssembly</li>
+                            <li>WebGL</li>
                           </ul>
                         </div>
-                        <div class="project-inspector__selection project-placeholder__selection" aria-hidden="true">
-                          <div class="project-inspector__content">
-                            <span class="project-placeholder__line project-placeholder__line--short"></span>
-                            <span class="project-placeholder__line project-placeholder__line--title"></span>
-                            <span class="project-placeholder__line"></span>
-                            <span class="project-placeholder__line project-placeholder__line--medium"></span>
+
+                        <div
+                          class="project-inspector__selection"
+                          data-scene-inspector
+                          data-inspector-state="overview"
+                          aria-live="polite"
+                          aria-atomic="true"
+                        >
+                          <div
+                            class="project-inspector__content"
+                            data-scene-content
+                          >
+                            <div class="project-inspector__selection-head">
+                              <p data-scene-kicker>Project visual</p>
+                            </div>
+                            <h4 data-scene-title>One anatomy drives the whole creature</h4>
+                            <p data-scene-copy>
+                              Select a highlighted area to inspect procedural anatomy, world simulation, live diagnostics, or the lifecycle tools.
+                            </p>
                           </div>
                         </div>
                       </aside>
@@ -1069,6 +1209,33 @@
                       </div>
                     </div>
                   </section>
+
+                  <section
+                    class="build-panel"
+                    id="project-3-build"
+                    data-project-build-panel="project-3"
+                    aria-labelledby="project-3-build-title"
+                    hidden
+                  >
+                    <div class="build-player">
+                      <h3 class="sr-only" id="project-3-build-title">Creature World playable web build</h3>
+                      <span class="sr-only" data-build-status-label aria-live="polite">Ready to load</span>
+                      <div class="build-player__viewport build-player__viewport--embedded" data-build-shell>
+                        <div class="build-player__loading" data-build-loading>
+                          <span class="build-player__loader" aria-hidden="true"></span>
+                          <p>Opening Creature World…</p>
+                        </div>
+                        <iframe
+                          class="build-player__frame"
+                          title="Creature World playable WebAssembly and WebGL build"
+                          data-build-frame
+                          data-build-src="builds/project-three/"
+                          allow="fullscreen; gamepad"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </section>
             </div>
@@ -1107,8 +1274,9 @@
                     <span>02</span>
                     <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
                   </button>
-                  <button type="button" aria-pressed="false" aria-label="Project 03" data-extra-project-select="project-3">
+                  <button type="button" aria-pressed="false" data-extra-project-select="project-3">
                     <span>03</span>
+                    <span><strong>Creature World</strong><small>Procedural creatures and simulation</small></span>
                   </button>
                 </div>
 
@@ -1380,8 +1548,9 @@
                     <span>02</span>
                     <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
                   </button>
-                  <button type="button" aria-pressed="false" aria-label="Project 03" data-extra-project-select="project-3">
+                  <button type="button" aria-pressed="false" data-extra-project-select="project-3">
                     <span>03</span>
+                    <span><strong>Creature World</strong><small>Procedural creatures and simulation</small></span>
                   </button>
                 </div>
 
@@ -1645,9 +1814,10 @@
             </div>
 
             <div
-              class="extra-workspace extra-workspace--placeholder"
+              class="extra-workspace"
+              data-extra-carousel
               data-extra-project-panel="project-3"
-              data-extra-project-title="Project 03"
+              data-extra-project-title="Creature World"
               hidden
             >
               <header class="extra-workspace__toolbar">
@@ -1660,43 +1830,272 @@
                     <span>02</span>
                     <span><strong>Cave Map Workshop</strong><small>Runtime authoring and gameplay</small></span>
                   </button>
-                  <button type="button" aria-pressed="true" aria-label="Project 03" data-extra-project-select="project-3">
+                  <button type="button" aria-pressed="true" data-extra-project-select="project-3">
                     <span>03</span>
+                    <span><strong>Creature World</strong><small>Procedural creatures and simulation</small></span>
                   </button>
                 </div>
 
-                <div class="extra-carousel-controls" role="group" aria-label="Project 03 page controls unavailable">
-                  <button type="button" aria-label="Previous page unavailable" disabled>←</button>
-                  <span aria-hidden="true"><strong>00</strong><span> / </span><span>00</span></span>
-                  <button type="button" aria-label="Next page unavailable" disabled>→</button>
+                <div class="extra-carousel-controls" role="group" aria-label="Deep-dive controls">
+                  <button type="button" data-extra-previous aria-label="Previous deep-dive window">←</button>
+                  <span aria-live="polite" aria-atomic="true">
+                    <strong data-extra-current>01</strong>
+                    <span aria-hidden="true"> / </span>
+                    <span data-extra-total>07</span>
+                  </span>
+                  <button type="button" data-extra-next aria-label="Next deep-dive window">→</button>
                 </div>
               </header>
 
-              <div class="extra-stage" aria-label="Reserved Project 03 breakdown frame">
-                <article class="extra-slide extra-slide--hero extra-placeholder__slide">
-                  <div class="extra-hero-copy" aria-hidden="true">
-                    <span class="extra-placeholder__line extra-placeholder__line--short"></span>
-                    <span class="extra-placeholder__line extra-placeholder__line--title"></span>
-                    <span class="extra-placeholder__line extra-placeholder__line--title-medium"></span>
-                    <span class="extra-placeholder__line"></span>
-                    <span class="extra-placeholder__line extra-placeholder__line--medium"></span>
+              <div class="extra-stage">
+                <article
+                  class="extra-slide extra-slide--hero"
+                  id="extra-p3-slide-overview"
+                  role="region"
+                  aria-labelledby="extra-p3-step-overview"
+                  data-extra-slide
+                  data-extra-index="0"
+                >
+                  <div class="extra-hero-copy">
+                    <p class="extra-slide__eyebrow">C# simulation · procedural anatomy · browser runtime</p>
+                    <h3>Creature World</h3>
+                    <p class="extra-slide__lead">
+                      Fifteen generated species enter one finite simulated world,
+                      then move, rest, react to player handling, and remain
+                      inspectable through the live sidebar. I separated
+                      deterministic authority from presentation so fixed
+                      simulation ticks decide identity, anatomy, movement,
+                      Energy, and lifecycle actions while the client compiles
+                      reusable rigs, interpolates motion, and draws the result.
+                      The browser uses KNI’s MonoGame-compatible WebGL backend,
+                      while the same C# systems also run in headless tools,
+                      tests, benchmarks, and the native client.
+                    </p>
+                    <a
+                      class="button button--primary extra-build-jump"
+                      href="#project-3-build"
+                      data-project-build-jump="project-3"
+                    >
+                      <span class="control-shine" aria-hidden="true"></span>
+                      <span>Open the WebAssembly build</span>
+                      <span aria-hidden="true">↑</span>
+                    </a>
                   </div>
-                  <div class="extra-meta extra-placeholder__meta" aria-hidden="true">
-                    <div><span></span><span></span></div>
-                    <div><span></span><span></span></div>
-                    <div><span></span><span></span></div>
-                    <div><span></span><span></span></div>
+                  <dl class="extra-meta">
+                    <div><dt>Role</dt><dd>Developer and technical artist</dd></div>
+                    <div><dt>Stack</dt><dd>C# · MonoGame/KNI · Blazor WASM · WebGL</dd></div>
+                    <div><dt>Main challenge</dt><dd>Make procedurally generated anatomy both functional and readable</dd></div>
+                    <div><dt>Result</dt><dd>Deterministic living world in a statically deployed browser runtime</dd></div>
+                  </dl>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story extra-slide--problem"
+                  id="extra-p3-slide-anatomy"
+                  role="region"
+                  aria-labelledby="extra-p3-step-anatomy"
+                  data-extra-slide
+                  data-extra-index="1"
+                >
+                  <header class="extra-slide__heading">
+                    <p>01 · Procedural anatomy</p>
+                    <h3>A bounded graph grammar builds connected species instead of selecting body presets.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      A strict versioned catalog supplies 19 semantic body parts,
+                      attachment sites, branch rules, constraints, and exact
+                      fallback plans. Each request generates a finite candidate
+                      set, validates every connected body, and uses Weirdness to
+                      rank structural distance from an authored reference.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Authored grammar</strong><span>Torso, head, limbs, features, anchors, symmetry, and generation stages use stable IDs in strict JSON.</span></li>
+                      <li><strong>Graph invariants</strong><span>Every result has one root, one connected acyclic topology, a primary head, valid features, and bounded dimensions.</span></li>
+                      <li><strong>Controlled variety</strong><span>Seed, Weirdness, and maximum body aspect expose reproducible form without allowing invalid or unbounded anatomy.</span></li>
+                      <li><strong>Preserved provenance</strong><span>The selected plan retains its seed, algorithm version, rank, divergence, mass target, catalog identity, and fallback status.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      Core and Major parts contribute exact structural mass and
+                      own per-being condition. Extra features remain lightweight
+                      functional anatomy.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story"
+                  id="extra-p3-slide-locomotion"
+                  role="region"
+                  aria-labelledby="extra-p3-step-locomotion"
+                  data-extra-slide
+                  data-extra-index="2"
+                >
+                  <header class="extra-slide__heading">
+                    <p>02 · Functional locomotion</p>
+                    <h3>The body plan determines how a being moves, how fast it can travel, and what that movement costs.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      Locomotion is derived from the exact species graph,
+                      mechanical part definitions, structural mass, current
+                      part condition, and available Energy. A legged body walks
+                      through usable connected leg chains. A legless body crawls
+                      through the healthy anatomy that can contact or assist
+                      against the ground.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Connected leg chains</strong><span>Segment lengths, propulsion, condition, and mass contribute to the legal top speed.</span></li>
+                      <li><strong>Crawl engagement</strong><span>More supporting anatomy can raise crawl speed while also increasing Energy cost at the same effort.</span></li>
+                      <li><strong>Continuous intent</strong><span>Speed is one exact value from stillness to the being’s current affordable maximum, without a binary walk or sprint switch.</span></li>
+                      <li><strong>Committed cost</strong><span>The simulation charges Energy only for legal displacement that actually occurred during the fixed tick.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      When no positive movement is affordable, the being enters
+                      an explicit Energy-limited state instead of silently
+                      violating the locomotion rules.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story"
+                  id="extra-p3-slide-rigs"
+                  role="region"
+                  aria-labelledby="extra-p3-step-rigs"
+                  data-extra-slide
+                  data-extra-index="3"
+                >
+                  <header class="extra-slide__heading">
+                    <p>03 · Organic 2.5D rigs</p>
+                    <h3>The authority-owned body graph compiles once into a reusable animated rig.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      The rig compiler lifts the two-dimensional anatomy into a
+                      connected presentation-space structure, solves every
+                      parent chain, grounds the result, and builds safe bounds.
+                      Every being of the same species reuses that immutable plan
+                      rather than creating its own assets or geometry setup.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Continuous heading</strong><span>Five authored view families expand into eight semantic sectors with smooth 360-degree rotation between them.</span></li>
+                      <li><strong>Connected silhouettes</strong><span>Organic ellipses, circular joints, and fused overlaps preserve articulation without exposing internal seams.</span></li>
+                      <li><strong>Walk and crawl poses</strong><span>Observed simulation distance advances planted walking or connected crawl animation through the creature’s actual support graph.</span></li>
+                      <li><strong>Stable composition</strong><span>Compiled depth, part slots, conservative bounds, whole-being culling, and fixed painter ordering prevent visual flicker.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      Presentation interpolates authoritative positions and gait
+                      samples. Visual guesses never feed back into the simulation.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story"
+                  id="extra-p3-slide-simulation"
+                  role="region"
+                  aria-labelledby="extra-p3-step-simulation"
+                  data-extra-slide
+                  data-extra-index="4"
+                >
+                  <header class="extra-slide__heading">
+                    <p>04 · Deterministic world</p>
+                    <h3>Fixed ticks, fixed-point movement, and stable ordering make every simulation state reproducible.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      One host step processes a complete tick in explicit system
+                      order. Rendering can speed up, slow down, pause, resize, or
+                      disappear without changing the result produced by the same
+                      versioned inputs, command stream, and tick count.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Finite continuous world</strong><span>The 128 × 128 space uses fixed-point positions, hard bounds, swept collision, and radius-aware occupancy.</span></li>
+                      <li><strong>Deterministic routing</strong><span>Direct travel handles clear paths; stable eight-neighbor A* and line-of-sight smoothing handle blocked routes.</span></li>
+                      <li><strong>Owned randomness</strong><span>Host random state, stable IDs, traversal order, system order, and integer rules all participate in exact fingerprints.</span></li>
+                      <li><strong>Independent presentation</strong><span>The 0.5x, 1x, 2x, and 4x controls change how quickly complete ticks are requested, not what one tick means.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      The visible seed reproduces creature bodies. A separate
+                      recorded motion seed allows fresh movement histories and
+                      exact diagnosis when needed.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story"
+                  id="extra-p3-slide-interaction"
+                  role="region"
+                  aria-labelledby="extra-p3-step-interaction"
+                  data-extra-slide
+                  data-extra-index="5"
+                >
+                  <header class="extra-slide__heading">
+                    <p>05 · Creature interaction</p>
+                    <h3>Handling, lifecycle machines, and spacecraft arrivals stay tactile without bypassing simulation authority.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      Picking evaluates the current animated rig instead of a
+                      loose rectangle. Dragging preserves the clicked offset,
+                      lifts the body above its grounded shadow, and turns a
+                      release into a bounded deterministic throw or a safe return
+                      from outside the world.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Visible-shape picking</strong><span>Primitive masks, rotation, reflection, pose, and world order identify the topmost anatomy under the pointer.</span></li>
+                      <li><strong>Safe manipulation</strong><span>Pointer capture, bounded flailing, capped throw speed, collision response, and return arcs preserve valid movement state.</span></li>
+                      <li><strong>Lifecycle machines</strong><span>Animated trash and duplication intakes submit ordered removal or same-species creation only after the visual sequence completes.</span></li>
+                      <li><strong>Spacecraft arrivals</strong><span>A cooldown-gated landing generates a new species, registers its blueprint, stages one being, and releases it after the beam sequence.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      The authoritative lifecycle systems enforce the hard
+                      99-being cap, including the two free slots required before
+                      duplication can begin.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--proof"
+                  id="extra-p3-slide-proof"
+                  role="region"
+                  aria-labelledby="extra-p3-step-proof"
+                  data-extra-slide
+                  data-extra-index="6"
+                >
+                  <header class="extra-slide__heading">
+                    <p>06 · Engineering evidence</p>
+                    <h3>Headless reproduction, tests, benchmarks, and diagnostics exercise the game’s production paths.</h3>
+                  </header>
+                  <div class="extra-proof-body">
+                    <dl class="extra-evidence-grid">
+                      <div><dt>4 xUnit projects</dt><dd>simulation, client framework, native composition, and web composition contracts</dd></div>
+                      <div><dt>2 benchmark suites</dt><dd>authoritative simulation and presentation hot paths measured independently</dd></div>
+                      <div><dt>3,000 movers</dt><dd>controlled workloads cover large being, movement, culling, sorting, and composition cases</dd></div>
+                      <div><dt>AOT + -O3</dt><dd>full WebAssembly compilation and Emscripten optimization in the static browser release</dd></div>
+                    </dl>
+                    <p>
+                      Headless scenarios sample seed ranges and compare
+                      deterministic fingerprints without graphics. The browser
+                      exposes sizing, authority, camera, selection, and
+                      performance diagnostics on demand while normal play avoids
+                      recurring full snapshots and detailed renderer timers.
+                    </p>
                   </div>
                 </article>
               </div>
 
-              <div class="extra-step-tabs extra-placeholder__tabs" role="group" aria-label="Project 03 topics unavailable">
-                <button type="button" aria-pressed="true" aria-label="Reserved topic 00" disabled><span>00</span><strong aria-hidden="true"></strong></button>
-                <button type="button" aria-pressed="false" aria-label="Reserved topic 01" disabled><span>01</span><strong aria-hidden="true"></strong></button>
-                <button type="button" aria-pressed="false" aria-label="Reserved topic 02" disabled><span>02</span><strong aria-hidden="true"></strong></button>
-                <button type="button" aria-pressed="false" aria-label="Reserved topic 03" disabled><span>03</span><strong aria-hidden="true"></strong></button>
-                <button type="button" aria-pressed="false" aria-label="Reserved topic 04" disabled><span>04</span><strong aria-hidden="true"></strong></button>
-                <button type="button" aria-pressed="false" aria-label="Reserved topic 05" disabled><span>05</span><strong aria-hidden="true"></strong></button>
+              <div class="extra-step-tabs extra-step-tabs--seven" role="group" aria-label="Choose a Creature World topic">
+                <button type="button" id="extra-p3-step-overview" aria-controls="extra-p3-slide-overview" aria-pressed="true" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
+                <button type="button" id="extra-p3-step-anatomy" aria-controls="extra-p3-slide-anatomy" aria-pressed="false" data-extra-tab="1"><span>01</span><strong>Anatomy</strong></button>
+                <button type="button" id="extra-p3-step-locomotion" aria-controls="extra-p3-slide-locomotion" aria-pressed="false" data-extra-tab="2"><span>02</span><strong>Locomotion</strong></button>
+                <button type="button" id="extra-p3-step-rigs" aria-controls="extra-p3-slide-rigs" aria-pressed="false" data-extra-tab="3"><span>03</span><strong>Rigs</strong></button>
+                <button type="button" id="extra-p3-step-simulation" aria-controls="extra-p3-slide-simulation" aria-pressed="false" data-extra-tab="4"><span>04</span><strong>Simulation</strong></button>
+                <button type="button" id="extra-p3-step-interaction" aria-controls="extra-p3-slide-interaction" aria-pressed="false" data-extra-tab="5"><span>05</span><strong>Interaction</strong></button>
+                <button type="button" id="extra-p3-step-proof" aria-controls="extra-p3-slide-proof" aria-pressed="false" data-extra-tab="6"><span>06</span><strong>Proof</strong></button>
               </div>
             </div>
           </div>

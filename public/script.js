@@ -602,7 +602,7 @@ function setBuildStatus(frame, status) {
   const labels = {
     idle: "Ready to load",
     loading: "Game files are loading…",
-    ready: "Build running",
+    ready: "Build ready",
     error: "Build could not start",
   };
 
@@ -649,7 +649,9 @@ function loadActiveProjectBuild() {
 window.addEventListener("message", (event) => {
   if (
     event.origin !== window.location.origin ||
-    event.data?.type !== "portfolio-unity-build"
+    !["portfolio-unity-build", "portfolio-game-build"].includes(
+      event.data?.type,
+    )
   ) {
     return;
   }
@@ -744,19 +746,20 @@ function updateProjectViewButton() {
 
   const projectTitle = selectedTab.dataset.projectTitle;
   const hasBuild = selectedTab.dataset.hasBuild === "true";
+  const buildLabel = selectedTab.dataset.buildLabel || "web";
 
   projectBuildButton.disabled = !hasBuild;
   projectBuildButton.setAttribute("aria-disabled", String(!hasBuild));
   projectBuildButton.setAttribute(
     "aria-label",
     hasBuild
-      ? `Play the ${projectTitle} WebGPU build`
+      ? `Play the ${projectTitle} ${buildLabel} build`
       : `${projectTitle} does not have a web build`,
   );
 
   if (projectBuildLinkKicker) {
     projectBuildLinkKicker.textContent = hasBuild
-      ? "Playable WebGPU build"
+      ? `Playable ${buildLabel} build`
       : "Web build unavailable";
   }
 
@@ -847,8 +850,9 @@ function setProjectView(
   }
 
   if (announce && sectionAnnouncer && selectedTab) {
+    const buildLabel = selectedTab.dataset.buildLabel || "web";
     sectionAnnouncer.textContent = `${selectedTab.dataset.projectTitle} ${
-      mode === "build" ? "WebGPU build" : "project visual"
+      mode === "build" ? `${buildLabel} build` : "project visual"
     } view`;
   }
 }
@@ -1063,6 +1067,41 @@ const sceneHighlightDetails = {
     kicker: "Content budget",
     title: "Live generation cost estimates",
     copy: "The workshop tracks cave size, pits, markers, enemies, and estimated geometry as the map changes. It blocks documents that would ask the browser to generate more than the defined limits.",
+  },
+  "species-arrival": {
+    kicker: "New species arrival",
+    title: "A generated species enters through a staged landing",
+    copy: "After its cooldown, the spacecraft generates and registers a new body plan, stages one being in the beam, and releases it into the authoritative world when the arrival sequence finishes.",
+  },
+  "creature-anatomy": {
+    kicker: "Procedural anatomy",
+    title: "One connected body graph drives form and function",
+    copy: "Each creature's exact anatomy determines its silhouette, structural mass, part condition, locomotion, Energy cost, animation, ground contact, and stable draw order.",
+  },
+  "world-simulation": {
+    kicker: "Deterministic simulation",
+    title: "Every being moves through one reproducible world",
+    copy: "Fixed ticks, fixed-point positions, stable system order, swept collision, and deterministic routing keep the 128 × 128 world reproducible from recorded inputs.",
+  },
+  "lifecycle-tools": {
+    kicker: "Lifecycle machines",
+    title: "Trash and duplication become part of play",
+    copy: "Dragging a creature into a machine begins a visible intake sequence. Only after it completes does the simulation remove that being or create two same-species beings within the hard population cap.",
+  },
+  "simulation-sidebar": {
+    kicker: "Live simulation controls",
+    title: "World time remains visible and adjustable",
+    copy: "The sidebar exposes day, local time, phase, and 0.5x, 1x, 2x, and 4x controls. Each setting changes how quickly complete ticks are requested without changing what a tick means.",
+  },
+  "performance-sidebar": {
+    kicker: "Browser diagnostics",
+    title: "Performance is measured inside the playable build",
+    copy: "Live frame rate, p95 frame time, simulation pace, and CPU-budget state make the WebAssembly client's behavior inspectable while the world is running.",
+  },
+  "creature-inspection": {
+    kicker: "Creature inspection",
+    title: "Generated anatomy remains readable at runtime",
+    copy: "Selecting a creature opens its species, body, movement, Energy, and condition details so the procedural systems can be examined instead of treated as a visual black box.",
   },
 };
 

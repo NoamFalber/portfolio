@@ -1,0 +1,18 @@
+MonogameSimulation browser third-party notices
+
+KNI 4.2.9001 / KNI Blazor.GL 4.2.9001.2
+Copyright KNI contributors
+Microsoft Public License (MS-PL)
+https://github.com/kniengine/kni
+https://licenses.nuget.org/MS-PL
+
+nkast Wasm helpers 8.0.11
+Copyright nkast contributors
+MIT License
+https://github.com/nkast/Wasm
+https://licenses.nuget.org/MIT
+
+Noto Sans Regular and Bold
+Copyright 2012 The Noto Project Authors
+SIL Open Font License 1.1
+The complete font license is distributed as NotoSans-LICENSE.txt beside this file.

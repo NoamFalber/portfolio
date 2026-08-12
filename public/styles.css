@@ -988,6 +988,10 @@ html:not(.js) .project-panel {
   border-right: 2px solid var(--ink);
 }
 
+#project-3 .project-gallery {
+  --project-visual-aspect: 1618 / 826;
+}
+
 .gallery-heading {
   display: grid;
   min-height: clamp(3.65rem, 6.5vh, 4.5rem);
@@ -1091,7 +1095,8 @@ html:not(.js) .project-panel {
 
 .interactive-scene--workshop,
 .interactive-scene--gameplay,
-.interactive-scene--landscape {
+.interactive-scene--landscape,
+.interactive-scene--creature-world {
   width: 100%;
   height: auto;
   aspect-ratio: var(--project-visual-aspect);
@@ -1100,7 +1105,8 @@ html:not(.js) .project-panel {
 
 .interactive-scene--workshop .interactive-scene__image,
 .interactive-scene--gameplay .interactive-scene__image,
-.interactive-scene--landscape .interactive-scene__image {
+.interactive-scene--landscape .interactive-scene__image,
+.interactive-scene--creature-world .interactive-scene__image {
   object-fit: contain;
 }
 
@@ -1398,12 +1404,17 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   line-height: 0.9;
 }
 
-#project-1 .project-inspector__project h3 {
+#project-1 .project-inspector__project h3,
+#project-3 .project-inspector__project h3 {
   font-size: clamp(2rem, 4.2vh, 3.4rem);
   line-height: 0.9;
 }
 
 #project-2 .project-inspector__project > p:last-of-type {
+  font-size: clamp(0.74rem, 1.35vh, 0.88rem);
+}
+
+#project-3 .project-inspector__project > p:last-of-type {
   font-size: clamp(0.74rem, 1.35vh, 0.88rem);
 }
 
@@ -1560,10 +1571,19 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   text-align: left;
 }
 
+#project-3-build .build-player__viewport--embedded {
+  aspect-ratio: 5 / 3;
+}
+
 @supports (width: 1cqw) {
   .build-player__viewport--embedded {
     width: min(100cqw, 160cqh);
     height: min(100cqh, 62.5cqw);
+  }
+
+  #project-3-build .build-player__viewport--embedded {
+    width: min(100cqw, 166.6667cqh);
+    height: min(100cqh, 60cqw);
   }
 }
 
@@ -1755,6 +1775,12 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   background-image:
     linear-gradient(var(--wallpaper-wash), var(--wallpaper-wash)),
     url("assets/wallpapers/extra-cave-workshop.webp");
+}
+
+[data-extra-project-panel="project-3"] .extra-stage {
+  background-image:
+    linear-gradient(rgba(235, 241, 220, 0.56), rgba(235, 241, 220, 0.56)),
+    url("assets/wallpapers/extra-creature-world.webp");
 }
 
 .extra-slide {
@@ -2517,7 +2543,8 @@ html:not(.js) .extra-step-tabs {
 
   .interactive-scene--landscape,
   .interactive-scene--workshop,
-  .interactive-scene--gameplay {
+  .interactive-scene--gameplay,
+  .interactive-scene--creature-world {
     aspect-ratio: var(--project-visual-aspect);
   }
 
@@ -2777,7 +2804,8 @@ html:not(.js) .extra-step-tabs {
     font-size: clamp(2.3rem, 10vw, 3.3rem);
   }
 
-  #project-1 .project-inspector__project h3 {
+  #project-1 .project-inspector__project h3,
+  #project-3 .project-inspector__project h3 {
     font-size: clamp(2rem, 9vw, 3rem);
   }
 
@@ -2806,6 +2834,10 @@ html:not(.js) .extra-step-tabs {
 
   [data-extra-project-panel="project-2"] .extra-stage {
     background-position: 18% center;
+  }
+
+  [data-extra-project-panel="project-3"] .extra-stage {
+    background-position: center;
   }
 
   .extra-workspace__toolbar {
@@ -3219,6 +3251,10 @@ html:not(.js) .extra-step-tabs {
   background: rgba(235, 224, 206, 0.8);
 }
 
+[data-extra-project-panel="project-3"] .extra-meta {
+  background: rgba(211, 225, 188, 0.82);
+}
+
 .extra-slide__heading,
 .extra-slide--problem .extra-slide__heading {
   background: rgba(222, 233, 222, 0.68);
@@ -3226,6 +3262,10 @@ html:not(.js) .extra-step-tabs {
 
 [data-extra-project-panel="project-2"] .extra-slide__heading {
   background: rgba(235, 224, 206, 0.68);
+}
+
+[data-extra-project-panel="project-3"] .extra-slide__heading {
+  background: rgba(211, 225, 188, 0.72);
 }
 
 .extra-slide__body {
@@ -3240,6 +3280,10 @@ html:not(.js) .extra-step-tabs {
   background: rgba(239, 226, 205, 0.82);
 }
 
+[data-extra-project-panel="project-3"] .extra-callout {
+  background: rgba(225, 232, 190, 0.86);
+}
+
 .extra-slide--proof {
   background: transparent;
 }
@@ -3247,6 +3291,11 @@ html:not(.js) .extra-step-tabs {
 .extra-slide--proof .extra-slide__heading,
 .extra-slide--proof .extra-proof-body {
   background: rgba(25, 58, 51, 0.82);
+}
+
+[data-extra-project-panel="project-3"] .extra-slide--proof .extra-slide__heading,
+[data-extra-project-panel="project-3"] .extra-slide--proof .extra-proof-body {
+  background: rgba(35, 62, 37, 0.86);
 }
 
 .extra-step-tabs,
@@ -3318,6 +3367,10 @@ html:not(.js) .extra-step-tabs {
 
 [data-extra-project-panel="project-2"] {
   --sun: #d3ae6b;
+}
+
+[data-extra-project-panel="project-3"] {
+  --sun: #a7bb6f;
 }
 
 .extra-slide--hero h3 {
@@ -3616,13 +3669,15 @@ html:not(.js) .extra-step-tabs {
 }
 
 #project-1 .project-inspector__project h3,
-#project-2 .project-inspector__project h3 {
+#project-2 .project-inspector__project h3,
+#project-3 .project-inspector__project h3 {
   font-size: clamp(2.1rem, 4vh, 3.3rem);
   line-height: 0.9;
 }
 
 #project-1 .project-inspector__project > p:last-of-type,
-#project-2 .project-inspector__project > p:last-of-type {
+#project-2 .project-inspector__project > p:last-of-type,
+#project-3 .project-inspector__project > p:last-of-type {
   font-size: clamp(0.94rem, 1.65vh, 1rem);
   line-height: 1.48;
 }
@@ -3816,7 +3871,8 @@ html:not(.js) .extra-step-tabs {
   }
 
   #project-1 .project-inspector__project > p:last-of-type,
-  #project-2 .project-inspector__project > p:last-of-type {
+  #project-2 .project-inspector__project > p:last-of-type,
+  #project-3 .project-inspector__project > p:last-of-type {
     font-size: 1rem;
     line-height: 1.52;
   }
@@ -3953,7 +4009,8 @@ html:not(.js) .extra-step-tabs {
   }
 
   #project-1 .project-inspector__project h3,
-  #project-2 .project-inspector__project h3 {
+  #project-2 .project-inspector__project h3,
+  #project-3 .project-inspector__project h3 {
     font-size: clamp(2.2rem, 9.5vw, 3.1rem);
   }
 
@@ -4479,14 +4536,16 @@ html:not(.js) .extra-step-tabs {
   }
 
   #project-1 .project-inspector__project h3,
-  #project-2 .project-inspector__project h3 {
+  #project-2 .project-inspector__project h3,
+  #project-3 .project-inspector__project h3 {
     margin-top: 0.25rem;
     font-size: clamp(1.65rem, 4.6vh, 2.15rem);
     line-height: 0.9;
   }
 
   #project-1 .project-inspector__project > p:last-of-type,
-  #project-2 .project-inspector__project > p:last-of-type {
+  #project-2 .project-inspector__project > p:last-of-type,
+  #project-3 .project-inspector__project > p:last-of-type {
     margin-top: clamp(0.42rem, 1.25vh, 0.65rem);
     font-size: clamp(0.76rem, 1.8vh, 0.84rem);
     line-height: 1.36;
@@ -5523,193 +5582,6 @@ html:not(.js) .extra-step-tabs {
   visibility: hidden;
 }
 
-/* Project 03 reserves the complete interface without inventing project copy or
-   media. Blank rails and panels use the existing project geometry so replacing
-   them with real evidence will not require a new responsive layout. */
-.project-panel--placeholder,
-.extra-workspace--placeholder {
-  --placeholder-line: rgba(var(--project-ink-rgb), 0.2);
-  --placeholder-line-light: rgba(255, 250, 240, 0.24);
-}
-
-.project-placeholder__heading {
-  display: grid;
-  gap: 0.45rem;
-}
-
-.project-placeholder__heading span,
-.project-placeholder__line,
-.project-placeholder__thumbnail-copy i,
-.extra-placeholder__line,
-.extra-placeholder__meta span,
-.extra-placeholder__tabs strong {
-  display: block;
-  height: 0.55rem;
-  background: var(--placeholder-line);
-}
-
-.project-placeholder__heading span:first-child,
-.project-placeholder__line--short,
-.extra-placeholder__line--short,
-.extra-placeholder__meta span:first-child {
-  width: 34%;
-}
-
-.project-placeholder__heading span:last-child {
-  width: min(72%, 19rem);
-  height: 0.8rem;
-}
-
-.project-placeholder__slide {
-  background: var(--gallery-surface);
-}
-
-.project-placeholder__visual {
-  display: grid;
-  width: 100%;
-  height: auto;
-  aspect-ratio: var(--project-visual-aspect);
-  grid-template-columns: 0.7fr 1.3fr 0.7fr;
-  gap: clamp(0.45rem, 1.2vw, 0.9rem);
-  align-items: end;
-  padding: clamp(0.65rem, 1.5vw, 1.1rem);
-  background:
-    linear-gradient(rgba(var(--project-light-rgb), 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--project-light-rgb), 0.08) 1px, transparent 1px),
-    var(--gallery-surface);
-  background-size: 2rem 2rem;
-}
-
-.project-placeholder__visual > span {
-  min-height: 34%;
-  border: 1px solid rgba(var(--project-light-rgb), 0.2);
-  background: rgba(var(--project-light-rgb), 0.06);
-}
-
-.project-placeholder__visual > span:nth-child(2) {
-  min-height: 62%;
-}
-
-.project-placeholder__slide figcaption .project-placeholder__line {
-  width: 58%;
-}
-
-.project-placeholder__thumbnail {
-  width: 3.5rem;
-  height: 2.65rem;
-  border: 1px solid rgba(var(--project-ink-rgb), 0.22);
-  background:
-    linear-gradient(var(--placeholder-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--placeholder-line) 1px, transparent 1px),
-    var(--project-surface-strong);
-  background-size: 0.8rem 0.8rem;
-}
-
-.project-placeholder__thumbnail-copy {
-  align-content: center;
-}
-
-.project-placeholder__thumbnail-copy i:first-child {
-  width: 42%;
-  height: 0.4rem;
-}
-
-.project-placeholder__thumbnail-copy i:last-child {
-  width: 76%;
-  height: 0.55rem;
-}
-
-.project-placeholder__summary {
-  align-content: start;
-  gap: 0.65rem;
-}
-
-.project-placeholder__line {
-  width: 100%;
-}
-
-.project-placeholder__line--medium {
-  width: 72%;
-}
-
-.project-placeholder__line--title {
-  width: 88%;
-  height: clamp(1.5rem, 4vh, 2.5rem);
-}
-
-.project-panel--placeholder .project-tags li {
-  width: 3.5rem;
-  min-height: 1.35rem;
-  background: var(--placeholder-line);
-}
-
-.project-placeholder__selection .project-inspector__content {
-  gap: 0.6rem;
-}
-
-.project-placeholder__selection .project-placeholder__line {
-  background: var(--placeholder-line-light);
-}
-
-.extra-workspace--placeholder {
-  --project-ink-rgb: 24, 53, 46;
-}
-
-.extra-workspace--placeholder .extra-stage {
-  background:
-    linear-gradient(rgba(24, 53, 46, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(24, 53, 46, 0.07) 1px, transparent 1px),
-    rgba(255, 250, 240, 0.9);
-  background-size: 2.5rem 2.5rem;
-}
-
-.extra-placeholder__slide {
-  background: transparent;
-}
-
-.extra-placeholder__slide .extra-hero-copy {
-  gap: 0.7rem;
-  justify-content: center;
-}
-
-.extra-placeholder__line {
-  width: min(100%, 35rem);
-  height: 0.7rem;
-}
-
-.extra-placeholder__line--medium {
-  width: min(72%, 26rem);
-}
-
-.extra-placeholder__line--title,
-.extra-placeholder__line--title-medium {
-  width: min(78%, 30rem);
-  height: clamp(2rem, 6vh, 4rem);
-}
-
-.extra-placeholder__line--title-medium {
-  width: min(56%, 21rem);
-}
-
-.extra-placeholder__meta > div {
-  gap: 0.55rem;
-}
-
-.extra-placeholder__meta span {
-  width: 88%;
-}
-
-.extra-placeholder__meta span:first-child {
-  height: 0.45rem;
-}
-
-.extra-placeholder__tabs strong {
-  width: 65%;
-  min-width: 1.5rem;
-  height: 0.5rem;
-  justify-self: center;
-}
-
 :is(
     .gallery-thumbnails button,
     .extra-carousel-controls button,
@@ -5875,7 +5747,8 @@ html:not(.js) .extra-step-tabs {
   }
 
   #project-1 .project-inspector__project > p:last-of-type,
-  #project-2 .project-inspector__project > p:last-of-type {
+  #project-2 .project-inspector__project > p:last-of-type,
+  #project-3 .project-inspector__project > p:last-of-type {
     font-size: clamp(0.8rem, 1.9vh, 0.88rem);
     line-height: 1.38;
   }
