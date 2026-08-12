@@ -936,7 +936,7 @@
                         <header class="gallery-heading">
                           <div>
                             <p>Project visual</p>
-                            <strong>Procedural creatures and simulation</strong>
+                            <strong>Creature generation and living-world simulation</strong>
                           </div>
                           <div class="gallery-pager" role="group" aria-label="Picture navigation">
                             <button type="button" data-gallery-previous aria-label="Previous picture">←</button>
@@ -960,8 +960,8 @@
                               class="interactive-scene interactive-scene--creature-world"
                               data-interactive-scene
                               data-scene-overview-kicker="Project visual"
-                              data-scene-overview-title="One anatomy drives the whole creature"
-                              data-scene-overview-copy="Select a highlighted area to inspect procedural anatomy, world simulation, live diagnostics, or the lifecycle tools."
+                              data-scene-overview-title="Explore a world of generated creatures"
+                              data-scene-overview-copy="Select a highlighted area to inspect the procedural generation, animation, interaction, and simulation behind the playable world."
                             >
                               <img
                                 class="interactive-scene__image"
@@ -1043,7 +1043,7 @@
                               </div>
                             </div>
                             <figcaption>
-                              In-game capture of the living world, browser diagnostics, and creature lifecycle tools.
+                              In-game capture of generated species moving through the playable living world.
                             </figcaption>
                           </figure>
                         </div>
@@ -1082,16 +1082,14 @@
                           <p>C# simulation · procedural rendering</p>
                           <h3 id="project-3-summary-title">Creature World</h3>
                           <p>
-                            Creature World generates fifteen species, builds
-                            each one from a connected procedural body graph, and
-                            releases them into a deterministic living world. The
-                            same anatomy defines each creature’s silhouette,
-                            condition, walking or crawling, top speed, Energy
-                            cost, animation, ground contact, and draw order. I
-                            built the complete C# experience to run locally in
-                            the browser, with precise dragging and throws,
-                            lifecycle machines, new-species spacecraft arrivals,
-                            time controls, and live inspection.
+                            I built Creature World as a playable C# simulation
+                            that generates fifteen species from connected body
+                            plans and releases them into a living world. Anatomy
+                            controls both appearance and behavior, shaping each
+                            creature’s animation, locomotion, speed, and Energy
+                            use. Players can inspect, drag, throw, duplicate,
+                            remove, and introduce new species in the complete
+                            browser build.
                           </p>
                           <ul class="project-tags">
                             <li>C#</li>
@@ -1115,9 +1113,9 @@
                             <div class="project-inspector__selection-head">
                               <p data-scene-kicker>Project visual</p>
                             </div>
-                            <h4 data-scene-title>One anatomy drives the whole creature</h4>
+                            <h4 data-scene-title>Explore a world of generated creatures</h4>
                             <p data-scene-copy>
-                              Select a highlighted area to inspect procedural anatomy, world simulation, live diagnostics, or the lifecycle tools.
+                              Select a highlighted area to inspect the procedural generation, animation, interaction, and simulation behind the playable world.
                             </p>
                           </div>
                         </div>
@@ -1857,19 +1855,17 @@
                   data-extra-index="0"
                 >
                   <div class="extra-hero-copy">
-                    <p class="extra-slide__eyebrow">C# simulation · procedural anatomy · browser runtime</p>
+                    <p class="extra-slide__eyebrow">C# simulation · procedural creatures · WebAssembly</p>
                     <h3>Creature World</h3>
                     <p class="extra-slide__lead">
-                      Fifteen generated species enter one finite simulated world,
-                      then move, rest, react to player handling, and remain
-                      inspectable through the live sidebar. I separated
-                      deterministic authority from presentation so fixed
-                      simulation ticks decide identity, anatomy, movement,
-                      Energy, and lifecycle actions while the client compiles
-                      reusable rigs, interpolates motion, and draws the result.
-                      The browser uses KNI’s MonoGame-compatible WebGL backend,
-                      while the same C# systems also run in headless tools,
-                      tests, benchmarks, and the native client.
+                      Creature World connects procedural generation, simulation,
+                      animation, interaction, and rendering through one shared
+                      anatomy system. Visitors generate fifteen species, inspect
+                      how their bodies affect movement, handle them directly,
+                      and change the population with in-world machines and
+                      spacecraft arrivals. I separated deterministic simulation
+                      from presentation and shipped the complete C# experience
+                      as a static WebAssembly and WebGL release.
                     </p>
                     <a
                       class="button button--primary extra-build-jump"
@@ -1884,8 +1880,8 @@
                   <dl class="extra-meta">
                     <div><dt>Role</dt><dd>Developer and technical artist</dd></div>
                     <div><dt>Stack</dt><dd>C# · MonoGame/KNI · Blazor WASM · WebGL</dd></div>
-                    <div><dt>Main challenge</dt><dd>Make procedurally generated anatomy both functional and readable</dd></div>
-                    <div><dt>Result</dt><dd>Deterministic living world in a statically deployed browser runtime</dd></div>
+                    <div><dt>Main challenge</dt><dd>Turn varied body plans into readable creatures with real movement rules</dd></div>
+                    <div><dt>Result</dt><dd>A playable browser world where fifteen generated species look and move according to their anatomy</dd></div>
                   </dl>
                 </article>
 
@@ -1899,26 +1895,25 @@
                 >
                   <header class="extra-slide__heading">
                     <p>01 · Procedural anatomy</p>
-                    <h3>A bounded graph grammar builds connected species instead of selecting body presets.</h3>
+                    <h3>One generated body plan defines both the creature and its rules.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      A strict versioned catalog supplies 19 semantic body parts,
-                      attachment sites, branch rules, constraints, and exact
-                      fallback plans. Each request generates a finite candidate
-                      set, validates every connected body, and uses Weirdness to
-                      rank structural distance from an authored reference.
+                      I built a graph generator that assembles each species from
+                      19 authored body parts. Every result is connected,
+                      readable, and reproducible, while the seed, Weirdness,
+                      and body-aspect controls produce a broad range of forms.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Authored grammar</strong><span>Torso, head, limbs, features, anchors, symmetry, and generation stages use stable IDs in strict JSON.</span></li>
-                      <li><strong>Graph invariants</strong><span>Every result has one root, one connected acyclic topology, a primary head, valid features, and bounded dimensions.</span></li>
-                      <li><strong>Controlled variety</strong><span>Seed, Weirdness, and maximum body aspect expose reproducible form without allowing invalid or unbounded anatomy.</span></li>
-                      <li><strong>Preserved provenance</strong><span>The selected plan retains its seed, algorithm version, rank, divergence, mass target, catalog identity, and fallback status.</span></li>
+                      <li><strong>Connected bodies</strong><span>The generator can create compact creatures, long spines, repeated sections, multiple heads, many limb pairs, or no limbs without producing disconnected anatomy.</span></li>
+                      <li><strong>Controlled variation</strong><span>Seed, Weirdness, and maximum body aspect make unusual forms repeatable while keeping the complete body within authored limits.</span></li>
+                      <li><strong>Shared blueprint</strong><span>Every creature of a species references one body plan instead of duplicating anatomy data.</span></li>
+                      <li><strong>Functional parts</strong><span>Structural parts define mass and condition, while facial and other features stay attached to the correct head or body section.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      Core and Major parts contribute exact structural mass and
-                      own per-being condition. Extra features remain lightweight
-                      functional anatomy.
+                      The generator does not choose from named body presets.
+                      Familiar and unusual creatures come from the same
+                      generation rules.
                     </p>
                   </div>
                 </article>
@@ -1933,27 +1928,25 @@
                 >
                   <header class="extra-slide__heading">
                     <p>02 · Functional locomotion</p>
-                    <h3>The body plan determines how a being moves, how fast it can travel, and what that movement costs.</h3>
+                    <h3>Generated anatomy decides whether a creature walks or crawls.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Locomotion is derived from the exact species graph,
-                      mechanical part definitions, structural mass, current
-                      part condition, and available Energy. A legged body walks
-                      through usable connected leg chains. A legless body crawls
-                      through the healthy anatomy that can contact or assist
-                      against the ground.
+                      Movement is calculated from the creature’s actual limbs,
+                      body mass, part condition, and available Energy. A legged
+                      species uses its connected leg chains; a legless species
+                      crawls with the body parts that can support it against the
+                      ground.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Connected leg chains</strong><span>Segment lengths, propulsion, condition, and mass contribute to the legal top speed.</span></li>
-                      <li><strong>Crawl engagement</strong><span>More supporting anatomy can raise crawl speed while also increasing Energy cost at the same effort.</span></li>
-                      <li><strong>Continuous intent</strong><span>Speed is one exact value from stillness to the being’s current affordable maximum, without a binary walk or sprint switch.</span></li>
-                      <li><strong>Committed cost</strong><span>The simulation charges Energy only for legal displacement that actually occurred during the fixed tick.</span></li>
+                      <li><strong>Body-driven speed</strong><span>Leg length, propulsion, condition, and total mass determine the current legal top speed.</span></li>
+                      <li><strong>Connected crawling</strong><span>Healthy supporting anatomy affects both crawl speed and Energy cost.</span></li>
+                      <li><strong>Continuous control</strong><span>A creature can move at any affordable speed from stillness to its current maximum.</span></li>
+                      <li><strong>Real movement cost</strong><span>Energy is charged only for legal distance the creature actually travels.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      When no positive movement is affordable, the being enters
-                      an explicit Energy-limited state instead of silently
-                      violating the locomotion rules.
+                      Walking and crawling are consequences of generated
+                      anatomy, not cosmetic animation labels.
                     </p>
                   </div>
                 </article>
@@ -1968,25 +1961,24 @@
                 >
                   <header class="extra-slide__heading">
                     <p>03 · Organic 2.5D rigs</p>
-                    <h3>The authority-owned body graph compiles once into a reusable animated rig.</h3>
+                    <h3>Every body graph becomes a reusable animated 2.5D rig.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      The rig compiler lifts the two-dimensional anatomy into a
-                      connected presentation-space structure, solves every
-                      parent chain, grounds the result, and builds safe bounds.
-                      Every being of the same species reuses that immutable plan
-                      rather than creating its own assets or geometry setup.
+                      I built a rig compiler that turns generated anatomy into
+                      connected organic shapes, joints, facial features,
+                      shadows, and movement poses. Each species compiles once,
+                      then every creature of that species reuses the result.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Continuous heading</strong><span>Five authored view families expand into eight semantic sectors with smooth 360-degree rotation between them.</span></li>
-                      <li><strong>Connected silhouettes</strong><span>Organic ellipses, circular joints, and fused overlaps preserve articulation without exposing internal seams.</span></li>
-                      <li><strong>Walk and crawl poses</strong><span>Observed simulation distance advances planted walking or connected crawl animation through the creature’s actual support graph.</span></li>
-                      <li><strong>Stable composition</strong><span>Compiled depth, part slots, conservative bounds, whole-being culling, and fixed painter ordering prevent visual flicker.</span></li>
+                      <li><strong>Continuous direction</strong><span>Five authored views expand into eight appearance sectors with smooth 360-degree turning.</span></li>
+                      <li><strong>Organic construction</strong><span>Ellipses, circular joints, and controlled overlap create connected silhouettes without exposed seams.</span></li>
+                      <li><strong>Anatomy-based animation</strong><span>Leg chains produce planted walking, while the creature’s support graph drives crawling.</span></li>
+                      <li><strong>Stable rendering</strong><span>Whole-creature culling and fixed depth ordering keep large, unusual bodies readable without flicker.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      Presentation interpolates authoritative positions and gait
-                      samples. Visual guesses never feed back into the simulation.
+                      Animation follows distance reported by the simulation, so
+                      the renderer never decides how fast a creature moves.
                     </p>
                   </div>
                 </article>
@@ -2001,25 +1993,26 @@
                 >
                   <header class="extra-slide__heading">
                     <p>04 · Deterministic world</p>
-                    <h3>Fixed ticks, fixed-point movement, and stable ordering make every simulation state reproducible.</h3>
+                    <h3>Fixed simulation rules keep every generated world reproducible.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      One host step processes a complete tick in explicit system
-                      order. Rendering can speed up, slow down, pause, resize, or
-                      disappear without changing the result produced by the same
-                      versioned inputs, command stream, and tick count.
+                      Creature World runs in fixed ticks with deterministic
+                      random state, stable identities, and fixed-point movement.
+                      The same inputs, commands, and tick count produce the same
+                      result even when frame rate, window size, or rendering
+                      changes.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Finite continuous world</strong><span>The 128 × 128 space uses fixed-point positions, hard bounds, swept collision, and radius-aware occupancy.</span></li>
-                      <li><strong>Deterministic routing</strong><span>Direct travel handles clear paths; stable eight-neighbor A* and line-of-sight smoothing handle blocked routes.</span></li>
-                      <li><strong>Owned randomness</strong><span>Host random state, stable IDs, traversal order, system order, and integer rules all participate in exact fingerprints.</span></li>
-                      <li><strong>Independent presentation</strong><span>The 0.5x, 1x, 2x, and 4x controls change how quickly complete ticks are requested, not what one tick means.</span></li>
+                      <li><strong>Finite world</strong><span>The 128 × 128 space uses hard bounds, swept collision, and radius-aware occupancy.</span></li>
+                      <li><strong>Reliable routes</strong><span>Creatures travel directly across clear space and use deterministic A* around obstacles.</span></li>
+                      <li><strong>Stable behavior</strong><span>Rest, destination choice, interaction, and movement run in one explicit system order.</span></li>
+                      <li><strong>Independent time controls</strong><span>The 0.5x, 1x, 2x, and 4x options request complete ticks faster or slower without changing their rules.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      The visible seed reproduces creature bodies. A separate
-                      recorded motion seed allows fresh movement histories and
-                      exact diagnosis when needed.
+                      Creature bodies and movement use separate recorded seeds,
+                      so a body can be shared while its motion remains
+                      reproducible.
                     </p>
                   </div>
                 </article>
@@ -2034,26 +2027,25 @@
                 >
                   <header class="extra-slide__heading">
                     <p>05 · Creature interaction</p>
-                    <h3>Handling, lifecycle machines, and spacecraft arrivals stay tactile without bypassing simulation authority.</h3>
+                    <h3>Players can handle creatures and change the population directly.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Picking evaluates the current animated rig instead of a
-                      loose rectangle. Dragging preserves the clicked offset,
-                      lifts the body above its grounded shadow, and turns a
-                      release into a bounded deterministic throw or a safe return
-                      from outside the world.
+                      Picking follows the visible animated body rather than a
+                      loose box. Creatures keep the clicked offset while
+                      dragging, react to pointer speed, and can be released into
+                      a controlled throw or safely returned after leaving the
+                      world.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Visible-shape picking</strong><span>Primitive masks, rotation, reflection, pose, and world order identify the topmost anatomy under the pointer.</span></li>
-                      <li><strong>Safe manipulation</strong><span>Pointer capture, bounded flailing, capped throw speed, collision response, and return arcs preserve valid movement state.</span></li>
-                      <li><strong>Lifecycle machines</strong><span>Animated trash and duplication intakes submit ordered removal or same-species creation only after the visual sequence completes.</span></li>
-                      <li><strong>Spacecraft arrivals</strong><span>A cooldown-gated landing generates a new species, registers its blueprint, stages one being, and releases it after the beam sequence.</span></li>
+                      <li><strong>Precise selection</strong><span>Current pose, rotation, reflection, and draw order identify the visible creature under the pointer.</span></li>
+                      <li><strong>Safe handling</strong><span>Pointer capture, capped throws, collision response, and return arcs keep movement valid.</span></li>
+                      <li><strong>Lifecycle machines</strong><span>Trash and duplication complete their intake animations before removing one creature or creating two new creatures of the same species.</span></li>
+                      <li><strong>Spacecraft arrivals</strong><span>A landing and beam sequence introduces the first creature from a newly generated species.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      The authoritative lifecycle systems enforce the hard
-                      99-being cap, including the two free slots required before
-                      duplication can begin.
+                      The simulation enforces a hard 99-creature cap across
+                      duplication and new-species arrivals.
                     </p>
                   </div>
                 </article>
@@ -2068,21 +2060,22 @@
                 >
                   <header class="extra-slide__heading">
                     <p>06 · Engineering evidence</p>
-                    <h3>Headless reproduction, tests, benchmarks, and diagnostics exercise the game’s production paths.</h3>
+                    <h3>Tests, benchmarks, and browser diagnostics verify the shipped systems.</h3>
                   </header>
                   <div class="extra-proof-body">
                     <dl class="extra-evidence-grid">
-                      <div><dt>4 xUnit projects</dt><dd>simulation, client framework, native composition, and web composition contracts</dd></div>
-                      <div><dt>2 benchmark suites</dt><dd>authoritative simulation and presentation hot paths measured independently</dd></div>
-                      <div><dt>3,000 movers</dt><dd>controlled workloads cover large being, movement, culling, sorting, and composition cases</dd></div>
-                      <div><dt>AOT + -O3</dt><dd>full WebAssembly compilation and Emscripten optimization in the static browser release</dd></div>
+                      <div><dt>4 xUnit projects</dt><dd>simulation, presentation, native, and web contracts</dd></div>
+                      <div><dt>2 benchmark suites</dt><dd>simulation and rendering workloads measured independently</dd></div>
+                      <div><dt>3,000 movers</dt><dd>controlled workloads for movement, culling, sorting, and composition</dd></div>
+                      <div><dt>AOT + -O3</dt><dd>optimized static WebAssembly release</dd></div>
                     </dl>
                     <p>
                       Headless scenarios sample seed ranges and compare
-                      deterministic fingerprints without graphics. The browser
-                      exposes sizing, authority, camera, selection, and
-                      performance diagnostics on demand while normal play avoids
-                      recurring full snapshots and detailed renderer timers.
+                      deterministic results without graphics. Benchmark
+                      suites exercise simulation and rendering workloads through
+                      the same production paths as the game, and the playable
+                      build exposes live frame rate, frame time, and simulation
+                      pace.
                     </p>
                   </div>
                 </article>
