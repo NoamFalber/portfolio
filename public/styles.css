@@ -635,6 +635,10 @@ img {
   object-position: 58% 53%;
 }
 
+.intro-reel__item--creature img {
+  object-position: center 50%;
+}
+
 .intro-reel__item--workshop img {
   object-position: center 48%;
 }
@@ -988,7 +992,7 @@ html:not(.js) .project-panel {
   border-right: 2px solid var(--ink);
 }
 
-#project-3 .project-gallery {
+#project-2 .project-gallery {
   --project-visual-aspect: 1618 / 826;
 }
 
@@ -1399,22 +1403,22 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   line-height: 0.86;
 }
 
-#project-2 .project-inspector__project h3 {
+#project-3 .project-inspector__project h3 {
   font-size: clamp(2rem, 4vh, 3.25rem);
   line-height: 0.9;
 }
 
 #project-1 .project-inspector__project h3,
-#project-3 .project-inspector__project h3 {
+#project-2 .project-inspector__project h3 {
   font-size: clamp(2rem, 4.2vh, 3.4rem);
   line-height: 0.9;
 }
 
-#project-2 .project-inspector__project > p:last-of-type {
+#project-3 .project-inspector__project > p:last-of-type {
   font-size: clamp(0.74rem, 1.35vh, 0.88rem);
 }
 
-#project-3 .project-inspector__project > p:last-of-type {
+#project-2 .project-inspector__project > p:last-of-type {
   font-size: clamp(0.74rem, 1.35vh, 0.88rem);
 }
 
@@ -1571,7 +1575,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   text-align: left;
 }
 
-#project-3-build .build-player__viewport--embedded {
+#project-2-build .build-player__viewport--embedded {
   aspect-ratio: 5 / 3;
 }
 
@@ -1581,7 +1585,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     height: min(100cqh, 62.5cqw);
   }
 
-  #project-3-build .build-player__viewport--embedded {
+  #project-2-build .build-player__viewport--embedded {
     width: min(100cqw, 166.6667cqh);
     height: min(100cqh, 60cqw);
   }
@@ -1771,13 +1775,13 @@ body:not([data-section="projects"]) .scene-hotspot > span {
     url("assets/wallpapers/extra-surreal-landscape.webp");
 }
 
-[data-extra-project-panel="project-2"] .extra-stage {
+[data-extra-project-panel="project-3"] .extra-stage {
   background-image:
     linear-gradient(var(--wallpaper-wash), var(--wallpaper-wash)),
     url("assets/wallpapers/extra-cave-workshop.webp");
 }
 
-[data-extra-project-panel="project-3"] .extra-stage {
+[data-extra-project-panel="project-2"] .extra-stage {
   background-image:
     linear-gradient(rgba(235, 241, 220, 0.56), rgba(235, 241, 220, 0.56)),
     url("assets/wallpapers/extra-creature-world.webp");
@@ -2800,12 +2804,12 @@ html:not(.js) .extra-step-tabs {
     box-shadow: 0.25rem 0.25rem 0 var(--shadow);
   }
 
-  #project-2 .project-inspector__project h3 {
+  #project-3 .project-inspector__project h3 {
     font-size: clamp(2.3rem, 10vw, 3.3rem);
   }
 
   #project-1 .project-inspector__project h3,
-  #project-3 .project-inspector__project h3 {
+  #project-2 .project-inspector__project h3 {
     font-size: clamp(2rem, 9vw, 3rem);
   }
 
@@ -2832,11 +2836,11 @@ html:not(.js) .extra-step-tabs {
     background-position: 68% center;
   }
 
-  [data-extra-project-panel="project-2"] .extra-stage {
+  [data-extra-project-panel="project-3"] .extra-stage {
     background-position: 18% center;
   }
 
-  [data-extra-project-panel="project-3"] .extra-stage {
+  [data-extra-project-panel="project-2"] .extra-stage {
     background-position: center;
   }
 
@@ -3247,11 +3251,11 @@ html:not(.js) .extra-step-tabs {
   background: rgba(208, 226, 230, 0.8);
 }
 
-[data-extra-project-panel="project-2"] .extra-meta {
+[data-extra-project-panel="project-3"] .extra-meta {
   background: rgba(235, 224, 206, 0.8);
 }
 
-[data-extra-project-panel="project-3"] .extra-meta {
+[data-extra-project-panel="project-2"] .extra-meta {
   background: rgba(211, 225, 188, 0.82);
 }
 
@@ -3260,11 +3264,11 @@ html:not(.js) .extra-step-tabs {
   background: rgba(214, 230, 234, 0.7);
 }
 
-[data-extra-project-panel="project-2"] .extra-slide__heading {
+[data-extra-project-panel="project-3"] .extra-slide__heading {
   background: rgba(235, 224, 206, 0.68);
 }
 
-[data-extra-project-panel="project-3"] .extra-slide__heading {
+[data-extra-project-panel="project-2"] .extra-slide__heading {
   background: rgba(211, 225, 188, 0.72);
 }
 
@@ -3280,11 +3284,11 @@ html:not(.js) .extra-step-tabs {
   background: rgba(218, 234, 237, 0.86);
 }
 
-[data-extra-project-panel="project-2"] .extra-callout {
+[data-extra-project-panel="project-3"] .extra-callout {
   background: rgba(239, 226, 205, 0.82);
 }
 
-[data-extra-project-panel="project-3"] .extra-callout {
+[data-extra-project-panel="project-2"] .extra-callout {
   background: rgba(225, 232, 190, 0.86);
 }
 
@@ -3302,13 +3306,13 @@ html:not(.js) .extra-step-tabs {
   background: rgba(22, 56, 67, 0.84);
 }
 
-[data-extra-project-panel="project-2"] .extra-slide--proof .extra-slide__heading,
-[data-extra-project-panel="project-2"] .extra-slide--proof .extra-proof-body {
+[data-extra-project-panel="project-3"] .extra-slide--proof .extra-slide__heading,
+[data-extra-project-panel="project-3"] .extra-slide--proof .extra-proof-body {
   background: rgba(63, 47, 43, 0.86);
 }
 
-[data-extra-project-panel="project-3"] .extra-slide--proof .extra-slide__heading,
-[data-extra-project-panel="project-3"] .extra-slide--proof .extra-proof-body {
+[data-extra-project-panel="project-2"] .extra-slide--proof .extra-slide__heading,
+[data-extra-project-panel="project-2"] .extra-slide--proof .extra-proof-body {
   background: rgba(35, 62, 37, 0.86);
 }
 
@@ -3407,18 +3411,23 @@ html:not(.js) .extra-step-tabs {
   --control-edge: #12343c;
 }
 
-[data-extra-project-panel="project-2"] {
+[data-extra-project-panel="project-3"] {
   --proof-line: #9b8174;
   --proof-copy: #eadfd7;
   --proof-copy-strong: #fff8ef;
   --sun: #d3ae6b;
 }
 
-[data-extra-project-panel="project-3"] {
+[data-extra-project-panel="project-2"] {
   --proof-line: #7f9270;
   --proof-copy: #dfe6d4;
   --proof-copy-strong: #f6f7ed;
   --sun: #a7bb6f;
+}
+
+.extra-slide--proof .extra-slide__heading p,
+.extra-slide--proof .extra-evidence-grid dt {
+  color: #dcca66;
 }
 
 .extra-slide--hero h3 {
@@ -3717,15 +3726,15 @@ html:not(.js) .extra-step-tabs {
 }
 
 #project-1 .project-inspector__project h3,
-#project-2 .project-inspector__project h3,
-#project-3 .project-inspector__project h3 {
+#project-3 .project-inspector__project h3,
+#project-2 .project-inspector__project h3 {
   font-size: clamp(2.1rem, 4vh, 3.3rem);
   line-height: 0.9;
 }
 
 #project-1 .project-inspector__project > p:last-of-type,
-#project-2 .project-inspector__project > p:last-of-type,
-#project-3 .project-inspector__project > p:last-of-type {
+#project-3 .project-inspector__project > p:last-of-type,
+#project-2 .project-inspector__project > p:last-of-type {
   font-size: clamp(0.94rem, 1.65vh, 1rem);
   line-height: 1.48;
 }
@@ -3923,8 +3932,8 @@ html:not(.js) .extra-step-tabs {
   }
 
   #project-1 .project-inspector__project > p:last-of-type,
-  #project-2 .project-inspector__project > p:last-of-type,
-  #project-3 .project-inspector__project > p:last-of-type {
+  #project-3 .project-inspector__project > p:last-of-type,
+  #project-2 .project-inspector__project > p:last-of-type {
     font-size: 1rem;
     line-height: 1.52;
   }
@@ -4061,8 +4070,8 @@ html:not(.js) .extra-step-tabs {
   }
 
   #project-1 .project-inspector__project h3,
-  #project-2 .project-inspector__project h3,
-  #project-3 .project-inspector__project h3 {
+  #project-3 .project-inspector__project h3,
+  #project-2 .project-inspector__project h3 {
     font-size: clamp(2.2rem, 9.5vw, 3.1rem);
   }
 
@@ -4588,16 +4597,16 @@ html:not(.js) .extra-step-tabs {
   }
 
   #project-1 .project-inspector__project h3,
-  #project-2 .project-inspector__project h3,
-  #project-3 .project-inspector__project h3 {
+  #project-3 .project-inspector__project h3,
+  #project-2 .project-inspector__project h3 {
     margin-top: 0.25rem;
     font-size: clamp(1.65rem, 4.6vh, 2.15rem);
     line-height: 0.9;
   }
 
   #project-1 .project-inspector__project > p:last-of-type,
-  #project-2 .project-inspector__project > p:last-of-type,
-  #project-3 .project-inspector__project > p:last-of-type {
+  #project-3 .project-inspector__project > p:last-of-type,
+  #project-2 .project-inspector__project > p:last-of-type {
     margin-top: clamp(0.42rem, 1.25vh, 0.65rem);
     font-size: clamp(0.76rem, 1.8vh, 0.84rem);
     line-height: 1.36;
@@ -5799,8 +5808,8 @@ html:not(.js) .extra-step-tabs {
   }
 
   #project-1 .project-inspector__project > p:last-of-type,
-  #project-2 .project-inspector__project > p:last-of-type,
-  #project-3 .project-inspector__project > p:last-of-type {
+  #project-3 .project-inspector__project > p:last-of-type,
+  #project-2 .project-inspector__project > p:last-of-type {
     font-size: clamp(0.8rem, 1.9vh, 0.88rem);
     line-height: 1.38;
   }

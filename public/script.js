@@ -933,10 +933,12 @@ function setExtraProject(projectName, previousProjectName = null) {
     previousProjectName !== projectName &&
     document.body.dataset.section === "extra"
   ) {
-    const previousIndex = panels.findIndex(
-      (panel) => panel.dataset.extraProjectPanel === previousProjectName,
+    const previousIndex = projectTabs.findIndex(
+      (tab) => tab.dataset.projectTab === previousProjectName,
     );
-    const nextIndex = panels.indexOf(selectedPanel);
+    const nextIndex = projectTabs.findIndex(
+      (tab) => tab.dataset.projectTab === projectName,
+    );
     extraProjectAnimationTimer = runPageEntrance(
       selectedPanel,
       previousIndex >= 0 && nextIndex < previousIndex ? -1 : 1,

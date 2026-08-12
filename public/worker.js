@@ -14,22 +14,22 @@ const unityBrotliTypes = new Map([
     "application/wasm",
   ],
   [
-    "/builds/project-two/Build/70778cd10bfff059ad7f73d3e414d077.framework.js.br",
+    "/builds/project-three/Build/70778cd10bfff059ad7f73d3e414d077.framework.js.br",
     "application/javascript",
   ],
   [
-    "/builds/project-two/Build/d9959914722f8fe13c94204e95a15e5b.wasm.br",
+    "/builds/project-three/Build/d9959914722f8fe13c94204e95a15e5b.wasm.br",
     "application/wasm",
   ],
 ]);
 
-const projectTwoDataPath =
-  "/builds/project-two/Build/954cd8d0e5bf0a0fe62a3c706f875469.data.br";
-const projectTwoDataParts = [
-  `${projectTwoDataPath}.part-00`,
-  `${projectTwoDataPath}.part-01`,
+const projectThreeDataPath =
+  "/builds/project-three/Build/954cd8d0e5bf0a0fe62a3c706f875469.data.br";
+const projectThreeDataParts = [
+  `${projectThreeDataPath}.part-00`,
+  `${projectThreeDataPath}.part-01`,
 ];
-const projectTwoDataLength = 47796561;
+const projectThreeDataLength = 47796561;
 
 function brotliHeaders(contentType, contentLength) {
   const headers = new Headers({
@@ -80,15 +80,15 @@ function concatenateBodies(responses) {
   });
 }
 
-async function projectTwoDataResponse(request, environment) {
+async function projectThreeDataResponse(request, environment) {
   if (request.method === "HEAD") {
     return new Response(null, {
-      headers: brotliHeaders("application/octet-stream", projectTwoDataLength),
+      headers: brotliHeaders("application/octet-stream", projectThreeDataLength),
     });
   }
 
   const partResponses = await Promise.all(
-    projectTwoDataParts.map((partPath) => {
+    projectThreeDataParts.map((partPath) => {
       const partUrl = new URL(request.url);
       partUrl.pathname = partPath;
 
@@ -110,7 +110,7 @@ async function projectTwoDataResponse(request, environment) {
   }
 
   return new Response(concatenateBodies(partResponses), {
-    headers: brotliHeaders("application/octet-stream", projectTwoDataLength),
+    headers: brotliHeaders("application/octet-stream", projectThreeDataLength),
     encodeBody: "manual",
   });
 }
@@ -120,10 +120,10 @@ export default {
     const pathname = new URL(request.url).pathname;
 
     if (
-      pathname === projectTwoDataPath &&
+      pathname === projectThreeDataPath &&
       (request.method === "GET" || request.method === "HEAD")
     ) {
-      return projectTwoDataResponse(request, environment);
+      return projectThreeDataResponse(request, environment);
     }
 
     const assetResponse = await environment.ASSETS.fetch(request);
