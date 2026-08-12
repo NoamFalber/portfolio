@@ -354,15 +354,14 @@
                 <div class="project-toolbar">
                 <div
                   class="project-tabs"
-                  role="tablist"
+                  role="group"
                   aria-label="Select a project"
                 >
                   <button
                     class="project-tab"
                     id="project-1-tab"
                     type="button"
-                    role="tab"
-                    aria-selected="true"
+                    aria-pressed="true"
                     aria-controls="project-1"
                     data-project-tab="project-1"
                     data-project-title="Surreal Landscape Prototype"
@@ -381,8 +380,7 @@
                     class="project-tab"
                     id="project-2-tab"
                     type="button"
-                    role="tab"
-                    aria-selected="false"
+                    aria-pressed="false"
                     aria-controls="project-2"
                     data-project-tab="project-2"
                     data-project-title="Cave Map Workshop"
@@ -401,8 +399,7 @@
                     class="project-tab"
                     id="project-3-tab"
                     type="button"
-                    role="tab"
-                    aria-selected="false"
+                    aria-pressed="false"
                     aria-controls="project-3"
                     aria-label="Project 03"
                     data-project-tab="project-3"
@@ -436,7 +433,7 @@
                 <div
                   class="project-panel"
                   id="project-1"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="project-1-tab"
                   data-project-panel="project-1"
                 >
@@ -651,7 +648,7 @@
                 <div
                   class="project-panel"
                   id="project-2"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="project-2-tab"
                   data-project-panel="project-2"
                 >
@@ -917,7 +914,7 @@
                 <div
                   class="project-panel project-panel--placeholder"
                   id="project-3"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="project-3-tab"
                   data-project-panel="project-3"
                   hidden
@@ -1130,7 +1127,7 @@
                 <article
                   class="extra-slide extra-slide--hero"
                   id="extra-p1-slide-overview"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p1-step-overview"
                   data-extra-slide
                   data-extra-index="0"
@@ -1167,7 +1164,7 @@
                 <article
                   class="extra-slide extra-slide--story extra-slide--problem"
                   id="extra-p1-slide-world"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p1-step-world"
                   data-extra-slide
                   data-extra-index="1"
@@ -1196,7 +1193,7 @@
                 <article
                   class="extra-slide extra-slide--story"
                   id="extra-p1-slide-grass"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p1-step-grass"
                   data-extra-slide
                   data-extra-index="2"
@@ -1229,7 +1226,7 @@
                 <article
                   class="extra-slide extra-slide--story"
                   id="extra-p1-slide-trails"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p1-step-trails"
                   data-extra-slide
                   data-extra-index="3"
@@ -1262,7 +1259,7 @@
                 <article
                   class="extra-slide extra-slide--story"
                   id="extra-p1-slide-clouds"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p1-step-clouds"
                   data-extra-slide
                   data-extra-index="4"
@@ -1295,7 +1292,7 @@
                 <article
                   class="extra-slide extra-slide--story"
                   id="extra-p1-slide-webgpu"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p1-step-webgpu"
                   data-extra-slide
                   data-extra-index="5"
@@ -1330,7 +1327,7 @@
                 <article
                   class="extra-slide extra-slide--proof"
                   id="extra-p1-slide-proof"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p1-step-proof"
                   data-extra-slide
                   data-extra-index="6"
@@ -1356,14 +1353,14 @@
                 </article>
               </div>
 
-              <div class="extra-step-tabs extra-step-tabs--seven" role="tablist" aria-label="Choose a Surreal Landscape Prototype topic">
-                <button type="button" role="tab" id="extra-p1-step-overview" aria-controls="extra-p1-slide-overview" aria-selected="true" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
-                <button type="button" role="tab" id="extra-p1-step-world" aria-controls="extra-p1-slide-world" aria-selected="false" data-extra-tab="1"><span>01</span><strong>World</strong></button>
-                <button type="button" role="tab" id="extra-p1-step-grass" aria-controls="extra-p1-slide-grass" aria-selected="false" data-extra-tab="2"><span>02</span><strong>Grass</strong></button>
-                <button type="button" role="tab" id="extra-p1-step-trails" aria-controls="extra-p1-slide-trails" aria-selected="false" data-extra-tab="3"><span>03</span><strong>Trails</strong></button>
-                <button type="button" role="tab" id="extra-p1-step-clouds" aria-controls="extra-p1-slide-clouds" aria-selected="false" data-extra-tab="4"><span>04</span><strong>Clouds</strong></button>
-                <button type="button" role="tab" id="extra-p1-step-webgpu" aria-controls="extra-p1-slide-webgpu" aria-selected="false" data-extra-tab="5"><span>05</span><strong>WebGPU</strong></button>
-                <button type="button" role="tab" id="extra-p1-step-proof" aria-controls="extra-p1-slide-proof" aria-selected="false" data-extra-tab="6"><span>06</span><strong>Proof</strong></button>
+              <div class="extra-step-tabs extra-step-tabs--seven" role="group" aria-label="Choose a Surreal Landscape Prototype topic">
+                <button type="button" id="extra-p1-step-overview" aria-controls="extra-p1-slide-overview" aria-pressed="true" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
+                <button type="button" id="extra-p1-step-world" aria-controls="extra-p1-slide-world" aria-pressed="false" data-extra-tab="1"><span>01</span><strong>World</strong></button>
+                <button type="button" id="extra-p1-step-grass" aria-controls="extra-p1-slide-grass" aria-pressed="false" data-extra-tab="2"><span>02</span><strong>Grass</strong></button>
+                <button type="button" id="extra-p1-step-trails" aria-controls="extra-p1-slide-trails" aria-pressed="false" data-extra-tab="3"><span>03</span><strong>Trails</strong></button>
+                <button type="button" id="extra-p1-step-clouds" aria-controls="extra-p1-slide-clouds" aria-pressed="false" data-extra-tab="4"><span>04</span><strong>Clouds</strong></button>
+                <button type="button" id="extra-p1-step-webgpu" aria-controls="extra-p1-slide-webgpu" aria-pressed="false" data-extra-tab="5"><span>05</span><strong>WebGPU</strong></button>
+                <button type="button" id="extra-p1-step-proof" aria-controls="extra-p1-slide-proof" aria-pressed="false" data-extra-tab="6"><span>06</span><strong>Proof</strong></button>
               </div>
             </div>
 
@@ -1403,7 +1400,7 @@
                 <article
                   class="extra-slide extra-slide--hero"
                   id="extra-p2-slide-overview"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p2-step-overview"
                   data-extra-slide
                   data-extra-index="0"
@@ -1442,7 +1439,7 @@
                 <article
                   class="extra-slide extra-slide--story extra-slide--problem"
                   id="extra-p2-slide-problem"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p2-step-problem"
                   data-extra-slide
                   data-extra-index="1"
@@ -1476,7 +1473,7 @@
                 <article
                   class="extra-slide extra-slide--story"
                   id="extra-p2-slide-authoring"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p2-step-authoring"
                   data-extra-slide
                   data-extra-index="2"
@@ -1511,7 +1508,7 @@
                 <article
                   class="extra-slide extra-slide--story"
                   id="extra-p2-slide-runtime"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p2-step-runtime"
                   data-extra-slide
                   data-extra-index="3"
@@ -1542,7 +1539,7 @@
                 <article
                   class="extra-slide extra-slide--story"
                   id="extra-p2-slide-webgpu"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p2-step-webgpu"
                   data-extra-slide
                   data-extra-index="4"
@@ -1571,7 +1568,7 @@
                 <article
                   class="extra-slide extra-slide--proof"
                   id="extra-p2-slide-proof"
-                  role="tabpanel"
+                  role="region"
                   aria-labelledby="extra-p2-step-proof"
                   data-extra-slide
                   data-extra-index="5"
@@ -1596,13 +1593,13 @@
                 </article>
               </div>
 
-              <div class="extra-step-tabs" role="tablist" aria-label="Choose a Cave Map Workshop topic">
-                <button type="button" role="tab" id="extra-p2-step-overview" aria-controls="extra-p2-slide-overview" aria-selected="true" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
-                <button type="button" role="tab" id="extra-p2-step-problem" aria-controls="extra-p2-slide-problem" aria-selected="false" data-extra-tab="1"><span>01</span><strong>Problem</strong></button>
-                <button type="button" role="tab" id="extra-p2-step-authoring" aria-controls="extra-p2-slide-authoring" aria-selected="false" data-extra-tab="2"><span>02</span><strong>Authoring</strong></button>
-                <button type="button" role="tab" id="extra-p2-step-runtime" aria-controls="extra-p2-slide-runtime" aria-selected="false" data-extra-tab="3"><span>03</span><strong>Runtime</strong></button>
-                <button type="button" role="tab" id="extra-p2-step-webgpu" aria-controls="extra-p2-slide-webgpu" aria-selected="false" data-extra-tab="4"><span>04</span><strong>WebGPU</strong></button>
-                <button type="button" role="tab" id="extra-p2-step-proof" aria-controls="extra-p2-slide-proof" aria-selected="false" data-extra-tab="5"><span>05</span><strong>Proof</strong></button>
+              <div class="extra-step-tabs" role="group" aria-label="Choose a Cave Map Workshop topic">
+                <button type="button" id="extra-p2-step-overview" aria-controls="extra-p2-slide-overview" aria-pressed="true" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
+                <button type="button" id="extra-p2-step-problem" aria-controls="extra-p2-slide-problem" aria-pressed="false" data-extra-tab="1"><span>01</span><strong>Problem</strong></button>
+                <button type="button" id="extra-p2-step-authoring" aria-controls="extra-p2-slide-authoring" aria-pressed="false" data-extra-tab="2"><span>02</span><strong>Authoring</strong></button>
+                <button type="button" id="extra-p2-step-runtime" aria-controls="extra-p2-slide-runtime" aria-pressed="false" data-extra-tab="3"><span>03</span><strong>Runtime</strong></button>
+                <button type="button" id="extra-p2-step-webgpu" aria-controls="extra-p2-slide-webgpu" aria-pressed="false" data-extra-tab="4"><span>04</span><strong>WebGPU</strong></button>
+                <button type="button" id="extra-p2-step-proof" aria-controls="extra-p2-slide-proof" aria-pressed="false" data-extra-tab="5"><span>05</span><strong>Proof</strong></button>
               </div>
             </div>
 
@@ -1652,13 +1649,13 @@
                 </article>
               </div>
 
-              <div class="extra-step-tabs extra-placeholder__tabs" role="tablist" aria-label="Project 03 topics unavailable">
-                <button type="button" role="tab" aria-selected="true" aria-label="Reserved topic 00" disabled><span>00</span><strong aria-hidden="true"></strong></button>
-                <button type="button" role="tab" aria-selected="false" aria-label="Reserved topic 01" disabled><span>01</span><strong aria-hidden="true"></strong></button>
-                <button type="button" role="tab" aria-selected="false" aria-label="Reserved topic 02" disabled><span>02</span><strong aria-hidden="true"></strong></button>
-                <button type="button" role="tab" aria-selected="false" aria-label="Reserved topic 03" disabled><span>03</span><strong aria-hidden="true"></strong></button>
-                <button type="button" role="tab" aria-selected="false" aria-label="Reserved topic 04" disabled><span>04</span><strong aria-hidden="true"></strong></button>
-                <button type="button" role="tab" aria-selected="false" aria-label="Reserved topic 05" disabled><span>05</span><strong aria-hidden="true"></strong></button>
+              <div class="extra-step-tabs extra-placeholder__tabs" role="group" aria-label="Project 03 topics unavailable">
+                <button type="button" aria-pressed="true" aria-label="Reserved topic 00" disabled><span>00</span><strong aria-hidden="true"></strong></button>
+                <button type="button" aria-pressed="false" aria-label="Reserved topic 01" disabled><span>01</span><strong aria-hidden="true"></strong></button>
+                <button type="button" aria-pressed="false" aria-label="Reserved topic 02" disabled><span>02</span><strong aria-hidden="true"></strong></button>
+                <button type="button" aria-pressed="false" aria-label="Reserved topic 03" disabled><span>03</span><strong aria-hidden="true"></strong></button>
+                <button type="button" aria-pressed="false" aria-label="Reserved topic 04" disabled><span>04</span><strong aria-hidden="true"></strong></button>
+                <button type="button" aria-pressed="false" aria-label="Reserved topic 05" disabled><span>05</span><strong aria-hidden="true"></strong></button>
               </div>
             </div>
           </div>

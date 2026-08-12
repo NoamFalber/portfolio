@@ -809,7 +809,7 @@ body[data-project-view="build"] .workspace-window--build {
   border-right: 0;
 }
 
-.project-tab[aria-selected="true"] {
+.project-tab[aria-pressed="true"] {
   background: var(--selection);
   color: var(--ink);
 }
@@ -841,7 +841,7 @@ body[data-project-view="build"] .workspace-window--build {
   transition: opacity 150ms ease, transform 150ms ease;
 }
 
-.project-tab[aria-selected="true"] > span:last-child {
+.project-tab[aria-pressed="true"] > span:last-child {
   opacity: 1;
   transform: translateX(0);
 }
@@ -2068,11 +2068,11 @@ body:not([data-section="projects"]) .scene-hotspot > span {
   border-right: 0;
 }
 
-.extra-step-tabs button[aria-selected="true"] {
+.extra-step-tabs button[aria-pressed="true"] {
   background: var(--selection);
 }
 
-.extra-step-tabs button[aria-selected="true"]:hover {
+.extra-step-tabs button[aria-pressed="true"]:hover {
   background: var(--selection);
 }
 
@@ -3131,8 +3131,8 @@ html:not(.js) .extra-step-tabs {
   color: var(--ink);
 }
 
-.project-tab[aria-selected="true"],
-.project-tab[aria-selected="true"]:hover {
+.project-tab[aria-pressed="true"],
+.project-tab[aria-pressed="true"]:hover {
   background: var(--selection);
   color: var(--ink);
 }
@@ -3258,8 +3258,8 @@ html:not(.js) .extra-step-tabs {
   background: #e1e9df;
 }
 
-.extra-step-tabs button[aria-selected="true"],
-.extra-step-tabs button[aria-selected="true"]:hover {
+.extra-step-tabs button[aria-pressed="true"],
+.extra-step-tabs button[aria-pressed="true"]:hover {
   background: var(--selection);
   box-shadow: inset 0 0.24rem 0 var(--selection-edge);
   color: var(--ink);
@@ -3535,7 +3535,7 @@ html:not(.js) .extra-step-tabs {
   border-right-color: #839b9f;
 }
 
-.project-tab[aria-selected="true"] {
+.project-tab[aria-pressed="true"] {
   box-shadow: inset 0 -0.32rem 0 var(--selection-edge);
 }
 
@@ -4917,7 +4917,7 @@ html:not(.js) .extra-step-tabs {
   --control-edge: #102f36;
 }
 
-.project-tab[aria-selected="true"],
+.project-tab[aria-pressed="true"],
 .gallery-thumbnails button[aria-pressed="true"] {
   --control-face: #a8cfd4;
   --control-face-hover: #b5d9dc;
@@ -5026,7 +5026,7 @@ html:not(.js) .extra-step-tabs {
   --control-edge: #183b3b;
 }
 
-.extra-step-tabs button[aria-selected="true"] {
+.extra-step-tabs button[aria-pressed="true"] {
   --control-face: #c9ddd3;
   --control-face-hover: #d4e5dc;
   --control-side-right: #91afa3;
@@ -5038,10 +5038,10 @@ html:not(.js) .extra-step-tabs {
     var(--control-backplate);
 }
 
-.project-tab[aria-selected="true"],
+.project-tab[aria-pressed="true"],
 .gallery-thumbnails button[aria-pressed="true"],
 .extra-project-switcher > button[aria-pressed="true"],
-.extra-step-tabs button[aria-selected="true"],
+.extra-step-tabs button[aria-pressed="true"],
 .section-rail a[aria-current="page"] {
   border-color: var(--control-edge);
   background-color: var(--control-face);
@@ -5191,10 +5191,10 @@ html:not(.js) .extra-step-tabs {
     );
   }
 
-  .project-tab[aria-selected="true"]:hover:not(:disabled),
+  .project-tab[aria-pressed="true"]:hover:not(:disabled),
   .gallery-thumbnails button[aria-pressed="true"]:hover:not(:disabled),
   .extra-project-switcher > button[aria-pressed="true"]:hover:not(:disabled),
-  .extra-step-tabs button[aria-selected="true"]:hover:not(:disabled),
+  .extra-step-tabs button[aria-pressed="true"]:hover:not(:disabled),
   .section-rail a[aria-current="page"]:hover {
     background-color: var(--control-face-hover);
     background-image: linear-gradient(

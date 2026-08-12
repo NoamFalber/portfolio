@@ -483,30 +483,6 @@ function enableHorizontalSwipe(surface, onSwipe) {
   });
 }
 
-function tabIndexFromKey(event, currentIndex, tabCount) {
-  if (!tabCount) {
-    return null;
-  }
-
-  if (event.key === "Home") {
-    return 0;
-  }
-
-  if (event.key === "End") {
-    return tabCount - 1;
-  }
-
-  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-    return (currentIndex + 1) % tabCount;
-  }
-
-  if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-    return (currentIndex - 1 + tabCount) % tabCount;
-  }
-
-  return null;
-}
-
 sectionLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
     const nextIndex = sectionIndexFromTarget(link.dataset.sectionTarget);
@@ -906,8 +882,7 @@ function setProject(projectName) {
 
   projectTabs.forEach((tab) => {
     const isSelected = tab === selectedTab;
-    tab.setAttribute("aria-selected", String(isSelected));
-    tab.tabIndex = isSelected ? 0 : -1;
+    tab.setAttribute("aria-pressed", String(isSelected));
   });
 
   projectPanels.forEach((panel) => {
@@ -1009,25 +984,6 @@ projectTabs.forEach((tab) => {
     setProject(tab.dataset.projectTab);
     setProjectView("showcase", { historyMode: "push", announce: true });
     alignProjectWorkspaceAfterControl();
-  });
-
-  tab.addEventListener("keydown", (event) => {
-    const selectableTabs = projectTabs.filter(
-      (candidate) => !candidate.disabled && !candidate.hidden,
-    );
-    const nextIndex = tabIndexFromKey(
-      event,
-      selectableTabs.indexOf(tab),
-      selectableTabs.length,
-    );
-
-    if (nextIndex === null) {
-      return;
-    }
-
-    event.preventDefault();
-    selectableTabs[nextIndex].focus({ preventScroll: true });
-    selectableTabs[nextIndex].click();
   });
 });
 
@@ -1586,8 +1542,7 @@ function initializeExtraCarousel(carousel) {
 
     tabs.forEach((tab, index) => {
       const isCurrent = index === activeIndex;
-      tab.setAttribute("aria-selected", String(isCurrent));
-      tab.tabIndex = isCurrent ? 0 : -1;
+      tab.setAttribute("aria-pressed", String(isCurrent));
     });
 
     if (currentLabel) {
@@ -1670,19 +1625,6 @@ function initializeExtraCarousel(carousel) {
   tabs.forEach((tab, index) => {
     tab.addEventListener("click", () => {
       setExtraSlide(index);
-      alignCarouselAfterControl();
-    });
-
-    tab.addEventListener("keydown", (event) => {
-      const nextIndex = tabIndexFromKey(event, index, tabs.length);
-
-      if (nextIndex === null) {
-        return;
-      }
-
-      event.preventDefault();
-      setExtraSlide(nextIndex);
-      tabs[nextIndex].focus({ preventScroll: true });
       alignCarouselAfterControl();
     });
   });
