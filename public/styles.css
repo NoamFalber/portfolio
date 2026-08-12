@@ -4700,6 +4700,7 @@ html:not(.js) .extra-step-tabs {
   --control-edge: #132f33;
   --control-stroke: 1px;
   --control-edge-width: 1px;
+  --control-diagonal-edge-half: 0.75px;
   --control-depth: 0.44rem;
   --control-hover-travel: 0.11rem;
   --control-press-travel: 0.24rem;
@@ -4765,9 +4766,11 @@ html:not(.js) .extra-step-tabs {
   background:
     linear-gradient(
         45deg,
-        transparent 0 calc(50% - 0.5px),
-        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
-        transparent calc(50% + 0.5px) 100%
+        transparent 0 calc(50% - var(--control-diagonal-edge-half)),
+        var(--control-edge)
+          calc(50% - var(--control-diagonal-edge-half))
+          calc(50% + var(--control-diagonal-edge-half)),
+        transparent calc(50% + var(--control-diagonal-edge-half)) 100%
       )
       100% 0 / var(--control-depth) var(--control-depth) no-repeat,
     linear-gradient(var(--control-edge), var(--control-edge))
@@ -4779,9 +4782,11 @@ html:not(.js) .extra-step-tabs {
       no-repeat,
     linear-gradient(
         45deg,
-        transparent 0 calc(50% - 0.5px),
-        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
-        transparent calc(50% + 0.5px) 100%
+        transparent 0 calc(50% - var(--control-diagonal-edge-half)),
+        var(--control-edge)
+          calc(50% - var(--control-diagonal-edge-half))
+          calc(50% + var(--control-diagonal-edge-half)),
+        transparent calc(50% + var(--control-diagonal-edge-half)) 100%
       )
       0 100% / var(--control-depth) var(--control-depth) no-repeat,
     linear-gradient(var(--control-side-right), var(--control-side-right))
@@ -4792,9 +4797,13 @@ html:not(.js) .extra-step-tabs {
       var(--control-depth) no-repeat,
     linear-gradient(
         45deg,
-        var(--control-side-bottom) 0 calc(50% - 0.5px),
-        var(--control-edge) calc(50% - 0.5px) calc(50% + 0.5px),
-        var(--control-side-right) calc(50% + 0.5px) 100%
+        var(--control-side-bottom) 0
+          calc(50% - var(--control-diagonal-edge-half)),
+        var(--control-edge)
+          calc(50% - var(--control-diagonal-edge-half))
+          calc(50% + var(--control-diagonal-edge-half)),
+        var(--control-side-right)
+          calc(50% + var(--control-diagonal-edge-half)) 100%
       )
       100% 100% / var(--control-depth) var(--control-depth) no-repeat;
   clip-path: polygon(
@@ -5130,6 +5139,7 @@ html:not(.js) .extra-step-tabs {
   --control-edge: #132f33;
   --control-stroke: 1px;
   --control-edge-width: 1px;
+  --control-diagonal-edge-half: 0.75px;
   --control-motion: 320ms cubic-bezier(0.2, 0.74, 0.22, 1);
   --control-press-motion: 120ms cubic-bezier(0.2, 0.82, 0.24, 1);
   --control-backplate-color: var(--paper-light);
