@@ -1390,7 +1390,7 @@
                   <span aria-live="polite" aria-atomic="true">
                     <strong data-extra-current>01</strong>
                     <span aria-hidden="true"> / </span>
-                    <span data-extra-total>06</span>
+                    <span data-extra-total>07</span>
                   </span>
                   <button type="button" data-extra-next aria-label="Next deep-dive window">→</button>
                 </div>
@@ -1406,17 +1406,17 @@
                   data-extra-index="0"
                 >
                   <div class="extra-hero-copy">
-                    <p class="extra-slide__eyebrow">Three-person team · April–July 2026</p>
+                    <p class="extra-slide__eyebrow">Team project · runtime tools · procedural generation</p>
                     <h3>Cave Map Workshop</h3>
                     <p class="extra-slide__lead">
-                      Cave Map Workshop began as my second-year final
-                      assignment at Tiltan, developed over three months with a
-                      2D artist and a game designer. I owned the system design,
-                      external map-making tool, shaders, and visual effects.
-                      The original game included a preview level. I wanted the
-                      map-making tool itself in the playable build, so I rebuilt
-                      it for runtime. The browser version now supports the
-                      complete authoring, generation, and playtesting loop.
+                      Cave Map Workshop turns a layered 2D construction plan
+                      into a complete first-person cave level. Players draw
+                      cave geometry, place encounters and interactive tiles,
+                      validate the map, generate its meshes and navigation,
+                      then enter spell combat and return to revise the same
+                      map. I owned the team project's system design, external
+                      map-making tool, shaders, and visual effects, then rebuilt
+                      the map workflow inside the runtime.
                     </p>
                     <a
                       class="button button--primary extra-build-jump"
@@ -1429,44 +1429,42 @@
                     </a>
                   </div>
                   <dl class="extra-meta">
-                    <div><dt>My role</dt><dd>System design, map tools, shaders, and visual effects</dd></div>
-                    <div><dt>Team</dt><dd>Three people · developer / technical artist · 2D artist · game designer</dd></div>
-                    <div><dt>Timeline</dt><dd>Three months · April–July 2026</dd></div>
-                    <div><dt>Runtime result</dt><dd>Author → validate → generate → play → revise</dd></div>
+                    <div><dt>Role</dt><dd>Developer and technical artist on a three-person team</dd></div>
+                    <div><dt>Stack</dt><dd>Unity 6 · C# · procedural meshes · runtime NavMesh</dd></div>
+                    <div><dt>Main challenge</dt><dd>Turn layered 2D maps into complete playable 3D caves</dd></div>
+                    <div><dt>Result</dt><dd>Author → validate → generate → fight → revise at runtime</dd></div>
                   </dl>
                 </article>
 
                 <article
                   class="extra-slide extra-slide--story extra-slide--problem"
-                  id="extra-p2-slide-problem"
+                  id="extra-p2-slide-rules"
                   role="region"
-                  aria-labelledby="extra-p2-step-problem"
+                  aria-labelledby="extra-p2-step-rules"
                   data-extra-slide
                   data-extra-index="1"
                 >
                   <header class="extra-slide__heading">
-                    <p>01 · Runtime conversion</p>
-                    <h3>The original map tool depended on Unity editor APIs.</h3>
+                    <p>01 · Layered map rules</p>
+                    <h3>Three editable layers preserve cave structure and gameplay rules.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      The external map tool was a roughly 5,000-line Unity
-                      editor window. Undo, asset saving, scene changes,
-                      generated mesh assets, and direct project references all
-                      used editor-only systems that cannot run in a player or
-                      browser build.
-                    </p>
-                    <p>
-                      I kept the established map rules and procedural generator,
-                      then replaced the surrounding editor infrastructure with
-                      runtime systems.
+                      The map document separates base geometry, added gameplay
+                      objects, and Guide Lamp overlays. Each layer keeps its
+                      exact meaning through editing, validation, and
+                      generation.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Portable document</strong><span>Maps store stable tile, theme, and enemy IDs instead of Unity object references.</span></li>
-                      <li><strong>Runtime undo</strong><span>Drawing gestures and setting changes become bounded, reversible transactions.</span></li>
-                      <li><strong>Shared validation</strong><span>Editing and generation enforce the same legal map rules.</span></li>
-                      <li><strong>Resource ownership</strong><span>The runtime releases generated geometry, materials, and navigation before rebuilding.</span></li>
+                      <li><strong>Cave geometry</strong><span>Floor and Pit cells define the cave interior, while boundary loops generate curved walls and a roof.</span></li>
+                      <li><strong>Gameplay layer</strong><span>Player Start, Enemy Trigger, Finish Zone, Healing Pool, and Wind Pit add playable behavior to the cave.</span></li>
+                      <li><strong>Wall functions</strong><span>Guide Lamps store a valid wall side without replacing the Floor or gameplay object on that cell.</span></li>
+                      <li><strong>Topology authority</strong><span>Every editing tool preserves one player start, one connected finish, attached pits, and configured encounter groups.</span></li>
                     </ul>
+                    <p class="extra-callout">
+                      One Floor cell can hold an Enemy Trigger and Guide Lamp;
+                      one Pit cell can hold a Wind Pit.
+                    </p>
                   </div>
                 </article>
 
@@ -1480,27 +1478,27 @@
                 >
                   <header class="extra-slide__heading">
                     <p>02 · Runtime map authoring</p>
-                    <h3>The workshop combines cave layout, gameplay placement, validation, and build status.</h3>
+                    <h3>Brush, rectangle, and fill tools edit the map with immediate feedback.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      The map stores cave shape, gameplay markers, and
-                      wall-mounted functions as separate layers. I designed the
-                      canvas to show the active tool, legal placement,
-                      topology, selected settings, warnings, and build
-                      readiness while editing.
+                      I designed the workshop so the selected tool, tile
+                      layers, legal placement, marker settings, validation
+                      issues, and content budgets stay visible while editing.
+                      Every gesture changes the same document used to generate
+                      the cave.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>Layered editing</strong><span>Cave shape, gameplay objects, and wall functions remain independently editable.</span></li>
-                      <li><strong>Continuous gestures</strong><span>Fast drags fill skipped cells and commit as one undo step.</span></li>
-                      <li><strong>Topology rules</strong><span>Every tool preserves one player start, connected finish zones, attached pits, and configured encounter groups.</span></li>
-                      <li><strong>Clear validation</strong><span>Errors identify affected cells, while warnings remain visible without blocking a valid build.</span></li>
+                      <li><strong>Continuous gestures</strong><span>Fast drags fill skipped cells, and each brush, rectangle, or fill action commits as one undo step.</span></li>
+                      <li><strong>Layer-aware editing</strong><span>Right-drag removes the topmost authored layer before touching the cave shape underneath it.</span></li>
+                      <li><strong>Marker inspector</strong><span>Placed markers expose player facing, encounter contents, or only the lamp sides that have a valid wall.</span></li>
+                      <li><strong>Build readiness</strong><span>Errors identify affected cells; warnings remain visible without blocking a valid map.</span></li>
                     </ul>
                     <p class="extra-callout">
-                      <strong>4,096 cells in one custom UI mesh.</strong> The 64
-                      × 64 canvas batches its symbols, outlines, previews, and
-                      validation feedback instead of creating thousands of
-                      interface objects.
+                      <strong>One custom UI mesh.</strong> The canvas batches
+                      its cells, symbols, outlines, previews, and validation
+                      feedback instead of creating thousands of interface
+                      objects.
                     </p>
                   </div>
                 </article>
@@ -1515,53 +1513,93 @@
                 >
                   <header class="extra-slide__heading">
                     <p>03 · Runtime generation</p>
-                    <h3>Build and Play turns the authored map into the complete combat level.</h3>
+                    <h3>Build &amp; Play generates the cave and connects the complete combat level.</h3>
                   </header>
                   <div class="extra-slide__body">
-                    <ol class="runtime-pipeline">
-                      <li><strong>Validate</strong><span>Check a stable copy of the map before generation begins.</span></li>
-                      <li><strong>Shape</strong><span>Generate floors, curved walls, a roof, pits, and repeatable seeded detail.</span></li>
-                      <li><strong>Place</strong><span>Add the player start, enemies, finish, healing pools, wind hazards, and guide lamps.</span></li>
-                      <li><strong>Collide</strong><span>Generate player-safe collision separately from the detailed cave meshes.</span></li>
-                      <li><strong>Navigate</strong><span>Build ground and flying enemy routes with runtime NavMesh.</span></li>
-                      <li><strong>Play</strong><span>Connect the existing combat systems and enter the generated cave.</span></li>
-                    </ol>
+                    <p class="extra-slide__intro">
+                      The build coordinator freezes a stable copy of the map,
+                      validates it, then runs the established generator in
+                      measured stages. The same authored cells drive the
+                      visible cave, collision, spawn points, encounters,
+                      goals, and enemy routes.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Cave shell</strong><span>The footprint becomes floors, curved walls, a roof, deep pits, and repeatable seeded stalactites.</span></li>
+                      <li><strong>Purpose-built collision</strong><span>Player-safe pit collision stays simple while detailed geometry remains available for visuals and spells.</span></li>
+                      <li><strong>Runtime navigation</strong><span>Ground and flying NavMesh data bake after the generated geometry exists.</span></li>
+                      <li><strong>Gameplay placement</strong><span>The build places starts, encounters, goals, pools, wind hazards, and guide lamps from their authored cells.</span></li>
+                    </ul>
                     <p class="extra-callout">
-                      Generation runs in measured stages and reports progress
-                      in the browser. The generated level uses the game’s
-                      movement, spells, enemies, pickups, hazards, death,
-                      completion, and reset systems. Players can return to the
-                      workshop, edit the same map, and rebuild it.
+                      Large scans and geometry groups yield between stages so
+                      the workshop can report honest build progress.
                     </p>
                   </div>
                 </article>
 
                 <article
                   class="extra-slide extra-slide--story"
-                  id="extra-p2-slide-webgpu"
+                  id="extra-p2-slide-gameplay"
                   role="region"
-                  aria-labelledby="extra-p2-step-webgpu"
+                  aria-labelledby="extra-p2-step-gameplay"
                   data-extra-slide
                   data-extra-index="4"
                 >
                   <header class="extra-slide__heading">
-                    <p>04 · Browser release</p>
-                    <h3>A dedicated WebGPU build supports runtime generation, persistence, and repeated playtesting.</h3>
+                    <p>04 · First-person spell combat</p>
+                    <h3>Generated caves use the complete first-person combat system.</h3>
                   </header>
                   <div class="extra-slide__body">
                     <p class="extra-slide__intro">
-                      Browser delivery required more than changing Unity’s
-                      target platform. I added capability checks, focus and
-                      pointer-lock handling, persistent map storage, resource
-                      cleanup, memory limits, compressed delivery, and build
-                      validation.
+                      The workshop does not launch a simplified preview.
+                      Build &amp; Play places the player inside the generated cave
+                      with CharacterController movement, a spell book,
+                      resource pools, configured encounters, win and death
+                      states, and level reset.
                     </p>
                     <ul class="extra-detail-grid">
-                      <li><strong>WebGPU preflight</strong><span>The page checks secure context, desktop input, WebGPU, and a suitable adapter before downloading the game.</span></li>
-                      <li><strong>Clear support boundary</strong><span>Unsupported setups receive an explanation instead of loading an unintended graphics fallback.</span></li>
-                      <li><strong>Browser session</strong><span>Focus, pointer lock, pause UI, storage sync, and rebuild cleanup have explicit runtime owners.</span></li>
-                      <li><strong>Release validation</strong><span>The build checks renderer settings, memory, caching, Brotli headers, and required assets before shipping.</span></li>
+                      <li><strong>Spell book</strong><span>Blood Orb, Fireball, Heal, Chain Lightning, Speed Boost, and Force Field use health or collected resources.</span></li>
+                      <li><strong>Authored encounters</strong><span>Connected trigger cells form one encounter zone with configured enemy types and counts.</span></li>
+                      <li><strong>Hazards and rewards</strong><span>Pits, Wind Pits, Healing Pools, resource pickups, and enemy drops change how each route plays.</span></li>
+                      <li><strong>Complete level states</strong><span>Finish, death, pause, and reset all operate against the generated cave and its current actors.</span></li>
                     </ul>
+                    <p class="extra-callout">
+                      If an enemy falls into a pit, its reward uses the last
+                      safe floor position instead of spawning at the bottom of
+                      the shaft.
+                    </p>
+                  </div>
+                </article>
+
+                <article
+                  class="extra-slide extra-slide--story"
+                  id="extra-p2-slide-lifecycle"
+                  role="region"
+                  aria-labelledby="extra-p2-step-lifecycle"
+                  data-extra-slide
+                  data-extra-index="5"
+                >
+                  <header class="extra-slide__heading">
+                    <p>05 · Repeated authoring and playtesting</p>
+                    <h3>Edit, play, revise, and rebuild without restarting the game.</h3>
+                  </header>
+                  <div class="extra-slide__body">
+                    <p class="extra-slide__intro">
+                      Editing and gameplay are two states of one runtime
+                      product. Returning to the workshop releases the previous
+                      generated level, restores authoring input, and keeps the
+                      map ready for another edit and build.
+                    </p>
+                    <ul class="extra-detail-grid">
+                      <li><strong>Generated lifetime</strong><span>Each build owns its roots, meshes, materials, and NavMesh data so the next map starts cleanly.</span></li>
+                      <li><strong>Portable maps</strong><span>Versioned documents store stable tile, theme, enemy, and marker settings for save, import, and export.</span></li>
+                      <li><strong>Bounded history</strong><span>Cell edits and marker settings participate in undo and redo without unbounded session memory.</span></li>
+                      <li><strong>Session handoff</strong><span>Pause, cursor, gameplay input, and authoring input switch owners as the player moves between editing and play.</span></li>
+                    </ul>
+                    <p class="extra-callout">
+                      Runtime NavMesh baking remains a meaningful main-thread
+                      stage, so map budgets are checked before generation
+                      begins.
+                    </p>
                   </div>
                 </article>
 
@@ -1571,35 +1609,38 @@
                   role="region"
                   aria-labelledby="extra-p2-step-proof"
                   data-extra-slide
-                  data-extra-index="5"
+                  data-extra-index="6"
                 >
                   <header class="extra-slide__heading">
-                    <p>05 · Reliability evidence</p>
-                    <h3>Tests verify editing, generation, gameplay, cleanup, and rebuilding.</h3>
+                    <p>06 · Reliability evidence</p>
+                    <h3>Tests and repeated rebuilds verify the authoring-to-gameplay loop.</h3>
                   </header>
                   <div class="extra-proof-body">
                     <dl class="extra-evidence-grid">
                       <div><dt>23 / 23</dt><dd>map editing, validation, and generation tests passed</dd></div>
                       <div><dt>20 cycles</dt><dd>Build → Play → Edit completed repeatedly without resource drift</dd></div>
                       <div><dt>64 × 64</dt><dd>layered authoring grid rendered through one responsive UI mesh</dd></div>
-                      <div><dt>WebGPU only</dt><dd>release validation rejects unintended WebGL output before shipping</dd></div>
+                      <div><dt>8 types</dt><dd>geometry, encounters, objectives, resources, hazards, and route markers</dd></div>
                     </dl>
                     <p>
-                      Runtime NavMesh baking remains a meaningful synchronous
-                      generation cost. The workshop checks map complexity
-                      before building and reports progress through each stage.
+                      The twenty-cycle soak also checked pause input,
+                      pointer-lock menu behavior, generated lifetime disposal,
+                      and stable object and mesh counts. The current release
+                      limits map size, cave cells, pits, placed objects,
+                      enemies, and estimated triangles before generation.
                     </p>
                   </div>
                 </article>
               </div>
 
-              <div class="extra-step-tabs" role="group" aria-label="Choose a Cave Map Workshop topic">
+              <div class="extra-step-tabs extra-step-tabs--seven" role="group" aria-label="Choose a Cave Map Workshop topic">
                 <button type="button" id="extra-p2-step-overview" aria-controls="extra-p2-slide-overview" aria-pressed="true" data-extra-tab="0"><span>00</span><strong>Overview</strong></button>
-                <button type="button" id="extra-p2-step-problem" aria-controls="extra-p2-slide-problem" aria-pressed="false" data-extra-tab="1"><span>01</span><strong>Problem</strong></button>
+                <button type="button" id="extra-p2-step-rules" aria-controls="extra-p2-slide-rules" aria-pressed="false" data-extra-tab="1"><span>01</span><strong>Rules</strong></button>
                 <button type="button" id="extra-p2-step-authoring" aria-controls="extra-p2-slide-authoring" aria-pressed="false" data-extra-tab="2"><span>02</span><strong>Authoring</strong></button>
-                <button type="button" id="extra-p2-step-runtime" aria-controls="extra-p2-slide-runtime" aria-pressed="false" data-extra-tab="3"><span>03</span><strong>Runtime</strong></button>
-                <button type="button" id="extra-p2-step-webgpu" aria-controls="extra-p2-slide-webgpu" aria-pressed="false" data-extra-tab="4"><span>04</span><strong>WebGPU</strong></button>
-                <button type="button" id="extra-p2-step-proof" aria-controls="extra-p2-slide-proof" aria-pressed="false" data-extra-tab="5"><span>05</span><strong>Proof</strong></button>
+                <button type="button" id="extra-p2-step-runtime" aria-controls="extra-p2-slide-runtime" aria-pressed="false" data-extra-tab="3"><span>03</span><strong>Generation</strong></button>
+                <button type="button" id="extra-p2-step-gameplay" aria-controls="extra-p2-slide-gameplay" aria-pressed="false" data-extra-tab="4"><span>04</span><strong>Gameplay</strong></button>
+                <button type="button" id="extra-p2-step-lifecycle" aria-controls="extra-p2-slide-lifecycle" aria-pressed="false" data-extra-tab="5"><span>05</span><strong>Lifecycle</strong></button>
+                <button type="button" id="extra-p2-step-proof" aria-controls="extra-p2-slide-proof" aria-pressed="false" data-extra-tab="6"><span>06</span><strong>Proof</strong></button>
               </div>
             </div>
 
