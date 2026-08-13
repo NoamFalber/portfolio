@@ -631,16 +631,17 @@
                           aria-labelledby="project-1-summary-title"
                         >
                           <div class="project-inspector__project">
-                            <p>Rendering systems · browser delivery</p>
                             <h3 id="project-1-summary-title">Surreal Landscape Prototype</h3>
-                            <p>
-                              I built a dense, endlessly streaming grassland
-                              where movement bends the meadow and leaves trails
-                              that recover over time. Compute shaders, custom
-                              rendering, volumetric clouds, and bounded world
-                              systems keep the full scene reactive and directly
-                              playable in WebGPU without cutting the features
-                              that define it.
+                            <p class="project-inspector__hook">
+                              The WebGPU build preserves the grassland’s defining systems.
+                            </p>
+                            <p class="project-inspector__description">
+                              I built an endlessly streaming grassland where
+                              movement bends the meadow and leaves persistent
+                              trails that recover over time. Compute-driven grass,
+                              custom shaders, volumetric clouds, bounded world
+                              systems, and wandering encounters remain directly
+                              playable in the measured WebGPU build.
                             </p>
                             <ul class="project-tags">
                               <li>Unity 6</li>
@@ -896,18 +897,19 @@
                           aria-labelledby="project-3-summary-title"
                         >
                           <div class="project-inspector__project">
-                            <p>Three-person team · April–July 2026</p>
                             <h3 id="project-3-summary-title">Cave Map Workshop</h3>
-                            <p>
-                              Cave Map Workshop began as my second-year final
-                              assignment at Tiltan, built over three months
-                              with a 2D artist and a game designer. I owned the
-                              system design, external map-making tool, shaders,
-                              and visual effects. The original game included a
-                              preview level. I wanted the tool itself in the
-                              playable build, so I rebuilt it for runtime.
-                              Players can now author, validate, generate, and
-                              immediately play their own caves in the browser.
+                            <p class="project-inspector__hook">
+                              Author a layered map and play its generated cave in one runtime.
+                            </p>
+                            <p class="project-inspector__description">
+                              This began as a three-person second-year final
+                              assignment at Tiltan, built over three months with
+                              a 2D artist and a game designer. I owned the system
+                              design, external map-making tool, shaders, and visual
+                              effects. To make the tool itself part of the playable
+                              build, I rebuilt its workflow in the game with
+                              validation, cave and navigation generation, and a
+                              repeatable return-to-edit loop.
                             </p>
                             <ul class="project-tags">
                               <li>Unity 6</li>
@@ -1101,17 +1103,20 @@
                         aria-labelledby="project-2-summary-title"
                       >
                         <div class="project-inspector__project">
-                          <p>Solo project · procedural simulation</p>
                           <h3 id="project-2-summary-title">Creature World</h3>
-                          <p>
-                            I built Creature World as a playable C# simulation
-                            that generates fifteen species from connected body
-                            plans and releases them into a living world. Anatomy
-                            controls both appearance and behavior, shaping each
-                            creature’s animation, locomotion, speed, and Energy
-                            use. Players can inspect, drag, throw, duplicate,
-                            remove, and introduce new species in the complete
-                            browser build.
+                          <p class="project-inspector__hook">
+                            Custom rendering turns body graphs into animated creatures.
+                          </p>
+                          <p class="project-inspector__description">
+                            I built the creature renderer and graph-to-rig
+                            compiler from scratch in C#, using MonoGame as the
+                            graphics framework rather than a full game engine.
+                            From one shared body plan, the pipeline builds an organic
+                            2.5D rig with connected joints, continuous headings,
+                            stable draw order, and grounded walking or crawling. The
+                            fifteen-species living world is the playable showcase,
+                            putting the same renderer through varied procedural
+                            bodies and motion in the complete WebAssembly/WebGL build.
                           </p>
                           <ul class="project-tags">
                             <li>C#</li>
