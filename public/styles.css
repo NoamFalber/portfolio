@@ -1381,6 +1381,7 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 
 .project-inspector__project {
   display: grid;
+  grid-template-rows: auto auto auto minmax(3.25rem, 1fr);
   min-height: 0;
 }
 
@@ -1392,15 +1393,27 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .project-inspector__hook {
-  margin-top: clamp(0.55rem, 1.2vh, 0.8rem);
-  color: var(--coral-dark);
-  font-size: clamp(0.96rem, 1.7vh, 1.08rem);
+  margin-top: clamp(0.72rem, 1.55vh, 1rem);
+  color: var(--ink);
+  font-size: clamp(1rem, 1.85vh, 1.12rem);
   font-weight: 700;
-  line-height: 1.28;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+.project-inspector__hook::before {
+  content: "";
+  display: block;
+  width: clamp(2.4rem, 4vw, 3rem);
+  height: 0.2rem;
+  margin-bottom: clamp(0.46rem, 1vh, 0.62rem);
+  background: var(--coral);
 }
 
 .project-inspector__description {
-  margin-top: clamp(0.6rem, 1.35vh, 0.85rem);
+  margin-top: clamp(0.75rem, 1.55vh, 1rem);
+  text-wrap: pretty;
 }
 
 .project-inspector__project h3 {
@@ -1428,11 +1441,14 @@ body:not([data-section="projects"]) .scene-hotspot > span {
 }
 
 .project-tags {
+  align-self: end;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin: clamp(0.7rem, 1.5vh, 1rem) 0 0;
-  padding: 0;
+  margin: clamp(0.75rem, 1.5vh, 1rem) 0 0;
+  padding: clamp(0.62rem, 1.25vh, 0.8rem) 0 0;
+  border-top: 1px solid rgba(21, 56, 62, 0.24);
   list-style: none;
 }
 
@@ -3705,7 +3721,7 @@ html:not(.js) .extra-step-tabs {
   --inspector-rail-gap: clamp(1rem, 1.65vw, 1.35rem);
   --inspector-rail-inset: clamp(0.95rem, 1.35vw, 1.2rem);
   --inspector-rail-width: 0.24rem;
-  grid-template-rows: minmax(0, 1.15fr) minmax(0, 0.75fr);
+  grid-template-rows: minmax(0, 1.22fr) minmax(0, 0.68fr);
 }
 
 .project-inspector__project {
@@ -3734,7 +3750,9 @@ html:not(.js) .extra-step-tabs {
 #project-3 .project-inspector__project h3,
 #project-2 .project-inspector__project h3 {
   font-size: clamp(2.1rem, 4vh, 3.3rem);
-  line-height: 0.9;
+  letter-spacing: -0.05em;
+  line-height: 0.94;
+  text-wrap: balance;
 }
 
 #project-1 .project-inspector__description,
@@ -4598,9 +4616,9 @@ html:not(.js) .extra-step-tabs {
   }
 
   .project-inspector__hook {
-    margin-top: clamp(0.38rem, 1vh, 0.55rem);
-    font-size: clamp(0.78rem, 1.9vh, 0.88rem);
-    line-height: 1.25;
+    margin-top: clamp(0.52rem, 1.25vh, 0.72rem);
+    font-size: clamp(0.82rem, 2vh, 0.94rem);
+    line-height: 1.28;
   }
 
   #project-1 .project-inspector__project h3,
@@ -4608,7 +4626,7 @@ html:not(.js) .extra-step-tabs {
   #project-2 .project-inspector__project h3 {
     margin-top: 0;
     font-size: clamp(1.65rem, 4.6vh, 2.15rem);
-    line-height: 0.9;
+    line-height: 0.94;
   }
 
   #project-1 .project-inspector__description,
@@ -4622,6 +4640,7 @@ html:not(.js) .extra-step-tabs {
   .project-tags {
     gap: 0.25rem;
     margin-top: clamp(0.35rem, 1.1vh, 0.55rem);
+    padding-top: clamp(0.42rem, 1vh, 0.58rem);
   }
 
   .project-tags li {

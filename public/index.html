@@ -633,15 +633,16 @@
                           <div class="project-inspector__project">
                             <h3 id="project-1-summary-title">Surreal Landscape Prototype</h3>
                             <p class="project-inspector__hook">
-                              The WebGPU build preserves the grassland’s defining systems.
+                              The full GPU-heavy grassland runs intact in WebGPU.
                             </p>
                             <p class="project-inspector__description">
                               I built an endlessly streaming grassland where
                               movement bends the meadow and leaves persistent
                               trails that recover over time. Compute-driven grass,
-                              custom shaders, volumetric clouds, bounded world
-                              systems, and wandering encounters remain directly
-                              playable in the measured WebGPU build.
+                              custom shaders, volumetric clouds, bounded streaming,
+                              and wandering encounters keep the infinite-looking
+                              scene responsive while its simulation and rendering
+                              work stay finite.
                             </p>
                             <ul class="project-tags">
                               <li>Unity 6</li>
@@ -899,17 +900,17 @@
                           <div class="project-inspector__project">
                             <h3 id="project-3-summary-title">Cave Map Workshop</h3>
                             <p class="project-inspector__hook">
-                              Author a layered map and play its generated cave in one runtime.
+                              Build, play, edit, and rebuild an entire cave without ever leaving the game.
                             </p>
                             <p class="project-inspector__description">
-                              This began as a three-person second-year final
-                              assignment at Tiltan, built over three months with
-                              a 2D artist and a game designer. I owned the system
-                              design, external map-making tool, shaders, and visual
-                              effects. To make the tool itself part of the playable
-                              build, I rebuilt its workflow in the game with
-                              validation, cave and navigation generation, and a
-                              repeatable return-to-edit loop.
+                              Created over three months for my second-year final at
+                              Tiltan, this was a three-person project with a 2D artist
+                              and game designer. I owned system design, the external
+                              map-making tool, shaders, and visual effects. The game
+                              originally included a preview level. I later rebuilt
+                              the tool inside the runtime with layered authoring,
+                              live validation, cave and navigation generation, and
+                              reliable cleanup between builds.
                             </p>
                             <ul class="project-tags">
                               <li>Unity 6</li>
@@ -1105,18 +1106,18 @@
                         <div class="project-inspector__project">
                           <h3 id="project-2-summary-title">Creature World</h3>
                           <p class="project-inspector__hook">
-                            Custom rendering turns body graphs into animated creatures.
+                            My renderer and rig compiler animate every creature the generator can build.
                           </p>
                           <p class="project-inspector__description">
-                            I built the creature renderer and graph-to-rig
-                            compiler from scratch in C#, using MonoGame as the
-                            graphics framework rather than a full game engine.
-                            From one shared body plan, the pipeline builds an organic
-                            2.5D rig with connected joints, continuous headings,
-                            stable draw order, and grounded walking or crawling. The
-                            fifteen-species living world is the playable showcase,
-                            putting the same renderer through varied procedural
-                            bodies and motion in the complete WebAssembly/WebGL build.
+                            I built the entire C# pipeline from scratch on
+                            MonoGame’s graphics framework rather than a full game
+                            engine. From one connected anatomy graph, it compiles a
+                            reusable organic rig with connected joints, stable draw
+                            order, continuous headings, and grounded walking or
+                            crawling. The fifteen-species living world is its
+                            playable showcase, pushing the same system across varied
+                            procedural bodies and motion in the complete
+                            WebAssembly/WebGL build.
                           </p>
                           <ul class="project-tags">
                             <li>C#</li>
